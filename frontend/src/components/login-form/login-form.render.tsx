@@ -1,3 +1,4 @@
+import ImageComponent from "@components/image.component";
 import {
   Button,
   Group,
@@ -9,7 +10,7 @@ import {
 } from "@mantine/core";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { useFormContext } from "react-hook-form";
 import {
   ILoginFormValues,
@@ -42,10 +43,16 @@ const LoginFormRender: React.FC<ILoginFormRenderProps> = ({
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={24} justify="space-between">
-        <Group>
-          <div>Image1</div>
-          <div>Image2</div>
-          <div>Image3</div>
+        <Group mb={32} align={"baseline"}>
+          <div className={`relative w-20 h-24`}>
+            <ImageComponent src={"/logos/unhas-logo.png"} layout="fill" />
+          </div>
+          <div className={`relative w-20 h-24`}>
+            <ImageComponent src={"/logos/asiin-logo.png"} layout="fill" />
+          </div>
+          <div className={`relative w-16 h-20`}>
+            <ImageComponent src={"/logos/lamkes-logo.png"} layout="fill" />
+          </div>
         </Group>
         <Stack spacing={0}>
           <Title order={4}>{`${t("login-form-title")},`}</Title>
@@ -105,8 +112,9 @@ const LoginFormRender: React.FC<ILoginFormRenderProps> = ({
               />
               <Link className={`cursor-pointer`} href="#forget-password">
                 <Text
+                  align="right"
                   size={"sm"}
-                  className={`w-fit`}
+                  className={`cursor-pointer`}
                   color={COLORS.PRIMARY}
                 >{`${t("forget-password-link-label")}?`}</Text>
               </Link>
