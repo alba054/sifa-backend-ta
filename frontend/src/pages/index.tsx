@@ -1,8 +1,9 @@
-import { Text } from "@mantine/core";
+import { Button, Input, Text } from "@mantine/core";
 import { GetStaticProps } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
+import { useState } from "react";
 import {
   generateDescription,
   generateHeadTitle,
@@ -23,6 +24,7 @@ export interface IHomepageProps {}
 
 const Homepage: React.FC<IHomepageProps> = () => {
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
@@ -34,8 +36,11 @@ const Homepage: React.FC<IHomepageProps> = () => {
         />
       </Head>
 
-      <main>
-        <Text size={"sm"}>{t("homepage-title")}</Text>
+      <main className={``}>
+        <Text color={"primary"} size={"sm"}>
+          {t("homepage-title")}
+        </Text>
+        <Input />
       </main>
     </>
   );
