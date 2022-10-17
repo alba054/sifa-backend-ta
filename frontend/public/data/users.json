@@ -1,0 +1,37 @@
+[
+    {
+        "nip": "195507051976031005",
+        "nama": "Dr. Djohan Aras, AFT.,M.Pd, M.Kes.",
+        "email": "djohanaras@gmail.com",
+        "jabatan": "Dosen",
+        "status": "Aktif"
+    },
+    {
+        "nip": "195507052021015001",
+        "nama": "Dr. Djohan Aras, S.Ft., Physio., M.Pd., M.Kes",
+        "email": "djohanaras@gmail.com",
+        "jabatan": "Dosen",
+        "status": "Tidak Aktif"
+    },
+    {
+        "nip": "196503161993031002",
+        "nama": "Drs Sulaiman Gosalam, M.Si",
+        "email": "sulaimago@gmail.com",
+        "jabatan": "Dosen",
+        "status": "Aktif"
+    },
+    {
+        "nip": "196606091989031004",
+        "nama": "Dr. Tiar Erawan, S.Ft.Physio., M.Kes",
+        "email": "tiarerawan@gmail.com",
+        "jabatan": "Dosen",
+        "status": "Aktif"
+    },
+    {
+        "nip": "196712161997022001",
+        "nama": "dr. Yanti Leman, M.Kes.,Sp.KK.",
+        "email": "djohanaras@gmail.com",
+        "jabatan": "Dosen",
+        "status": "Aktif"
+    }
+]

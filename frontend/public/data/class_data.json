@@ -1,0 +1,47 @@
+[
+    {
+        "semester": "2021/2",
+        "kurikulum": 2018,
+        "namaKelas": "A",
+        "namaMatakuliah": "Falsafah & Teori Keperawatan",
+        "sks": 3,
+        "semesterKurikulum": 1,
+        "sifat" : "W"
+    },
+    {
+        "semester": "2021/2",
+        "kurikulum": 2018,
+        "namaKelas": "B",
+        "namaMatakuliah": "Falsafah & Teori Keperawatan",
+        "sks": 3,
+        "semesterKurikulum": 2,
+        "sifat" : "W"
+    },
+    {
+        "semester": "2021/2",
+        "kurikulum": 2018,
+        "namaKelas": "A",
+        "namaMatakuliah": "Falsafah & Teori Keperawatan",
+        "sks": 3,
+        "semesterKurikulum": 3,
+        "sifat" : "W"
+    },
+    {
+        "semester": "2021/2",
+        "kurikulum": 2018,
+        "namaKelas": "A",
+        "namaMatakuliah": "Falsafah & Teori Keperawatan",
+        "sks": 3,
+        "semesterKurikulum": 4,
+        "sifat" : "W"
+    },
+    {
+        "semester": "2021/2",
+        "kurikulum": 2018,
+        "namaKelas": "Kerjasama",
+        "namaMatakuliah": "Bahasa Inggris 1",
+        "sks": 3,
+        "semesterKurikulum": 5,
+        "sifat" : "W"
+    }
+]

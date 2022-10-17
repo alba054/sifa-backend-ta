@@ -1,0 +1,12 @@
+.ql-clipboard {
+    position: fixed !important;
+}
+  
+.ql-container {
+    height: auto !important;
+}
+  
+.ql-editor {
+    height: 214px !important;
+    overflow-y: auto;
+}

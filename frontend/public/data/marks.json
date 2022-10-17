@@ -1,0 +1,132 @@
+[
+    {
+        "id": "1",
+        "semester": "2021/2",
+        "major": "Ilmu Keperawatan",
+        "class": "A",
+        "courseName": "Ilmu Biomedik Dasar",
+        "credit": 3,
+        "minimumSemester": 1,
+        "mandatory": true
+    },
+    {
+        "id": "2",
+        "semester": "2021/2",
+        "major": "Ilmu Keperawatan",
+        "class": "B",
+        "courseName": "Ilmu Biomedik Dasar",
+        "credit": 3,
+        "minimumSemester": 2,
+        "mandatory": true
+    },
+    {
+        "id": "3",
+        "semester": "2021/2",
+        "major": "Ilmu Keperawatan",
+        "class": "Karya Tulis Ilmiah (KTI)",
+        "courseName": "Karya Tulis Ilmiah (KTI)",
+        "credit": 3,
+        "minimumSemester": 3,
+        "mandatory": true
+    },
+    {
+        "id": "4",
+        "semester": "2021/2",
+        "major": "Ilmu Keperawatan",
+        "class": "Reguler",
+        "courseName": "Keperawatan Anak",
+        "credit": 3,
+        "minimumSemester": 4,
+        "mandatory": false
+    },
+    {
+        "id": "5",
+        "semester": "2021/2",
+        "major": "Ilmu Keperawatan",
+        "class": "Kerjasama",
+        "courseName": "Pemenuhan Kebutuhan Dasar",
+        "credit": 3,
+        "minimumSemester": 5,
+        "mandatory": false
+    },
+    {
+        "id": "6",
+        "semester": "2021/2",
+        "major": "Ilmu Keperawatan",
+        "class": "Kerjasama",
+        "courseName": "Pemenuhan Kebutuhan Dasar",
+        "credit": 3,
+        "minimumSemester": 5,
+        "mandatory": false
+    },
+    {
+        "id": "7",
+        "semester": "2021/2",
+        "major": "Ilmu Keperawatan",
+        "class": "Kerjasama",
+        "courseName": "Pemenuhan Kebutuhan Dasar",
+        "credit": 3,
+        "minimumSemester": 5,
+        "mandatory": false
+    },
+    {
+        "id": "8",
+        "semester": "2021/2",
+        "major": "Ilmu Keperawatan",
+        "class": "Kerjasama",
+        "courseName": "Pemenuhan Kebutuhan Dasar",
+        "credit": 3,
+        "minimumSemester": 5,
+        "mandatory": false
+    },
+    {
+        "id": "9",
+        "semester": "2021/2",
+        "major": "Ilmu Keperawatan",
+        "class": "Kerjasama",
+        "courseName": "Pemenuhan Kebutuhan Dasar",
+        "credit": 3,
+        "minimumSemester": 5,
+        "mandatory": false
+    },
+    {
+        "id": "10",
+        "semester": "2021/2",
+        "major": "Ilmu Keperawatan",
+        "class": "Kerjasama",
+        "courseName": "Pemenuhan Kebutuhan Dasar",
+        "credit": 3,
+        "minimumSemester": 5,
+        "mandatory": false
+    },
+    {
+        "id": "11",
+        "semester": "2021/2",
+        "major": "Ilmu Keperawatan",
+        "class": "Kerjasama",
+        "courseName": "Pemenuhan Kebutuhan Dasar",
+        "credit": 3,
+        "minimumSemester": 5,
+        "mandatory": false
+    },
+    {
+        "id": "12",
+        "semester": "2021/2",
+        "major": "Ilmu Keperawatan",
+        "class": "Kerjasama",
+        "courseName": "Pemenuhan Kebutuhan Dasar",
+        "credit": 3,
+        "minimumSemester": 5,
+        "mandatory": false
+    },
+    {
+        "id": "13",
+        "semester": "2021/2",
+        "major": "Ilmu Keperawatan",
+        "class": "Kerjasama",
+        "courseName": "Pemenuhan Kebutuhan Dasar",
+        "credit": 3,
+        "minimumSemester": 5,
+        "mandatory": false
+    }
+]
