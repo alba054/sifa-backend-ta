@@ -1,0 +1,83 @@
+[
+    {
+        "kurikulum" : 2018,
+        "kodeMatakuliah": "17101R0103",
+        "namaMatakuliah" : "Falsafah & Teori Keperawatan",
+        "kelas": "A",
+        "statusAsesmen": false,
+        "statusNilai": true,
+        "statusPortfolio": true
+    },
+    {
+        "kurikulum" : 2018,
+        "kodeMatakuliah": "17153R0105",
+        "namaMatakuliah" : "Ilmu Dasar Keperawatan II",
+        "kelas": "A",
+        "statusAsesmen": false,
+        "statusNilai": true,
+        "statusPortfolio": true
+    },
+    {
+        "kurikulum" : 2018,
+        "kodeMatakuliah": "17208R0103",
+        "namaMatakuliah" : "Pendidikan dan Promosi kesehatan",
+        "kelas": "A", 
+        "statusAsesmen": false,
+        "statusNilai": true,
+        "statusPortfolio": true
+    },
+    {
+        "kurikulum" : 2018,
+        "kodeMatakuliah": "17101R0103",
+        "namaMatakuliah" : "Falsafah & Teori Keperawatan",
+        "kelas": "A",
+        "statusAsesmen": false,
+        "statusNilai": true,
+        "statusPortfolio": true
+    },
+    {
+        "kurikulum" : 2018,
+        "kodeMatakuliah": "17153R0105",
+        "namaMatakuliah" : "Ilmu Dasar Keperawatan II",
+        "kelas": "A",
+        "statusAsesmen": false,
+        "statusNilai": true,
+        "statusPortfolio": true
+    },
+    {
+        "kurikulum" : 2018,
+        "kodeMatakuliah": "17208R0103",
+        "namaMatakuliah" : "Pendidikan dan Promosi kesehatan",
+        "kelas": "A", 
+        "statusAsesmen": false,
+        "statusNilai": true,
+        "statusPortfolio": true
+    },
+    {
+        "kurikulum" : 2018,
+        "kodeMatakuliah": "17101R0103",
+        "namaMatakuliah" : "Falsafah & Teori Keperawatan",
+        "kelas": "A",
+        "statusAsesmen": false,
+        "statusNilai": true,
+        "statusPortfolio": true
+    },
+    {
+        "kurikulum" : 2018,
+        "kodeMatakuliah": "17153R0105",
+        "namaMatakuliah" : "Ilmu Dasar Keperawatan II",
+        "kelas": "A",
+        "statusAsesmen": false,
+        "statusNilai": true,
+        "statusPortfolio": true
+    },
+    {
+        "kurikulum" : 2018,
+        "kodeMatakuliah": "17208R0103",
+        "namaMatakuliah" : "Pendidikan dan Promosi kesehatan",
+        "kelas": "A", 
+        "statusAsesmen": false,
+        "statusNilai": true,
+        "statusPortfolio": true
+    }
+]

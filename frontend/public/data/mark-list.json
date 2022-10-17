@@ -1,0 +1,52 @@
+[
+    {
+        "no": 1,
+        "studentId": "R012211008",
+        "name": "Nur Chairul",
+        "midTest": 85.00,
+        "attendance": 85.00,
+        "total" : 85.00,
+        "predicate": "B+",
+        "weight": 3.50
+    },
+    {
+        "no": 2,
+        "studentId": "R012211008",
+        "name": "Nur Chairul",
+        "midTest": 85.00,
+        "attendance": 85.00,
+        "total" : 85.00,
+        "predicate": "B+",
+        "weight": 3.50
+    },
+    {
+        "no": 3,
+        "studentId": "R012211008",
+        "name": "Nur Chairul",
+        "midTest": 85.00,
+        "attendance": 85.00,
+        "total" : 85.00,
+        "predicate": "B+",
+        "weight": 3.50
+    },
+    {
+        "no": 4,
+        "studentId": "R012211008",
+        "name": "Nur Chairul",
+        "midTest": 85.00,
+        "attendance": 85.00,
+        "total" : 85.00,
+        "predicate": "B+",
+        "weight": 3.50
+    },
+    {
+        "no": 5,
+        "studentId": "R012211008",
+        "name": "Nur Chairul",
+        "midTest": 85.00,
+        "attendance": 85.00,
+        "total" : 85.00,
+        "predicate": "B+",
+        "weight": 3.50
+    }
+]

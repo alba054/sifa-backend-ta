@@ -1,0 +1,5 @@
+export const SM_AND_WIDER = '(min-width: 640px)'
+export const MD_AND_WIDER = '(min-width: 768px)'
+export const LG_AND_WIDER = '(min-width: 1024px)'
+export const XL_AND_WIDER = '(min-width: 1280px)'
+export const DOUBLE_XL_AND_WIDER = '(min-width: 1536px)'

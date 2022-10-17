@@ -1,0 +1,34 @@
+.rte_container ol{
+    list-style: decimal;
+}
+
+.rte_container ul{
+    list-style: circle;
+}
+
+.rte_container .ql-clipboard {
+    position: fixed !important;
+}
+  
+.rte_container .ql-container {
+    height: auto !important;
+}
+  
+.rte_container .ql-editor {
+    height: 214px !important;
+    overflow-y: auto;
+}
+
+/* .rte_container .ql-container{
+    min-height: 10rem !important;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.rte_container .ql-editor{
+    height: 100% !important;
+    flex: 1;
+    overflow-y: auto;
+} */
