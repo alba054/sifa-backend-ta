@@ -1,11 +1,9 @@
-export function generateHeadTitle(title: string) {
-  const appName = process.env.NEXT_PUBLIC_APP_NAME;
+import { SITE_SETTINGS } from "src/utils/site.setting";
 
-  return `${appName} | ${title}`;
+export function generateHeadTitle(title: string) {
+  return `${SITE_SETTINGS.APP_NAME} | ${title}`;
 }
 
 export function generateDescription(description: string) {
-  const appName = process.env.NEXT_PUBLIC_APP_NAME;
-
-  return `${appName} | ${description}`;
+  return `${SITE_SETTINGS.APP_NAME} | ${description}`;
 }
