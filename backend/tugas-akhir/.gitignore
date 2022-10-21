@@ -1,0 +1,7 @@
+node_modules
+prisma/migrations
+# Keep environment variables out of version control
+.env
+test.ts
+prettier.json
+dbtugasakhir.sql
