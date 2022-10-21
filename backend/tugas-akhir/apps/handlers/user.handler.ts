@@ -5,8 +5,13 @@ import { constants, createResponse } from "../utils/utils";
 import dotenv from "dotenv";
 import { InternalServerError } from "../utils/error/internalError";
 import { TokenPayload } from "../utils/interfaces/tokenPayload";
-import { IUser } from "../utils/interfaces/user.interface";
+import {
+  IStudentRequestSignUp,
+  ISuperUserRequestSignUp,
+  IUser,
+} from "../utils/interfaces/user.interface";
 import { BadRequestError } from "../utils/error/badrequestError";
+import { UserService } from "../services/user.service";
 
 dotenv.config();
 
@@ -50,14 +55,43 @@ export class UserHandler {
     res: Response,
     next: NextFunction
   ) {
-    const { username, name, email } = req.body;
-    // todo: add new user with confirmed status (1)
-    const payload = null;
-    if (typeof payload === "undefined") {
-      return next(new BadRequestError("put your data in request body"));
+    const payload = req.body as ISuperUserRequestSignUp;
+    if (
+      typeof payload.email === "undefined" ||
+      typeof payload.name === "undefined" ||
+      typeof payload.username === "undefined" ||
+      typeof payload.groupAccess === "undefined"
+    ) {
+      return next(
+        new BadRequestError("provide email, name, username, groupAccess")
+      );
     }
 
-    return res.status(200).json(createResponse("success", "ok", payload));
+    try {
+      const newUser = {
+        username: payload.username,
+        name: payload.name,
+        email: payload.email,
+        status: 1,
+        groupAccess: payload.groupAccess,
+      } as IUser;
+
+      // todo: add user to student if groupAccess is student
+
+      const insertedNewUser = await UserService.insertNewUser(newUser);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            "success",
+            "inserted new user successfully",
+            insertedNewUser
+          )
+        );
+    } catch (error) {
+      next(error);
+    }
   }
 
   static async addNewUserStudentHandler(
@@ -65,11 +99,38 @@ export class UserHandler {
     res: Response,
     next: NextFunction
   ) {
-    // todo: implement student sign up
-    const payload = req.body as IUser;
+    const payload = req.body as IStudentRequestSignUp;
 
-    if (typeof payload === "undefined") {
-      return next(new BadRequestError("put your data in request body"));
+    if (
+      typeof payload.email === "undefined" ||
+      typeof payload.name === "undefined" ||
+      typeof payload.username === "undefined"
+    ) {
+      return next(new BadRequestError("provide username, email and name"));
+    }
+
+    try {
+      const newUser = {
+        username: payload.username,
+        name: payload.name,
+        email: payload.email,
+        status: 0,
+        groupAccess: constants.STUDENT_GROUP_ACCESS,
+      } as IUser;
+
+      const insertedNewUser = await UserService.insertNewUser(newUser);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            "success",
+            "inserted new user successfully",
+            insertedNewUser
+          )
+        );
+    } catch (error) {
+      next(error);
     }
   }
 }

@@ -60,6 +60,10 @@ export class AuthenticationMiddleware {
           return next(new NotFoundError("no user's found"));
         }
 
+        if (user.status !== 1) {
+          return next(new UnauthenticatedError("user's not active yet"));
+        }
+
         const passwordIsCorrect = await bcryptjs.compare(
           password,
           user.password as string

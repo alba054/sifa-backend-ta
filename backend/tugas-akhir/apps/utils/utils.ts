@@ -31,4 +31,6 @@ export const constants = {
     "token is not formed correctly. JWT format is xxxx.yyyyy.zzzz",
   SIGNATURE_REQUIRED: "provide secret key to verify token",
   INVALID_SIGNATURE: "secret key is not valid",
+  STUDENT_GROUP_ACCESS: 7,
+  SUPERUSER_GROUP_ACCESS: 1,
 };

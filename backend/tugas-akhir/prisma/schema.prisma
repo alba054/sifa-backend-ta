@@ -62,7 +62,7 @@ model dosen {
   dsnNoTelp                                                String?                @db.VarChar(30)
   ref_departemen                                           ref_departemen         @relation(fields: [dsnDprtId], references: [dprtId], onDelete: NoAction, map: "dosen_ibfk_1")
   ref_status_kepegawaian                                   ref_status_kepegawaian @relation(fields: [dsnStatusKepegawaian], references: [stpegId], onDelete: Cascade, map: "dosen_ibfk_2")
-  ref_jk                                                   ref_jk?                @relation(fields: [dsnJenisKelamin], references: [jkId], onDelete: Restrict, onUpdate: Restrict, map: "dosen_ibfk_3")
+  // ref_jk                                                   ref_jk?                @relation(fields: [dsnJenisKelamin], references: [jkId], onDelete: Restrict, onUpdate: Restrict, map: "dosen_ibfk_3")
   mahasiswa                                                mahasiswa[]
   pembimbing                                               pembimbing[]
   penasehat_akademik                                       penasehat_akademik[]
@@ -87,16 +87,14 @@ model mahasiswa {
   mhsAlamat          String?              @db.VarChar(100)
   mhsTempatLahir     String?              @db.VarChar(30)
   mhsTglLahir        DateTime?            @db.Date
-  mhsStatusId        String?              @db.Char(1)
+  mhsStatus          Status               @default(Aktif)
   mhsEmail           String?              @db.VarChar(60)
   mhsNoTelp          String?              @db.VarChar(20)
   mhsJenjangId       Int?
-  mhsJkId            String?              @db.Char(1)
+  mhsJk              JK?
   mhsPrdId           Int?
   mhsPaDsnId         Int?
   ref_jenjang        ref_jenjang?         @relation(fields: [mhsJenjangId], references: [jenjangId], onDelete: Restrict, map: "Mahasiswa_ibfk_1")
-  ref_jk             ref_jk?              @relation(fields: [mhsJkId], references: [jkId], onDelete: Restrict, map: "Mahasiswa_ibfk_2")
-  ref_status         ref_status?          @relation(fields: [mhsStatusId], references: [statusId], onDelete: Restrict, map: "Mahasiswa_ibfk_3")
   ref_prodi          ref_prodi?           @relation(fields: [mhsPrdId], references: [prdId], onDelete: Restrict, map: "Mahasiswa_ibfk_5")
   dosen              dosen?               @relation(fields: [mhsPaDsnId], references: [dsnId], onDelete: Restrict, onUpdate: Restrict, map: "Mahasiswa_ibfk_6")
   bebas_lab          bebas_lab[]
@@ -105,9 +103,7 @@ model mahasiswa {
 
   @@index([mhsPaDsnId], map: "Mahasiswa_ibfk_6")
   @@index([mhsJenjangId], map: "mhsJenjangId")
-  @@index([mhsJkId], map: "mhsJkId")
   @@index([mhsPrdId], map: "mhsPrdId")
-  @@index([mhsStatusId], map: "mhsStatusId")
 }
 
 model notifikasi {
@@ -259,12 +255,12 @@ model ref_jenjang {
   mahasiswa   mahasiswa[]
 }
 
-model ref_jk {
-  jkId      String      @id @db.Char(1)
-  jkNama    String      @db.VarChar(10)
-  dosen     dosen[]
-  mahasiswa mahasiswa[]
-}
+// model ref_jk {
+//   jkId      String      @id @db.Char(1)
+//   jkNama    String      @db.VarChar(10)
+//   dosen     dosen[]
+//   mahasiswa mahasiswa[]
+// }
 
 model ref_konversi_nilai {
   nilaiId      Int       @id @default(autoincrement()) @db.UnsignedInt
@@ -343,11 +339,11 @@ model ref_semester {
   penasehat_akademik penasehat_akademik[]
 }
 
-model ref_status {
-  statusId   String      @id @db.Char(1)
-  statusNama String      @db.VarChar(30)
-  mahasiswa  mahasiswa[]
-}
+// model ref_status {
+//   statusId   String      @id @db.Char(1)
+//   statusNama String      @db.VarChar(30)
+//   mahasiswa  mahasiswa[]
+// }
 
 model ref_status_kepegawaian {
   stpegId   Int     @id @default(autoincrement()) @db.UnsignedInt
@@ -781,4 +777,16 @@ model user {
   adm_group_unit adm_group_unit? @relation(fields: [aksesgroup], references: [aksesId], onDelete: Restrict, map: "user_ibfk_1")
 
   @@index([aksesgroup], map: "group")
+}
+
+enum JK {
+  L
+  P
+}
+
+enum Status {
+  Aktif
+  Lulus
+  Drop_Out
+  Keluar
 }

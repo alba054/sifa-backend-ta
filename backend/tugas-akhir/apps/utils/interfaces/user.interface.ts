@@ -7,10 +7,16 @@ export interface IUser {
   description: string;
 }
 
-export interface IUserRequestBody {
+export interface IStudentRequestSignUp {
   username: string;
   email: string;
-  name?: string;
+  name: string;
+}
+
+export interface ISuperUserRequestSignUp {
+  username: string;
+  email: string;
+  name: string;
+  groupAccess: number;
   description?: string;
-  groupAccess?: number | undefined;
 }
