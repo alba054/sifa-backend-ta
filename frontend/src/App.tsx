@@ -29,6 +29,7 @@ import CPMK from "./pages/admin/References/CPMK";
 import RPS from "./pages/admin/References/RPS";
 import Settings from "./pages/admin/Setting";
 import { mantineTheme } from "./themes/mantine.theme";
+import FEHomepage from "./pages/final-exam/FEHomepage";
 
 function App() {
   return (
@@ -95,6 +96,9 @@ function App() {
             <Route path="manajemen-pengguna">
               <Route index element={<Settings />} />
             </Route>
+          </Route>
+          <Route path="tugas-akhir">
+            <Route index element={<FEHomepage />} />
           </Route>
           <Route path="bantuan" element={<Help />} />
           <Route path="profil" element={<Profile />} />
