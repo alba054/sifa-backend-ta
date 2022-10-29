@@ -1,5 +1,5 @@
-import { AppShell, Burger, Group, MediaQuery, Stack } from "@mantine/core";
-import React, { useState } from "react";
+import React from "react";
+import { AppShell, MediaQuery, Stack, Text } from "@mantine/core";
 import FEMainNavbar from "./navbars/FEMainNavbar";
 
 interface IMainLayoutProps {
@@ -20,7 +20,7 @@ const FEMainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
         </>
       }
     >
-      <Group className={`bg-black`}>{children}</Group>
+      <Stack className={`mx-10 my-12`}>{children}</Stack>
     </AppShell>
   );
 };

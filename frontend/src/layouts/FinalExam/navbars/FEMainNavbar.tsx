@@ -1,40 +1,45 @@
-import { Group, Image, Navbar, Text } from "@mantine/core";
+import { Group, Image, Navbar, Stack, Text } from "@mantine/core";
 import React, { useState } from "react";
+import { FEROUTES } from "src/routes/final-exam.route";
 import {
+  DocumentRibbonIcon,
   HandshakeOutlineIcon,
   HomeOutline,
   IFluentProps,
-} from "../../../assets/Icons/Fluent";
-import UnhasLogo from "../../../assets/images/unhas_logo.png";
+} from "src/assets/Icons/Fluent";
+import UnhasLogo from "src/assets/images/unhas_logo.png";
 import FENavbarMenuItem from "./FENavbarMenuItem";
+import { useLocation } from "react-router-dom";
 
 interface IFEMainNavbarProps {}
 
 interface INavbarMenuItem {
   icon: React.FC<IFluentProps>;
   label: string;
-  route: string;
+  href: string;
 }
 
 const menus: INavbarMenuItem[] = [
   {
     icon: HomeOutline,
     label: "Home",
-    route: "#",
+    href: FEROUTES.HOMEPAGE,
   },
   {
     icon: HandshakeOutlineIcon,
     label: "Bebas Lab",
-    route: "#",
+    href: "#",
+  },
+  {
+    icon: DocumentRibbonIcon,
+    label: "Tugas Akhir",
+    href: FEROUTES.FINAL_EXAM_PROPOSAL,
   },
 ];
 
 const FEMainNavbar: React.FC<IFEMainNavbarProps> = ({}) => {
   const [isHover, setIsHover] = useState(false);
-
-  // function toggleSidebar() {
-  //   setIsHover((prev) => !prev);
-  // }
+  const { pathname } = useLocation();
 
   return (
     <Navbar
@@ -46,7 +51,7 @@ const FEMainNavbar: React.FC<IFEMainNavbarProps> = ({}) => {
     >
       <Navbar.Section>
         <Group position="center">
-          <Image src={UnhasLogo} width={35} height={40} />
+          <Image src={UnhasLogo} width={45} height={50} />
           <Text
             size={24}
             weight={600}
@@ -61,17 +66,21 @@ const FEMainNavbar: React.FC<IFEMainNavbarProps> = ({}) => {
         </Group>
       </Navbar.Section>
 
-      <Navbar.Section mt={"md"} grow>
-        {menus.map((menu) => {
-          return (
-            <FENavbarMenuItem
-              key={"menu-item" + menu.label}
-              icon={menu.icon}
-              label={menu.label}
-              isOpen={isHover}
-            />
-          );
-        })}
+      <Navbar.Section mt={"xl"} grow>
+        <Stack spacing={"lg"}>
+          {menus.map((menu) => {
+            return (
+              <FENavbarMenuItem
+                isActive={menu.href === pathname}
+                key={"menu-item" + menu.label}
+                icon={menu.icon}
+                label={menu.label}
+                isOpen={isHover}
+                href={menu.href}
+              />
+            );
+          })}
+        </Stack>
       </Navbar.Section>
     </Navbar>
   );

@@ -4,6 +4,6 @@ import FEMainLayout from "../../layouts/FinalExam/FEMainlayout";
 interface IFEHomepageProps {}
 
 const FEHomepage: React.FC<IFEHomepageProps> = ({}) => {
-  return <FEMainLayout>Mantu</FEMainLayout>;
+  return <FEMainLayout>In Development</FEMainLayout>;
 };
 export default FEHomepage;

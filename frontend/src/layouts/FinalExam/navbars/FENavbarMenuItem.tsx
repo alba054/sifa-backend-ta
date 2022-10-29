@@ -1,33 +1,50 @@
 import { Group, Text } from "@mantine/core";
-import React from "react";
-import { IFluentProps } from "../../../assets/Icons/Fluent";
-import { COLORS } from "../../../themes/colors.theme";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { IFluentProps } from "src/assets/Icons/Fluent";
+import { COLORS } from "src/themes/colors.theme";
 
 interface IFENavbarMenuItemProps {
   isOpen: boolean;
+  isActive: boolean;
   icon: React.FC<IFluentProps>;
   label: string;
+  href: string;
 }
 
 const FENavbarMenuItem: React.FC<IFENavbarMenuItemProps> = ({
   icon: Icon,
+  isActive,
   isOpen,
   label,
+  href,
 }) => {
+  useEffect(() => {}, [isOpen]);
+
   return (
-    <Group
-      className="py-1 w-full transition-all duration-100 overflow-x-hidden"
-      noWrap
-    >
-      <Icon size={32} className="flex-shrink-0" color={COLORS.DIVIDER} />
-      <Text
-        className={`${!isOpen && "opacity-0"} transition-all duration-100`}
-        size={20}
-        color={COLORS.DIVIDER}
+    <Link to={href}>
+      <Group
+        className={`cursor-pointer mx-auto p-2 w-fit rounded-md transition-all overflow-hidden
+          ${isOpen ? "!w-full" : ""}
+          ${isActive ? "bg-primary shadow bg-opacity-10" : ""}
+        `}
+        noWrap
       >
-        {label}
-      </Text>
-    </Group>
+        <Icon
+          size={32}
+          color={isActive ? COLORS.PRIMARY : COLORS.DIVIDER}
+          className={`flex-shrink-0`}
+        />
+
+        <Text
+          className={`${!isOpen && "hidden h-0"} transition-all duration-150`}
+          size={20}
+          color={isActive ? COLORS.PRIMARY : COLORS.DIVIDER}
+        >
+          {label}
+        </Text>
+      </Group>
+    </Link>
   );
 };
 export default FENavbarMenuItem;

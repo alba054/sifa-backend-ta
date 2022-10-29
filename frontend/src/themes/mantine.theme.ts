@@ -98,10 +98,20 @@ export const mantineTheme: MantineThemeOverride = {
       "#c0bfd3",
       "#b6b5c9",
     ],
+    purple: new Array(10).fill("#CACCCE") as any,
   },
   primaryColor: "primary-text",
   fontFamily: "Nunito Sans, sans-serif",
   components: {
+    Radio: {
+      defaultProps: { color: "primary" },
+    },
+    InputWrapper: {
+      defaultProps: { color: "divider" },
+    },
+    Input: {
+      defaultProps: { color: "divider" },
+    },
     Button: {
       defaultProps: { size: "xs" },
       // Subscribe to theme and component params
