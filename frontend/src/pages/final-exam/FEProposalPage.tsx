@@ -15,7 +15,7 @@ import ArrowUploadIcon from "src/assets/Icons/ArrowUploadIcon";
 import { AddFilled, ArrowUpOutline } from "src/assets/Icons/Fluent";
 import NoFilesAnimationIcon from "src/assets/Icons/NoFilesAnimationIcon";
 import FEInputModal from "src/components/FEInputModal";
-import InputModal from "src/components/InputModal";
+import { TextInput } from "src/components/FormInput";
 import FEMainLayout from "src/layouts/FinalExam/FEMainlayout";
 
 interface IFEProposalPageProps {}
@@ -38,9 +38,12 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
         setOpened={setIsOpen}
       >
         <Stack spacing={"sm"}>
-          <Input.Wrapper required label="Judul yang diusulkan">
-            <Input placeholder="Input judul" />
-          </Input.Wrapper>
+          <TextInput
+            required
+            label="Judul yang diusulkan"
+            placeholder="Input judul"
+            size="md"
+          />
           <div className={`grid gap-x-4 grid-cols-2`}>
             <div className={`col-span-1`}>
               <Input.Wrapper required label="Laboratorium">
