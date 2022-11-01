@@ -10,14 +10,16 @@ import {
   useMantineTheme,
   SelectStylesNames,
   Select,
-  Text,
-  Input,
+  Radio,
+  RadioGroupProps,
+  RadioProps,
+  Textarea as MantineTextArea,
+  TextareaProps,
 } from "@mantine/core";
 
 import { useState } from "react";
-import { COLORS } from "src/themes/colors.theme";
 
-const getDefaultStyle = (
+export const getDefaultStyle = (
   isFocus: boolean,
   isError: boolean
 ):
@@ -112,5 +114,63 @@ export const SelectInput = ({ onFocus, onBlur, ...props }: SelectProps) => {
       }}
       {...props}
     />
+  );
+};
+
+interface IRadioGroupProps extends Omit<RadioGroupProps, "children"> {
+  data: RadioProps[];
+}
+
+export const RadioGroup = ({
+  onFocus,
+  onBlur,
+  data,
+  ...props
+}: IRadioGroupProps) => {
+  const [isFocus, setIsFocus] = useState<boolean>(false);
+
+  return (
+    <Radio.Group styles={getDefaultStyle(isFocus, !!props.error)} {...props}>
+      {data.map(({ label, value, ...radio }) => {
+        return (
+          <Radio
+            onFocus={(e) => {
+              setIsFocus(true);
+              if (!!onFocus) onFocus(e);
+            }}
+            onBlur={(e) => {
+              setIsFocus(false);
+              if (!!onBlur) onBlur(e);
+            }}
+            value={value}
+            label={label}
+            {...radio}
+          />
+        );
+      })}
+    </Radio.Group>
+  );
+};
+
+export const TextArea = ({ onFocus, onBlur, ...props }: TextareaProps) => {
+  const [isFocus, setIsFocus] = useState<boolean>(false);
+
+  return (
+    <>
+      <MantineTextArea
+        className="text-primary-500"
+        size="lg"
+        styles={getDefaultStyle(isFocus, !!props.error)}
+        onFocus={(e) => {
+          setIsFocus(true);
+          if (!!onFocus) onFocus(e);
+        }}
+        onBlur={(e) => {
+          setIsFocus(false);
+          if (!!onBlur) onBlur(e);
+        }}
+        {...props}
+      />
+    </>
   );
 };

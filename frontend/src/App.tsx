@@ -30,7 +30,7 @@ import RPS from "./pages/admin/References/RPS";
 import Settings from "./pages/admin/Setting";
 import { mantineTheme } from "./themes/mantine.theme";
 import FEHomepage from "./pages/final-exam/FEHomepage";
-import FEProposalPage from "./pages/final-exam/FEProposalPage";
+import FEProposalPage from "./pages/final-exam/fe-proposal-page/FEProposalPage";
 import { ModalsProvider } from "@mantine/modals";
 
 function App() {
