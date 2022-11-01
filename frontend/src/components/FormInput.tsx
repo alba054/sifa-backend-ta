@@ -10,31 +10,39 @@ import {
   useMantineTheme,
   SelectStylesNames,
   Select,
+  Text,
+  Input,
 } from "@mantine/core";
 
 import { useState } from "react";
 import { COLORS } from "src/themes/colors.theme";
 
 const getDefaultStyle = (
-  isFocus: boolean
+  isFocus: boolean,
+  isError: boolean
 ):
   | Styles<TextInputStylesNames | NumberInputStylesNames | SelectStylesNames>
   | undefined => {
   const theme = useMantineTheme();
+  const color = isError
+    ? theme.colors.error[5]
+    : isFocus
+    ? theme.colors.primary[5]
+    : theme.colors["secondary-text"][5];
   return {
     input: {
       ":focus": {
-        border: "2px solid #5F5AF7",
-        color: theme.colors.primary[5],
+        border: "2px solid",
+        color,
       },
-      border: "2px solid #B5C2D1",
+      borderWidth: "2px",
       borderRadius: theme.radius.md,
-      color: theme.colors["secondary-text"][5],
+      color,
       marginTop: "8px",
     },
     label: {
       fontWeight: 600,
-      color: `${isFocus ? COLORS.PRIMARY : "#b5c2d1"}`,
+      color,
     },
   };
 };
@@ -47,7 +55,7 @@ export const TextInput = ({ onFocus, onBlur, ...props }: TextInputProps) => {
       <MantineTextInput
         className="text-primary-500"
         size="lg"
-        styles={getDefaultStyle(isFocus)}
+        styles={getDefaultStyle(isFocus, !!props.error)}
         onFocus={(e) => {
           setIsFocus(true);
           if (!!onFocus) onFocus(e);
@@ -73,7 +81,7 @@ export const NumberInput = ({
     <MantineNumberInput
       size="lg"
       hideControls
-      styles={getDefaultStyle(isFocus)}
+      styles={getDefaultStyle(isFocus, !!props.error)}
       onFocus={(e) => {
         setIsFocus(true);
         if (!!onFocus) onFocus(e);
@@ -93,7 +101,7 @@ export const SelectInput = ({ onFocus, onBlur, ...props }: SelectProps) => {
   return (
     <Select
       size="lg"
-      styles={getDefaultStyle(isFocus)}
+      styles={getDefaultStyle(isFocus, !!props.error)}
       onFocus={(e) => {
         setIsFocus(true);
         if (!!onFocus) onFocus(e);

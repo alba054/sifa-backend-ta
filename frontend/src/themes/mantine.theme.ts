@@ -98,9 +98,8 @@ export const mantineTheme: MantineThemeOverride = {
       "#c0bfd3",
       "#b6b5c9",
     ],
-    purple: new Array(10).fill("#CACCCE") as any,
   },
-  primaryColor: "primary-text",
+  primaryColor: "primary",
   fontFamily: "Nunito Sans, sans-serif",
   components: {
     Radio: {
