@@ -30,8 +30,9 @@ import RPS from "./pages/admin/References/RPS";
 import Settings from "./pages/admin/Setting";
 import { mantineTheme } from "./themes/mantine.theme";
 import FEHomepage from "./pages/final-exam/FEHomepage";
-import FEProposalPage from "./pages/final-exam/fe-proposal-page/FEProposalPage";
+import FEProposalPage from "src/pages/final-exam/student/proposal/FEProposalPage";
 import { ModalsProvider } from "@mantine/modals";
+import FEEditProfilePage from "./pages/final-exam/student/profile/edit-profile/FEEditProfile.page";
 
 function App() {
   return (
@@ -103,6 +104,9 @@ function App() {
             <Route path="tugas-akhir">
               <Route index element={<FEHomepage />} />
               <Route path="proposal" element={<FEProposalPage />} />
+              <Route path="profile">
+                <Route path="edit" element={<FEEditProfilePage />} />
+              </Route>
             </Route>
             <Route path="bantuan" element={<Help />} />
             <Route path="profil" element={<Profile />} />

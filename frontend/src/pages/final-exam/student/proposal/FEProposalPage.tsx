@@ -15,11 +15,11 @@ import React, { useState } from "react";
 import ArrowUploadIcon from "src/assets/Icons/ArrowUploadIcon";
 import { AddFilled, ArrowUpOutline } from "src/assets/Icons/Fluent";
 import NoFilesAnimationIcon from "src/assets/Icons/NoFilesAnimationIcon";
-import LFPEmptyDataComponent from "src/components/FEComponents/LFPEmptyData.component";
-import LFPHeaderComponent from "src/components/FEComponents/LFPHeader.component";
+import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
+import LFPHeaderComponent from "src/components/fe-components/LFPHeader.component";
 import FEInputModal from "src/components/FEInputModal";
 import { TextInput } from "src/components/FormInput";
-import FEMainLayout from "src/layouts/FinalExam/FEMainlayout";
+import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
 import FEProposalForm from "./FEProposalForm";
 import {
   feProposalFormSchema,
@@ -43,7 +43,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
   }
 
   return (
-    <FEMainLayout>
+    <FEStudentMainlayout>
       {/* Input modal */}
       <FEInputModal
         opened={isOpen}
@@ -74,7 +74,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
           />
         </Stack>
       </Stack>
-    </FEMainLayout>
+    </FEStudentMainlayout>
   );
 };
 export default FEProposalPage;

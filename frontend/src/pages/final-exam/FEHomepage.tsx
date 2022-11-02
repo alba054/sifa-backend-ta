@@ -1,9 +1,9 @@
 import React from "react";
-import FEMainLayout from "../../layouts/FinalExam/FEMainlayout";
+import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
 
 interface IFEHomepageProps {}
 
 const FEHomepage: React.FC<IFEHomepageProps> = ({}) => {
-  return <FEMainLayout>In Development</FEMainLayout>;
+  return <FEStudentMainlayout>In Development</FEStudentMainlayout>;
 };
 export default FEHomepage;

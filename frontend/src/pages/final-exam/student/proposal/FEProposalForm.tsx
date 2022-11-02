@@ -16,6 +16,8 @@ interface IFEProposalFormProps {
   form: Omit<UseFormReturnType<IFEProposalFormValues>, "onSubmit">;
 }
 
+const SIZE = "md";
+
 const FEProposalForm: React.FC<IFEProposalFormProps> = ({ form }) => {
   const { getInputProps, errors, setValues } = form;
 
@@ -27,7 +29,7 @@ const FEProposalForm: React.FC<IFEProposalFormProps> = ({ form }) => {
         required
         label="Judul yang diusulkan"
         placeholder="Input judul"
-        size="sm"
+        size={SIZE}
         {...getInputProps("title")}
         error={errors["title" as keyof IFEProposalFormValues]}
       />
@@ -35,7 +37,7 @@ const FEProposalForm: React.FC<IFEProposalFormProps> = ({ form }) => {
         <div className={`col-span-1`}>
           <SelectInput
             required
-            size="sm"
+            size={SIZE}
             {...getInputProps("laboratory")}
             error={errors["laboratory" as keyof IFEProposalFormValues]}
             data={[
@@ -57,14 +59,14 @@ const FEProposalForm: React.FC<IFEProposalFormProps> = ({ form }) => {
             required
             label="Pembimbing utama yang diusulkan"
             placeholder="Pilih pembimbing"
-            size="sm"
+            size={SIZE}
           />
         </div>
       </div>
       <div className={`grid gap-x-4 grid-cols-2`}>
         <Input.Wrapper
           styles={getDefaultStyle(false, false)}
-          size="sm"
+          size={SIZE}
           required
           label="File draf proposal"
         >
@@ -84,7 +86,7 @@ const FEProposalForm: React.FC<IFEProposalFormProps> = ({ form }) => {
               </Button>
             </Dropzone>
 
-            <Text size="sm">Belum ada file yang di upload</Text>
+            <Text size={SIZE}>Belum ada file yang di upload</Text>
           </Group>
           <Text size="xs" color="secondary-text">
             *Ekstensi file yang diperbolehkan adalah pdf atau docx
@@ -99,7 +101,7 @@ const FEProposalForm: React.FC<IFEProposalFormProps> = ({ form }) => {
             { label: "Sudah", value: true },
             { label: "Belum", value: false },
           ]}
-          size="sm"
+          size={SIZE}
           onChange={(value) => {
             setValues((val) => ({
               ...val,
@@ -113,7 +115,7 @@ const FEProposalForm: React.FC<IFEProposalFormProps> = ({ form }) => {
         {...getInputProps("note")}
         error={errors["note" as keyof IFEProposalFormValues]}
         label="Catatan (Opsional)"
-        size="sm"
+        size={SIZE}
       />
     </Stack>
   );

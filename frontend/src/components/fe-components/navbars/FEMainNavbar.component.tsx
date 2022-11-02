@@ -8,7 +8,7 @@ import {
   IFluentProps,
 } from "src/assets/Icons/Fluent";
 import UnhasLogo from "src/assets/images/unhas_logo.png";
-import FENavbarMenuItem from "./FENavbarMenuItem";
+import FENavbarMenuItem from "./FENavbarMenuItem.component";
 import { useLocation } from "react-router-dom";
 
 interface IFEMainNavbarProps {}
@@ -81,6 +81,10 @@ const FEMainNavbar: React.FC<IFEMainNavbarProps> = ({}) => {
             );
           })}
         </Stack>
+      </Navbar.Section>
+
+      <Navbar.Section mt="auto">
+        {/* <FEUserNavbarProfile /> */}
       </Navbar.Section>
     </Navbar>
   );
