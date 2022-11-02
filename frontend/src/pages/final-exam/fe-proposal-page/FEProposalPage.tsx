@@ -15,6 +15,8 @@ import React, { useState } from "react";
 import ArrowUploadIcon from "src/assets/Icons/ArrowUploadIcon";
 import { AddFilled, ArrowUpOutline } from "src/assets/Icons/Fluent";
 import NoFilesAnimationIcon from "src/assets/Icons/NoFilesAnimationIcon";
+import LFPEmptyDataComponent from "src/components/FEComponents/LFPEmptyData.component";
+import LFPHeaderComponent from "src/components/FEComponents/LFPHeader.component";
 import FEInputModal from "src/components/FEInputModal";
 import { TextInput } from "src/components/FormInput";
 import FEMainLayout from "src/layouts/FinalExam/FEMainlayout";
@@ -42,42 +44,34 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
 
   return (
     <FEMainLayout>
+      {/* Input modal */}
       <FEInputModal
         opened={isOpen}
         title="Form Pengusulan Tugas Akhir"
         setOpened={setIsOpen}
         onSubmit={onSubmit(handleSubmit) as any}
-      >
-        <FEProposalForm form={form} />
-      </FEInputModal>
+        component={<FEProposalForm form={form} />}
+      />
 
       <Stack spacing={"xl"}>
-        <Group position="apart">
-          <Title order={2}>Usulan Tugas Akhir</Title>
-          <Button
-            variant="outline"
-            color="primary-text"
-            onClick={handleAddProposalClick}
-          >
-            <AddFilled className={`mr-1 mb-[1px]`} size={14} />
-            Buat Permohonan Baru
-          </Button>
-        </Group>
+        {/* Bebas lab, tugas akhir Header */}
+        <LFPHeaderComponent
+          title="Usulan Tugas Akhir"
+          onClick={handleAddProposalClick}
+          addButtonLabel={"Buat Permohonan Baru"}
+        />
 
+        {/* Empty page component */}
         <Stack
           py={"xl"}
           className={`border-dashed border rounded-md border-secondary-text-800`}
         >
-          <Stack align={"center"}>
-            <NoFilesAnimationIcon />
-            <Stack spacing={0}>
-              <Text align="center">Belum Ada Permohonan</Text>
-              <Text align="center" color={"secondary-text"}>
-                Untuk membuat permohonan bebas lab, tekan tombol “Buat
-                Permohonan Baru” di pojok kanan atas.
-              </Text>
-            </Stack>
-          </Stack>
+          <LFPEmptyDataComponent
+            title="Belum Ada Permohonan"
+            caption={
+              "Untuk membuat permohonan bebas lab, tekan tombol “Buat Permohonan Baru” di pojok kanan atas."
+            }
+          />
         </Stack>
       </Stack>
     </FEMainLayout>

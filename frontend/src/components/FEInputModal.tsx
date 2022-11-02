@@ -6,7 +6,7 @@ interface IFEInputModalProps {
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
   onSubmit?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  children: React.ReactNode;
+  component: React.ReactNode;
 }
 
 const FEInputModal = ({
@@ -14,7 +14,7 @@ const FEInputModal = ({
   setOpened,
   title,
   onSubmit,
-  children,
+  component,
 }: IFEInputModalProps) => {
   const theme = useMantineTheme();
 
@@ -45,7 +45,7 @@ const FEInputModal = ({
       }}
       padding={0}
     >
-      <div className="p-5">{children}</div>
+      <div className="p-5">{component}</div>
       <Group position="right" className={`p-5 bg-background-700`} mt={"md"}>
         <Button
           variant="subtle"
