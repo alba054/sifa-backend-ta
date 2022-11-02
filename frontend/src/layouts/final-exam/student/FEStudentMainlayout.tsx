@@ -1,12 +1,12 @@
 import React from "react";
-import { AppShell, MediaQuery, Stack, Text } from "@mantine/core";
-import FEMainNavbar from "./navbars/FEMainNavbar";
+import { AppShell, MediaQuery, Stack } from "@mantine/core";
+import FEMainNavbar from "src/components/fe-components/navbars/FEMainNavbar.component";
 
 interface IMainLayoutProps {
   children: any;
 }
 
-const FEMainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
+const FEStudentMainlayout: React.FC<IMainLayoutProps> = ({ children }) => {
   return (
     <AppShell
       padding={0}
@@ -24,4 +24,4 @@ const FEMainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
     </AppShell>
   );
 };
-export default FEMainLayout;
+export default FEStudentMainlayout;
