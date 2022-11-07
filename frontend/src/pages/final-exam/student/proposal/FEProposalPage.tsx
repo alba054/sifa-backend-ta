@@ -1,24 +1,9 @@
-import {
-  Button,
-  Group,
-  Input,
-  Radio,
-  Stack,
-  Text,
-  Textarea,
-  Title,
-} from "@mantine/core";
-import { Dropzone } from "@mantine/dropzone";
+import { Stack } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
-import { openModal } from "@mantine/modals";
 import React, { useState } from "react";
-import ArrowUploadIcon from "src/assets/Icons/ArrowUploadIcon";
-import { AddFilled, ArrowUpOutline } from "src/assets/Icons/Fluent";
-import NoFilesAnimationIcon from "src/assets/Icons/NoFilesAnimationIcon";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent from "src/components/fe-components/LFPHeader.component";
 import FEInputModal from "src/components/FEInputModal";
-import { TextInput } from "src/components/FormInput";
 import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
 import FEProposalForm from "./FEProposalForm";
 import {

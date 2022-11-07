@@ -7,6 +7,7 @@ module.exports = {
       transparent: "transparent",
       white: "#ffffff",
       black: "#000000",
+      error: Array(10).fill("#FF2C56"),
       "sidebar-background": "#F9FAFB",
       "primary-text": {
         50: "#657387",
