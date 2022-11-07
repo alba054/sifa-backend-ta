@@ -31,6 +31,7 @@ import Settings from "./pages/admin/Setting";
 import { mantineTheme } from "./themes/mantine.theme";
 import FEHomepage from "./pages/final-exam/FEHomepage";
 import FEProposalPage from "src/pages/final-exam/student/proposal/FEProposalPage";
+import FELabFreeApplication from "./pages/final-exam/student/lab-free/FELabFree";
 import { ModalsProvider } from "@mantine/modals";
 import FEEditProfilePage from "./pages/final-exam/student/profile/edit-profile/FEEditProfile.page";
 
@@ -104,6 +105,7 @@ function App() {
             <Route path="tugas-akhir">
               <Route index element={<FEHomepage />} />
               <Route path="proposal" element={<FEProposalPage />} />
+              <Route path="bebas-lab" element={<FELabFreeApplication />} />
               <Route path="profile">
                 <Route path="edit" element={<FEEditProfilePage />} />
               </Route>

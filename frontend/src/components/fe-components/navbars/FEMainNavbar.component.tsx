@@ -29,7 +29,7 @@ const menus: INavbarMenuItem[] = [
   {
     icon: HandshakeOutlineIcon,
     label: "Bebas Lab",
-    href: "#",
+    href: FEROUTES.LAB_FREE,
   },
   {
     icon: DocumentRibbonIcon,

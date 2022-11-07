@@ -16,8 +16,8 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
 }) => {
   return (
     <Group position="apart">
-      <Title order={2}>{title}</Title>
-      <Button variant="outline" color="primary-text" onClick={onClick}>
+      <Title /* order={2} */>{title}</Title>
+      <Button variant="outline" color="primary-text" className="h-[46px] gap-[8px] py-[12px] px-[16px] border-[1px] border-[#CACCCE] rounded-[8px] font-bold" onClick={onClick}>
         <AddFilled className={`mr-1 mb-[1px]`} size={14} />
         {addButtonLabel}
       </Button>

@@ -5,11 +5,11 @@ import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.com
 import LFPHeaderComponent from "src/components/fe-components/LFPHeader.component";
 import FEInputModal from "src/components/FEInputModal";
 import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
-import FEProposalForm from "./FEProposalForm";
+import FELabFreeForm from "./FELabFreeForm";
 import {
-  feProposalFormSchema,
-  IFEProposalFormValues,
-} from "./FEProposalInterfaces";
+  feLabFreeFormSchema,
+  IFELabFreeFormValues,
+} from "./FELabFreeInterfaces";
 
 interface IFEProposalPageProps {}
 
@@ -19,11 +19,11 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
     setIsOpen(true);
   }
 
-  const { onSubmit, ...form } = useForm<IFEProposalFormValues>({
-    validate: yupResolver(feProposalFormSchema),
+  const { onSubmit, ...form } = useForm<IFELabFreeFormValues>({
+    validate: yupResolver(feLabFreeFormSchema),
   });
 
-  function handleSubmit(values: IFEProposalFormValues) {
+  function handleSubmit(values: IFELabFreeFormValues) {
     console.log(values);
   }
 
@@ -32,18 +32,18 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
       {/* Input modal */}
       <FEInputModal
         opened={isOpen}
-        title="Form Pengusulan Tugas Akhir"
+        title="Pilih Laboratorium"
         setOpened={setIsOpen}
         onSubmit={onSubmit(handleSubmit) as any}
-        component={<FEProposalForm form={form} />}
+        component={<FELabFreeForm form={form} />}
       />
 
       <Stack spacing={"xl"}>
         {/* Bebas lab, tugas akhir Header */}
         <LFPHeaderComponent
-          title="Usulan Tugas Akhir"
+          title="Permohonan Bebas Lab"
           onClick={handleAddProposalClick}
-          addButtonLabel={"Buat Usulan Baru"}
+          addButtonLabel={"Buat Permohonan Baru"}
         />
 
         {/* Empty page component */}
@@ -52,9 +52,9 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
           className={`border-dashed border rounded-md border-secondary-text-800`}
         > */}
           <LFPEmptyDataComponent
-            title="Belum Ada Pengusulan Tugas Akhir"
+            title="Belum Ada Permohonan"
             caption={
-              "Untuk mengusulkan judul tugas akhir, tekan tombol “Buat Usulan Baru” di pojok kanan atas."
+              "Untuk membuat permohonan bebas lab, tekan tombol “Buat Permohonan Baru” di pojok kanan atas."
             }
           />
         {/* </Stack> */}
