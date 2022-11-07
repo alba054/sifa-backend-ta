@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react";
 import {
   TextInput as MantineTextInput,
   TextInputProps,
@@ -15,9 +16,20 @@ import {
   RadioProps,
   Textarea as MantineTextArea,
   TextareaProps,
+  Button,
+  Group,
+  Input,
+  Text,
+  MantineSize,
+  MantineColor,
 } from "@mantine/core";
+import { DatePicker, DatePickerProps } from "@mantine/dates";
+import { Dropzone, DropzoneProps } from "@mantine/dropzone";
 
 import { useState } from "react";
+import ArrowUploadIcon from "src/assets/Icons/ArrowUploadIcon";
+import { DeleteOutline } from "src/assets/Icons/Fluent";
+import { IFEProposalFormValues } from "src/pages/final-exam/student/proposal/FEProposalInterfaces";
 
 export const getDefaultStyle = (
   isFocus: boolean,

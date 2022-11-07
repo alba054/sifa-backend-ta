@@ -20,7 +20,9 @@ const FEStudentMainlayout: React.FC<IMainLayoutProps> = ({ children }) => {
         </>
       }
     >
-      <Stack className={`mx-10 my-12`}>{children}</Stack>
+      <Stack className={`transition-all duration-150 mx-10 my-12`}>
+        {children}
+      </Stack>
     </AppShell>
   );
 };

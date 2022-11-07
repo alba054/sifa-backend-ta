@@ -10,6 +10,7 @@ import {
 import UnhasLogo from "src/assets/images/unhas_logo.png";
 import FENavbarMenuItem from "./FENavbarMenuItem.component";
 import { useLocation } from "react-router-dom";
+import FEUserNavbarProfileComponent from "../FEUserNavbarProfile.component";
 
 interface IFEMainNavbarProps {}
 
@@ -84,7 +85,15 @@ const FEMainNavbar: React.FC<IFEMainNavbarProps> = ({}) => {
       </Navbar.Section>
 
       <Navbar.Section mt="auto">
-        {/* <FEUserNavbarProfile /> */}
+        <Stack spacing={4}>
+          <FEUserNavbarProfileComponent isHover={isHover} />
+
+          {!!isHover && (
+            <Text color="gray">
+              ©2022 Faculty of Pharmacy. All rights reserved.
+            </Text>
+          )}
+        </Stack>
       </Navbar.Section>
     </Navbar>
   );

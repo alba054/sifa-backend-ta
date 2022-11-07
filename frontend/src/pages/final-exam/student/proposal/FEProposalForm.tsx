@@ -1,10 +1,13 @@
-import { Stack, Input, Group, Button, Text } from "@mantine/core";
-import { Dropzone } from "@mantine/dropzone";
-import { useForm, UseFormReturnType, yupResolver } from "@mantine/form";
-import React from "react";
-import ArrowUploadIcon from "src/assets/Icons/ArrowUploadIcon";
+import { Stack } from "@mantine/core";
 import {
-  getDefaultStyle,
+  MS_EXCEL_MIME_TYPE,
+  MS_WORD_MIME_TYPE,
+  PDF_MIME_TYPE,
+} from "@mantine/dropzone";
+import { UseFormReturnType } from "@mantine/form";
+import React from "react";
+import DocumentInput from "src/components/DocumentInput";
+import {
   RadioGroup,
   SelectInput,
   TextArea,
@@ -20,8 +23,6 @@ const SIZE = "md";
 
 const FEProposalForm: React.FC<IFEProposalFormProps> = ({ form }) => {
   const { getInputProps, errors, setValues } = form;
-
-  function handleDrop(files: File[]) {}
 
   return (
     <Stack spacing={"sm"}>
@@ -64,34 +65,15 @@ const FEProposalForm: React.FC<IFEProposalFormProps> = ({ form }) => {
         </div>
       </div>
       <div className={`grid gap-x-4 grid-cols-2`}>
-        <Input.Wrapper
-          styles={getDefaultStyle(false, false)}
-          size={SIZE}
-          required
+        <DocumentInput
+          {...getInputProps("mainLecturer")}
+          size="md"
+          accept={[PDF_MIME_TYPE, MS_WORD_MIME_TYPE, MS_EXCEL_MIME_TYPE]}
           label="File draf proposal"
-        >
-          <Group my={4}>
-            <Dropzone
-              {...getInputProps("proposalFile")}
-              error={errors["proposalFile" as keyof IFEProposalFormValues]}
-              padding={0}
-              className={`w-fit border-none`}
-              onDrop={handleDrop}
-            >
-              <Button className={`!bg-secondary-text-50`}>
-                <ArrowUploadIcon size={12} />
-                <Text ml={"xs"} color={"primary-text"}>
-                  Choose File
-                </Text>
-              </Button>
-            </Dropzone>
-
-            <Text size={SIZE}>Belum ada file yang di upload</Text>
-          </Group>
-          <Text size="xs" color="secondary-text">
-            *Ekstensi file yang diperbolehkan adalah pdf atau docx
-          </Text>
-        </Input.Wrapper>
+          withPreview
+          error={errors["proposalFile" as keyof IFEProposalFormValues]}
+          description="*Ekstensi file yang diperbolehkan adalah pdf atau docx"
+        />
         <RadioGroup
           {...getInputProps("isHaveLecturerDecree")}
           error={errors["isHaveLecturerDecree" as keyof IFEProposalFormValues]}
