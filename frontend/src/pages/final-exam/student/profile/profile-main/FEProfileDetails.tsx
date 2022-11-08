@@ -20,6 +20,7 @@ import {
 import dummy_profile_picture from "./../../../../../assets/images/dummy_profile_picture.png";
 import FEProfilePrivacyInformationComp from "./FEProfilePrivacyInformationComp";
 import FEProfileCard from "src/components/FEProfileCard";
+import { Link } from "react-router-dom";
 
 export interface IFEProfileDetails {}
 
@@ -67,6 +68,8 @@ const FEProfileDetails: React.FC<IFEProfileDetails> = ({}) => {
         <Button
           variant="light"
           className="bg-white !important text-primary-500 hover:bg-transparent"
+          component={Link}
+          to="edit"
         >
           <EditProfileOutline color={theme.colors.primary[5]} /> Edit Profil
         </Button>

@@ -69,7 +69,7 @@ export const TextInput = ({ onFocus, onBlur, ...props }: TextInputProps) => {
       <MantineTextInput
         className="text-primary-500"
         size="lg"
-        styles={getDefaultStyle(isFocus, !!props.error)}
+        styles={{...getDefaultStyle(isFocus, !!props.error)}}
         onFocus={(e) => {
           setIsFocus(true);
           if (!!onFocus) onFocus(e);
@@ -95,7 +95,7 @@ export const NumberInput = ({
     <MantineNumberInput
       size="lg"
       hideControls
-      styles={getDefaultStyle(isFocus, !!props.error)}
+      styles={{...getDefaultStyle(isFocus, !!props.error)}}
       onFocus={(e) => {
         setIsFocus(true);
         if (!!onFocus) onFocus(e);
@@ -115,7 +115,7 @@ export const SelectInput = ({ onFocus, onBlur, ...props }: SelectProps) => {
   return (
     <Select
       size="lg"
-      styles={getDefaultStyle(isFocus, !!props.error)}
+      styles={{...getDefaultStyle(isFocus, !!props.error)}}
       onFocus={(e) => {
         setIsFocus(true);
         if (!!onFocus) onFocus(e);
@@ -142,7 +142,7 @@ export const RadioGroup = ({
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
   return (
-    <Radio.Group styles={getDefaultStyle(isFocus, !!props.error)} {...props}>
+    <Radio.Group styles={{...getDefaultStyle(isFocus, !!props.error)}} {...props}>
       {data.map(({ label, value, ...radio }) => {
         return (
           <Radio
@@ -172,7 +172,7 @@ export const TextArea = ({ onFocus, onBlur, ...props }: TextareaProps) => {
       <MantineTextArea
         className="text-primary-500"
         size="lg"
-        styles={getDefaultStyle(isFocus, !!props.error)}
+        styles={{...getDefaultStyle(isFocus, !!props.error)}}
         onFocus={(e) => {
           setIsFocus(true);
           if (!!onFocus) onFocus(e);
