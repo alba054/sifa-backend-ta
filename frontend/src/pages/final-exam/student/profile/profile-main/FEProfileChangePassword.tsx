@@ -1,4 +1,4 @@
-import { Button, Group, Stack, Text, Title } from "@mantine/core";
+import { Button, Group, Stack, Title } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import React from "react";
 import FEProfileCard from "src/components/FEProfileCard";
