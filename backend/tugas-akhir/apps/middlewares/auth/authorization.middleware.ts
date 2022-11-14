@@ -8,7 +8,7 @@ import { constants } from "../../utils/utils";
 import { tokenGenerator } from "./tokenGenerator";
 
 export class AuthorizationMiddleware {
-  static authorize(roles: number) {
+  static authorize(roles: number[]) {
     return async function authorizationHandler(
       req: Request,
       res: Response,
@@ -55,19 +55,23 @@ export class AuthorizationMiddleware {
           return next(new UnathorizedError("provide token"));
         }
 
-        // const { nim } = req.params;
-        // console.log(req.params);
-        // console.log(tokenPayload.username);
-
-        // if (nim !== tokenPayload.username) {
-        //   return next(new UnathorizedError("you are not who you declare"));
-        // }
+        // * this is a special case
+        // * when there is nim / nip parameters
+        const { nim } = req.params;
+        if (
+          typeof nim !== "undefined" &&
+          !roles.includes(constants.SUPERUSER_GROUP_ACCESS)
+        ) {
+          if (nim !== tokenPayload.username) {
+            return next(new UnathorizedError("you are not who you declare"));
+          }
+        }
 
         if (tokenPayload.status !== 1) {
           return next(new UnathorizedError("You are not an active user"));
         }
 
-        if (tokenPayload.groupAccess !== roles) {
+        if (!roles.includes(tokenPayload.groupAccess)) {
           return next(new UnathorizedError("you cannot access this resource"));
         }
 

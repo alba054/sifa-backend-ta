@@ -6,7 +6,7 @@ const groupUnitRouter = express.Router();
 
 groupUnitRouter
   .route("/")
-  .get(AuthorizationMiddleware.authorize(1), GroupUnitHandler.getUnit)
-  .post(AuthorizationMiddleware.authorize(1), GroupUnitHandler.addUnit);
+  .get(AuthorizationMiddleware.authorize([1]), GroupUnitHandler.getUnit)
+  .post(AuthorizationMiddleware.authorize([1]), GroupUnitHandler.addUnit);
 
 export default groupUnitRouter;

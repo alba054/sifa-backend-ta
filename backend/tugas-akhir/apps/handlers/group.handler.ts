@@ -19,7 +19,7 @@ export class GroupHandler {
         .status(200)
         .json(createResponse("success", "successfully get group", group));
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 }

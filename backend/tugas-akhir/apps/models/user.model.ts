@@ -1,9 +1,9 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-import bcryptjs from "bcryptjs";
 
 import prismaDB from "../utils/database";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { InternalServerError } from "../utils/error/internalError";
+import { constants } from "../utils/utils";
 
 export class User {
   username: string;
@@ -38,8 +38,8 @@ export class User {
     return this;
   }
 
-  setDescription(descript: string) {
-    this.description = descript;
+  setDescription(description: string) {
+    this.description = description;
     return this;
   }
 
@@ -47,6 +47,64 @@ export class User {
     const user = await prismaDB.user.findUnique({ where: { username } });
 
     return user;
+  }
+  static async resetPassword(username: string, newPassword: string) {
+    try {
+      const updatedUser = await prismaDB.user.update({
+        where: { username },
+        data: { password: newPassword },
+      });
+
+      return updatedUser;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
+  static async getUserResetPasswordToken(token: string) {
+    const userResetPasswordToken =
+      await prismaDB.password_reset_token.findUnique({
+        where: { token: token },
+      });
+
+    return userResetPasswordToken;
+  }
+  static async selectUserStudents(page: number, limit: number) {
+    const user = await prismaDB.user.findMany({
+      where: { aksesgroup: constants.STUDENT_GROUP_ACCESS },
+      skip: page,
+      take: limit,
+    });
+
+    return user;
+  }
+
+  static async insertIntoUserResetToken(username: string, token: string) {
+    try {
+      const resetToken = await prismaDB.password_reset_token.create({
+        data: {
+          user: { connect: { username } },
+          token,
+          token_exp: Date.now(),
+        },
+      });
+
+      return resetToken;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
   }
 
   static async insertIntoUser(newUser: User) {

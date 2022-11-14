@@ -12,10 +12,49 @@ import {
 } from "../utils/interfaces/user.interface";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { UserService } from "../services/user.service";
+import { StudentService } from "../services/student.service";
+// import { sendForgetPasswordEmail } from "../utils/thirdpartyservice";
+import crypto from "crypto";
+import { NotFoundError } from "../utils/error/notFoundError";
+import { UnathorizedError } from "../utils/error/authError";
+import { LecturerService } from "../services/lecturer.service";
+import { ILecturer } from "../utils/interfaces/lecturer.interface";
 
 dotenv.config();
 
 export class UserHandler {
+  static async getUserStudents(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    // todo: get all user students
+    const { page, limit } = req.query;
+    // * pageInNumber : default 0
+    // * limitInNumber : default 10 items per page
+    const pageInNumber = typeof page === "undefined" ? 0 : Number(page);
+    let limitInNumber = typeof limit === "undefined" ? 10 : Number(limit);
+
+    try {
+      const users = await UserService.getAllStudentUsers(
+        pageInNumber,
+        limitInNumber
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get all user students",
+            users
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async loginHandler(req: Request, res: Response, next: NextFunction) {
     const tokenPayload = {
       username: res.locals.user.username,
@@ -72,13 +111,24 @@ export class UserHandler {
         username: payload.username,
         name: payload.name,
         email: payload.email,
-        status: 1,
         groupAccess: payload.groupAccess,
       } as IUser;
 
       // todo: add user to student if groupAccess is student
+      if (newUser.groupAccess === constants.STUDENT_GROUP_ACCESS) {
+        // todo: insert into mahasiswa table
+        const insertedNewStudent = await StudentService.insertUserIntoStudent({
+          nim: newUser.username,
+          name: newUser.name,
+          email: newUser.email,
+        });
+      } else if (newUser.groupAccess === constants.LECTURER_GROUP_ACCESS) {
+        // todo: lecturer departmentID is undefined so create a default value
+      }
 
-      const insertedNewUser = await UserService.insertNewUser(newUser);
+      const insertedNewUser = await UserService.insertNewUserBySuperUser(
+        newUser
+      );
 
       return res
         .status(201)
@@ -90,15 +140,11 @@ export class UserHandler {
           )
         );
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 
-  static async addNewUserStudentHandler(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
+  static async studentSignUp(req: Request, res: Response, next: NextFunction) {
     const payload = req.body as IStudentRequestSignUp;
 
     if (
@@ -114,11 +160,9 @@ export class UserHandler {
         username: payload.username,
         name: payload.name,
         email: payload.email,
-        status: 0,
-        groupAccess: constants.STUDENT_GROUP_ACCESS,
       } as IUser;
 
-      const insertedNewUser = await UserService.insertNewUser(newUser);
+      const insertedNewUser = await UserService.studentSignUp(newUser);
 
       return res
         .status(201)
@@ -130,7 +174,87 @@ export class UserHandler {
           )
         );
     } catch (error) {
-      next(error);
+      return next(error);
+    }
+  }
+
+  static async forgetPassword(req: Request, res: Response, next: NextFunction) {
+    // todo: forget password
+    // todo: generate token to be used for resetting password
+
+    try {
+      const user = await UserService.getUserByUsername(req.params.username);
+      if (user === null) {
+        throw new NotFoundError("user's not found");
+      }
+
+      crypto.randomBytes(48, async (err, buf) => {
+        if (err) {
+          throw err;
+        }
+
+        const token = buf.toString("hex");
+        const resetPasswordToken = await UserService.generateResetPasswordToken(
+          req.params.username,
+          token
+        );
+
+        return res
+          .status(200)
+          .json(
+            createResponse(
+              constants.SUCCESS_MESSAGE,
+              "successfully send generate reset pass token",
+              token
+            )
+          );
+      });
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async resetPassword(req: Request, res: Response, next: NextFunction) {
+    const { username, token } = req.params;
+    const { password } = req.body;
+
+    try {
+      if (typeof password === "undefined") {
+        throw new BadRequestError("provide password");
+      }
+
+      const resetPasswordToken = await UserService.getUserResetPasswordToken(
+        token
+      );
+
+      console.log(resetPasswordToken);
+
+      if (resetPasswordToken?.username !== username) {
+        throw new UnathorizedError("credential doesn't match");
+      }
+
+      const isExpired =
+        Date.now() - Number(resetPasswordToken.token_exp) >
+        constants.PASSWORD_RESET_TOKEN_EXP;
+
+      if (isExpired) {
+        throw new BadRequestError(
+          `token is expired. go to /users/${username}/forget-password`
+        );
+      }
+
+      const updatedUser = await UserService.resetPassword(username, password);
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully reset password"
+          )
+        );
+    } catch (error) {
+      return next(error);
     }
   }
 }

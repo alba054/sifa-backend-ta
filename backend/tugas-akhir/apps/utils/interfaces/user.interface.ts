@@ -15,8 +15,8 @@ export interface IStudentRequestSignUp {
 
 export interface ISuperUserRequestSignUp {
   username: string;
-  email: string;
-  name: string;
+  email?: string;
+  name?: string;
   groupAccess: number;
   description?: string;
 }
