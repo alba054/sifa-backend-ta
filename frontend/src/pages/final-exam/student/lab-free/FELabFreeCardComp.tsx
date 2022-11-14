@@ -57,7 +57,8 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
     ),
   };
   return (
-    <Group className="flex py-8 px-9 border border-[#DFDFDF] relative justify-between rounded-xl gap-x-10 mx-2">
+    <Group className="flex py-8 px-9 border border-[#DFDFDF] relative justify-between rounded-xl gap-x-10 mx-2 drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md">
+      {/* drop-shadow-[0_1px_4px_rgba(0,0,0,0.12)] */}
       <Stack spacing={"lg"}>
         {statusChip[`${status}`]}{" "}
         <Stack className="gap-1">

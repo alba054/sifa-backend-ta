@@ -70,6 +70,15 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({}) => {
               tanggalPermohonan="14 November 2022"
             />
           </Grid.Col>
+          
+          <Grid.Col span={6} xs={12} sm={12} md={6}>
+            <FELabFreeCardComp
+              title="Permohonan #2.5"
+              lab="Lab. Farmasetika"
+              status="rejected"
+              tanggalPermohonan="14 November 2022"
+            />
+          </Grid.Col>
           <Grid.Col span={6} xs={12} sm={12} md={6}>
             <FELabFreeCardComp
               title="Permohonan #1"
