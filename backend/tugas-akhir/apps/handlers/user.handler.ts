@@ -5,20 +5,16 @@ import { constants, createResponse } from "../utils/utils";
 import dotenv from "dotenv";
 import { InternalServerError } from "../utils/error/internalError";
 import { TokenPayload } from "../utils/interfaces/tokenPayload";
-import {
-  IStudentRequestSignUp,
-  ISuperUserRequestSignUp,
-  IUser,
-} from "../utils/interfaces/user.interface";
+import { IUser } from "../utils/interfaces/user.interface";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { UserService } from "../services/user.service";
 import { StudentService } from "../services/student.service";
-// import { sendForgetPasswordEmail } from "../utils/thirdpartyservice";
 import crypto from "crypto";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { UnathorizedError } from "../utils/error/authError";
 import { LecturerService } from "../services/lecturer.service";
-import { ILecturer } from "../utils/interfaces/lecturer.interface";
+import { UserAsStudent } from "../services/user/UserAsStudent.facade";
+import { UserAsLecturer } from "../services/user/UserAsLecturer.facade";
 
 dotenv.config();
 
@@ -40,6 +36,8 @@ export class UserHandler {
         pageInNumber,
         limitInNumber
       );
+
+      console.log(users);
 
       return res
         .status(200)
@@ -94,7 +92,7 @@ export class UserHandler {
     res: Response,
     next: NextFunction
   ) {
-    const payload = req.body as ISuperUserRequestSignUp;
+    const payload = req.body as IUser;
     if (
       typeof payload.email === "undefined" ||
       typeof payload.name === "undefined" ||
@@ -114,21 +112,24 @@ export class UserHandler {
         groupAccess: payload.groupAccess,
       } as IUser;
 
+      let insertedUser = {};
       // todo: add user to student if groupAccess is student
       if (newUser.groupAccess === constants.STUDENT_GROUP_ACCESS) {
         // todo: insert into mahasiswa table
-        const insertedNewStudent = await StudentService.insertUserIntoStudent({
-          nim: newUser.username,
-          name: newUser.name,
-          email: newUser.email,
-        });
+        // const insertedNewStudent = await StudentService.insertUserIntoStudent({
+        //   nim: newUser.username,
+        //   name: newUser.name || "",
+        //   email: newUser.email,
+        // });
+        insertedUser = await UserAsStudent.insertUserAsStudent(newUser);
       } else if (newUser.groupAccess === constants.LECTURER_GROUP_ACCESS) {
         // todo: lecturer departmentID is undefined so create a default value
+        insertedUser = await UserAsLecturer.insertUserAsLecturer(newUser);
       }
 
-      const insertedNewUser = await UserService.insertNewUserBySuperUser(
-        newUser
-      );
+      // const insertedNewUser = await UserService.insertNewUserBySuperUser(
+      //   newUser
+      // );
 
       return res
         .status(201)
@@ -136,7 +137,7 @@ export class UserHandler {
           createResponse(
             "success",
             "inserted new user successfully",
-            insertedNewUser
+            insertedUser
           )
         );
     } catch (error) {
@@ -144,39 +145,39 @@ export class UserHandler {
     }
   }
 
-  static async studentSignUp(req: Request, res: Response, next: NextFunction) {
-    const payload = req.body as IStudentRequestSignUp;
+  // static async studentSignUp(req: Request, res: Response, next: NextFunction) {
+  //   const payload = req.body as IUser;
 
-    if (
-      typeof payload.email === "undefined" ||
-      typeof payload.name === "undefined" ||
-      typeof payload.username === "undefined"
-    ) {
-      return next(new BadRequestError("provide username, email and name"));
-    }
+  //   if (
+  //     typeof payload.email === "undefined" ||
+  //     typeof payload.name === "undefined" ||
+  //     typeof payload.username === "undefined"
+  //   ) {
+  //     return next(new BadRequestError("provide username, email and name"));
+  //   }
 
-    try {
-      const newUser = {
-        username: payload.username,
-        name: payload.name,
-        email: payload.email,
-      } as IUser;
+  //   try {
+  //     const newUser = {
+  //       username: payload.username,
+  //       name: payload.name,
+  //       email: payload.email,
+  //     } as IUser;
 
-      const insertedNewUser = await UserService.studentSignUp(newUser);
+  //     const insertedNewUser = await UserService.studentSignUp(newUser);
 
-      return res
-        .status(201)
-        .json(
-          createResponse(
-            "success",
-            "inserted new user successfully",
-            insertedNewUser
-          )
-        );
-    } catch (error) {
-      return next(error);
-    }
-  }
+  //     return res
+  //       .status(201)
+  //       .json(
+  //         createResponse(
+  //           "success",
+  //           "inserted new user successfully",
+  //           insertedNewUser
+  //         )
+  //       );
+  //   } catch (error) {
+  //     return next(error);
+  //   }
+  // }
 
   static async forgetPassword(req: Request, res: Response, next: NextFunction) {
     // todo: forget password

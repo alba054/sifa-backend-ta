@@ -197,6 +197,7 @@ model ref_departemen {
   ref_prodi         ref_prodi[]
   sk_pembimbing_dep sk_pembimbing_dep[]
   sk_penguji_dep    sk_penguji_dep[]
+  user              user[]
 }
 
 model ref_dokumenseminar {
@@ -285,10 +286,10 @@ model ref_laboratorium {
   labNama          String             @db.VarChar(40)
   labKepalaNip     String             @default("") @db.VarChar(25)
   labKepalaNama    String             @default("") @db.VarChar(60)
-  labPrdId         Int                @default(0)
+  labPrdId         Int?               @default(0)
   labTTd           String?            @db.VarChar(100)
   labKodeNomor     String?            @db.VarChar(50)
-  ref_prodi        ref_prodi          @relation(fields: [labPrdId], references: [prdId], map: "ref_laboratorium_ibfk_1")
+  ref_prodi        ref_prodi?         @relation(fields: [labPrdId], references: [prdId], map: "ref_laboratorium_ibfk_1")
   bebas_lab        bebas_lab[]
   ref_temp_nosurat ref_temp_nosurat[]
   tugas_akhir      tugas_akhir[]
@@ -326,6 +327,7 @@ model ref_prodi {
   prdKepalaNama          String                   @db.VarChar(60)
   prdDprtId              Int?
   prdJenjang             String?                  @db.VarChar(3)
+  jenjang                Jenjang?
   prdKodeMkTa            String?                  @db.VarChar(15)
   prdNamaMkTa            String?                  @db.VarChar(50)
   prdPrefix              String?                  @db.VarChar(10)
@@ -336,6 +338,7 @@ model ref_prodi {
   ref_laboratorium       ref_laboratorium[]
   ref_temp_nosurat_prodi ref_temp_nosurat_prodi[]
   sk_penguji             sk_penguji[]
+  user                   user[]
 
   @@index([prdDprtId], map: "prdDprtId")
 }
@@ -780,15 +783,20 @@ model tugas_akhir {
 }
 
 model user {
-  id                   Int                    @id @default(autoincrement())
-  username             String?                @unique(map: "username") @db.VarChar(30)
-  password             String?                @db.VarChar(100)
-  email                String?                @db.VarChar(100)
-  name                 String?                @db.VarChar(100)
-  status               Int?
-  aksesgroup           Int?
-  keterangan           String?                @db.VarChar(100)
-  adm_group_unit       adm_group_unit?        @relation(fields: [aksesgroup], references: [aksesId], onDelete: Restrict, map: "user_ibfk_1")
+  id             Int             @id @default(autoincrement())
+  username       String?         @unique(map: "username") @db.VarChar(30)
+  password       String?         @db.VarChar(100)
+  email          String?         @db.VarChar(100)
+  name           String?         @db.VarChar(100)
+  status         Int?
+  aksesgroup     Int?
+  prodiID        Int?
+  departementID  Int?
+  keterangan     String?         @db.VarChar(100)
+  adm_group_unit adm_group_unit? @relation(fields: [aksesgroup], references: [aksesId], onDelete: Restrict, map: "user_ibfk_1")
+  ref_prodi      ref_prodi?      @relation(fields: [prodiID], references: [prdId], onDelete: Restrict, map: "user_ibfk_2")
+  ref_departemen ref_departemen? @relation(fields: [departementID], references: [dprtId])
+
   password_reset_token password_reset_token[]
 
   @@index([aksesgroup], map: "group")

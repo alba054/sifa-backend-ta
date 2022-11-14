@@ -5,7 +5,7 @@ import { AuthenticationMiddleware } from "../middlewares/auth/authentication.mid
 const vocationRouter = express.Router();
 
 vocationRouter
-  .route("/departmentID")
+  .route("/:departmentID")
   .get(
     AuthenticationMiddleware.authenticate("admin"),
     VocationHandler.getAllVocations

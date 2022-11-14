@@ -43,5 +43,7 @@ export const constants = {
   DEAN_GROUP_ACCESS: 9,
   SUCCESS_MESSAGE: "success",
   FAILED_MESSAGE: "failed",
+  USER_ACTIVE_STATUS: 1,
+  USER_INACTIVE_STATUS: 0,
   PASSWORD_RESET_TOKEN_EXP,
 };

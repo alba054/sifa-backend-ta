@@ -1,7 +1,7 @@
 export interface ILecturer {
   name: string;
   nip: string;
-  departmentID: number;
+  departmentID?: number;
   prefixDegree?: string;
   postfixDegree?: string;
   birthPlace?: string;
@@ -14,7 +14,7 @@ export interface ILecturer {
   picture?: string;
   email: string;
   gender?: "L" | "P";
-  employeeStatus:
+  employeeStatus?:
     | "PNS"
     | "CPNS"
     | "Dosen_Tetap_Non_PNS"

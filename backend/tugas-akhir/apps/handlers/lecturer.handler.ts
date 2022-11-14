@@ -6,8 +6,8 @@ import { ILecturer } from "../utils/interfaces/lecturer.interface";
 import { LecturerService } from "../services/lecturer.service";
 import { constants, createResponse } from "../utils/utils";
 import { NotFoundError } from "@prisma/client/runtime";
-import { User } from "../models/user.model";
-import { UserBuilder } from "../utils/builder/user.builder";
+import { UserService } from "../services/user.service";
+import { UserAsLecturer } from "../services/user/UserAsLecturer.facade";
 
 dotenv.config();
 
@@ -49,23 +49,12 @@ export class LecturerHandler {
       if (
         typeof body.name === "undefined" ||
         typeof body.nip === "undefined" ||
-        typeof body.departmentID === "undefined" ||
-        typeof body.email === "undefined"
+        typeof body.departmentID === "undefined"
       ) {
         throw new BadRequestError("provide nip, name, and departmentID");
       }
 
-      const registeredLecturer = await User.selectByUsername(body.nip);
-
-      if (registeredLecturer === null) {
-        const userLecturer = await User.insertIntoUser(
-          UserBuilder.build(body.nip, body.nip, body.email).setGroupAccess(
-            constants.LECTURER_GROUP_ACCESS
-          )
-        );
-      }
-
-      const newLecturer = await LecturerService.insertNewLecturer(body);
+      const newLecturer = await UserAsLecturer.insertLecturertoUser(body);
 
       return res
         .status(201)

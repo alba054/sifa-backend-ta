@@ -11,6 +11,7 @@ lecturerRouter.post(
   LecturerHandler.insertNewLecturer
 );
 
+// * use {departmentID} as query param to get spesific lecturer based on departmentID
 lecturerRouter.get(
   "/",
   AuthorizationMiddleware.authorize([constants.SUPERUSER_GROUP_ACCESS]),

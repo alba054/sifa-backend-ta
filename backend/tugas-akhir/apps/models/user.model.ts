@@ -3,24 +3,40 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import prismaDB from "../utils/database";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { InternalServerError } from "../utils/error/internalError";
+import { IUser } from "../utils/interfaces/user.interface";
 import { constants } from "../utils/utils";
 
 export class User {
   username: string;
   password: string;
-  email: string;
+  email?: string;
   name: string;
   status: number;
   groupAccess?: number;
   description?: string;
 
-  constructor(username: string, password: string, email: string) {
+  constructor(username: string, password: string) {
     this.username = username;
-    this.email = email;
     this.status = 0;
     this.name = "";
     this.description = "";
     this.password = password;
+  }
+
+  transformToIUser() {
+    return {
+      description: this.description,
+      email: this.email,
+      groupAccess: this.groupAccess,
+      name: this.name,
+      status: this.status,
+      username: this.username,
+    } as IUser;
+  }
+
+  setEmail(email: string) {
+    this.email = email;
+    return this;
   }
 
   setStatus(status: number) {

@@ -25,36 +25,30 @@ export class UserService {
     return user;
   }
 
-  static async studentSignUp(newUser: IUser) {
-    const hashedPassword = await bcryptjs.hash(newUser.username, 10);
-    const user = UserBuilder.build(
-      newUser.username,
-      hashedPassword,
-      newUser.email
-    )
-      .setName(newUser.name)
-      .setStatus(0)
-      .setGroupAccess(constants.STUDENT_GROUP_ACCESS);
+  // static async studentSignUp(newUser: IUser) {
+  //   const hashedPassword = await bcryptjs.hash(newUser.username, 10);
+  //   const user = UserBuilder.build(newUser.username, hashedPassword)
+  //     .setName(newUser.name)
+  //     .setStatus(constants.USER_INACTIVE_STATUS)
+  //     .setEmail(newUser.email)
+  //     .setGroupAccess(constants.STUDENT_GROUP_ACCESS);
 
-    try {
-      const insertedUser = await User.insertIntoUser(user);
+  //   try {
+  //     const insertedUser = await User.insertIntoUser(user);
 
-      return insertedUser;
-    } catch (error) {
-      throw error;
-    }
-  }
+  //     return insertedUser;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
 
   static async insertNewUserBySuperUser(newUser: IUser) {
     const hashedPassword = await bcryptjs.hash(newUser.username, 10);
-    const user = UserBuilder.build(
-      newUser.username,
-      hashedPassword,
-      newUser.email
-    )
-      .setName(newUser.name)
-      .setStatus(1)
-      .setDescription(newUser.description)
+    const user = UserBuilder.build(newUser.username, hashedPassword)
+      .setName(newUser.name || "")
+      .setStatus(constants.USER_ACTIVE_STATUS)
+      .setEmail(newUser.email || "")
+      .setDescription(newUser.description || "")
       .setGroupAccess(newUser.groupAccess);
 
     try {
