@@ -5,7 +5,7 @@ import {
   MediaQuery,
   Stack,
   Text,
-  Title,
+  Title
 } from "@mantine/core";
 import React from "react";
 import { InfoOutline } from "src/assets/Icons/Fluent";
@@ -22,7 +22,14 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({}) => {
         </MediaQuery>
 
         <Stack className="w-11/12">
-          <Title className="text-[22px] font-semibold text-[#3B82F6] mt-1">
+          <Title className="text-[22px] font-semibold text-[#3B82F6] mt-1 inline">
+            <MediaQuery
+              smallerThan={"lg"}
+              styles={{ display: "inline !important" }}
+              className="hidden relative -top-[1px] mr-2 p-[1px]"
+            >
+              <InfoOutline size={36} color={"#3B82F6"} />
+            </MediaQuery>
             Informasi
           </Title>
           <Text className="text-[16px] font-semibold text-[#3B82F6]">
@@ -48,13 +55,28 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({}) => {
       >
         <Grid className="mt-2" gutter={"xl"}>
           <Grid.Col span={6} xs={12} sm={12} md={6}>
-            <FELabFreeCardComp title="Permohonan #3" lab="Lab. Biofarmaka" status="process" tanggalPermohonan="14 November 2022" />
+            <FELabFreeCardComp
+              title="Permohonan #3"
+              lab="Lab. Biofarmaka"
+              status="process"
+              tanggalPermohonan="14 November 2022"
+            />
           </Grid.Col>
           <Grid.Col span={6} xs={12} sm={12} md={6}>
-            <FELabFreeCardComp title="Permohonan #2" lab="Lab. Farmasetika" status="rejected" tanggalPermohonan="14 November 2022" />
+            <FELabFreeCardComp
+              title="Permohonan #2"
+              lab="Lab. Farmasetika"
+              status="rejected"
+              tanggalPermohonan="14 November 2022"
+            />
           </Grid.Col>
           <Grid.Col span={6} xs={12} sm={12} md={6}>
-            <FELabFreeCardComp title="Permohonan #1" lab="Lab. Farmakologi Toksikologi" status="accepted" tanggalPermohonan="10 November 2022" />
+            <FELabFreeCardComp
+              title="Permohonan #1"
+              lab="Lab. Farmakologi Toksikologi"
+              status="accepted"
+              tanggalPermohonan="10 November 2022"
+            />
           </Grid.Col>
         </Grid>
       </MantineProvider>
