@@ -1,4 +1,3 @@
-import { useTheme } from "@emotion/react";
 import {
   TextInput as MantineTextInput,
   TextInputProps,
@@ -16,20 +15,9 @@ import {
   RadioProps,
   Textarea as MantineTextArea,
   TextareaProps,
-  Button,
-  Group,
-  Input,
-  Text,
-  MantineSize,
-  MantineColor,
 } from "@mantine/core";
-import { DatePicker, DatePickerProps } from "@mantine/dates";
-import { Dropzone, DropzoneProps } from "@mantine/dropzone";
 
 import { useState } from "react";
-import ArrowUploadIcon from "src/assets/Icons/ArrowUploadIcon";
-import { DeleteOutline } from "src/assets/Icons/Fluent";
-import { IFEProposalFormValues } from "src/pages/final-exam/student/proposal/FEProposalInterfaces";
 
 export const getDefaultStyle = (
   isFocus: boolean,
@@ -58,6 +46,9 @@ export const getDefaultStyle = (
       fontWeight: 600,
       color,
     },
+    error: {
+      marginTop: 8,
+    },
   };
 };
 
@@ -69,7 +60,7 @@ export const TextInput = ({ onFocus, onBlur, ...props }: TextInputProps) => {
       <MantineTextInput
         className="text-primary-500"
         size="lg"
-        styles={{...getDefaultStyle(isFocus, !!props.error)}}
+        styles={{ ...getDefaultStyle(isFocus, !!props.error) }}
         onFocus={(e) => {
           setIsFocus(true);
           if (!!onFocus) onFocus(e);
@@ -95,7 +86,7 @@ export const NumberInput = ({
     <MantineNumberInput
       size="lg"
       hideControls
-      styles={{...getDefaultStyle(isFocus, !!props.error)}}
+      styles={{ ...getDefaultStyle(isFocus, !!props.error) }}
       onFocus={(e) => {
         setIsFocus(true);
         if (!!onFocus) onFocus(e);
@@ -115,7 +106,7 @@ export const SelectInput = ({ onFocus, onBlur, ...props }: SelectProps) => {
   return (
     <Select
       size="lg"
-      styles={{...getDefaultStyle(isFocus, !!props.error)}}
+      styles={{ ...getDefaultStyle(isFocus, !!props.error) }}
       onFocus={(e) => {
         setIsFocus(true);
         if (!!onFocus) onFocus(e);
@@ -142,13 +133,21 @@ export const RadioGroup = ({
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
   return (
-    <Radio.Group styles={{...getDefaultStyle(isFocus, !!props.error)}} {...props}>
+    <Radio.Group
+      styles={{ ...getDefaultStyle(isFocus, !!props.error) }}
+      size="lg"
+      {...props}
+    >
       {data.map(({ label, value, ...radio }) => {
         return (
           <Radio
+            size="lg"
             onFocus={(e) => {
               setIsFocus(true);
               if (!!onFocus) onFocus(e);
+            }}
+            styles={{
+              ...getDefaultStyle(value === props.value, !!props.error),
             }}
             onBlur={(e) => {
               setIsFocus(false);
@@ -172,7 +171,7 @@ export const TextArea = ({ onFocus, onBlur, ...props }: TextareaProps) => {
       <MantineTextArea
         className="text-primary-500"
         size="lg"
-        styles={{...getDefaultStyle(isFocus, !!props.error)}}
+        styles={{ ...getDefaultStyle(isFocus, !!props.error) }}
         onFocus={(e) => {
           setIsFocus(true);
           if (!!onFocus) onFocus(e);
