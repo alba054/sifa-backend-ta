@@ -6,6 +6,7 @@ import lecturerRouter from "./lecturer.route";
 import userRouter from "./user.route";
 import departmentRouter from "./departement.route";
 import vocationRouter from "./vocation.route";
+import laboratoryRouter from "./laboratory.route";
 
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.use("/groups", groupRouter);
 router.use("/lecturers", lecturerRouter);
 router.use("/departments", departmentRouter);
 router.use("/vocations", vocationRouter);
+router.use("/laboratories", laboratoryRouter);
 
 export default router;

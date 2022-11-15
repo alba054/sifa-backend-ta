@@ -4,6 +4,7 @@ import { AuthenticationMiddleware } from "../middlewares/auth/authentication.mid
 
 const vocationRouter = express.Router();
 
+// * get vocations list based on departmentID
 vocationRouter
   .route("/:departmentID")
   .get(

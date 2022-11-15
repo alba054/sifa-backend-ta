@@ -5,3 +5,5 @@ prisma/migrations
 test.ts
 prettier.json
 dbtugasakhir.sql
+# data for seeding initial data
+data

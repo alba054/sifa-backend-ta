@@ -4,6 +4,7 @@ import { AuthenticationMiddleware } from "../middlewares/auth/authentication.mid
 
 const departmentRouter = express.Router();
 
+// * get list departments
 departmentRouter
   .route("/")
   .get(

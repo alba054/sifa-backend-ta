@@ -30,14 +30,14 @@ model bebas_lab {
   blMhsNim         String           @db.Char(12)
   blLabId          Int
   blTglSurat       DateTime?        @db.Date
-  blStatus         Int?
+  // blStatus         Int?
   blTahun          Int?
   ref_permohonan   StatusPermohonan @default(Belum_Diproses)
   ref_laboratorium ref_laboratorium @relation(fields: [blLabId], references: [labId], onDelete: Cascade, map: "Bebas_Lab_ibfk_1")
   // ref_permohonan   ref_permohonan?  @relation(fields: [blStatus], references: [tastatusId], onDelete: Cascade, map: "Bebas_Lab_ibfk_2")
   mahasiswa        mahasiswa        @relation(fields: [blMhsNim], references: [mhsNim], onDelete: Cascade, map: "Bebas_Lab_ibfk_3")
 
-  @@index([blStatus], map: "Bebas_Lab_ibfk_2")
+  // @@index([blStatus], map: "Bebas_Lab_ibfk_2")
   @@index([blLabId], map: "blLabId")
   @@index([blMhsNim], map: "blMhsNim")
 }
@@ -286,7 +286,7 @@ model ref_laboratorium {
   labNama          String             @db.VarChar(40)
   labKepalaNip     String             @default("") @db.VarChar(25)
   labKepalaNama    String             @default("") @db.VarChar(60)
-  labPrdId         Int?               @default(0)
+  labPrdId         Int?
   labTTd           String?            @db.VarChar(100)
   labKodeNomor     String?            @db.VarChar(50)
   ref_prodi        ref_prodi?         @relation(fields: [labPrdId], references: [prdId], map: "ref_laboratorium_ibfk_1")

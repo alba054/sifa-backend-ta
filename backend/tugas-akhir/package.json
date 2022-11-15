@@ -17,6 +17,7 @@
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.8.4",
     "@types/nodemailer": "^6.4.6",
+    "csv-parser": "^3.0.0",
     "prisma": "^4.4.0",
     "ts-node": "^10.9.1"
   },

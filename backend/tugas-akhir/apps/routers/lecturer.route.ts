@@ -5,6 +5,7 @@ import { constants } from "../utils/utils";
 
 const lecturerRouter = express.Router();
 
+// * post new lecturer
 lecturerRouter.post(
   "/",
   AuthorizationMiddleware.authorize([constants.SUPERUSER_GROUP_ACCESS]),
@@ -18,6 +19,7 @@ lecturerRouter.get(
   LecturerHandler.getAllLecturers
 );
 
+// * get lecturer's profile
 lecturerRouter.get(
   "/:nim",
   AuthorizationMiddleware.authorize([

@@ -58,11 +58,11 @@ export class AuthorizationMiddleware {
         // * this is a special case
         // * when there is nim / nip parameters
         const { nim } = req.params;
-        if (
-          typeof nim !== "undefined" &&
-          !roles.includes(constants.SUPERUSER_GROUP_ACCESS)
-        ) {
-          if (nim !== tokenPayload.username) {
+        if (typeof nim !== "undefined") {
+          if (
+            nim !== tokenPayload.username &&
+            tokenPayload.groupAccess !== constants.SUPERUSER_GROUP_ACCESS
+          ) {
             return next(new UnathorizedError("you are not who you declare"));
           }
         }
