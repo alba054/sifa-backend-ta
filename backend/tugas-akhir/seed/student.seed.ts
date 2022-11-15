@@ -1,15 +1,14 @@
 import { parseCSV } from "../apps/utils/csv-parser";
 import prismaDB from "../apps/utils/database";
 
-export async function insertLecturers() {
+export async function insertStudents() {
   try {
     parseCSV(
-      "/home/yoyo/personal/dev/sifa/backend/tugas-akhir/data/seed tugas akhir farmasi - Dosen.csv",
+      "/home/yoyo/personal/dev/sifa/backend/tugas-akhir/data/seed tugas akhir farmasi - Mahasiswa.csv",
       (results) => {
         results.forEach(async (result) => {
-          const NIP = result.NIP;
+          const NIM = result.NIM;
           const name = result.Nama;
-          const departmentID = Number(result.DepartemenID);
           const birthPlace = result.TempatLahir;
           const day = Number(result.TglLahir.split("/")[0]);
           const month = Number(result.TglLahir.split("/")[1]);
@@ -17,25 +16,32 @@ export async function insertLecturers() {
           const reformattedDate = `${year}-${month}-${day}`;
           const birthDate = new Date(reformattedDate);
           const address = result.Alamat;
-          const nidn = result.NIDN;
-          const expertise = result.BidangKeahlian;
           const email = result.email;
-          const gender = result.JenisKelamin;
-          const status = result.StatusKepegawaian;
+          const gender = result.JK;
+          const phoneNumber = result.NoTelp;
+          const vocationCode = result.KodeProdi;
+          const academicLecturer = result.PADosenNIP;
 
-          await prismaDB.dosen.create({
+          const vocation = await prismaDB.ref_prodi.findFirst({
+            where: { prdKode: vocationCode },
+          });
+
+          const lecturer = await prismaDB.dosen.findUnique({
+            where: { dsnNip: academicLecturer },
+          });
+
+          await prismaDB.mahasiswa.create({
             data: {
-              dsnNama: name,
-              dsnNip: NIP,
-              dsnAlamat: address,
-              dsnBidangKeahlian: expertise,
-              dsnDprtId: departmentID,
-              dsnEmail: email,
-              dsnJK: gender,
-              dsnNIDN: nidn,
-              dsnTempatLahir: birthPlace,
-              dsnTglLahir: birthDate,
-              statusKepegawaian: status,
+              mhsNama: name,
+              mhsNim: NIM,
+              mhsAlamat: address,
+              mhsEmail: email,
+              mhsJk: gender,
+              mhsTempatLahir: birthPlace,
+              mhsTglLahir: birthDate,
+              mhsNoTelp: phoneNumber,
+              mhsPrdId: vocation?.prdId,
+              mhsPaDsnId: lecturer?.dsnId,
             },
           });
         });
