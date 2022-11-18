@@ -41,7 +41,7 @@ const InputModal = ({opened, setOpened, title, onSubmit, children}: IInputModalP
                     onClick={onSubmit}
                 >
                     Tambah
-                </Button>
+                </Button>   
             </Group>
         </Modal>
     )

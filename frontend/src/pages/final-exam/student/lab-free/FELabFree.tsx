@@ -3,7 +3,7 @@ import { useForm, yupResolver } from "@mantine/form";
 import React, { useState } from "react";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent from "src/components/fe-components/LFPHeader.component";
-import FEInputModal from "src/components/FEInputModal";
+import FEInputModal from "src/components/FEInputModal2";
 import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
 import FELabFreeMain from "./FELabFreeMain";
 import FELabFreeForm from "./FELabFreeForm";
@@ -17,6 +17,7 @@ interface IFEProposalPageProps {}
 const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDataExist, setIsDataExist] = useState(true);
+  
   function handleAddProposalClick() {
     setIsOpen(true);
   }
@@ -37,7 +38,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
         title="Pilih Laboratorium"
         setOpened={setIsOpen}
         onSubmit={onSubmit(handleSubmit) as any}
-        component={<FELabFreeForm form={form} />}
+        children={<FELabFreeForm form={form} />}
       />
 
       <Stack spacing={"xl"}>

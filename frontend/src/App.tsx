@@ -35,6 +35,7 @@ import FELabFreeApplication from "./pages/final-exam/student/lab-free/FELabFree"
 import { ModalsProvider } from "@mantine/modals";
 import FEEditProfilePage from "./pages/final-exam/student/profile/edit-profile/FEEditProfile.page";
 import FEProfile from "./pages/final-exam/student/profile/profile-main/FEProfile.page";
+import FESeminar from "./pages/final-exam/student/seminar/FESeminar";
 
 function App() {
   return (
@@ -107,6 +108,7 @@ function App() {
               <Route index element={<FEHomepage />} />
               <Route path="proposal" element={<FEProposalPage />} />
               <Route path="bebas-lab" element={<FELabFreeApplication />} />
+              <Route path="seminar" element={<FESeminar />} />
               <Route path="profile">
                 <Route path="" element={<FEProfile />} />
                 <Route path="edit" element={<FEEditProfilePage />} />
