@@ -39,7 +39,7 @@ const FESeminarMain: React.FC<IFESeminarMain> = ({}) => {
         </Group>
         <FEProgressBar />
       </Stack>
-      <Stack className="pb-8 px-8 border-[1px] border-secondary-500 box-border rounded-xl drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md">
+      <Stack className="pb-8 px-8 border-[1px] border-secondary-500 box-border rounded-xl drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md ">
         <Text className="py-5 mx-[-32px] pl-8 mb-5 text-lg text-primary-text-500 font-bold tracking-[0.0015em] border-b border-secondary-500">
           Ujian Sidang
         </Text>
