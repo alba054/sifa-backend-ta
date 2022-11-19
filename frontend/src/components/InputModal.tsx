@@ -57,7 +57,7 @@ const InputModal = ({opened, setOpened, title, onSubmit, submitButtonTitle="Tamb
                     className="text-white bg-primary-500 hover:bg-primary-700 font-bold"
                     onClick={onSubmit}
                 >
-                    {submitButtonTitle}
+                    Tambah
                 </Button>
             </Group>
         </Modal>

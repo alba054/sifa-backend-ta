@@ -4,4 +4,5 @@ export const FEROUTES = {
   FINAL_EXAM_PROPOSAL: "/tugas-akhir/proposal",
   NEW_FINAL_EXAM_PROPOSAL: "/tugas-akhir/proposal/new",
   PROFILE: "/tugas-akhir/profile",
+  SEMINAR: "/tugas-akhir/seminar",
 };

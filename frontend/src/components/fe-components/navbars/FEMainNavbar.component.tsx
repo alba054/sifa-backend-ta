@@ -6,6 +6,7 @@ import {
   HandshakeOutlineIcon,
   HomeOutline,
   IFluentProps,
+  FESeminar
 } from "src/assets/Icons/Fluent";
 import UnhasLogo from "src/assets/images/unhas_logo.png";
 import FENavbarMenuItem from "./FENavbarMenuItem.component";
@@ -35,6 +36,11 @@ const menus: INavbarMenuItem[] = [
     icon: DocumentRibbonIcon,
     label: "Tugas Akhir",
     href: FEROUTES.FINAL_EXAM_PROPOSAL,
+  },
+  {
+    icon: FESeminar,
+    label: "Seminar",
+    href: FEROUTES.SEMINAR,
   },
 ];
 
