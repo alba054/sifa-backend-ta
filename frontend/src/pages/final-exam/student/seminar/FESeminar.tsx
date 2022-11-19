@@ -2,7 +2,7 @@ import { Stack } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import React, { useState } from 'react';
 import LFPEmptyDataComponent from 'src/components/fe-components/LFPEmptyData.component';
-import LFPHeaderComponent from 'src/components/fe-components/LFPHeader.component';
+import LFPHeaderComponent, { ILFPHeaderButton } from 'src/components/fe-components/LFPHeader.component';
 import FEInputModal from 'src/components/FEInputModal2';
 import FEStudentMainlayout from 'src/layouts/final-exam/student/FEStudentMainlayout';
 import FESeminarForm from './FESeminarForm';
@@ -27,6 +27,15 @@ const FESeminar: React.FC<IFESeminar> = ({ }) => {
     console.log(values);
   }
 
+  const buttons:ILFPHeaderButton[]=[
+    {
+      label: "Buat Permohonan",
+      type: "modal",
+      onClick: handleAddSeminarClick,
+      href: "#"
+    }
+  ]
+
   return (
     <FEStudentMainlayout>
       <FEInputModal
@@ -40,8 +49,7 @@ const FESeminar: React.FC<IFESeminar> = ({ }) => {
       <Stack spacing={"xl"}>
         <LFPHeaderComponent
           title="Seminar"
-          onClick={handleAddSeminarClick}
-          addButtonLabel={"Buat Permohonan"}
+          buttons={buttons}
         />
         {isDataExist ? (
           <FESeminarMain />

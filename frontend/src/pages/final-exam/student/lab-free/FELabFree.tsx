@@ -2,7 +2,7 @@ import { Stack } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import React, { useState } from "react";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
-import LFPHeaderComponent from "src/components/fe-components/LFPHeader.component";
+import LFPHeaderComponent, { ILFPHeaderButton } from "src/components/fe-components/LFPHeader.component";
 import FEInputModal from "src/components/FEInputModal2";
 import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
 import FELabFreeMain from "./FELabFreeMain";
@@ -18,7 +18,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDataExist, setIsDataExist] = useState(true);
   
-  function handleAddProposalClick() {
+  function handleAddApplicationClick() {
     setIsOpen(true);
   }
 
@@ -29,6 +29,15 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
   function handleSubmit(values: IFELabFreeFormValues) {
     console.log(values);
   }
+
+  const buttons:ILFPHeaderButton[]=[
+    {
+      label: "Buat Permohonan Baru",
+      type: "modal",
+      onClick: handleAddApplicationClick,
+      href: "#"
+    }
+  ]
 
   return (
     <FEStudentMainlayout>
@@ -45,8 +54,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
         {/* Bebas lab, tugas akhir Header */}
         <LFPHeaderComponent
           title="Permohonan Bebas Lab"
-          onClick={handleAddProposalClick}
-          addButtonLabel={"Buat Permohonan Baru"}
+          buttons={buttons}
         />
         {isDataExist ? (
           <FELabFreeMain />
