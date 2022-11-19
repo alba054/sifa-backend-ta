@@ -1,15 +1,17 @@
-import { useTheme } from "@emotion/react";
 import {
   MantineSize,
   MantineColor,
   Input,
+  Text,
+  Stack,
   Group,
   Button,
-  Text,
 } from "@mantine/core";
 import { DropzoneProps, Dropzone } from "@mantine/dropzone";
-import ArrowUploadIcon from "src/assets/Icons/ArrowUploadIcon";
+import CloudUploadIcon from "src/assets/Icons/CloudUploadIcon";
 import { DeleteOutline } from "src/assets/Icons/Fluent";
+import PreviewIcon from "src/assets/Icons/PreviewIcon";
+import { COLORS } from "src/themes/colors.theme";
 import { getDefaultStyle } from "./FormInput";
 
 interface IDocumentInputProps extends Omit<DropzoneProps, "onChange"> {
@@ -21,30 +23,32 @@ interface IDocumentInputProps extends Omit<DropzoneProps, "onChange"> {
   label?: string;
   buttonLabel?: string;
   description?: string;
+  placeholder?: string;
   withDelete?: boolean;
   color?: MantineColor;
 }
 
 const DocumentInput: React.FC<IDocumentInputProps> = ({
   error,
-  size = "md",
+  size = "lg",
   onChange,
   label,
+  placeholder,
   description = "",
-  buttonLabel = "Choose File",
-  withPreview,
   value,
-  color,
-  withDelete,
-  ...props
 }) => {
-  const themes: any = useTheme();
   function handleDrop(files: File[]) {
     onChange(files[0]);
   }
 
   function onDelete() {
     onChange(undefined);
+  }
+
+  function onPreviewClick() {
+    if (!value) return;
+    const url = URL.createObjectURL(value);
+    window.open(url, "_blank");
   }
 
   return (
@@ -54,48 +58,40 @@ const DocumentInput: React.FC<IDocumentInputProps> = ({
       required
       label={label}
     >
-      <Group my={4}>
-        <Dropzone
-          padding={0}
-          className={`w-fit border-none`}
-          {...props}
-          onDrop={handleDrop}
-        >
-          <Button variant="light" className={`bg-primary bg-opacity-10`}>
-            <ArrowUploadIcon
-              size={16}
-              color={color}
-              fill={themes.colors[color || "primary-text"][5]}
-            />
-            <Text ml={"xs"} color={color || "primary-text"}>
-              {buttonLabel}
+      <Dropzone onDrop={handleDrop} p="xl">
+        <Stack align="center" spacing={"xs"}>
+          <CloudUploadIcon size={36} color={COLORS.DIVIDER} />
+          <Stack spacing={0} align="center">
+            {!!placeholder && (
+              <Text size={size}>{value?.name || placeholder}</Text>
+            )}
+            {!!description && (
+              <Text size={size} color="secondary-text">
+                {description}
+              </Text>
+            )}
+          </Stack>
+        </Stack>
+      </Dropzone>
+      {!!value && (
+        <Group grow mt={8}>
+          <Button onClick={onPreviewClick} size="lg">
+            <PreviewIcon size={16} color="white" />
+            <Text ml={4} size={"lg"}>
+              Lihat Pratinjau
             </Text>
           </Button>
-        </Dropzone>
-        {!!withDelete && (
-          <Button
-            onClick={onDelete}
-            variant="light"
-            className={`bg-error bg-opacity-10`}
-          >
-            <DeleteOutline color={themes.colors["error"][5]} />
-            <Text ml={"xs"} color={"error"}>
-              {buttonLabel}
+          <Button onClick={onDelete} size="lg" color={"error"}>
+            <DeleteOutline size={20} color="white" />
+            <Text ml={4} size={"lg"}>
+              Hapus File
             </Text>
           </Button>
-        )}
-
-        {!!withPreview && (
-          <Text size={size} className={`truncate w-48`}>
-            {value?.name || "Belum ada file yang di upload"}
-          </Text>
-        )}
-      </Group>
-      {!!description && (
-        <Text size={size} color="secondary-text">
-          {description}
-        </Text>
+        </Group>
       )}
+      <Input.Error mt={8} size="lg">
+        {error}
+      </Input.Error>
     </Input.Wrapper>
   );
 };
