@@ -3,7 +3,7 @@ import { useForm, yupResolver } from '@mantine/form';
 import React, { useState } from 'react';
 import LFPEmptyDataComponent from 'src/components/fe-components/LFPEmptyData.component';
 import LFPHeaderComponent, { ILFPHeaderButton } from 'src/components/fe-components/LFPHeader.component';
-import FEInputModal from 'src/components/FEInputModal2';
+import FEInputModal from 'src/components/FEInputModal';
 import FEStudentMainlayout from 'src/layouts/final-exam/student/FEStudentMainlayout';
 import FESeminarForm from './FESeminarForm';
 import { feSeminarFormSchema, IFESeminarFormValues } from './FESeminarInterfaces';
@@ -31,8 +31,7 @@ const FESeminar: React.FC<IFESeminar> = ({ }) => {
     {
       label: "Buat Permohonan",
       type: "modal",
-      onClick: handleAddSeminarClick,
-      href: "#"
+      onClick: handleAddSeminarClick
     }
   ]
 

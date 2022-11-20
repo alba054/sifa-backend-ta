@@ -1,10 +1,12 @@
 import React from "react";
 const NoFilesAnimationIcon: React.FC<React.SVGAttributes<{}>> = ({
   fill,
+  width=640,
+  height=427,
   ...props
 }) => {
   return (
-    <svg width="640" height="427" viewBox="0 0 640 427" fill="none" {...props}>
+    <svg width={width} height={height} viewBox="0 0 640 427" fill="none" {...props}>
       <path
         d="M569.131 128.23L560.964 167.782L555.708 162.654L546.765 169.037L539.93 160.546L524.604 171.691L511.505 149.786L496.896 158.345L491.102 150.357L472.551 160.811L466.97 148.856L479.975 85.871L549.692 100.267L569.131 128.23Z"
         fill="#EBEBEB"

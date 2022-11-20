@@ -13,7 +13,7 @@ import {
 } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FERoundedChip from "src/components/fe-components/FERoundedChip";
-import FEInputModal from "src/components/FEInputModal2";
+import FEInputModal from "src/components/FEInputModal";
 import FELabFreeForm from "./FELabFreeForm";
 import {
   feLabFreeFormSchema,

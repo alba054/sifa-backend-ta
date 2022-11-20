@@ -1,4 +1,10 @@
-import { Button, Group, Modal, useMantineTheme } from "@mantine/core";
+import {
+  Button,
+  Group,
+  Modal,
+  useMantineTheme,
+  ButtonProps,
+} from "@mantine/core";
 import React from "react";
 
 interface IFEInputModalProps {
@@ -6,7 +12,9 @@ interface IFEInputModalProps {
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
   onSubmit?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  component: React.ReactNode;
+  children: React.ReactNode;
+  noButtonLabel?: string;
+  yesButtonLabel?: string;
 }
 
 const FEInputModal = ({
@@ -14,7 +22,9 @@ const FEInputModal = ({
   setOpened,
   title,
   onSubmit,
-  component,
+  children,
+  noButtonLabel = "Batal",
+  yesButtonLabel = "Buat Permohonan",
 }: IFEInputModalProps) => {
   const theme = useMantineTheme();
 
@@ -24,38 +34,35 @@ const FEInputModal = ({
       onClose={() => setOpened(false)}
       centered
       title={title}
+      padding={30}
       styles={{
         modal: {
           maxWidth: "800px",
-          overflow: "hidden",
           width: "100%",
+          borderRadius: "12px"
         },
         title: {
           fontSize: 24,
-          fontWeight: "bold",
           color: theme.colors["primary-text"][5],
-        },
-        header: {
-          borderBottom: `1px solid`,
-          borderColor: theme.colors["secondary-text"],
-          padding: "10px",
-          paddingRight: "20px",
-          paddingLeft: "20px",
-        },
+          fontWeight: 700
+        }
       }}
-      padding={0}
     >
-      <div className="p-5">{component}</div>
-      <Group position="right" className={`p-5 bg-background-700`} mt={"md"}>
+      <div className="py-3">{children}</div>
+      <Group position="right" mt={"md"} className="pt-4">
         <Button
-          variant="subtle"
-          color="primary"
+          variant="light"
+          color={"primary"}
           onClick={() => setOpened(false)}
+          className="font-bold hover:bg-white"
         >
-          Batalkan
+          {noButtonLabel}
         </Button>
-        <Button color="primary" onClick={onSubmit}>
-          Buat Permohonan
+        <Button
+          className="text-white bg-primary-500 hover:bg-primary-700 font-bold"
+          onClick={onSubmit}
+        >
+          {yesButtonLabel}
         </Button>
       </Group>
     </Modal>

@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./index.html", "./src/**/*.{js,ts,jsx,tsx}"
+  ],
   theme: {
     colors: {
       light: "#FFFFFF",
@@ -8,7 +10,7 @@ module.exports = {
       white: "#ffffff",
       black: "#000000",
       info: "#EFF6FF",
-      error: Array(10).fill("#FF2C56"),
+      error: Array (10).fill ("#FF2C56"),
       "sidebar-background": "#F9FAFB",
       "primary-text": {
         50: "#657387",
@@ -20,7 +22,7 @@ module.exports = {
         600: "#29374b",
         700: "#1f2d41",
         800: "#152337",
-        900: "#0b192d",
+        900: "#0b192d"
       },
       "secondary-text": {
         50: "#c6d5ea",
@@ -32,7 +34,7 @@ module.exports = {
         600: "#8a99ae",
         700: "#808fa4",
         800: "#76859a",
-        900: "#6c7b90",
+        900: "#6c7b90"
       },
       primary: {
         DEFAULT: "#5F5AF7",
@@ -45,7 +47,7 @@ module.exports = {
         600: "#5550ed",
         700: "#4b46e3",
         800: "#413cd9",
-        900: "#3732cf",
+        900: "#3732cf"
       },
       error: {
         DEFAULT: "#FF2C56",
@@ -58,7 +60,7 @@ module.exports = {
         600: "#f5224c",
         700: "#eb1842",
         800: "#e10e38",
-        900: "#d7042e",
+        900: "#d7042e"
       },
       background: {
         DEFAULT: "#ffffff",
@@ -71,7 +73,7 @@ module.exports = {
         600: "#f5f5f5",
         700: "#ebebeb",
         800: "#e1e1e1",
-        900: "#d7d7d7",
+        900: "#d7d7d7"
       },
       divider: {
         DEFAULT: "#B5C2D1",
@@ -84,7 +86,7 @@ module.exports = {
         600: "#abb8c7",
         700: "#a1aebd",
         800: "#97a4b3",
-        900: "#8d9aa9",
+        900: "#8d9aa9"
       },
       secondary: {
         DEFAULT: "#DEDDF1",
@@ -97,10 +99,17 @@ module.exports = {
         600: "#d4d3e7",
         700: "#cac9dd",
         800: "#c0bfd3",
-        900: "#b6b5c9",
-      },
+        900: "#b6b5c9"
+      }
     },
-    extend: {},
+    fontSize: {
+      xs: 10,
+      sm: 12,
+      md: 14,
+      lg: 16,
+      xl: 20
+    },
+    extend: {}
   },
-  plugins: [],
+  plugins: []
 };

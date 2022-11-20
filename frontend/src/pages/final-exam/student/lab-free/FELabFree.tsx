@@ -3,7 +3,7 @@ import { useForm, yupResolver } from "@mantine/form";
 import React, { useState } from "react";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, { ILFPHeaderButton } from "src/components/fe-components/LFPHeader.component";
-import FEInputModal from "src/components/FEInputModal2";
+import FEInputModal from "src/components/FEInputModal";
 import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
 import FELabFreeMain from "./FELabFreeMain";
 import FELabFreeForm from "./FELabFreeForm";
@@ -34,8 +34,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
     {
       label: "Buat Permohonan Baru",
       type: "modal",
-      onClick: handleAddApplicationClick,
-      href: "#"
+      onClick: handleAddApplicationClick
     }
   ]
 

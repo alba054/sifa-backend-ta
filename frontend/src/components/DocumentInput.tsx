@@ -53,7 +53,7 @@ const DocumentInput: React.FC<IDocumentInputProps> = ({
 
   return (
     <Input.Wrapper
-      styles={getDefaultStyle(false, false)}
+      // styles={getDefaultStyle(false, false)}
       size={size}
       required
       label={label}

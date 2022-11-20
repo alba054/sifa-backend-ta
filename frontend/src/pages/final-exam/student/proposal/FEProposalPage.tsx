@@ -6,32 +6,25 @@ import LFPHeaderComponent from "src/components/fe-components/LFPHeader.component
 import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import {ILFPHeaderButton} from "src/components/fe-components/LFPHeader.component"
+import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 
 interface IFEProposalPageProps {}
 
 const buttons:ILFPHeaderButton[]=[
   {
-    label: "Buat Usulan Baru",
-    type: "href",
-    href: FEROUTES.NEW_FINAL_EXAM_PROPOSAL,
-    onClick: ()=>void(console.log('a'))
-  },{
     label: "Riwayat Usulan",
     type: "href",
     href: FEROUTES.NEW_FINAL_EXAM_PROPOSAL,
-    onClick: ()=>void(console.log('a'))
+    icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />
+  },
+  {
+    label: "Buat Usulan Baru",
+    type: "href",
+    href: FEROUTES.NEW_FINAL_EXAM_PROPOSAL
   }
-]
-
+];
 
 const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
-  function handleAddProposalClick() {
-    // TODO: Make this right dude
-    // window.open(FEROUTES.NEW_FINAL_EXAM_PROPOSAL, "_self");
-
-    // Sip
-
-  }
 
   return (
     <FEStudentMainlayout>

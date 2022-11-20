@@ -101,6 +101,14 @@ export const mantineTheme: MantineThemeOverride = {
   },
   primaryColor: "primary",
   fontFamily: "Nunito Sans, sans-serif",
+  fontSizes: {
+    xs: 10,
+    sm: 12,
+    md: 14,
+    lg: 16,
+    xl: 20,
+  },
+
   components: {
     Radio: {
       defaultProps: { color: "primary" },
@@ -131,6 +139,12 @@ export const mantineTheme: MantineThemeOverride = {
                     theme.colors[params.color || theme.primaryColor][9]
                   } !important`
                 : undefined,
+            paddingLeft: "14px",
+            paddingRight: "14px",
+            paddingTop: "11px",
+            paddingBottom: "11px",
+            borderRadius: "8px",
+            height: "max-content"
           },
         };
       },
