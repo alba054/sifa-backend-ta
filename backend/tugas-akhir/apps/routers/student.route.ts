@@ -24,24 +24,25 @@ studentRouter
     StudentHandler.updateProfile
   );
 
-studentRouter.get(
-  "/:nim/reqlabs",
-  AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
-  StudentHandler.getRequestLabs
-);
+// * get all reqlabs
+// * create new lab free request
+studentRouter
+  .route("/:nim/reqlabs")
+  .get(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.getRequestLabs
+  )
+  .post(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.requestLabFree
+  );
 
+// * delete reqlabs
 studentRouter
   .route("/:nim/reqlabs/:reqlabsID")
   .delete(
     AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
     StudentHandler.deleteRequestLab
   );
-
-// * create new lab free request
-studentRouter.post(
-  "/:nim/reqlabs/request-lab-free",
-  AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
-  StudentHandler.requestLabFree
-);
 
 export default studentRouter;
