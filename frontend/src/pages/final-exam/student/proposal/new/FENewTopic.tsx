@@ -11,7 +11,7 @@ const FENewTopicPage: React.FC<IFENewTopicPageProps> = ({}) => {
   return (
     <FEStudentMainlayout>
       <Stack>
-        <Title order={1} mb="md">
+        <Title order={2} mb="md">
           Buat Susulan Tugas Akhir
         </Title>
 

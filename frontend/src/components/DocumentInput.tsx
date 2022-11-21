@@ -6,6 +6,7 @@ import {
   Stack,
   Group,
   Button,
+  useMantineTheme,
 } from "@mantine/core";
 import { DropzoneProps, Dropzone } from "@mantine/dropzone";
 import CloudUploadIcon from "src/assets/Icons/CloudUploadIcon";
@@ -37,6 +38,8 @@ const DocumentInput: React.FC<IDocumentInputProps> = ({
   description = "",
   value,
 }) => {
+  const theme= useMantineTheme();
+
   function handleDrop(files: File[]) {
     onChange(files[0]);
   }
@@ -57,6 +60,13 @@ const DocumentInput: React.FC<IDocumentInputProps> = ({
       size={size}
       required
       label={label}
+      styles={{
+        label:{
+          color: theme.colors['divider'],
+          marginBottom: "10px",
+          fontSize: "14px"  
+        }
+      }}
     >
       <Dropzone
         onDrop={handleDrop}

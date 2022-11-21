@@ -50,9 +50,8 @@ const FEProposalApplicationForm: React.FC<IFEProposalApplicationFormProps> = ({
   }
 
   return (
-    <Stack spacing={"xl"}>
-      <Title order={2}>{title}</Title>
-
+    <Stack spacing={"md"}>
+      <Title order={3}>{title}</Title>
       <TextInput
         required
         label="Judul Tugas Akhir"
@@ -63,6 +62,7 @@ const FEProposalApplicationForm: React.FC<IFEProposalApplicationFormProps> = ({
           handleInputChange("title" as keyof TOffer, e.target.value)
         }
         value={value?.title}
+        size={"md"}
       />
 
       <div className={`grid grid-cols-2 gap-x-12`}>
@@ -80,6 +80,7 @@ const FEProposalApplicationForm: React.FC<IFEProposalApplicationFormProps> = ({
             handleInputChange("firstLaboratory" as keyof TOffer, e)
           }
           value={value?.firstLaboratory}
+          size={"md"}
         />
         <SelectInput
           data={[
@@ -95,6 +96,7 @@ const FEProposalApplicationForm: React.FC<IFEProposalApplicationFormProps> = ({
           }
           disabled={!value?.firstLaboratory}
           value={value?.secondLaboratory}
+          size={"md"}
         />
       </div>
 
@@ -118,6 +120,7 @@ const FEProposalApplicationForm: React.FC<IFEProposalApplicationFormProps> = ({
               value: "LECTURER",
             },
           ]}
+          size={"md"}
         />
 
         {state.proposalIdeaOrigin === "LECTURER" && (
@@ -140,6 +143,7 @@ const FEProposalApplicationForm: React.FC<IFEProposalApplicationFormProps> = ({
             onChange={(e) => handleInputChange("lecturer" as keyof TOffer, e)}
             disabled={state.proposalIdeaOrigin !== "LECTURER"}
             value={value?.lecturer}
+            size={"md"}
           />
         )}
       </div>

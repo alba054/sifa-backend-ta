@@ -22,11 +22,11 @@ const FENewProposalForm: React.FC<IFENewProposalFormProps> = ({}) => {
     console.log(values);
   }
 
-  console.log(values);
+  // console.log(values);
 
   return (
     <form onSubmit={onSubmit(handleSubmit)}>
-      <Stack spacing={"lg"}>
+      <Stack >
         <FEProposalApplicationForm
           {...getInputProps("firstOffer")}
           title="Usulan 1"
