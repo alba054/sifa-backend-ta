@@ -1,6 +1,7 @@
 import { Stack } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import React, { useState } from 'react';
+import { FEClockRepeatOutline } from 'src/assets/Icons/Fluent';
 import LFPEmptyDataComponent from 'src/components/fe-components/LFPEmptyData.component';
 import LFPHeaderComponent, { ILFPHeaderButton } from 'src/components/fe-components/LFPHeader.component';
 import FEInputModal from 'src/components/FEInputModal';
@@ -28,6 +29,12 @@ const FESeminar: React.FC<IFESeminar> = ({ }) => {
   }
 
   const buttons:ILFPHeaderButton[]=[
+    {
+      label: "Riwayat Seminar",
+      type: "modal",
+      onClick: handleAddSeminarClick,
+      icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />
+    },
     {
       label: "Buat Permohonan",
       type: "modal",

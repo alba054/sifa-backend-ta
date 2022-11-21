@@ -1,19 +1,22 @@
-import { Stack, Group, Stepper, Text, useMantineTheme } from "@mantine/core";
+import { Stepper, useMantineTheme } from "@mantine/core";
 import React from "react";
 
 export interface IFEProgressBar {
-  progressStages?: Array<string>;
-  currentProgress?: number;
-  date?: string;
+  progressStages: Array<string>;
+  currentProgress: number;
 }
 
-const FEProgressBar: React.FC<IFEProgressBar> = ({}) => {
+const FEProgressBar: React.FC<IFEProgressBar> = ({
+  progressStages,
+  currentProgress,
+}) => {
   const theme = useMantineTheme();
   return (
     <Stepper
-      active={2}
+      active={currentProgress}
       breakpoint="sm"
       iconPosition="right"
+      size="sm"
       styles={{
         // separator:{
         //   color: "black !important",
@@ -25,17 +28,17 @@ const FEProgressBar: React.FC<IFEProgressBar> = ({}) => {
         },
         stepDescription: {
           display: "flex",
-          marginTop: "13px !important",
+          marginTop: "12px !important",
           color: theme.colors["secondary"][9],
           fontWeight: 600,
-          fontSize: "14px !important",
+          fontSize: "12px !important",
           letterSpacing: "0.004em",
           // position: "absolute",
           // backgroundColor: "red",
           textAlign: "center",
           // alignItems: "center",
           justifyContent: "center",
-          width: "120px !important",
+          width: "140px !important",
           height: "28px !important",
           // marginLeft: "-50px !important"
         },
@@ -52,12 +55,12 @@ const FEProgressBar: React.FC<IFEProgressBar> = ({}) => {
           // textAlign: "center",
           // left: "-7% !important",
           // right: "-5.5vw !important",
-          marginLeft: "-4% !important",
-          marginRight: "-4% !important",
+          marginLeft: "-5% !important",
+          marginRight: "-5% !important",
           zIndex: -10,
         },
         stepIcon: {
-          borderWidth: "3px !important",
+          borderWidth: "2px !important",
           borderColor: theme.colors["primary"][5],
           color: theme.colors["primary"][5],
           // width: "40px !important",
@@ -65,12 +68,9 @@ const FEProgressBar: React.FC<IFEProgressBar> = ({}) => {
         },
       }}
     >
-      <Stepper.Step description="Pengusulan Judul" />
-      <Stepper.Step description="Judul Diterima" />
-      <Stepper.Step description="Verifikasi Dokumen" />
-      <Stepper.Step description="Penyusunan Tim Seminar " />
-      <Stepper.Step description="Penandatangan SK" />
-      <Stepper.Step description="SK Diterima" />
+      {progressStages.map((currDesc) => {
+        return <Stepper.Step description={currDesc} />;
+      })}
     </Stepper>
   );
 };

@@ -39,22 +39,23 @@ const FEAlertModal = ({
       padding={36}
       styles={{
         modal: {
-          maxWidth: "640px",
+          maxWidth: "600px",
           width: "100%",
           borderRadius: "16px",
-          paddingBottom: "30px !important"
+          paddingBottom: "34px !important",
+          paddingTop: "34px !important"
         },
         title: {
-          fontSize: 26,
+          fontSize: 24,
           color: theme.colors["primary-text"][5],
           fontWeight: 700,
-          paddingLeft: "60px"
+          paddingLeft: "50px"
         }
       }}
     >
-      <FEEllipsisQuestionMark size={44} className="bg-[#FEF3C7]-100 border-8 border-[#FEF3C7] rounded-full absolute top-9"/>
-      <Text className="py-[1px] text-[17px] text-secondary-text-500 pl-[60px]">{description}</Text>
-      <Group mt={"md"} className="pt-2 px-8 justify-evenly gap-12" grow>
+      <FEEllipsisQuestionMark size={42} className="bg-[#FEF3C7]-100 border-8 border-[#FEF3C7] rounded-full absolute top-8 left-6"/>
+      <Text className="text-lg text-secondary-text-500 pl-[50px]">{description}</Text>
+      <Group mt={"md"} className=" px-8 justify-evenly gap-12" grow>
         <Button
           variant="light"
           color={"primary"}
@@ -64,7 +65,7 @@ const FEAlertModal = ({
           {noButtonLabel}
         </Button>
         <Button
-          className="text-white bg-primary-500 hover:bg-primary-700 font-bold px-3 py-3 h-full rounded-lg"
+          className="text-white bg-primary-500 hover:bg-primary-700 font-bold"
           onClick={onSubmit}
         >
           {yesButtonLabel}

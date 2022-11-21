@@ -48,7 +48,7 @@ const FEInputModal = ({
         }
       }}
     >
-      <div className="py-3">{children}</div>
+      <div className="py-2">{children}</div>
       <Group position="right" mt={"md"} className="pt-4">
         <Button
           variant="light"

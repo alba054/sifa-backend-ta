@@ -106,9 +106,9 @@ export const mantineTheme: MantineThemeOverride = {
     sm: 12,
     md: 14,
     lg: 16,
-    xl: 20,
+    xl: 20
   },
-
+  
   components: {
     Radio: {
       defaultProps: { color: "primary" },

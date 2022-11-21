@@ -58,15 +58,20 @@ const DocumentInput: React.FC<IDocumentInputProps> = ({
       required
       label={label}
     >
-      <Dropzone onDrop={handleDrop} p="xl">
-        <Stack align="center" spacing={"xs"}>
-          <CloudUploadIcon size={36} color={COLORS.DIVIDER} />
+      <Dropzone
+        onDrop={handleDrop}
+        className="items-center gap-[1px] border-2 border-[#B5C2D1] pt-7 pb-5 rounded-xl border-dashed"
+      >
+        <Stack className="items-center gap-4">
+          <CloudUploadIcon size={32} color={COLORS.DIVIDER} className="mt-1" />
           <Stack spacing={0} align="center">
             {!!placeholder && (
-              <Text size={size}>{value?.name || placeholder}</Text>
+              <Text className="text-primary-text-500 text-lg tracking-1">
+                {value?.name || placeholder}
+              </Text>
             )}
             {!!description && (
-              <Text size={size} color="secondary-text">
+              <Text className="text-secondary-text-500 text-base tracking-2">
                 {description}
               </Text>
             )}
@@ -74,18 +79,22 @@ const DocumentInput: React.FC<IDocumentInputProps> = ({
         </Stack>
       </Dropzone>
       {!!value && (
-        <Group grow mt={8}>
-          <Button onClick={onPreviewClick} size="lg">
-            <PreviewIcon size={16} color="white" />
-            <Text ml={4} size={"lg"}>
-              Lihat Pratinjau
-            </Text>
+        <Group grow spacing={"md"} className="mt-4">
+          <Button
+            variant="light"
+            className="bg-[#3B82F6] py-3 h-full rounded-lg text-white hover:bg-[#3B82F6]"
+            onClick={onPreviewClick}
+          >
+            <PreviewIcon size={16} color={"white"} className="mr-2" />
+            Lihat Pratinjau
           </Button>
-          <Button onClick={onDelete} size="lg" color={"error"}>
-            <DeleteOutline size={20} color="white" />
-            <Text ml={4} size={"lg"}>
-              Hapus File
-            </Text>
+          <Button
+            variant="light"
+            className="bg-error-500 !important py-3 h-full rounded-lg text-white hover:bg-error-500"
+            onClick={onDelete}
+          >
+            <DeleteOutline size={18} color={"white"} className="mr-2" />
+            Hapus File
           </Button>
         </Group>
       )}

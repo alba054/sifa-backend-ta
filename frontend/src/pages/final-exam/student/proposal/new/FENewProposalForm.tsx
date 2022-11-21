@@ -71,7 +71,7 @@ const FENewProposalForm: React.FC<IFENewProposalFormProps> = ({}) => {
           </Text>
         </Alert>
 
-        <Button size="lg" type="submit">
+        <Button mt={"lg"} size="md" type="submit">
           Buat Usulan
         </Button>
       </Stack>

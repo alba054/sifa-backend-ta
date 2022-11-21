@@ -52,7 +52,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
       <Stack spacing={"xl"}>
         {/* Bebas lab, tugas akhir Header */}
         <LFPHeaderComponent
-          title="Permohonan Bebas Lab"
+          title="Bebas Lab"
           buttons={buttons}
         />
         {isDataExist ? (

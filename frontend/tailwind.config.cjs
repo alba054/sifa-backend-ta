@@ -107,7 +107,12 @@ module.exports = {
       sm: 12,
       md: 14,
       lg: 16,
-      xl: 20
+      xl: 20,
+      "2xl": 24
+    },
+    letterSpacing:{
+      "1": "0.0015em",
+      "2": "0.0025em"
     },
     extend: {}
   },
