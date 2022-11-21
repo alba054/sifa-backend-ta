@@ -4,10 +4,10 @@ import React from 'react';
 export interface IFERoundedChip {
   label: string,
   leftIcon?: JSX.Element;
-  type: "green"|"blue"|"red"
+  type?: "green"|"blue"|"red"
 }
 
-const FERoundedChip: React.FC<IFERoundedChip> = ({label, leftIcon=null, type}) => {
+const FERoundedChip: React.FC<IFERoundedChip> = ({label, leftIcon=null, type="green"}) => {
   let groupClassName= "py-[3px] px-3 gap-0 rounded-full max-w-max box-content ";
   if(type=="green"){
     groupClassName+="bg-[#1E9E63]/[0.15] text-[#1E9E63]"
@@ -20,7 +20,7 @@ const FERoundedChip: React.FC<IFERoundedChip> = ({label, leftIcon=null, type}) =
   return (
     <Group className={groupClassName}>
       {leftIcon}
-      <Text className="px-1 text-[13px]">{label}</Text>
+      <Text className={"text-[13px] " + (leftIcon==null? "" : "pl-[6px]")}>{label}</Text>
     </Group>
   )
 }

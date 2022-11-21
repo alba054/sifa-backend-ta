@@ -34,9 +34,9 @@ const statusChip: any = {
       type="green"
       leftIcon={
         <ProgressClockOutlined
-          size={21}
+          size={14}
           color={"#1E9E63"}
-          className="items-center p-[3px]"
+          className="items-center"
         />
       }
     />
@@ -48,8 +48,8 @@ const statusChip: any = {
       leftIcon={
         <FECloseOutline
           color="#FF2C56"
-          size={16}
-          className="items-center p-[3px] pt-[2px]"
+          size={12}
+          className="items-center pb-[1px]"
         />
       }
     />
@@ -61,8 +61,8 @@ const statusChip: any = {
       leftIcon={
         <FECheckOutline
           color="#5F5AF7"
-          size={18}
-          className="items-center p-[3px]"
+          size={14}
+          className="items-center"
         />
       }
     />
@@ -140,9 +140,9 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
             <Button
               variant="light"
               onClick={handleEditProposalClick}
+              disabled
               className={
-                "p-0 m-0 bg-white hover:bg-white " +
-                (status == "process" ? "" : "pointer-events-none")
+                "p-0 m-0 bg-white hover:bg-white "
               }
             >
               <FEPenOutline

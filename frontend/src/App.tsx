@@ -37,6 +37,7 @@ import FEEditProfilePage from "./pages/final-exam/student/profile/edit-profile/F
 import FEProfile from "./pages/final-exam/student/profile/profile-main/FEProfile.page";
 import FESeminar from "./pages/final-exam/student/seminar/FESeminar";
 import FENewTopicPage from "./pages/final-exam/student/proposal/new/FENewTopic";
+import FEProposalHistory from "./pages/final-exam/student/proposal/history/FEProposalHistory";
 
 function App() {
   return (
@@ -109,6 +110,7 @@ function App() {
               <Route index element={<FEHomepage />} />
               <Route path="proposal" element={<FEProposalPage />} />
               <Route path="proposal/new" element={<FENewTopicPage />} />
+              <Route path="proposal/history" element={<FEProposalHistory />} />
               <Route path="bebas-lab" element={<FELabFreeApplication />} />
               <Route path="seminar" element={<FESeminar />} />
               <Route path="profile">

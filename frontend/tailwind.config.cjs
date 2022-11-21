@@ -114,6 +114,9 @@ module.exports = {
       "1": "0.0015em",
       "2": "0.0025em"
     },
+    dropShadow:{
+      "1": "0px 1px 4px rgba(0, 0, 0, 0.12)"
+    },
     extend: {}
   },
   plugins: []
