@@ -21,6 +21,7 @@ import dummy_profile_picture from "./../../../../../assets/images/dummy_profile_
 import FEProfilePrivacyInformationComp from "./FEProfilePrivacyInformationComp";
 import FEProfileCard from "src/components/FEProfileCard";
 import { Link } from "react-router-dom";
+import FERoundedChip from "src/components/fe-components/FERoundedChip";
 
 export interface IFEProfileDetails {}
 
@@ -52,9 +53,7 @@ const FEProfileDetails: React.FC<IFEProfileDetails> = ({}) => {
               <Text className="-ml-4 text-secondary-text-500 text-[16px] top-[2px] relative">
                 (N071191042)
               </Text>
-              <Text className="text-[14px] font-normal text-primary-500 bg-primary-500/[0.15] rounded-full py-1 px-3">
-                Aktif
-              </Text>
+              <FERoundedChip label="Aktif" type="blue" />
             </Group>
             <Text className="inline-flex gap-2 text-secondary-text-500 text-[16px]">
               S1{" "}
