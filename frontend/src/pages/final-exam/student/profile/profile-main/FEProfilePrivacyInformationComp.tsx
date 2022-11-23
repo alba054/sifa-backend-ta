@@ -12,7 +12,7 @@ const FEProfilePrivacyInformationComp: React.FC<
   IFEProfilePrivacyInformationComp
 > = ({label, value, icon}) => {
   return (
-    <Group className="gap-5">
+    <Group className="gap-4 min-w-[49%]">
       {icon}
       <Stack className="gap-0">
         <Text className="text-primary-text-500 text-base font-semibold tracking-wide">{value}</Text>

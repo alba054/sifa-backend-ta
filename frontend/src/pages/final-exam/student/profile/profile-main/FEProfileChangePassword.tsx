@@ -1,8 +1,9 @@
-import { Button, Group, Stack, Title } from "@mantine/core";
+import { Button, Group, Stack, Text, PasswordInput } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
-import React from "react";
+import React, { useState } from "react";
+import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FEProfileCard from "src/components/FEProfileCard";
-import { TextInput } from "src/components/FormInput";
+// import { PasswordInput } from "src/components/Input";
 import * as yup from "yup";
 
 export interface IFEProfileChangePassword {}
@@ -24,25 +25,38 @@ export const feEditProfileFormSchema = yup.object({
 });
 
 const FEProfileChangePassword: React.FC<IFEProfileChangePassword> = ({}) => {
+  const [isOpened, setIsOpened] = useState(false)
+
   const { getInputProps, values, onSubmit, errors } =
     useForm<IFEEditProfileChangePasswordValues>({
       validate: yupResolver(feEditProfileFormSchema),
     });
 
   function handleSubmit(values: IFEProfileChangePassword) {
+    setIsOpened(true)
     console.log(values);
   }
+
+  function handleSubmitDelete() {
+    console.log("a");
+  }
+
   return (
-    <FEProfileCard bg="bg-secondary-text-500">
+    <FEProfileCard
+      bg="bg-secondary-text-500"
+      cardTitle="Ganti Password"
+      cardTitleBottomBorderColor="bg-secondary-text-500"
+    >
+      <FEAlertModal
+        opened={isOpened}
+        setOpened={setIsOpened}
+        title="Ganti Password?"
+        description="Gunakan password baru Anda saat login berikutnya."
+        onSubmit={onSubmit(handleSubmitDelete) as any}
+      />
       <form onSubmit={onSubmit(handleSubmit)}>
-        <Stack className="w-fit gap-1 mb-4">
-          <Title order={3} className="text-primary-text-500">
-            Ganti Password
-          </Title>
-          <div className={`bg-secondary-text-500 w-1/2 pb-1 rounded-sm`} />
-        </Stack>
         <Stack>
-          <TextInput
+          <PasswordInput
             size={SIZE}
             label="Password Lama"
             placeholder="Masukkan Password Lama"
@@ -56,7 +70,7 @@ const FEProfileChangePassword: React.FC<IFEProfileChangePassword> = ({}) => {
             classNames={{ label: { backgroundColour: "000000" } }}
             className="flex items-start"
           >
-            <TextInput
+            <PasswordInput
               size={SIZE}
               label="Password Baru"
               placeholder="Masukkan Password Baru"
@@ -66,10 +80,9 @@ const FEProfileChangePassword: React.FC<IFEProfileChangePassword> = ({}) => {
                   "newPassword" as keyof IFEEditProfileChangePasswordValues
                 ]
               }
-              description="Note: Password minimal 8 karakter dan harus mengandung huruf dan angka"
               inputWrapperOrder={["label", "input", "error", "description"]}
             />
-            <TextInput
+            <PasswordInput
               size={SIZE}
               label="Ulangi Password Baru"
               placeholder="Masukkan Kembali Password Baru"
@@ -82,21 +95,24 @@ const FEProfileChangePassword: React.FC<IFEProfileChangePassword> = ({}) => {
               inputWrapperOrder={["label", "input", "error", "description"]}
             />
           </Group>
-          <Group className="flex flex-row-reverse" spacing={"lg"}>
-            <Button
-              variant="light"
-              className=" bg-primary-500 !important font-bold text-base text-white py-[12px] px-[16px] w-[154px] h-[46px] rounded-lg hover:bg-primary-500"
-              type="submit"
-            >
-              Ubah Password
-            </Button>
+          <Group className="justify-between">
+            <Text className="text-secondary-text-500">Note: Password minimal 8 karakter dan harus mengandung huruf dan angka</Text>
+            <Group className="flex flex-row-reverse" spacing={"lg"}>
+              <Button
+                variant="light"
+                className=" bg-primary-500 !important font-bold text-base text-white rounded-lg hover:bg-primary-500"
+                type="submit"
+              >
+                Ubah Password
+              </Button>
 
-            <Button
-              variant="light"
-              className=" bg-white !important font-bold text-base text-primary-500 hover:bg-transparent"
-            >
-              Cancel
-            </Button>
+              <Button
+                variant="light"
+                className=" bg-white !important font-bold text-base text-primary-500 hover:bg-transparent"
+              >
+                Cancel
+              </Button>
+            </Group>
           </Group>
         </Stack>
       </form>
