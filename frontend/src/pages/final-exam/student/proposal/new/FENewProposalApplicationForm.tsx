@@ -137,7 +137,7 @@ const FEProposalApplicationForm: React.FC<IFEProposalApplicationFormProps> = ({
             ]}
             className={`col-span-3`}
             placeholder="Pilih laboratorium kedua jika diperlukan"
-            label="Laboratorium 2"
+            label="Dosen Pengusul"
             error={errors?.[`${name}.${"lecturer" as keyof TOffer}`]}
             name={"lecturer" as keyof TOffer}
             onChange={(e) => handleInputChange("lecturer" as keyof TOffer, e)}

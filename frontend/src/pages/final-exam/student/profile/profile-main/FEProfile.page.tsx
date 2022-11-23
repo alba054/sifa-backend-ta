@@ -9,7 +9,7 @@ export interface IFEProfile {}
 const FEProfile: React.FC<IFEProfile> = ({}) => {
   return (
     <FEStudentMainlayout>
-      <Title className="text-primary-text-500 mb-6">Pengaturan Akun</Title>
+      <Title order={2} className="text-primary-text-500" mb={"md"}>Pengaturan Akun</Title>
       <Stack spacing={"xl"}>
         <FEProfileDetails />
         <FEProfileChangePassword />
