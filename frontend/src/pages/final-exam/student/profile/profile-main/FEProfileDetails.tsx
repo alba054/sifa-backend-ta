@@ -58,7 +58,7 @@ const FEProfileDetails: React.FC<IFEProfileDetails> = ({}) => {
               S1{" "}
               <Text className="text-[10px] align-middle top-1 relative">
                 &#x2022;
-              </Text>{" "}
+              </Text>
               Farmasi
             </Text>
             <Text className="text-secondary-text-500">

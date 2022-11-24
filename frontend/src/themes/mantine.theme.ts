@@ -2,8 +2,8 @@ import { ButtonStylesParams, MantineThemeOverride } from "@mantine/core";
 
 export const mantineTheme: MantineThemeOverride = {
   headings: {
-    fontWeight: 400,
-    fontFamily: "Nunito Sans, sans-serif",
+    fontWeight: 600,
+    fontFamily: "Nunito Sans, sans-serif"
   },
   breakpoints: {
     sm: 640,
@@ -110,6 +110,9 @@ export const mantineTheme: MantineThemeOverride = {
   },
   
   components: {
+    Title:{
+      defaultProps: { color: "primary-text",  },
+    },
     Radio: {
       defaultProps: { color: "primary" },
     },

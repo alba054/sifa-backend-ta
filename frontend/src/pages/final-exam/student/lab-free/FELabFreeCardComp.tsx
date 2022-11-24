@@ -140,9 +140,9 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
             <Button
               variant="light"
               onClick={handleEditProposalClick}
-              disabled
+              disabled={status!=="process"}
               className={
-                "p-0 m-0 bg-white hover:bg-white "
+                "p-0 m-0 bg-white hover:bg-white"
               }
             >
               <FEPenOutline
