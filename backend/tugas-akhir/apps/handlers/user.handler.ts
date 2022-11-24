@@ -81,7 +81,10 @@ export class UserHandler {
 
       return res
         .status(200)
-        .json(createResponse("success", "login successfully", token));
+        .json(createResponse("success", "login successfully", {
+          token,
+          role: tokenPayload.groupAccess
+        }));
     } catch (error: any) {
       next(new InternalServerError(error.message));
     }

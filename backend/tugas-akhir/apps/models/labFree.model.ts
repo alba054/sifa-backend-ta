@@ -2,9 +2,44 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import prismaDB from "../utils/database";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { InternalServerError } from "../utils/error/internalError";
-import { ILabFree } from "../utils/interfaces/labFree.interface";
+import {
+  ILabFree,
+  ILabFreeUpdate,
+} from "../utils/interfaces/labFree.interface";
 
 export class LabFree {
+  static async editByID(nim: string, reqlabsID: number, body: ILabFreeUpdate) {
+    try {
+      await prismaDB.bebas_lab.updateMany({
+        where: {
+          AND: [
+            {
+              blId: reqlabsID,
+            },
+            {
+              blMhsNim: nim,
+            },
+          ],
+        },
+        data: {
+          blLabId: body.labID,
+          blNomor: body.labFreeNumber,
+          blTahun: body.year,
+          blTglSurat: body.documentDate,
+          ref_permohonan: body.requestStatus,
+        },
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
   static async deleteByID(nim: string, reqlabsID: number) {
     try {
       await prismaDB.bebas_lab.deleteMany({

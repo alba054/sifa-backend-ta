@@ -7,3 +7,5 @@ prettier.json
 dbtugasakhir.sql
 # data for seeding initial data
 data
+docs
+uploaded_file

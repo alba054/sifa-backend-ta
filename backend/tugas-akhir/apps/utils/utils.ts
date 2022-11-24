@@ -16,6 +16,8 @@ export const createResponse = (
 
 const ACCESS_TOKEN_EXP = 24 * 60 * 60;
 const PASSWORD_RESET_TOKEN_EXP = 5 * 60 * 1000;
+const UPLOADED_FILE_BASE_URL = "./uploaded_file";
+const STUDENT_UPLOADED_FILE = `${UPLOADED_FILE_BASE_URL}/students`;
 
 export const constants = {
   ACCESS_TOKEN_CLAIMS: {
@@ -45,5 +47,7 @@ export const constants = {
   FAILED_MESSAGE: "failed",
   USER_ACTIVE_STATUS: 1,
   USER_INACTIVE_STATUS: 0,
+  MAXIMUM_UPLOADED_FILE_SIZE: 5 * 1024 * 1024, // * 5 KB
+  KRS_AND_KHS_PATH: `${STUDENT_UPLOADED_FILE}/krs_khs`, // * krs and khs path
   PASSWORD_RESET_TOKEN_EXP,
 };

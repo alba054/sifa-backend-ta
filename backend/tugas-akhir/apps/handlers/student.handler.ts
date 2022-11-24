@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { v4 as uuidv4 } from "uuid";
 
 import dotenv from "dotenv";
 import { StudentService } from "../services/student.service";
@@ -6,13 +7,79 @@ import { constants, createResponse } from "../utils/utils";
 import { NotFoundError } from "@prisma/client/runtime";
 import { IStudentUpdate } from "../utils/interfaces/student.interface";
 import { BadRequestError } from "../utils/error/badrequestError";
-import { ILabFree } from "../utils/interfaces/labFree.interface";
+import {
+  ILabFree,
+  ILabFreeUpdate,
+} from "../utils/interfaces/labFree.interface";
 import { LabFreeService } from "../services/labFree.service";
-// import { sendForgetPasswordEmail } from "../utils/thirdpartyservice";
+import { writeToFile } from "../utils/storage";
 
 dotenv.config();
 
 export class StudentHandler {
+  static async uploadKRSAndKHS(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    let title1 = uuidv4();
+    let title2 = uuidv4();
+
+    const { nim } = req.params;
+    try {
+      const path = `${constants.KRS_AND_KHS_PATH}/${nim}`;
+
+      if (typeof req.files === "undefined") {
+        throw new BadRequestError("provide files");
+      }
+      if (Array.isArray(req.files)) {
+        if (req.files.length !== 2) {
+          throw new BadRequestError("provide 2 files");
+        }
+
+        title1 += "." + req.files[0].originalname.split(".")[1];
+        title2 += "." + req.files[1].originalname.split(".")[1];
+
+        writeToFile(path, title1, req.files[0].buffer);
+        writeToFile(path, title2, req.files[1].buffer);
+      }
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully uploaded krs and khs"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async editReqLabs(req: Request, res: Response, next: NextFunction) {
+    // todo: edit request lab
+
+    const { nim, reqlabsID } = req.params;
+    const body = req.body as ILabFreeUpdate;
+
+    try {
+      if (typeof body.labID === "undefined") {
+        throw new BadRequestError("provide labID");
+      }
+
+      await LabFreeService.editFreeLabByID(nim, Number(reqlabsID), body);
+
+      return res
+        .status(200)
+        .json(
+          createResponse(constants.SUCCESS_MESSAGE, "successfully updated")
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async deleteRequestLab(
     req: Request,
     res: Response,

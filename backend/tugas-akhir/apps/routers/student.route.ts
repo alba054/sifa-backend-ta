@@ -1,6 +1,7 @@
 import express from "express";
 import { StudentHandler } from "../handlers/student.handler";
 import { AuthorizationMiddleware } from "../middlewares/auth/authorization.middleware";
+import { upload } from "../utils/storage";
 import { constants } from "../utils/utils";
 
 const studentRouter = express.Router();
@@ -38,11 +39,23 @@ studentRouter
   );
 
 // * delete reqlabs
+// * update reqlabs
 studentRouter
   .route("/:nim/reqlabs/:reqlabsID")
   .delete(
     AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
     StudentHandler.deleteRequestLab
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.editReqLabs
   );
+
+studentRouter.post(
+  "/:nim/upload-krs-and-khs",
+  AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+  upload.array("docs"),
+  StudentHandler.uploadKRSAndKHS
+);
 
 export default studentRouter;
