@@ -92,18 +92,18 @@ const DocumentInput: React.FC<IDocumentInputProps> = ({
         <Group grow spacing={"md"} className="mt-4">
           <Button
             variant="light"
-            className="bg-[#3B82F6] py-3 h-full rounded-lg text-white hover:bg-[#3B82F6]"
+            className="bg-[#3B82F6] py-[10px] h-max rounded-lg text-white hover:bg-[#3B82F6]"
             onClick={onPreviewClick}
           >
-            <PreviewIcon size={16} color={"white"} className="mr-2" />
+            <PreviewIcon size={14} color={"white"} className="mr-2" />
             Lihat Pratinjau
           </Button>
           <Button
             variant="light"
-            className="bg-error-500 !important py-3 h-full rounded-lg text-white hover:bg-error-500"
+            className="bg-error-500 !important py-[10px] h-max rounded-lg text-white hover:bg-error-500"
             onClick={onDelete}
           >
-            <DeleteOutline size={18} color={"white"} className="mr-2" />
+            <DeleteOutline size={16} color={"white"} className="mr-2" />
             Hapus File
           </Button>
         </Group>

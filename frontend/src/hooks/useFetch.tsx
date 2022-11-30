@@ -13,7 +13,7 @@ export function useFetchWithAbort <T>(endpoint: string, config: AxiosRequestConf
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  (() => {
     const abortController = new AbortController();
     
     const fetchData = async () => {
