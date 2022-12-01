@@ -11,8 +11,8 @@ interface IFESeminarFormProps {
 const SIZE = "md";
 
 const FESeminarForm: React.FC<IFESeminarFormProps> = ({ form }) => {
-  const { getInputProps, errors, setValues } = form;
-
+  const { getInputProps, errors, setValues, values } = form;
+  
   return (
     <Stack spacing={"sm"}>
       <SelectInput
