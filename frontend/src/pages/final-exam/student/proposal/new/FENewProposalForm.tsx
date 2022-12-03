@@ -21,11 +21,10 @@ const FENewProposalForm: React.FC<IFENewProposalFormProps> = ({}) => {
   function handleSubmit(values: IFENewProposalFormValues) {
     console.log(values);
   }
-
   // console.log(values);
 
   return (
-    <form onSubmit={onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack >
         <FEProposalApplicationForm
           {...getInputProps("firstOffer")}

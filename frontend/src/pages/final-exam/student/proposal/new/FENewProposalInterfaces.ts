@@ -24,8 +24,8 @@ export const feNewProposalFormSchema = yup.object({
   secondOffer: feOfferSchema,
   academicRecord: yup.object({
     name: yup.string().required("Tolong input transkrip nilai"),
-  }),
+  }).nullable(),
   krs: yup.object({
     name: yup.string().required("Tolong input krs"),
-  }),
+  }).nullable(),
 });
