@@ -25,6 +25,7 @@ const FESeminarMain: React.FC<IFESeminarMain> = ({}) => {
   }
 
   const { getInputProps, values, errors, onSubmit } = form;
+
   return (
     <Stack className="gap-8">
       <Stack className="py-7 px-8 border-[1px] border-secondary-500 box-border rounded-xl drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md">
@@ -65,7 +66,7 @@ const FESeminarMain: React.FC<IFESeminarMain> = ({}) => {
           currentProgress={2}
         />
       </Stack>
-      <form onSubmit={onSubmit(handleSubmit)}>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack className="pb-8 px-8 border-[1px] border-secondary-500 box-border rounded-xl drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md ">
           <Text className="py-5 mx-[-32px] pl-8 mb-3 text-md text-primary-text-500 font-bold tracking-[0.0015em] border-b border-secondary-500">
             Ujian Sidang
@@ -116,6 +117,7 @@ const FESeminarMain: React.FC<IFESeminarMain> = ({}) => {
                         }.name`
                       ]
                     }
+                    maxSize={500}
                   />
                 }
               />
