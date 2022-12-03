@@ -27,18 +27,18 @@ export const feEditProfileFormSchema = yup.object({
 const FEProfileChangePassword: React.FC<IFEProfileChangePassword> = ({}) => {
   const [isOpened, setIsOpened] = useState(false)
 
-  const { getInputProps, values, onSubmit, errors } =
-    useForm<IFEEditProfileChangePasswordValues>({
-      validate: yupResolver(feEditProfileFormSchema),
-    });
+  const form= useForm<IFEEditProfileChangePasswordValues>({
+    validate: yupResolver(feEditProfileFormSchema),
+  });
+
+  const { getInputProps, values, onSubmit, errors } = form
 
   function handleSubmit(values: IFEProfileChangePassword) {
     setIsOpened(true)
-    console.log(values);
   }
 
   function handleSubmitDelete() {
-    console.log("a");
+    console.log(values);
   }
 
   return (
@@ -52,6 +52,7 @@ const FEProfileChangePassword: React.FC<IFEProfileChangePassword> = ({}) => {
         setOpened={setIsOpened}
         title="Ganti Password?"
         description="Gunakan password baru Anda saat login berikutnya."
+        yesButtonLabel="Ganti"
         onSubmit={onSubmit(handleSubmitDelete) as any}
       />
       <form onSubmit={onSubmit(handleSubmit)}>
