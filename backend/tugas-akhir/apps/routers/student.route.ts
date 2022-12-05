@@ -1,6 +1,7 @@
 import express from "express";
 import { StudentHandler } from "../handlers/student.handler";
 import { AuthorizationMiddleware } from "../middlewares/auth/authorization.middleware";
+import { StorageMiddleware } from "../middlewares/utils/storage.middleware";
 import { upload } from "../utils/storage";
 import { constants } from "../utils/utils";
 
@@ -51,11 +52,26 @@ studentRouter
     StudentHandler.editReqLabs
   );
 
-studentRouter.post(
-  "/:nim/upload-krs-and-khs",
-  AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
-  upload.array("docs"),
-  StudentHandler.uploadKRSAndKHS
-);
+// * create new thesis
+// *
+studentRouter
+  .route("/:nim/thesis")
+  .post(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    upload.array("files"),
+    StorageMiddleware.uploadKRSAndKHS,
+    StudentHandler.postThesisProposal
+  )
+  .get(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.getAllProposedThesis
+  );
+
+// studentRouter.post(
+//   "/:nim/upload-krs-and-khs",
+//   AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+//   upload.array("docs"),
+//   StudentHandler.uploadKRSAndKHS
+// );
 
 export default studentRouter;

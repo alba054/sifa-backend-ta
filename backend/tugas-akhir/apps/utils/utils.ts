@@ -16,7 +16,10 @@ export const createResponse = (
 
 const ACCESS_TOKEN_EXP = 24 * 60 * 60;
 const PASSWORD_RESET_TOKEN_EXP = 5 * 60 * 1000;
+// * path to uploaded file
+// * change this if using object storage
 const UPLOADED_FILE_BASE_URL = "./uploaded_file";
+// * directory to separate students and other entities files
 const STUDENT_UPLOADED_FILE = `${UPLOADED_FILE_BASE_URL}/students`;
 
 export const constants = {
@@ -48,6 +51,9 @@ export const constants = {
   USER_ACTIVE_STATUS: 1,
   USER_INACTIVE_STATUS: 0,
   MAXIMUM_UPLOADED_FILE_SIZE: 5 * 1024 * 1024, // * 5 KB
-  KRS_AND_KHS_PATH: `${STUDENT_UPLOADED_FILE}/krs_khs`, // * krs and khs path
+  KRS_AND_KHS_PATH: `${STUDENT_UPLOADED_FILE}/krs_khs`, // * krs and khs path,
+  PROPOSAL_STATUS_IN_PROCESS: "Belum_diproses",
+  PROPOSAL_STATUS_APPROVED: "Diterima",
+  PROPOSAL_STATUS_REJECTED: "Ditolak",
   PASSWORD_RESET_TOKEN_EXP,
 };

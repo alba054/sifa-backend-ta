@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { v4 as uuidv4 } from "uuid";
 
 import dotenv from "dotenv";
 import { StudentService } from "../services/student.service";
@@ -12,44 +11,69 @@ import {
   ILabFreeUpdate,
 } from "../utils/interfaces/labFree.interface";
 import { LabFreeService } from "../services/labFree.service";
-import { writeToFile } from "../utils/storage";
+import { IThesis } from "../utils/interfaces/thesis.interface";
+import { ThesisService } from "../services/thesis.service";
 
 dotenv.config();
 
 export class StudentHandler {
-  static async uploadKRSAndKHS(
+  static async getAllProposedThesis(
     req: Request,
     res: Response,
     next: NextFunction
   ) {
-    let title1 = uuidv4();
-    let title2 = uuidv4();
-
     const { nim } = req.params;
+    const { excludeProposalStatus } = req.query;
+
+    let thesis = await ThesisService.getAllProposedThesis(nim);
+    if (typeof excludeProposalStatus !== "undefined") {
+      thesis = thesis.filter(
+        (th) => th.statusPermohonan !== excludeProposalStatus
+      );
+    }
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "get all student's proposed thesis successfully",
+          thesis
+        )
+      );
+  }
+
+  static async postThesisProposal(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim } = req.params;
+    const body = req.body as IThesis;
+
     try {
-      const path = `${constants.KRS_AND_KHS_PATH}/${nim}`;
+      body.studentNIM = nim;
+      body.KRSPath = res.locals.KRSPath;
+      body.KHSPath = res.locals.KHSPath;
+      console.log(body);
 
-      if (typeof req.files === "undefined") {
-        throw new BadRequestError("provide files");
+      if (
+        typeof body.studentNIM === "undefined" ||
+        typeof body.title === "undefined" ||
+        typeof body.KRSPath === "undefined" ||
+        typeof body.KHSPath === "undefined"
+      ) {
+        throw new BadRequestError("provide title");
       }
-      if (Array.isArray(req.files)) {
-        if (req.files.length !== 2) {
-          throw new BadRequestError("provide 2 files");
-        }
 
-        title1 += "." + req.files[0].originalname.split(".")[1];
-        title2 += "." + req.files[1].originalname.split(".")[1];
-
-        writeToFile(path, title1, req.files[0].buffer);
-        writeToFile(path, title2, req.files[1].buffer);
-      }
+      await ThesisService.insertNewThesis(body);
 
       return res
         .status(201)
         .json(
           createResponse(
             constants.SUCCESS_MESSAGE,
-            "successfully uploaded krs and khs"
+            "successfully post new Thesis"
           )
         );
     } catch (error) {

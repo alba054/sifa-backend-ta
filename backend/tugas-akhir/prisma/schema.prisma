@@ -80,6 +80,7 @@ model dosen {
   seminar_persetujuan                                      seminar_persetujuan[]
   // @@index([dsnStatusKepegawaian], map: "dsnStatusKepegawaian")
   // @@index([dsnJenisKelamin], map: "dsnJenisKelamin")
+  tugas_akhir                                              tugas_akhir[]
 
   @@index([dsnBidangKeahlian], map: "dsnBidangKeahlian")
   @@index([dsnDprtId], map: "dsnDprtId")
@@ -756,15 +757,20 @@ model tugas_akhir {
   // taStatusKep                                            Int
   taLabId                                                Int?
   taFile                                                 String?             @db.VarChar(255)
+  taKRS                                                  String?
+  taKHS                                                  String?
   taCatatan                                              String?             @db.Text
   taCatatanMhs                                           String?             @db.Text
   taStatusSk                                             Int?
+  taDosenPengusul                                        Int?
   ref_permohonan_ref_permohonanTotugas_akhir_taStatusPmb StatusPermohonan    @default(Belum_Diproses)
   ref_permohonan_ref_permohonanTotugas_akhir_taStatusKep StatusPermohonan    @default(Belum_Diproses)
+  statusPermohonan                                       StatusPermohonan    @default(Belum_Diproses)
   // ref_permohonan_ref_permohonanTotugas_akhir_taStatusPmb ref_permohonan      @relation("ref_permohonanTotugas_akhir_taStatusPmb", fields: [taStatusPmb], references: [tastatusId], onDelete: Cascade, map: "tugas_akhir_ibfk_1")
   // ref_permohonan_ref_permohonanTotugas_akhir_taStatusKep ref_permohonan      @relation("ref_permohonanTotugas_akhir_taStatusKep", fields: [taStatusKep], references: [tastatusId], onDelete: Cascade, map: "tugas_akhir_ibfk_2")
   ref_laboratorium                                       ref_laboratorium?   @relation(fields: [taLabId], references: [labId], onDelete: Cascade, onUpdate: Restrict, map: "tugas_akhir_ibfk_3")
   mahasiswa                                              mahasiswa           @relation(fields: [taMhsNim], references: [mhsNim], onDelete: Cascade, map: "tugas_akhir_ibfk_4")
+  pengusul                                               dosen?              @relation(fields: [taDosenPengusul], references: [dsnId])
   pembimbing                                             pembimbing[]
   pembimbingan                                           pembimbingan[]
   penguji                                                penguji[]
