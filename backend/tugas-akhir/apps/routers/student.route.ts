@@ -53,7 +53,7 @@ studentRouter
   );
 
 // * create new thesis
-// *
+// * get all thesis of a student
 studentRouter
   .route("/:nim/thesis")
   .post(
@@ -67,11 +67,12 @@ studentRouter
     StudentHandler.getAllProposedThesis
   );
 
-// studentRouter.post(
-//   "/:nim/upload-krs-and-khs",
-//   AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
-//   upload.array("docs"),
-//   StudentHandler.uploadKRSAndKHS
-// );
+// * delete thesis (only able if status is in process)
+studentRouter
+  .route("/:nim/thesis/:thesisID")
+  .delete(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.deleteThesis
+  );
 
 export default studentRouter;

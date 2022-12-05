@@ -5,6 +5,42 @@ import { InternalServerError } from "../utils/error/internalError";
 import { IThesis } from "../utils/interfaces/thesis.interface";
 
 export class Thesis {
+  static async getInProcessThesis() {
+    const thesis = await prismaDB.tugas_akhir.findMany({
+      where: { statusPermohonan: "Belum_Diproses" },
+    });
+
+    return thesis;
+  }
+
+  static async deleteThesis(nim: string, thesisID: number) {
+    try {
+      return await prismaDB.tugas_akhir.deleteMany({
+        where: {
+          AND: [
+            {
+              taId: thesisID,
+            },
+            {
+              taMhsNim: nim,
+            },
+            {
+              statusPermohonan: "Belum_Diproses",
+            },
+          ],
+        },
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
   static async getAllProposedThesis(nim: string) {
     const thesis = await prismaDB.tugas_akhir.findMany({
       where: { taMhsNim: nim },

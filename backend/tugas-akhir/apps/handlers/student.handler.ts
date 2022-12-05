@@ -17,6 +17,25 @@ import { ThesisService } from "../services/thesis.service";
 dotenv.config();
 
 export class StudentHandler {
+  static async deleteThesis(req: Request, res: Response, next: NextFunction) {
+    const { nim, thesisID } = req.params;
+
+    try {
+      await ThesisService.deleteThesis(nim, Number(thesisID));
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully delete thesis"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getAllProposedThesis(
     req: Request,
     res: Response,
@@ -55,7 +74,6 @@ export class StudentHandler {
       body.studentNIM = nim;
       body.KRSPath = res.locals.KRSPath;
       body.KHSPath = res.locals.KHSPath;
-      console.log(body);
 
       if (
         typeof body.studentNIM === "undefined" ||
