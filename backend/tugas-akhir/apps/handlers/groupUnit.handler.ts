@@ -25,7 +25,7 @@ export class GroupUnitHandler {
           createResponse("success", "successfully get group units", groupUnit)
         );
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 
@@ -52,7 +52,7 @@ export class GroupUnitHandler {
           )
         );
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 }

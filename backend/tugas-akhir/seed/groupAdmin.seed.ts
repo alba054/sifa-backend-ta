@@ -11,18 +11,22 @@ INSERT INTO `adm_group` VALUES (9, 'Dekanat');
  */
 
 import prismaDB from "../apps/utils/database";
+import { constants } from "../apps/utils/utils";
 
 export async function populateGroupAdmin() {
   const groupsToInsert = [
-    { id: 1, nama: "superuser" },
-    { id: 2, nama: "Admin Fakultas" },
-    { id: 3, nama: "Admin Departemen" },
-    { id: 4, nama: "Admin Program Studi" },
-    { id: 5, nama: "Admin Laboratorium" },
-    { id: 6, nama: "Dosen" },
-    { id: 7, nama: "Mahasiswa" },
-    { id: 8, nama: "Koordinator Seminar" },
-    { id: 9, nama: "Dekanat" },
+    { id: constants.SUPERUSER_GROUP_ACCESS, nama: "superuser" },
+    { id: constants.FACULTY_ADMIN_GROUP_ACCESS, nama: "Admin Fakultas" },
+    { id: constants.DEPARTMENT_ADMIN_GROUP_ACCESS, nama: "Admin Departemen" },
+    { id: constants.VOCATION_ADMIN_GROUP_ACCESS, nama: "Admin Program Studi" },
+    { id: constants.LAB_ADMIN_GROUP_ACCESS, nama: "Admin Laboratorium" },
+    { id: constants.LECTURER_GROUP_ACCESS, nama: "Dosen" },
+    { id: constants.STUDENT_GROUP_ACCESS, nama: "Mahasiswa" },
+    {
+      id: constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+      nama: "Koordinator Seminar",
+    },
+    { id: constants.DEAN_GROUP_ACCESS, nama: "Dekanat" },
   ];
 
   try {

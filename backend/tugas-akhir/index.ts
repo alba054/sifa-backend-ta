@@ -11,7 +11,7 @@ app.disable("x-powered-by");
 
 app.use(express.json());
 
-app.use(router);
+app.use("/api/v0", router);
 app.use(ErrorHandler);
 
 const PORT = Number(process.env.PORT) || 8080;
