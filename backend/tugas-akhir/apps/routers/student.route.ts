@@ -54,12 +54,12 @@ studentRouter
 
 // * create new thesis
 // * get all thesis of a student
+// * add query excludeProposalStatus=Belum_Diproses to get proposed Thesis history
 studentRouter
   .route("/:nim/thesis")
   .post(
     AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
     upload.array("files"),
-    StorageMiddleware.uploadKRSAndKHS,
     StudentHandler.postThesisProposal
   )
   .get(
@@ -69,7 +69,7 @@ studentRouter
 
 // * delete thesis (only able if status is in process)
 studentRouter
-  .route("/:nim/thesis/:thesisID")
+  .route("/:nim/thesis/:proposalGroupID")
   .delete(
     AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
     StudentHandler.deleteThesis

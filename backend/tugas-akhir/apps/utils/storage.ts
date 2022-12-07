@@ -16,3 +16,18 @@ export function writeToFile(path: string, filename: string, file: Buffer) {
 
   fs.createWriteStream(`${path}/${filename}`).write(file);
 }
+
+export function deleteFile(path: string) {
+  if (!fs.existsSync(path)) {
+    return false;
+  }
+
+  fs.unlink(path, (err) => {
+    if (typeof err !== null) {
+      console.log(err);
+    }
+    console.log("successfully removing file");
+  });
+
+  return true;
+}

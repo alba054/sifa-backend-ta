@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { v4 as uuidv4 } from "uuid";
 
 import dotenv from "dotenv";
 import { StudentService } from "../services/student.service";
@@ -11,17 +12,18 @@ import {
   ILabFreeUpdate,
 } from "../utils/interfaces/labFree.interface";
 import { LabFreeService } from "../services/labFree.service";
-import { IThesis } from "../utils/interfaces/thesis.interface";
+import { IThesis, IThesisPost } from "../utils/interfaces/thesis.interface";
 import { ThesisService } from "../services/thesis.service";
+import { deleteFile, writeToFile } from "../utils/storage";
 
 dotenv.config();
 
 export class StudentHandler {
   static async deleteThesis(req: Request, res: Response, next: NextFunction) {
-    const { nim, thesisID } = req.params;
+    const { nim, proposalGroupID } = req.params;
 
     try {
-      await ThesisService.deleteThesis(nim, Number(thesisID));
+      await ThesisService.deleteThesis(nim, proposalGroupID);
 
       return res
         .status(200)
@@ -68,30 +70,75 @@ export class StudentHandler {
     next: NextFunction
   ) {
     const { nim } = req.params;
-    const body = req.body as IThesis;
+    const body = req.body as IThesisPost;
+    let title1 = uuidv4();
+    let title2 = uuidv4();
 
     try {
-      body.studentNIM = nim;
-      body.KRSPath = res.locals.KRSPath;
-      body.KHSPath = res.locals.KHSPath;
-
       if (
-        typeof body.studentNIM === "undefined" ||
-        typeof body.title === "undefined" ||
-        typeof body.KRSPath === "undefined" ||
-        typeof body.KHSPath === "undefined"
+        typeof body.title_1st === "undefined" ||
+        typeof body.title_2nd === "undefined"
       ) {
-        throw new BadRequestError("provide title");
+        throw new BadRequestError("provide title_1st and title_2nd");
       }
 
-      await ThesisService.insertNewThesis(body);
+      const proposalGroupID = uuidv4();
+      const path = `${constants.KRS_AND_KHS_PATH}/${nim}`; // * path to upload krs and khs
+
+      if (typeof req.files === "undefined") {
+        throw new BadRequestError("provide files");
+      }
+
+      if (Array.isArray(req.files)) {
+        if (req.files.length !== 2) {
+          throw new BadRequestError("provide 2 files");
+        }
+
+        title1 += "." + req.files[0].originalname.split(".")[1];
+        title2 += "." + req.files[1].originalname.split(".")[1];
+
+        const KRSPath = `${path}/${title1}`;
+        const KHSPath = `${path}/${title2}`;
+
+        const thesis = [
+          {
+            studentNIM: nim,
+            title: body.title_1st,
+            KHSPath: KHSPath,
+            KRSPath: KRSPath,
+            labID: body.labID_1st,
+            labID2: body.labID2_1st,
+            lecturerPropose: body.lecturerPropose_1st,
+            proposalGroupID,
+          } as IThesis,
+          {
+            studentNIM: nim,
+            title: body.title_2nd,
+            KHSPath: KHSPath,
+            KRSPath: KRSPath,
+            labID: body.labID_2nd,
+            labID2: body.labID2_2nd,
+            lecturerPropose: body.lecturerPropose_2nd,
+            proposalGroupID,
+          } as IThesis,
+        ];
+
+        await ThesisService.insertProposedThesis(
+          thesis,
+          path,
+          title1,
+          title2,
+          req.files[0].buffer,
+          req.files[1].buffer
+        );
+      }
 
       return res
         .status(201)
         .json(
           createResponse(
             constants.SUCCESS_MESSAGE,
-            "successfully post new Thesis"
+            "successfully post new thesis proposal"
           )
         );
     } catch (error) {
