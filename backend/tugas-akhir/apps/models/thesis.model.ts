@@ -13,13 +13,13 @@ export class Thesis {
     return thesis;
   }
 
-  static async deleteThesis(nim: string, thesisID: number) {
+  static async deleteThesis(nim: string, proposalGroupID: string) {
     try {
       return await prismaDB.tugas_akhir.deleteMany({
         where: {
           AND: [
             {
-              taId: thesisID,
+              proposalGroupID,
             },
             {
               taMhsNim: nim,
@@ -68,6 +68,7 @@ export class Thesis {
           taDosenPengusul: Number(thesis.lecturerPropose) || undefined,
           taKHS: thesis.KHSPath,
           taKRS: thesis.KRSPath,
+          proposalGroupID: thesis.proposalGroupID,
         },
       });
 

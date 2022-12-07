@@ -293,7 +293,9 @@ model ref_laboratorium {
   ref_prodi        ref_prodi?         @relation(fields: [labPrdId], references: [prdId], map: "ref_laboratorium_ibfk_1")
   bebas_lab        bebas_lab[]
   ref_temp_nosurat ref_temp_nosurat[]
-  tugas_akhir      tugas_akhir[]
+  // tugas_akhir      tugas_akhir[]
+  PRtugas_akhir    tugas_akhir[]      @relation("primary")
+  SEtugas_akhir    tugas_akhir[]      @relation("secondary")
 
   @@index([labKepalaNip], map: "Index 2")
   @@index([labPrdId], map: "labPrdId")
@@ -756,6 +758,7 @@ model tugas_akhir {
   // taStatusPmb                                            Int
   // taStatusKep                                            Int
   taLabId                                                Int?
+  taLabId2                                               Int?
   taFile                                                 String?             @db.VarChar(255)
   taKRS                                                  String?
   taKHS                                                  String?
@@ -763,12 +766,14 @@ model tugas_akhir {
   taCatatanMhs                                           String?             @db.Text
   taStatusSk                                             Int?
   taDosenPengusul                                        Int?
+  proposalGroupID                                        String
   ref_permohonan_ref_permohonanTotugas_akhir_taStatusPmb StatusPermohonan    @default(Belum_Diproses)
   ref_permohonan_ref_permohonanTotugas_akhir_taStatusKep StatusPermohonan    @default(Belum_Diproses)
   statusPermohonan                                       StatusPermohonan    @default(Belum_Diproses)
   // ref_permohonan_ref_permohonanTotugas_akhir_taStatusPmb ref_permohonan      @relation("ref_permohonanTotugas_akhir_taStatusPmb", fields: [taStatusPmb], references: [tastatusId], onDelete: Cascade, map: "tugas_akhir_ibfk_1")
   // ref_permohonan_ref_permohonanTotugas_akhir_taStatusKep ref_permohonan      @relation("ref_permohonanTotugas_akhir_taStatusKep", fields: [taStatusKep], references: [tastatusId], onDelete: Cascade, map: "tugas_akhir_ibfk_2")
-  ref_laboratorium                                       ref_laboratorium?   @relation(fields: [taLabId], references: [labId], onDelete: Cascade, onUpdate: Restrict, map: "tugas_akhir_ibfk_3")
+  ref_laboratorium                                       ref_laboratorium?   @relation("primary", fields: [taLabId], references: [labId], onDelete: Cascade, onUpdate: Restrict, map: "tugas_akhir_ibfk_3")
+  ref_laboratorium2                                      ref_laboratorium?   @relation("secondary", fields: [taLabId2], references: [labId], onDelete: Cascade, onUpdate: Restrict, map: "tugas_akhir_lab2")
   mahasiswa                                              mahasiswa           @relation(fields: [taMhsNim], references: [mhsNim], onDelete: Cascade, map: "tugas_akhir_ibfk_4")
   pengusul                                               dosen?              @relation(fields: [taDosenPengusul], references: [dsnId])
   pembimbing                                             pembimbing[]

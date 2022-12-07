@@ -14,7 +14,9 @@
 export interface IThesis {
   studentNIM: string;
   title: string;
+  proposalGroupID: string;
   labID?: number;
+  labID2?: number;
   KRSPath?: string;
   KHSPath?: string;
   lecturerPropose?: number;
@@ -27,5 +29,12 @@ export interface IThesis {
 }
 
 export interface IThesisPost {
-  data: IThesis[];
+  title_1st: string;
+  labID_1st?: number;
+  labID2_1st?: number;
+  lecturerPropose_1st?: number;
+  title_2nd: string;
+  labID_2nd?: number;
+  labID2_2nd?: number;
+  lecturerPropose_2nd?: number;
 }

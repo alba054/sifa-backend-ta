@@ -18,9 +18,9 @@ const ACCESS_TOKEN_EXP = 24 * 60 * 60;
 const PASSWORD_RESET_TOKEN_EXP = 5 * 60 * 1000;
 // * path to uploaded file
 // * change this if using object storage
-const UPLOADED_FILE_BASE_URL = "./uploaded_file";
+const UPLOADED_FILE_BASE_URL = "uploaded_file";
 // * directory to separate students and other entities files
-const STUDENT_UPLOADED_FILE = `${UPLOADED_FILE_BASE_URL}/students`;
+const STUDENT_UPLOADED_FILE = `${process.cwd()}/${UPLOADED_FILE_BASE_URL}/students`;
 
 export const constants = {
   ACCESS_TOKEN_CLAIMS: {
