@@ -1,5 +1,6 @@
-import { Stack, Title } from "@mantine/core";
-import React, { ReactNode } from "react";
+import { Stack, Title } from '@mantine/core';
+import React, { ReactNode } from 'react';
+import FECard from './FECard';
 
 export interface IFEProfileCard {
   cardTitle: string,
@@ -10,7 +11,7 @@ export interface IFEProfileCard {
 
 const FEProfileCard: React.FC<IFEProfileCard> = ({ cardTitle, children, bg="bg-gradient-to-b to-error-400 from-primary-500", cardTitleBottomBorderColor="bg-gradient-to-l from-error to-primary" }) => {
   return (
-    <div className={`pl-[6px] shadow rounded-[12px] ${bg} !important`}>
+    <FECard bg={bg}>
       <Stack className={`bg-light p-8`}>
       <Stack className="w-fit gap-1 mb-4">
         <Title order={3} className="text-primary-text-500">
@@ -22,7 +23,7 @@ const FEProfileCard: React.FC<IFEProfileCard> = ({ cardTitle, children, bg="bg-g
       </Stack>
         {children}
       </Stack>
-    </div>
-  );
-};
+    </FECard>
+  )
+}
 export default FEProfileCard;

@@ -6,22 +6,25 @@ import {
   MediaQuery,
   Stack,
   Text,
-  Title
+  Title,
 } from "@mantine/core";
 import React from "react";
 import { InfoOutline } from "src/assets/Icons/Fluent";
-import FELabFreeCardComp from "./FELabFreeCardComp";
+import useArray from "src/hooks/fe-hooks/useArray";
+import FELabFreeCardComp, { IFELabFreeCardComp } from "./FELabFreeCardComp";
 
-export interface IFELabFreeMain {}
+export interface IFELabFreeMain {
+  labFreeCardArr: any;
+}
 
-const FELabFreeMain: React.FC<IFELabFreeMain> = ({}) => {
+const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardArr }) => {
   return (
     <Stack mt={10} spacing="md">
       <Group className="bg-[rgb(239,246,255)] rounded-xl p-5 items-start">
         <MediaQuery smallerThan={"lg"} styles={{ display: "none" }}>
           <InfoOutline size={30} color={"#3B82F6"} />
         </MediaQuery>
-        <Stack className="w-11/12 gap-2" >
+        <Stack className="w-11/12 gap-2">
           <Title className="text-[#3B82F6] inline" order={3}>
             <MediaQuery
               smallerThan={"lg"}
@@ -58,39 +61,13 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({}) => {
         inherit
       >
         <Grid className="mt-0" gutter={"xl"}>
-          <Grid.Col span={6} xs={12} sm={12} md={6}>
-            <FELabFreeCardComp
-              title="Permohonan #3"
-              lab="Lab. Biofarmaka"
-              status="process"
-              tanggalPermohonan="14 November 2022"
-            />
-          </Grid.Col>
-          <Grid.Col span={6} xs={12} sm={12} md={6}>
-            <FELabFreeCardComp
-              title="Permohonan #2.5"
-              lab="Lab. Farmasetika"
-              status="process"
-              tanggalPermohonan="14 November 2022"
-            />
-          </Grid.Col>
-          
-          <Grid.Col span={6} xs={12} sm={12} md={6}>
-            <FELabFreeCardComp
-              title="Permohonan #2"
-              lab="Lab. Farmasetika"
-              status="rejected"
-              tanggalPermohonan="14 November 2022"
-            />
-          </Grid.Col>
-          <Grid.Col span={6} xs={12} sm={12} md={6}>
-            <FELabFreeCardComp
-              title="Permohonan #1"
-              lab="Lab. Farmakologi Toksikologi"
-              status="accepted"
-              tanggalPermohonan="10 November 2022"
-            />
-          </Grid.Col>
+          {labFreeCardArr.map((LabFreeCard: any) => {
+            return (
+              <Grid.Col span={6} xs={12} sm={12} md={6}>
+                {LabFreeCard}
+              </Grid.Col>
+            );
+          })}
         </Grid>
       </MantineProvider>
     </Stack>
