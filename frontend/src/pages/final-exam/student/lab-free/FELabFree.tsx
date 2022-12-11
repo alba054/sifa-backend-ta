@@ -14,7 +14,7 @@ import {
   IFELabFreeFormValues,
 } from "./FELabFreeInterfaces";
 import useArray from "src/hooks/fe-hooks/useArray";
-import FELabFreeCardComp from "./FELabFreeCardComp";
+import FELabFreeCardComp, { IFELabFreeCardComp } from "./FELabFreeCardComp";
 import useUpdateEffect from "src/hooks/fe-hooks/useUpdateEffect";
 
 interface IFEProposalPageProps {}
@@ -22,7 +22,6 @@ interface IFEProposalPageProps {}
 const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { array, set, push, remove, filter, update, clear } = useArray([]);
   const [applicationDone, setApplicationDone] = useState(0);
 
   const [isDataExist, setIsDataExist] = useState(true);
@@ -31,10 +30,57 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
     setIsOpen(true);
   }
 
+  const dummyLab: Array<IFELabFreeCardComp> = [
+    {
+      index: 0,
+      title: "Permohonan #1",
+      lab: "Laboratorium Farmaka",
+      status: "process",
+      tanggalPermohonan: new Date()
+        .toLocaleTimeString("id", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+        .replaceAll(".", ":"),
+      handleDeleteLab: handleDeleteLabFreeApplication,
+    },
+    {
+      index: 1,
+      title: "Permohonan #2",
+      lab: "Laboratorium Fisika",
+      status: "rejected",
+      tanggalPermohonan: new Date()
+        .toLocaleTimeString("id", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+        .replaceAll(".", ":"),
+      handleDeleteLab: handleDeleteLabFreeApplication,
+    },
+    {
+      index: 2,
+      title: "Permohonan #3",
+      lab: "Laboratorium Farmaka",
+      status: "accepted",
+      tanggalPermohonan: new Date()
+        .toLocaleTimeString("id", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+        .replaceAll(".", ":"),
+      handleDeleteLab: handleDeleteLabFreeApplication,
+    },
+  ];
+
+  const { array, set, push, remove, filter, update, clear } = useArray(dummyLab);
+
   // ============= Wrong way?
 
   function handleDeleteLabFreeApplication(index: number) {
-    remove(index)
+    remove(index);
     // console.log(array)
     // for (let i = 0; i < array.length; i++) {
     //   console.log(index);
@@ -54,25 +100,22 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
   });
 
   function handleSubmit(values: IFELabFreeFormValues) {
-    push(
-      <FELabFreeCardComp
-        key={array.length}
-        index={array.length}
-        title={`Permohonan #${applicationDone + 1}`}
-        lab={values.laboratory}
-        status="process"
-        tanggalPermohonan={new Date()
-          .toLocaleTimeString("id", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          })
-          .replaceAll(".", ":")}
-        handleDeleteLab={(e) => {
-          handleDeleteLabFreeApplication(e);
-        }}
-      />
-    );
+    const newLabFreeCard: IFELabFreeCardComp = {
+      index: array.length,
+      title: `Permohonan #${applicationDone + 1}`,
+      lab: values.laboratory,
+      status: "process",
+      tanggalPermohonan: new Date()
+        .toLocaleTimeString("id", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+        .replaceAll(".", ":"),
+      handleDeleteLab: handleDeleteLabFreeApplication,
+    };
+
+    push(newLabFreeCard);
 
     setIsOpen(false);
   }
