@@ -145,7 +145,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
         {/* Bebas lab, tugas akhir Header */}
         <LFPHeaderComponent title="Bebas Lab" buttons={buttons} />
         {isDataExist ? (
-          <FELabFreeMain labFreeCardArr={map} />
+          <FELabFreeMain labFreeCardMap={map} />
         ) : (
           <LFPEmptyDataComponent
             title="Belum Ada Permohonan"

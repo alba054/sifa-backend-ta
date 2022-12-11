@@ -8,16 +8,29 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import React from "react";
+import React, { useEffect } from "react";
 import { InfoOutline } from "src/assets/Icons/Fluent";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FELabFreeCardComp, { IFELabFreeCardComp } from "./FELabFreeCardComp";
 
 export interface IFELabFreeMain {
-  labFreeCardArr: any;
+  labFreeCardMap: any;
 }
 
-const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardArr }) => {
+const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap }) => {
+  const { array, set: setArray, push, filter, update, remove, clear } = useArray([])
+
+  useEffect(()=>{
+    clear()
+    for (let key of labFreeCardMap.keys()) {
+      console.log(key)
+      console.log(labFreeCardMap[key])
+      push(labFreeCardMap[key])          
+    }
+  }, [array])
+
+  console.log(array)
+
   return (
     <Stack mt={10} spacing="md">
       <Group className="bg-[rgb(239,246,255)] rounded-xl p-5 items-start">
@@ -60,8 +73,24 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardArr }) => {
         }}
         inherit
       >
+      <Grid className="mt-0" gutter={"xl"}>
+
+          {array.map((e:number, LabFreeCard: IFELabFreeCardComp) => {
+            return (
+              <Grid.Col span={6} xs={12} sm={12} md={6}>
+                <FELabFreeCardComp
+                  key={e}
+                  title={LabFreeCard.title}
+                  lab={LabFreeCard.lab}
+                  status={LabFreeCard.status}
+                  tanggalPermohonan={LabFreeCard.tanggalPermohonan}
+                  handleDeleteLab={LabFreeCard.handleDeleteLab}
+                />
+              </Grid.Col>
+            );
+          })}
+      </Grid>
       </MantineProvider>
-      asd
     </Stack>
   );
 };
