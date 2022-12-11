@@ -60,24 +60,8 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardArr }) => {
         }}
         inherit
       >
-        <Grid className="mt-0" gutter={"xl"}>
-          {labFreeCardArr.map((LabFreeCard: IFELabFreeCardComp) => {
-            return (
-              <Grid.Col span={6} xs={12} sm={12} md={6}>
-                <FELabFreeCardComp
-                  key={LabFreeCard.index}
-                  index={LabFreeCard.index}
-                  title={LabFreeCard.title}
-                  lab={LabFreeCard.lab}
-                  status={LabFreeCard.status}
-                  tanggalPermohonan={LabFreeCard.tanggalPermohonan}
-                  handleDeleteLab={LabFreeCard.handleDeleteLab}
-                />
-              </Grid.Col>
-            );
-          })}
-        </Grid>
       </MantineProvider>
+      asd
     </Stack>
   );
 };

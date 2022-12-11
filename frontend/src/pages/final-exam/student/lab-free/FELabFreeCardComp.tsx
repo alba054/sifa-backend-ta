@@ -22,7 +22,6 @@ import {
 } from "./FELabFreeInterfaces";
 
 export interface IFELabFreeCardComp {
-  index: number;
   title: string;
   lab: string;
   status: "process" | "rejected" | "accepted";
@@ -69,7 +68,6 @@ const statusChip: any = {
 };
 
 const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
-  index,
   title,
   lab,
   status,
@@ -105,7 +103,7 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
   }, [])
 
   function handleSubmitDelete(e:IFELabFreeFormValues) {
-    handleDeleteLab(index);
+    // handleDeleteLab(index);
     setIsOpenAlertModal(false);
   }
   return (

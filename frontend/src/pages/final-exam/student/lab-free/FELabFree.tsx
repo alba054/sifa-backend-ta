@@ -14,6 +14,7 @@ import {
   IFELabFreeFormValues,
 } from "./FELabFreeInterfaces";
 import useArray from "src/hooks/fe-hooks/useArray";
+import useMap, {MapOrEntries} from "src/hooks/fe-hooks/useMap";
 import FELabFreeCardComp, { IFELabFreeCardComp } from "./FELabFreeCardComp";
 import useUpdateEffect from "src/hooks/fe-hooks/useUpdateEffect";
 
@@ -21,9 +22,6 @@ interface IFEProposalPageProps {}
 
 const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const [applicationDone, setApplicationDone] = useState(0);
-
   const [isDataExist, setIsDataExist] = useState(true);
 
   function handleAddApplicationClick() {
@@ -32,7 +30,6 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
 
   const dummyLab: Array<IFELabFreeCardComp> = [
     {
-      index: 0,
       title: "Permohonan #1",
       lab: "Laboratorium Farmaka",
       status: "process",
@@ -46,7 +43,6 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
       handleDeleteLab: handleDeleteLabFreeApplication,
     },
     {
-      index: 1,
       title: "Permohonan #2",
       lab: "Laboratorium Fisika",
       status: "rejected",
@@ -60,7 +56,6 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
       handleDeleteLab: handleDeleteLabFreeApplication,
     },
     {
-      index: 2,
       title: "Permohonan #3",
       lab: "Laboratorium Farmaka",
       status: "accepted",
@@ -75,12 +70,12 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
     },
   ];
 
-  const { array, set, push, remove, filter, update, clear } = useArray(dummyLab);
+  const [map, actions] = useMap(new Map());
 
   // ============= Wrong way?
 
   function handleDeleteLabFreeApplication(index: number) {
-    remove(index);
+    actions.remove(index);
     // console.log(array)
     // for (let i = 0; i < array.length; i++) {
     //   console.log(index);
@@ -101,8 +96,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
 
   function handleSubmit(values: IFELabFreeFormValues) {
     const newLabFreeCard: IFELabFreeCardComp = {
-      index: array.length,
-      title: `Permohonan #${applicationDone + 1}`,
+      title: `Permohonan #${map.size + 1}`,
       lab: values.laboratory,
       status: "process",
       tanggalPermohonan: new Date()
@@ -115,25 +109,18 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
       handleDeleteLab: handleDeleteLabFreeApplication,
     };
 
-    push(newLabFreeCard);
+    actions.set(Date.now(), newLabFreeCard);
 
     setIsOpen(false);
   }
 
-  // Biar dihapus bertambahki
-  useUpdateEffect(() => {
-    return () => {
-      setApplicationDone((e) => e + 1);
-    };
-  }, [array]);
-
   useEffect(() => {
-    if (array.length == 0) {
+    if (map.size == 0) {
       setIsDataExist(false);
     } else {
       setIsDataExist(true);
     }
-  }, [array]);
+  }, [map]);
 
   const buttons: ILFPHeaderButton[] = [
     {
@@ -158,7 +145,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
         {/* Bebas lab, tugas akhir Header */}
         <LFPHeaderComponent title="Bebas Lab" buttons={buttons} />
         {isDataExist ? (
-          <FELabFreeMain labFreeCardArr={array} />
+          <FELabFreeMain labFreeCardArr={map} />
         ) : (
           <LFPEmptyDataComponent
             title="Belum Ada Permohonan"
