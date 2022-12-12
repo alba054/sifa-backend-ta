@@ -14,12 +14,61 @@ import {
 import { LabFreeService } from "../services/labFree.service";
 import { IThesis, IThesisPost } from "../utils/interfaces/thesis.interface";
 import { ThesisService } from "../services/thesis.service";
-import { deleteFile, writeToFile } from "../utils/storage";
 
 dotenv.config();
 
 export class StudentHandler {
-  static async deleteThesis(req: Request, res: Response, next: NextFunction) {
+  static async updateProposedThesis(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, proposalGroupID } = req.params;
+    const body = req.body as IThesisPost;
+
+    try {
+      if (
+        typeof body.title_1st === "undefined" ||
+        typeof body.title_2nd === "undefined"
+      ) {
+        throw new BadRequestError("provide title_1st and title_2nd");
+      }
+
+      if (typeof req.files === "undefined") {
+        throw new BadRequestError("provide files");
+      }
+
+      if (Array.isArray(req.files)) {
+        if (req.files.length !== 2) {
+          throw new BadRequestError("provide 2 files");
+        }
+
+        await ThesisService.editProposedThesis(
+          body,
+          nim,
+          proposalGroupID,
+          req.files[0].buffer,
+          req.files[1].buffer
+        );
+      }
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully post new thesis proposal"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async deleteProposedThesis(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
     const { nim, proposalGroupID } = req.params;
 
     try {
@@ -83,7 +132,7 @@ export class StudentHandler {
       }
 
       const proposalGroupID = uuidv4();
-      const path = `${constants.KRS_AND_KHS_PATH}/${nim}`; // * path to upload krs and khs
+      const path = `${constants.KRS_AND_KHS_PATH}/${nim}`; // * path to save krs and khs
 
       if (typeof req.files === "undefined") {
         throw new BadRequestError("provide files");

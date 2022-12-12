@@ -68,11 +68,17 @@ studentRouter
   );
 
 // * delete thesis (only able if status is in process)
+// * update thesis (only able if status is in process)
 studentRouter
   .route("/:nim/thesis/:proposalGroupID")
   .delete(
     AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
-    StudentHandler.deleteThesis
+    StudentHandler.deleteProposedThesis
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    upload.array("files"),
+    StudentHandler.updateProposedThesis
   );
 
 export default studentRouter;

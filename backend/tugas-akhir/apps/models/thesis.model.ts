@@ -5,14 +5,68 @@ import { InternalServerError } from "../utils/error/internalError";
 import { IThesis } from "../utils/interfaces/thesis.interface";
 
 export class Thesis {
-  static async getInProcessThesis() {
+  // * filter statusPermohonan here to ensure consistency on updating
+  static async editThesis(thesis: IThesis, thesisID: number) {
+    try {
+      const updatedThesis = await prismaDB.tugas_akhir.updateMany({
+        where: {
+          AND: [
+            { taMhsNim: thesis.studentNIM },
+            { proposalGroupID: thesis.proposalGroupID },
+            { statusPermohonan: "Belum_Diproses" },
+            { taId: thesisID },
+          ],
+        },
+        data: {
+          taJudul: thesis.title,
+          taMhsNim: thesis.studentNIM,
+          taFile: thesis.thesisFile,
+          taLabId: Number(thesis.labID) || undefined,
+          taLabId2: Number(thesis.labID2) || undefined,
+          taCatatan: thesis.note,
+          taCatatanMhs: thesis.studentNote,
+          taDosenPengusul: Number(thesis.lecturerPropose) || undefined,
+          taKHS: thesis.KHSPath,
+          taKRS: thesis.KRSPath,
+          proposalGroupID: thesis.proposalGroupID,
+        },
+      });
+
+      return updatedThesis;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
+  static async getInProcessThesis(nim: string) {
     const thesis = await prismaDB.tugas_akhir.findMany({
-      where: { statusPermohonan: "Belum_Diproses" },
+      where: {
+        AND: [
+          {
+            statusPermohonan: "Belum_Diproses",
+          },
+          {
+            taMhsNim: nim,
+          },
+        ],
+      },
+      include: {
+        mahasiswa: true,
+        pengusul: true,
+        ref_laboratorium: true,
+      },
     });
 
     return thesis;
   }
 
+  // * filter statusPermohonan here to ensure consistency on deleting
   static async deleteThesis(nim: string, proposalGroupID: string) {
     try {
       return await prismaDB.tugas_akhir.deleteMany({
@@ -47,7 +101,7 @@ export class Thesis {
       include: {
         mahasiswa: true,
         ref_laboratorium: true,
-        _count: true,
+        // _count: true,
         pengusul: true,
       },
     });
@@ -63,6 +117,7 @@ export class Thesis {
           taMhsNim: thesis.studentNIM,
           taFile: thesis.thesisFile,
           taLabId: Number(thesis.labID) || undefined,
+          taLabId2: Number(thesis.labID2) || undefined,
           taCatatan: thesis.note,
           taCatatanMhs: thesis.studentNote,
           taDosenPengusul: Number(thesis.lecturerPropose) || undefined,
