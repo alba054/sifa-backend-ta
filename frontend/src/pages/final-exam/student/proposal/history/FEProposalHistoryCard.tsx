@@ -1,16 +1,22 @@
-import { Group, Stack, Text, useMantineTheme } from "@mantine/core";
-import React from "react";
-import { FEBookmarkSingleSearchOutline, PersonFilled } from "src/assets/Icons/Fluent";
+import { Button, Group, Stack, Text, useMantineTheme } from "@mantine/core";
+import React, { useState } from "react";
+import {
+  FEBookmarkSingleSearchOutline,
+  FETrashOutline,
+  PersonFilled,
+} from "src/assets/Icons/Fluent";
+import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FERoundedChip from "src/components/fe-components/FERoundedChip";
 
-export interface IFEProposalCard {
+export interface IFEProposalHistoryCard {
+  index: number;
   proposalNumber: string;
   role: "Mahasiswa" | string;
   title: string;
   laboratory: string;
-  mainMentor?: string;
-  sideMentor?: string;
   status: "Dalam Proses" | "Diterima" | "Ditolak";
+  refusalReason: string;
+  onDelete: (e: number) => void;
 }
 
 const statusMap = new Map<
@@ -22,18 +28,34 @@ const statusMap = new Map<
   ["Ditolak", "red"],
 ]);
 
-const FEProposalCard: React.FC<IFEProposalCard> = ({
+const FEProposalHistoryCard: React.FC<IFEProposalHistoryCard> = ({
+  index,
   proposalNumber,
   role,
   title,
   laboratory,
-  mainMentor = "Belum Ditentukan",
-  sideMentor = "Belum Ditentukan",
   status,
+  refusalReason,
+  onDelete,
 }) => {
   const theme = useMantineTheme();
+
+  const [isOpenAlertModal, setIsOpenAlertModal] = useState(false);
+
+  function deleteHistory() {
+    onDelete(index);
+    setIsOpenAlertModal(false);
+  }
+
   return (
     <Group className="p-8 border-[1px] border-secondary-500 box-border rounded-xl drop-shadow-1 shadow-md relative justify-between">
+      <FEAlertModal
+        opened={isOpenAlertModal}
+        setOpened={setIsOpenAlertModal}
+        title="Hapus Usulan"
+        description="Data yang telah dihapus tidak dapat dikembalikan."
+        onSubmit={deleteHistory}
+      />
       <Stack>
         <Group className="mb-0">
           <Text className="text-[22px] font-bold text-primary-text-500">
@@ -59,29 +81,30 @@ const FEProposalCard: React.FC<IFEProposalCard> = ({
             {laboratory}
           </Text>
         </Stack>
-        <Stack className="gap-0">
-          <Text className="text-lg font-bold tracking text-primary-text-500">
-            Pembimbing Utama
-          </Text>
-          <Text className="text-md tracking-2 text-secondary-text-500">
-            {mainMentor}
-          </Text>
-        </Stack>
-        <Stack className="gap-0">
-          <Text className="text-lg font-bold tracking text-primary-text-500">
-            Pembimbing Pendamping
-          </Text>
-          <Text className="text-md tracking-2 text-secondary-text-500">
-            {sideMentor}
-          </Text>
-        </Stack>
         <Stack className="gap-1">
           <Text className="text-lg font-bold tracking text-primary-text-500">
             Status
           </Text>
           <FERoundedChip label={status} type={statusMap.get(status)} />
         </Stack>
+        <Stack className="gap-1">
+          <Text className="text-lg font-bold tracking text-primary-text-500">
+            Alasan Penolakan
+          </Text>
+          <Text className="text-md tracking-2 text-error-500">
+            {refusalReason}
+          </Text>
+        </Stack>
       </Stack>
+      <Button
+        variant="light"
+        onClick={() => {
+          setIsOpenAlertModal(true);
+        }}
+        className="absolute right-8 bottom-8 p-0 m-0 bg-transparent hover:bg-transparent"
+      >
+        <FETrashOutline color="#FF2C56" className="bg-transparent" size={26} />
+      </Button>
       <FEBookmarkSingleSearchOutline
         size={160}
         color={"#F1F1F3"}
@@ -90,4 +113,4 @@ const FEProposalCard: React.FC<IFEProposalCard> = ({
     </Group>
   );
 };
-export default FEProposalCard;
+export default FEProposalHistoryCard;

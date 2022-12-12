@@ -33,11 +33,13 @@ const FESeminar: React.FC<IFESeminar> = ({ }) => {
       label: "Riwayat Seminar",
       type: "modal",
       onClick: handleAddSeminarClick,
-      icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />
+      icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />,
+      disabled: false
     },
     {
       label: "Buat Permohonan",
       type: "modal",
+      disabled: false,
       onClick: handleAddSeminarClick
     }
   ]

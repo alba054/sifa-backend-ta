@@ -5,9 +5,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import DateInput from "src/components/DateInput";
 import DocumentInput from "src/components/DocumentInput";
+import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import FEProfileCard from "src/components/FEProfileCard";
 import { SelectInput, TextInput } from "src/components/FormInput";
 import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
+import { FEROUTES } from "src/routes/final-exam.route";
 import {
   getFileUrl,
   getGenderOptions,
@@ -52,8 +54,15 @@ const FEEditProfilePage: React.FC<IFEEditProfilePageProps> = ({}) => {
     console.log(values);
   }
 
+  const breadCrumbs : Array<IFEBreadCrumbsItem> = [
+    {
+      title: 'Pengaturan Akun',
+      href: FEROUTES.PROFILE
+    },
+  ]
+
   return (
-    <FEStudentMainlayout>
+    <FEStudentMainlayout breadCrumbs={breadCrumbs}>
       <Title order={2} mb={"md"}>
         Edit Profil
       </Title>

@@ -1,39 +1,39 @@
 import { Stack } from "@mantine/core";
 import React from "react";
 import FEProposalCard from "../FEProposalCard";
+import FEProposalHistoryCard, {
+  IFEProposalHistoryCard,
+} from "./FEProposalHistoryCard";
 
-export interface IFEProposalHistoryMain {}
+export interface IFEProposalHistoryMain {
+  finalExamProposalHistoryArray: Array<IFEProposalHistoryCard>;
+  handleDeleteFinalExamProposalHistory: ((e:number)=>void)
+}
 
-const FEProposalHistoryMain: React.FC<IFEProposalHistoryMain> = ({}) => {
+const FEProposalHistoryMain: React.FC<IFEProposalHistoryMain> = ({
+  finalExamProposalHistoryArray,
+  handleDeleteFinalExamProposalHistory
+}) => {
+  
   return (
     <Stack>
-      <FEProposalCard
-        proposalNumber="1"
-        role="Mahasiswa"
-        title="Potensi Tumbuhan Libo (Ficus variegata, Blume) sebagai Sumber Bahan Farmasi Potensial"
-        laboratory="Lab: Biofarmaka, Farmasetika"
-        mainMentor="Belum ditentukan"
-        sideMentor="Belum ditentukan"
-        status="Ditolak"
-      />
-      <FEProposalCard
-        proposalNumber="2"
-        role="Dosen (Rangga Meidianto Asri S.Si., M.Si., Apt.)"
-        title="Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus"
-        laboratory="Lab: Kimia Farmasi"
-        mainMentor="Belum ditentukan"
-        sideMentor="Belum ditentukan"
-        status="Ditolak"
-      />
-      <FEProposalCard
-        proposalNumber="3"
-        role="Mahasiswa"
-        title="Potensi Tumbuhan Lebong (Ficus variegata, Blume) sebagai Sumber Bahan Farmasi Potensial"
-        laboratory="Lab: Biofarmaka, Farmasetika"
-        mainMentor="Belum ditentukan"
-        sideMentor="Belum ditentukan"
-        status="Ditolak"
-      />
+      {finalExamProposalHistoryArray.map(
+        (FEProposalHistory: IFEProposalHistoryCard, index:number) => {
+          return (
+            <FEProposalHistoryCard
+              key={index}
+              index={index}
+              proposalNumber={FEProposalHistory.proposalNumber}
+              role={FEProposalHistory.role}
+              title={FEProposalHistory.title}
+              laboratory={FEProposalHistory.laboratory}
+              status={FEProposalHistory.status}
+              refusalReason={FEProposalHistory.refusalReason}
+              onDelete={handleDeleteFinalExamProposalHistory}
+            />
+          );
+        }
+      )}
     </Stack>
   );
 };

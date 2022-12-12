@@ -9,12 +9,15 @@ import {
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FEProgressBar from "src/components/fe-components/FEProgressBar";
 import FEInputModal from "src/components/FEInputModal";
-import FEProposalCard from "./FEProposalCard";
+import useArray from "src/hooks/fe-hooks/useArray";
+import FEProposalCard, { IFEProposalCard } from "./FEProposalCard";
 import FEProposalDocuments from "./FEProposalDocuments";
 
-export interface IFEProposalMain {}
+export interface IFEProposalMain {
+  finalExamProposalArray: Array<IFEProposalCard>
+}
 
-const FEProposalMain: React.FC<IFEProposalMain> = ({}) => {
+const FEProposalMain: React.FC<IFEProposalMain> = ({finalExamProposalArray}) => {
   const theme = useMantineTheme();
 
   const [alertOpened, setAlertOpened] = useState(false);
@@ -66,7 +69,20 @@ const FEProposalMain: React.FC<IFEProposalMain> = ({}) => {
           currentProgress={2}
         />
       </Stack>
-      <FEProposalCard
+      {finalExamProposalArray.map((proposal: IFEProposalCard) => {
+        return (
+          <FEProposalCard
+            proposalNumber={proposal.proposalNumber}
+            role={proposal.role}
+            title={proposal.title}
+            laboratory={proposal.laboratory}
+            mainMentor={proposal.mainMentor}
+            sideMentor={proposal.sideMentor}
+            status={proposal.status}
+          />
+        );
+      })}
+      {/* <FEProposalCard
         proposalNumber="1"
         role="Mahasiswa"
         title="Potensi Tumbuhan Libo (Ficus variegata, Blume) sebagai Sumber Bahan Farmasi Potensial"
@@ -83,7 +99,7 @@ const FEProposalMain: React.FC<IFEProposalMain> = ({}) => {
         mainMentor="Belum ditentukan"
         sideMentor="Belum ditentukan"
         status="Ditolak"
-      />
+      /> */}
       <FEProposalDocuments />
       <Group grow spacing={"md"}>
         <Button
