@@ -27,14 +27,16 @@ export interface IFELabFreeCardComp {
   lab: string;
   status: "process" | "rejected" | "accepted";
   tanggalPermohonan: string;
-  handleDeleteLab: (e: number) => void;
+  handleDeleteLab: (index: number, lab:string) => void;
   handleUpdateLab: (
     index: string | number,
     title: string,
+    oldLab: string,
     lab: string,
     status: "process" | "rejected" | "accepted",
     tanggalPermohonan: string
   ) => void;
+  possibleLabValue?: Map<string|number, string|number>;
 }
 
 const statusChip: any = {
@@ -83,6 +85,7 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
   tanggalPermohonan,
   handleDeleteLab,
   handleUpdateLab,
+  possibleLabValue= []
 }) => {
   const theme = useMantineTheme();
 
@@ -107,11 +110,12 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
     handleUpdateLab(
       index,
       title,
+      lab,
       newValues.laboratory,
       status,
       tanggalPermohonan
     );
-    console.log(newValues);
+
     setValues(newValues);
     lab = newValues.laboratory;
     setIsOpenEditModal(false);
@@ -122,9 +126,10 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
   }, []);
 
   function handleSubmitDelete(e: IFELabFreeFormValues) {
-    handleDeleteLab(index);
+    handleDeleteLab(index, lab);
     setIsOpenAlertModal(false);
   }
+  
   return (
     <FECard bg={`bg-primary`} leftBorderRadius={"xl"}>
       <Group className="flex py-6 px-7 border border-[#DFDFDF] relative justify-between rounded-r-xl gap-x-10 drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md bg-white">
@@ -134,7 +139,7 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
           title="Ubah Laboratorium"
           setOpened={setIsOpenEditModal}
           onSubmit={form.onSubmit(handleSubmitEdit) as any}
-          children={<FELabFreeForm form={form} />}
+          children={<FELabFreeForm form={form} data={possibleLabValue} />}
           noButtonLabel="Batal"
           yesButtonLabel="Ubah Laboratorium Permohonan"
         />
