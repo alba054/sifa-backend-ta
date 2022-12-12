@@ -75,8 +75,11 @@ export class AuthenticationMiddleware {
 
         res.locals.user = user;
       } else if (roles === "admin") {
+        // console.log(username);
+        // console.log(password);
+
         if (
-          username !== process.env.ADMIN_USERNAME &&
+          username !== process.env.ADMIN_USERNAME ||
           password !== process.env.ADMIN_PASSWORD
         ) {
           return next(new UnauthenticatedError("authenticate as admin first"));
