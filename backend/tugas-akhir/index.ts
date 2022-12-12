@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 import { ErrorHandler } from "./apps/handlers/error/error.handler";
 import router from "./apps/routers/router";
 
+import swaggerUi from "swagger-ui-express";
+import swaggerfile from "./swagger-output.json";
+
 dotenv.config();
 
 const app = express();
@@ -12,6 +15,7 @@ app.disable("x-powered-by");
 app.use(express.json());
 
 app.use("/api/v0", router);
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerfile));
 app.use(ErrorHandler);
 
 const PORT = Number(process.env.PORT) || 8080;
