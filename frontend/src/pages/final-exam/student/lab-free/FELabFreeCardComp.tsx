@@ -23,10 +23,18 @@ import {
 
 export interface IFELabFreeCardComp {
   title: string;
+  index: any;
   lab: string;
   status: "process" | "rejected" | "accepted";
   tanggalPermohonan: string;
-  handleDeleteLab: (e:number)=>void;
+  handleDeleteLab: (e: number) => void;
+  handleUpdateLab: (
+    index: string | number,
+    title: string,
+    lab: string,
+    status: "process" | "rejected" | "accepted",
+    tanggalPermohonan: string
+  ) => void;
 }
 
 const statusChip: any = {
@@ -68,13 +76,15 @@ const statusChip: any = {
 };
 
 const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
+  index,
   title,
   lab,
   status,
   tanggalPermohonan,
-  handleDeleteLab
+  handleDeleteLab,
+  handleUpdateLab,
 }) => {
-  const theme= useMantineTheme();
+  const theme = useMantineTheme();
 
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const [isOpenAlertModal, setIsOpenAlertModal] = useState(false);
@@ -91,23 +101,32 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
     validate: yupResolver(feLabFreeFormSchema),
   });
 
-  const { getInputProps, values, errors, onSubmit } = form;
+  const { getInputProps, values, errors, onSubmit, setValues } = form;
 
   function handleSubmitEdit(newValues: IFELabFreeFormValues) {
-    console.log(newValues)
+    handleUpdateLab(
+      index,
+      title,
+      newValues.laboratory,
+      status,
+      tanggalPermohonan
+    );
+    console.log(newValues);
+    setValues(newValues);
+    lab = newValues.laboratory;
     setIsOpenEditModal(false);
   }
 
-  useEffect(()=>{
-    values.laboratory= lab
-  }, [])
+  useEffect(() => {
+    values.laboratory = lab;
+  }, []);
 
-  function handleSubmitDelete(e:IFELabFreeFormValues) {
-    // handleDeleteLab(index);
+  function handleSubmitDelete(e: IFELabFreeFormValues) {
+    handleDeleteLab(index);
     setIsOpenAlertModal(false);
   }
   return (
-    <FECard bg={`bg-primary`} leftBorderRadius={'xl'} >
+    <FECard bg={`bg-primary`} leftBorderRadius={"xl"}>
       <Group className="flex py-6 px-7 border border-[#DFDFDF] relative justify-between rounded-r-xl gap-x-10 drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md bg-white">
         {/* drop-shadow-[0_1px_4px_rgba(0,0,0,0.12)] */}
         <FEInputModal

@@ -11,6 +11,7 @@ import {
 import React, { useEffect } from "react";
 import { InfoOutline } from "src/assets/Icons/Fluent";
 import useArray from "src/hooks/fe-hooks/useArray";
+import useUpdateEffect from "src/hooks/fe-hooks/useUpdateEffect";
 import FELabFreeCardComp, { IFELabFreeCardComp } from "./FELabFreeCardComp";
 
 export interface IFELabFreeMain {
@@ -20,16 +21,13 @@ export interface IFELabFreeMain {
 const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap }) => {
   const { array, set: setArray, push, filter, update, remove, clear } = useArray([])
 
-  useEffect(()=>{
+  
+  useUpdateEffect(()=>{
     clear()
-    for (let key of labFreeCardMap.keys()) {
-      console.log(key)
-      console.log(labFreeCardMap[key])
-      push(labFreeCardMap[key])          
+    for (let values of labFreeCardMap.values()) {
+      push(values)
     }
-  }, [array])
-
-  console.log(array)
+  }, [labFreeCardMap])
 
   return (
     <Stack mt={10} spacing="md">
@@ -75,15 +73,18 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap }) => {
       >
       <Grid className="mt-0" gutter={"xl"}>
 
-          {array.map((e:number, LabFreeCard: IFELabFreeCardComp) => {
+          {array.map((LabFreeCard:any, e: number) => {
+            console.log(LabFreeCard.handleUpdateLab)
             return (
               <Grid.Col span={6} xs={12} sm={12} md={6}>
                 <FELabFreeCardComp
                   key={e}
+                  index={LabFreeCard.index}
                   title={LabFreeCard.title}
                   lab={LabFreeCard.lab}
                   status={LabFreeCard.status}
                   tanggalPermohonan={LabFreeCard.tanggalPermohonan}
+                  handleUpdateLab= {LabFreeCard.handleUpdateLab}
                   handleDeleteLab={LabFreeCard.handleDeleteLab}
                 />
               </Grid.Col>
