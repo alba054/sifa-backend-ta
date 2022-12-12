@@ -16,11 +16,11 @@ import FELabFreeCardComp, { IFELabFreeCardComp } from "./FELabFreeCardComp";
 
 export interface IFELabFreeMain {
   labFreeCardMap: any;
+  possibleLab: any;
 }
 
-const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap }) => {
+const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap, possibleLab }) => {
   const { array, set: setArray, push, filter, update, remove, clear } = useArray([])
-
   
   useUpdateEffect(()=>{
     clear()
@@ -86,6 +86,7 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap }) => {
                   tanggalPermohonan={LabFreeCard.tanggalPermohonan}
                   handleUpdateLab= {LabFreeCard.handleUpdateLab}
                   handleDeleteLab={LabFreeCard.handleDeleteLab}
+                  possibleLabValue={possibleLab}
                 />
               </Grid.Col>
             );

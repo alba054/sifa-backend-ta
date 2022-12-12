@@ -13,6 +13,7 @@ export interface ILFPHeaderButton {
   onClick?: () => void;
   href?: string;
   icon?: JSX.Element;
+  disabled: boolean;
 }
 
 interface ILFGHeaderComponentProps {
@@ -34,7 +35,8 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
             <Button
               variant="outline"
               color="primary-text"
-              className="border-[1px] border-[#CACCCE] font-bold"
+              className={`border-[1px] border-[#CACCCE] font-bold disabled`}
+              disabled= {button.disabled}
               onClick={button.onClick}
             >
               {button.icon?? addIcon}
@@ -45,6 +47,7 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
               variant="outline"
               color="primary-text"
               className="border-[1px] border-[#CACCCE] font-bold"
+              disabled= {button.disabled}
               component={Link}
               to={button.href ?? "#"}
             >
