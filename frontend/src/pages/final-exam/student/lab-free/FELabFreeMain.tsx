@@ -28,7 +28,6 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap, possibleLab }
       push(values)
     }
   }, [labFreeCardMap])
-
   return (
     <Stack mt={10} spacing="md">
       <Group className="bg-[rgb(239,246,255)] rounded-xl p-5 items-start">
@@ -74,7 +73,6 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap, possibleLab }
       <Grid className="mt-0" gutter={"xl"}>
 
           {array.map((LabFreeCard:any, e: number) => {
-            console.log(LabFreeCard.handleUpdateLab)
             return (
               <Grid.Col span={6} xs={12} sm={12} md={6}>
                 <FELabFreeCardComp

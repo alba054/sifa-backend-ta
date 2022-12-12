@@ -88,7 +88,7 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
   possibleLabValue= []
 }) => {
   const theme = useMantineTheme();
-
+  
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const [isOpenAlertModal, setIsOpenAlertModal] = useState(false);
 

@@ -20,6 +20,8 @@ import useUpdateEffect from "src/hooks/fe-hooks/useUpdateEffect";
 
 interface IFELabFreeProps {}
 
+const lastApplicationDone = 3;
+
 const labValue: Array<laboratoyObject> = [
   {
     id: 0,
@@ -42,10 +44,69 @@ const labValue: Array<laboratoyObject> = [
 ];
 
 const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
+  const dummyLab = new Map<string | number, IFELabFreeCardComp>([
+    [
+      0,
+      {
+        title: "Permohonan #1",
+        index: 0,
+        lab: "Laboratorium Fisika",
+        status: "process",
+        tanggalPermohonan: new Date()
+          .toLocaleTimeString("id", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })
+          .replaceAll(".", ":"),
+        handleDeleteLab: handleDeleteLabFreeApplication,
+        handleUpdateLab: handleEditLabFreeApplication,
+      },
+    ],
+    [
+      1,
+      {
+        title: "Permohonan #2",
+        index: 1,
+        lab: "Laboratorium Bio Farmaka",
+        status: "rejected",
+        tanggalPermohonan: new Date()
+          .toLocaleTimeString("id", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })
+          .replaceAll(".", ":"),
+        handleDeleteLab: handleDeleteLabFreeApplication,
+        handleUpdateLab: handleEditLabFreeApplication,
+      },
+    ],
+    [
+      2,
+      {
+        title: "Permohonan #3",
+        index: 2,
+        lab: "Laboratorium Matematika",
+        status: "accepted",
+        tanggalPermohonan: new Date()
+          .toLocaleTimeString("id", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })
+          .replaceAll(".", ":"),
+        handleDeleteLab: handleDeleteLabFreeApplication,
+        handleUpdateLab: handleEditLabFreeApplication,
+      },
+    ],
+  ]);
+
+  
+
   const [isOpen, setIsOpen] = useState(false);
   const [isDataExist, setIsDataExist] = useState(true);
-  const [applicationDone, setapplicationDone] = useState(0);
-  const [map, actions] = useMap(new Map());
+  const [applicationDone, setapplicationDone] = useState(lastApplicationDone);
+  const [map, actions] = useMap(dummyLab);
   const {
     array: possibleLabValue,
     set: setArray,
@@ -53,57 +114,12 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
     remove,
     clear,
   } = useArray(JSON.parse(JSON.stringify(labValue))); // <-- Wrong way?
-  
+
   function handleAddApplicationClick() {
     setIsOpen(true);
   }
 
-  // const dummyLab: {} = [
-  //   {
-  //     title: "Permohonan #1",
-  //     index: 1,
-  //     lab: "Laboratorium Farmaka",
-  //     status: "process",
-  //     tanggalPermohonan: new Date()
-  //       .toLocaleTimeString("id", {
-  //         day: "2-digit",
-  //         month: "long",
-  //         year: "numeric",
-  //       })
-  //       .replaceAll(".", ":"),
-  //     handleDeleteLab: handleDeleteLabFreeApplication,
-  //   },
-  //   {
-  //     title: "Permohonan #2",
-  //     index: 2,
-  //     lab: "Laboratorium Fisika",
-  //     status: "rejected",
-  //     tanggalPermohonan: new Date()
-  //       .toLocaleTimeString("id", {
-  //         day: "2-digit",
-  //         month: "long",
-  //         year: "numeric",
-  //       })
-  //       .replaceAll(".", ":"),
-  //     handleDeleteLab: handleDeleteLabFreeApplication,
-  //   },
-  //   {
-  //     title: "Permohonan #3",
-  //     index: 3,
-  //     lab: "Laboratorium Farmaka",
-  //     status: "accepted",
-  //     tanggalPermohonan: new Date()
-  //       .toLocaleTimeString("id", {
-  //         day: "2-digit",
-  //         month: "long",
-  //         year: "numeric",
-  //       })
-  //       .replaceAll(".", ":"),
-  //     handleDeleteLab: handleDeleteLabFreeApplication,
-  //   },
-  // ];
-
-  function handleDeleteLabFreeApplication(index: number, lab:string) {
+  function handleDeleteLabFreeApplication(index: number, lab: string) {
     for (let i = 0; i < possibleLabValue.length; i++) {
       if (possibleLabValue[i].labValue == lab) {
         possibleLabValue[i].show = true;
@@ -111,7 +127,6 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
     }
 
     actions.remove(index);
-    
   }
 
   function handleEditLabFreeApplication(
@@ -190,8 +205,6 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
     }
   }, [map]);
 
-  // console.log(possibleLabValue)
-
   const buttons: ILFPHeaderButton[] = [
     {
       label: "Buat Permohonan Baru",
@@ -211,6 +224,28 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
       })(),
     },
   ];
+
+  if (map.size===possibleLabValue.length){
+    buttons[0].disabled= true
+  }
+
+  useEffect(() => {
+    let prevLabValue: string[] = [];
+
+    map.forEach((value, key) => {
+      prevLabValue.push(value.lab);
+    });
+
+    for (let i = 0; i < possibleLabValue.length; i++) {
+      if (prevLabValue.includes(possibleLabValue[i].labValue)) {
+        possibleLabValue[i].show = false;
+      }
+    }
+
+    if (prevLabValue.length===possibleLabValue.length){
+      buttons[0].disabled= true
+    }
+  }, []);
 
   return (
     <FEStudentMainlayout>
