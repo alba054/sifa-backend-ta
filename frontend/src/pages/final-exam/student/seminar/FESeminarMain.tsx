@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import FEInformationNotification from "src/components/fe-components/FEInformationNotification";
 import FEProgressBar from "src/components/fe-components/FEProgressBar";
 import FEScoreCircleBar from "src/components/fe-components/FEScoreCircleBar";
+import FEProposalDocuments from "../proposal/FEProposalDocuments";
 import FESeminarApprovalStatus from "./FESeminarApprovalStatus";
+import FESeminarEvaluation from "./FESeminarEvaluation";
 import FESeminarMainCard from "./FESeminarMainCard";
 import FESeminarTimeInformation from "./FESeminarTimeInformation";
 import {
@@ -22,6 +24,13 @@ const dummySeminarTimeInformation: any = {
   onlinePlace:
     "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09 Meeting ID: 968 7472 2331 Passcode: f4rmasi",
 };
+
+const dummyMentorNotes : Array<string> = [
+  "“Lorem ipsum dolor sit amet consectetur.”",
+  "“Eleifend ut sodales mauris pellentesque accumsan pharetra semper ut.”",
+  "“Lorem ipsum dolor sit amet consectetur. Eleifend ut sodales mauris pellentesque accumsan pharetra semper ut. Pulvinar nibh id in pharetra tellus ac.”",
+  "“Lorem ipsum dolor sit amet consectetur. Velit sit euismod vulputate quis mauris euismod. Suscipit in et egestas molestie pharetra neque bibendum ornare elementum. Proin nunc non penatibus praesent id sed donec.”"
+]
 
 const FESeminarMain: React.FC<IFESeminarMain> = ({}) => {
   const theme = useMantineTheme();
@@ -84,11 +93,7 @@ const FESeminarMain: React.FC<IFESeminarMain> = ({}) => {
         onlinePlace={dummySeminarTimeInformation.onlinePlace}
         time={dummySeminarTimeInformation.time}
       />
-      <FEScoreCircleBar
-      rubric="A"
-      score="80"
-      title="Skor"
-      />
+      <FESeminarEvaluation mentorNotes={dummyMentorNotes} />
     </Stack>
   );
 };

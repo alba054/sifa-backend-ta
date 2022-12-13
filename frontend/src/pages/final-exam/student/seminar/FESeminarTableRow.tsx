@@ -4,20 +4,22 @@ import React from "react";
 export interface IFESeminarTableRow {
   subject: string;
   value: string | JSX.Element;
-  withBottomBorder: boolean;
+  withBottomBorder?: boolean;
   additionalChildren?: JSX.Element;
+  paddingX?: string
 }
 
 const FESeminarTableRow: React.FC<IFESeminarTableRow> = ({
   subject,
   value,
-  withBottomBorder,
+  withBottomBorder=true,
   additionalChildren,
+  paddingX= "px-8",
 }) => {
   return (
     <Stack
       className={
-        `px-8 mb-1 text-primary-text-500 tracking-[0.0015em] bg-white gap-[2px] relative ` +
+        `${paddingX} mb-1 text-primary-text-500 tracking-[0.0015em] bg-white gap-[2px] relative ` +
         (withBottomBorder ? `border-b border-secondary-500 pb-3` : "")
       }
     >
