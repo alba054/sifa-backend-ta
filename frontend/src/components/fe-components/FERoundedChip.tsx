@@ -1,5 +1,7 @@
 import { Group, Text } from '@mantine/core';
 import React from 'react';
+import { FECheckOutline, FECloseOutline, ProgressClockOutlined } from 'src/assets/Icons/Fluent';
+
 
 export interface IFERoundedChip {
   label: string,
@@ -25,3 +27,41 @@ const FERoundedChip: React.FC<IFERoundedChip> = ({label, leftIcon=null, type="gr
   )
 }
 export default FERoundedChip;
+
+export const statusChip: any = {
+  process: (
+    <FERoundedChip
+      label="Dalam Proses"
+      type="green"
+      leftIcon={
+        <ProgressClockOutlined
+          size={14}
+          color={"#1E9E63"}
+          className="items-center"
+        />
+      }
+    />
+  ),
+  rejected: (
+    <FERoundedChip
+      label="Ditolak"
+      type="red"
+      leftIcon={
+        <FECloseOutline
+          color="#FF2C56"
+          size={12}
+          className="items-center pb-[1px]"
+        />
+      }
+    />
+  ),
+  accepted: (
+    <FERoundedChip
+      label="Diterima"
+      type="blue"
+      leftIcon={
+        <FECheckOutline color="#5F5AF7" size={14} className="items-center" />
+      }
+    />
+  ),
+};

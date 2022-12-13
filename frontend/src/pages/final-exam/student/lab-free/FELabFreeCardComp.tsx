@@ -12,7 +12,7 @@ import {
   ProgressClockOutlined,
 } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
-import FERoundedChip from "src/components/fe-components/FERoundedChip";
+import FERoundedChip, { statusChip } from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
 import FEInputModal from "src/components/FEInputModal";
 import FELabFreeForm from "./FELabFreeForm";
@@ -38,44 +38,6 @@ export interface IFELabFreeCardComp {
   ) => void;
   possibleLabValue?: Map<string|number, string|number>;
 }
-
-const statusChip: any = {
-  process: (
-    <FERoundedChip
-      label="Dalam Proses"
-      type="green"
-      leftIcon={
-        <ProgressClockOutlined
-          size={14}
-          color={"#1E9E63"}
-          className="items-center"
-        />
-      }
-    />
-  ),
-  rejected: (
-    <FERoundedChip
-      label="Ditolak"
-      type="red"
-      leftIcon={
-        <FECloseOutline
-          color="#FF2C56"
-          size={12}
-          className="items-center pb-[1px]"
-        />
-      }
-    />
-  ),
-  accepted: (
-    <FERoundedChip
-      label="Diterima"
-      type="blue"
-      leftIcon={
-        <FECheckOutline color="#5F5AF7" size={14} className="items-center" />
-      }
-    />
-  ),
-};
 
 const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
   index,
@@ -154,7 +116,7 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
 
         <Stack spacing={"sm"}>
           <Stack className="gap-2">
-            {statusChip[`${status}`]}{" "}
+            {statusChip[`${status}`]}
             <Text className="text-sm text-secondary-text-200 ">
               Tanggal Permohonan: {tanggalPermohonan}
             </Text>

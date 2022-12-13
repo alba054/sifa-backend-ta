@@ -10,11 +10,9 @@ interface IFESeminarFormProps {
 
 const SIZE = "md";
 
-
-
 const FESeminarForm: React.FC<IFESeminarFormProps> = ({ form }) => {
   const { getInputProps, errors, setValues, values } = form;
-  
+
   return (
     <Stack spacing={"sm"}>
       <SelectInput
@@ -24,10 +22,11 @@ const FESeminarForm: React.FC<IFESeminarFormProps> = ({ form }) => {
         error={errors["seminarType" as keyof IFESeminarFormValues]}
         data={[
           {
-            value: "Ujian Sidang",
-            label: "Ujian Sidang",
+            value: "Seminar Proposal",
+            label: "Seminar Proposal",
           },
-          { value: "Ujian Proposal", label: "Ujian Proposal" },
+          { value: "Seminar Hasil", label: "Seminar Hasil" },
+          { value: "Ujian Skripsi", label: "Ujian Skripsi" },
         ]}
         label="Jenis Seminar"
         placeholder="Pilih Jenis Seminar"

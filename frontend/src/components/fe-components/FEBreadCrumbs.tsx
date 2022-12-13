@@ -14,12 +14,14 @@ export interface IFEBreadCrumbs {
 
 const FEBreadCrumbs: React.FC<IFEBreadCrumbs> = ({ items, current }) => {
   const tempBreadCrumbs = items.map((item, index) => (
-    <Link to={item.href} className='text-primary-500' >
+    <Link to={item.href} className='text-primary-500 font-semibold' >
       {item.title}
     </Link>
   ));
 
-  const breadCrumbs = [[...tempBreadCrumbs], current]
+  const breadCrumbs = [[...tempBreadCrumbs], (<Text className="text-primary-text-500 inline font-semibold">
+    {current}
+  </Text>)]
 
   return (
     <>

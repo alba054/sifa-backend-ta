@@ -28,14 +28,13 @@ const typeMap = new Map<"info"|"warning", typeMapObject>(
 const FEInformationNotification: React.FC<
   IFEInformationNotification
 > = ({title='Informasi', description, icon, type="info"}) => {
-  console.log(`bg-[${typeMap.get(type)?.bgColor}] rounded-xl p-5 items-start`)
   return (
-    <Group className={`bg-[${typeMap.get(type)?.bgColor}] rounded-xl p-5 items-start`}>
+    <Group className={`rounded-xl p-5 items-start`} bg={typeMap.get(type)?.bgColor}>
       <MediaQuery smallerThan={"lg"} styles={{ display: "none" }}>
         {icon?? <InfoOutline size={30} color={typeMap.get(type)?.textColor} />}
       </MediaQuery>
       <Stack className="w-11/12 gap-2">
-        <Title className={`text-[${typeMap.get(type)?.textColor}] inline`} order={3}>
+        <Title className={`inline`} order={3} color={typeMap.get(type)?.textColor}>
           <MediaQuery
             smallerThan={"lg"}
             styles={{ display: "inline !important" }}
@@ -45,13 +44,7 @@ const FEInformationNotification: React.FC<
           </MediaQuery>
           {title}
         </Title>
-        <Text className={`text-md text-[${typeMap.get(type)?.textColor}] text-justify tracking-2`}>
-          {/* Setelah mengajukan permohonan, tunggu hingga Kepala Laboratorium yang
-          bersangkutan mengecek permohonan Anda.
-          <Text className="font-extrabold inline">Jika diterima</Text>, silahkan
-          download surat hasil permohonan.{" "}
-          <Text className="font-extrabold inline">Jika ditolak</Text>, silahkan
-          lakukan pengajuan ulang jika berkenan. */}
+        <Text className={`text-md text-justify tracking-2`} color={typeMap.get(type)?.textColor} >
           {description}
         </Text>
       </Stack>

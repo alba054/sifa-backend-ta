@@ -53,7 +53,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
         lab: "Laboratorium Fisika",
         status: "process",
         tanggalPermohonan: new Date()
-          .toLocaleTimeString("id", {
+          .toLocaleDateString("id", {
             day: "2-digit",
             month: "long",
             year: "numeric",
@@ -71,7 +71,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
         lab: "Laboratorium Bio Farmaka",
         status: "rejected",
         tanggalPermohonan: new Date()
-          .toLocaleTimeString("id", {
+          .toLocaleDateString("id", {
             day: "2-digit",
             month: "long",
             year: "numeric",
@@ -89,7 +89,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
         lab: "Laboratorium Matematika",
         status: "accepted",
         tanggalPermohonan: new Date()
-          .toLocaleTimeString("id", {
+          .toLocaleDateString("id", {
             day: "2-digit",
             month: "long",
             year: "numeric",
@@ -175,7 +175,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
       lab: values.laboratory,
       status: "process",
       tanggalPermohonan: new Date()
-        .toLocaleTimeString("id", {
+        .toLocaleDateString("id", {
           day: "2-digit",
           month: "long",
           year: "numeric",

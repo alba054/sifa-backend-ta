@@ -1,35 +1,35 @@
 import * as yup from "yup";
 
 export interface IFESeminarValidationFormValues {
-  pelaporanPDDikti: File | null;
-  buktiSPPUKT: File | null
-  ijazahTerakhir: File | null;
-  transkripNilai: File | null;
-  pasFotoHitamPutih: File | null;
-  pelaporanNilaiMK: File | null;
-  daftarNilaiFisikMK: File | null;
+  drafProposal: File | null;
+  slidePresentasi: File | null
+  skPembimbing: File | null;
+  skPenguji: File | null;
+  skAktifKuliah: File | null;
+  krs: File | null;
+  buktiTelahMenghadiriSeminarProposal: File | null;
 }
 
 export const feSeminarValidationFormSchema = yup.object({
-  pelaporanPDDikti: yup.object({
-    name: yup.string().required("Tolong input pelaporan PD-Dikti"),
+  drafProposal: yup.object({
+    name: yup.string().required("Tolong input Draf Proposal"),
   }).nullable(),
-  buktiSPPUKT: yup.object({
-    name: yup.string().required("Tolong input bukti SPP / UKT"),
+  slidePresentasi: yup.object({
+    name: yup.string().required("Tolong input Slide Presentasi"),
   }).nullable(),
-  ijazahTerakhir: yup.object({
-    name: yup.string().required("Tolong input ijazah terakhir"),
+  skPembimbing: yup.object({
+    name: yup.string().required("Tolong input SK Pembimbing"),
   }).nullable(),
-  transkripNilai: yup.object({
-    name: yup.string().required("Tolong input transkrip nilai"),
+  skPenguji: yup.object({
+    name: yup.string().required("Tolong input SK Penguji"),
   }).nullable(),
-  pasFotoHitamPutih: yup.object({
-    name: yup.string().required("Tolong input pas foto hitam putih"),
+  skAktifKuliah: yup.object({
+    name: yup.string().required("Tolong input SK Aktif Kuliah"),
   }).nullable(),
-  pelaporanNilaiMK: yup.object({
-    name: yup.string().required("Tolong input pelaporan nilai mata kuliah pada sistem APPS"),
+  krs: yup.object({
+    name: yup.string().required("Tolong input Kartu Rencana Studi"),
   }).nullable(),
-  daftarNilaiFisikMK: yup.object({
-    name: yup.string().required("Tolong input daftar nilai fisik mata kuliah pada sistem APPS"),
+  buktiTelahMenghadiriSeminarProposal: yup.object({
+    name: yup.string().required("Tolong input Bukti telah menghadiri Seminar Proposal minimal 5 kali"),
   }).nullable()
 });

@@ -10,8 +10,8 @@ export interface IFESeminarFileUpload {
 const FESeminarFileUpload: React.FC<IFESeminarFileUpload> = ({title, documentInput}) => {
   const theme = useMantineTheme();
   return (
-    <Stack className="gap-3">
-      <Text className="text-primary-text-500 font-semibold text-[18px] tracking-[0.0015em]">
+    <Stack className="gap-2">
+      <Text className="text-primary-text-500 font-semibold text-[17px] tracking-[0.0015em]">
         {title}
       </Text>
       {documentInput}
