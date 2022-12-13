@@ -14,13 +14,18 @@ import FEProposalCard, { IFEProposalCard } from "./FEProposalCard";
 import FEProposalDocuments from "./FEProposalDocuments";
 
 export interface IFEProposalMain {
-  finalExamProposalArray: Array<IFEProposalCard>
+  finalExamProposalArray: Array<IFEProposalCard>,
+  clearFinalExamProposalArray: (()=>void)
 }
 
-const FEProposalMain: React.FC<IFEProposalMain> = ({finalExamProposalArray}) => {
+const FEProposalMain: React.FC<IFEProposalMain> = ({finalExamProposalArray, clearFinalExamProposalArray}) => {
   const theme = useMantineTheme();
 
   const [alertOpened, setAlertOpened] = useState(false);
+
+  function handleDeleteProposal(){
+    clearFinalExamProposalArray()
+  }
 
   return (
     <Stack className="gap-8">
@@ -29,7 +34,7 @@ const FEProposalMain: React.FC<IFEProposalMain> = ({finalExamProposalArray}) => 
         setOpened={setAlertOpened}
         title="Hapus Usulan?"
         description="Data yang telah dihapus tidak dapat dikembalikan."
-        // onSubmit={onSubmit(handleSubmitDelete) as any}
+        onSubmit={handleDeleteProposal}
       />
       <Stack className="py-7 px-8 border-[1px] border-secondary-500 box-border rounded-xl drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md">
         <Group className="justify-between mb-3">

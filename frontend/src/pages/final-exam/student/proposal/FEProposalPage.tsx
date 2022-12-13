@@ -76,7 +76,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
       <Stack spacing={"xl"}>
         <LFPHeaderComponent title="Tugas Akhir" buttons={buttons} />
         {isDataExist ? (
-          <FEProposalMain finalExamProposalArray={finalExamProposalArray} />
+          <FEProposalMain finalExamProposalArray={finalExamProposalArray} clearFinalExamProposalArray={clear} />
         ) : (
           <LFPEmptyDataComponent
             title="Belum Ada Pengusulan Tugas Akhir"

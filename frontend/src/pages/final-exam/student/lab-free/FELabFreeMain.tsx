@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import React, { useEffect } from "react";
 import { InfoOutline } from "src/assets/Icons/Fluent";
+import FEInformationNotification from "src/components/fe-components/FEInformationNotification";
 import useArray from "src/hooks/fe-hooks/useArray";
 import useUpdateEffect from "src/hooks/fe-hooks/useUpdateEffect";
 import FELabFreeCardComp, { IFELabFreeCardComp } from "./FELabFreeCardComp";
@@ -30,7 +31,20 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap, possibleLab }
   }, [labFreeCardMap])
   return (
     <Stack mt={10} spacing="md">
-      <Group className="bg-[rgb(239,246,255)] rounded-xl p-5 items-start">
+      <FEInformationNotification 
+        description={
+          <Text>
+          Setelah mengajukan permohonan, tunggu hingga Kepala Laboratorium yang
+          bersangkutan mengecek permohonan Anda.
+          <Text className="font-extrabold inline">Jika diterima</Text>, silahkan
+          download surat hasil permohonan.{" "}
+          <Text className="font-extrabold inline">Jika ditolak</Text>, silahkan
+          lakukan pengajuan ulang jika berkenan.
+          </Text>
+        }
+      
+      />
+      {/* <Group className="bg-[rgb(239,246,255)] rounded-xl p-5 items-start">
         <MediaQuery smallerThan={"lg"} styles={{ display: "none" }}>
           <InfoOutline size={30} color={"#3B82F6"} />
         </MediaQuery>
@@ -54,7 +68,7 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap, possibleLab }
             silahkan lakukan pengajuan ulang jika berkenan.
           </Text>
         </Stack>
-      </Group>
+      </Group> */}
       <MantineProvider
         withCSSVariables
         withGlobalStyles

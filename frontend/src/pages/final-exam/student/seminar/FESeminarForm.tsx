@@ -10,6 +10,8 @@ interface IFESeminarFormProps {
 
 const SIZE = "md";
 
+
+
 const FESeminarForm: React.FC<IFESeminarFormProps> = ({ form }) => {
   const { getInputProps, errors, setValues, values } = form;
   

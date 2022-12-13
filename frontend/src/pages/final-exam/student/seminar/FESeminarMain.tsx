@@ -10,6 +10,7 @@ import {
   IFESeminarValidationFormValues,
 } from "./FESeminarValidationInterfaces";
 import FESeminarFileUpload from "./FESeminarFileUpload";
+import FEInformationNotification from "src/components/fe-components/FEInformationNotification";
 
 export interface IFESeminarMain {}
 
@@ -28,6 +29,17 @@ const FESeminarMain: React.FC<IFESeminarMain> = ({}) => {
 
   return (
     <Stack className="gap-8">
+      <FEInformationNotification
+        description={
+          <Text>
+            Setelah melengkapi berkas persyaratan seminar, lakukan penguncian
+            berkas dengan menekan tombol <Text className="font-extrabold inline">Kunci Berkas</Text>. Permohonan tidak akan
+            diproses apabila berkas belum lengkap dan belum melakukan penguncian
+            berkas.
+          </Text>
+        }
+        type="warning"
+      />
       <Stack className="py-7 px-8 border-[1px] border-secondary-500 box-border rounded-xl drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md">
         <Group className="justify-between mb-3">
           <Group spacing={"xs"}>
