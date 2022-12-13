@@ -54,13 +54,11 @@ const FEProposalHistory: React.FC<IFEProposalHistory> = ({}) => {
     clear,
   } = useArray(dummyFEProposalHistoryData);
 
-  const [isDataExist, setIsDataExist] = useState(true);
-
   useEffect(() => {
     if(finalExamProposalHistoryArray.length>0){
-      setIsDataExist(true)
+      setIsHistoryExist(true)
     }else{
-      setIsDataExist(false)
+      setIsHistoryExist(false)
     }
   }, [finalExamProposalHistoryArray])
 
