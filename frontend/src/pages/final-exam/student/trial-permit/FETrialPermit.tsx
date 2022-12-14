@@ -2,17 +2,34 @@ import { Stack } from "@mantine/core";
 import React, { useState } from "react";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton
+  ILFPHeaderButton,
 } from "src/components/fe-components/LFPHeader.component";
 import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
-import {
-  IFETrialPermitFormValues
-} from "./FETrialPermitFormValues";
+import { IFETrialPermitFormValues } from "./FETrialPermitFormValues";
 import FETrialPermitInputModal from "./FETrialPermitInputModal";
+import FETrialPermitMain, { IFETrialPermitMain } from "./FETrialPermitMain";
 
 interface IFETrialPermit {}
 
+const dummyTrialPermitData: IFETrialPermitMain = {
+  applicationDate: "5 Maret 2022",
+  status: "process",
+  currentProgress: 1,
+  editPermit:(()=>{}),
+  deletePermit:(()=>{})
+};
+
+const initialTrialPermitData: IFETrialPermitMain = {
+  applicationDate: "",
+  status: "process",
+  currentProgress: 0,
+  editPermit:(()=>{}),
+  deletePermit:(()=>{})
+};
+
 const FETrialPermit: React.FC<IFETrialPermit> = ({}) => {
+  let trialPermitData = dummyTrialPermitData;
+
   const [isDataExist, setIsDataExist] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -20,18 +37,31 @@ const FETrialPermit: React.FC<IFETrialPermit> = ({}) => {
     setIsOpen(true);
   }
 
+  function handleDeletePermit(){
+    setIsDataExist(false)
+  }
+
   function handleSubmit(values: IFETrialPermitFormValues) {
     console.log(values);
     setIsDataExist(true);
     setIsOpen(false);
+
+    // Bagusji klo begini? atau mending inisialisasi variabel di sini saja?
+    trialPermitData.applicationDate = new Date()
+      .toLocaleDateString("id", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      })
+      .replaceAll(".", ":");
   }
-  
+
   const buttons: ILFPHeaderButton[] = [
     {
       label: "Buat Permohonan",
       type: "modal",
       onClick: handleOpenModal,
-      disabled: false,
+      disabled: isDataExist,
     },
   ];
 
@@ -46,7 +76,13 @@ const FETrialPermit: React.FC<IFETrialPermit> = ({}) => {
       <Stack spacing={"xl"}>
         <LFPHeaderComponent title="Izin Ujian Sidang" buttons={buttons} />
         {isDataExist ? (
-          <div>a</div>
+          <FETrialPermitMain
+            applicationDate={trialPermitData.applicationDate}
+            status={trialPermitData.status}
+            currentProgress={trialPermitData.currentProgress}
+            editPermit={setIsOpen}
+            deletePermit={handleDeletePermit}
+          />
         ) : (
           <LFPEmptyDataComponent
             title="Belum Ada Permohonan"
