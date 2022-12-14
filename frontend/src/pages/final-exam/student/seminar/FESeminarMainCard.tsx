@@ -1,9 +1,10 @@
 import { Button, Stack, Text } from "@mantine/core";
 import { PDF_MIME_TYPE } from "@mantine/dropzone";
 import { useForm, yupResolver } from "@mantine/form";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { LockOutline } from "src/assets/Icons/Fluent";
 import DocumentInput from "src/components/DocumentInput";
+import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FESeminarCardComp from "./FESeminarCardComp";
 import FESeminarFileUpload from "./FESeminarFileUpload";
 import {
@@ -13,22 +14,43 @@ import {
 
 export interface IFESeminarMainCard {
   seminarType: string;
-  title:string;
+  title: string;
 }
 
-const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({seminarType, title}) => {
+const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({
+  seminarType,
+  title,
+}) => {
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isLocked, setIsLocked] = useState(false);
+
   const form = useForm<IFESeminarValidationFormValues>({
     validate: yupResolver(feSeminarValidationFormSchema),
   });
 
+  const { getInputProps, values, errors, onSubmit } = form;
+
   function handleSubmit(values: IFESeminarValidationFormValues) {
-    console.log(values);
+    setIsAlertOpen(true);
   }
 
-  const { getInputProps, values, errors, onSubmit } = form;
+  function handleSubmitAlert() {
+    setIsLocked(!isLocked);
+    setIsAlertOpen(false);
+  }
 
   return (
     <FESeminarCardComp title={seminarType}>
+      <FEAlertModal
+        opened={isAlertOpen}
+        setOpened={setIsAlertOpen}
+        title={"Kunci Seluruh Berkas?"}
+        description={
+          "Pastikan SEMUA berkas yang diupload sudah benar. Anda dapat membuka kunci setelah melakukan aksi ini."
+        }
+        yesButtonLabel="Kunci"
+        onSubmit={handleSubmitAlert}
+      />
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Text className="text-[18px] font-semibold text-primary-500 tracking-[0.0015em] mb-4">
           {title}
@@ -47,6 +69,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({seminarType, title}) =
                   accept={PDF_MIME_TYPE}
                   label=""
                   placeholder="Seret dan tempatkan file ke sini, atau klik untuk memilih file."
+                  disabled={isLocked}
                   description="Ekstensi file PDF, ukuran file maksimal 5 MB."
                   error={
                     errors[
@@ -67,6 +90,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({seminarType, title}) =
                   accept={PDF_MIME_TYPE}
                   label=""
                   placeholder="Seret dan tempatkan file ke sini, atau klik untuk memilih file."
+                  disabled={isLocked}
                   description="Ekstensi file PDF, ukuran file maksimal 5 MB."
                   error={
                     errors[
@@ -88,6 +112,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({seminarType, title}) =
                   accept={PDF_MIME_TYPE}
                   label=""
                   placeholder="Seret dan tempatkan file ke sini, atau klik untuk memilih file."
+                  disabled={isLocked}
                   description="Ekstensi file PDF, ukuran file maksimal 5 MB."
                   error={
                     errors[
@@ -108,6 +133,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({seminarType, title}) =
                   accept={PDF_MIME_TYPE}
                   label=""
                   placeholder="Seret dan tempatkan file ke sini, atau klik untuk memilih file."
+                  disabled={isLocked}
                   description="Ekstensi file PDF, ukuran file maksimal 5 MB."
                   error={
                     errors[
@@ -128,6 +154,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({seminarType, title}) =
                   accept={PDF_MIME_TYPE}
                   label=""
                   placeholder="Seret dan tempatkan file ke sini, atau klik untuk memilih file."
+                  disabled={isLocked}
                   description="Ekstensi file PDF, ukuran file maksimal 5 MB."
                   error={
                     errors[
@@ -148,6 +175,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({seminarType, title}) =
                   accept={PDF_MIME_TYPE}
                   label=""
                   placeholder="Seret dan tempatkan file ke sini, atau klik untuk memilih file."
+                  disabled={isLocked}
                   description="Ekstensi file PDF, ukuran file maksimal 5 MB."
                   error={
                     errors[
@@ -166,6 +194,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({seminarType, title}) =
                   accept={PDF_MIME_TYPE}
                   label=""
                   placeholder="Seret dan tempatkan file ke sini, atau klik untuk memilih file."
+                  disabled={isLocked}
                   description="Ekstensi file PDF, ukuran file maksimal 5 MB."
                   error={
                     errors[
@@ -185,9 +214,15 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({seminarType, title}) =
           type="submit"
           color={"primary"}
           className="w-full"
-          leftIcon={<LockOutline color="white" size={18} className="mr-[-4px]"/>}
+          leftIcon={
+            isLocked === true ? (
+              <LockOutline color="white" size={18} className="mr-[-4px]" />
+            ) : (
+              <LockOutline color="white" size={18} className="mr-[-4px]" />
+            )
+          }
         >
-          Kunci Berkas
+          {isLocked === true ? "Buka Kunci Berkas" : "Kunci Berkas"}
         </Button>
       </form>
     </FESeminarCardComp>

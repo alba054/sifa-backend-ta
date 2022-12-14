@@ -9,7 +9,7 @@ export interface IFEBreadCrumbsItem {
 
 export interface IFEBreadCrumbs {
   items: Array<IFEBreadCrumbsItem>,
-  current: string
+  current?: string
 }
 
 const FEBreadCrumbs: React.FC<IFEBreadCrumbs> = ({ items, current }) => {

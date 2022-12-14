@@ -62,7 +62,7 @@ const FEEditProfilePage: React.FC<IFEEditProfilePageProps> = ({}) => {
   ]
 
   return (
-    <FEStudentMainlayout breadCrumbs={breadCrumbs}>
+    <FEStudentMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Edit Profil">
       <Title order={2} mb={"md"}>
         Edit Profil
       </Title>

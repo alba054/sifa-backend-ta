@@ -1,18 +1,13 @@
-import { Group, Stack, useMantineTheme, Text, Button } from "@mantine/core";
+import { Button, Group, Stack, useMantineTheme } from "@mantine/core";
 import React, { useState } from "react";
 import {
   DeleteOutline,
-  EditOutline,
-  FECalendarOutline,
-  FEPenCircleOutline,
+  EditOutline
 } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
+import FEDocumentList from "src/components/fe-components/FEDocumentList";
 import FEProgressBar from "src/components/fe-components/FEProgressBar";
-import FEStepper from "src/components/fe-components/FEStepper";
-import FEInputModal from "src/components/FEInputModal";
-import useArray from "src/hooks/fe-hooks/useArray";
 import FEProposalCard, { IFEProposalCard } from "./FEProposalCard";
-import FEProposalDocuments from "./FEProposalDocuments";
 
 export interface IFEProposalMain {
   finalExamProposalArray: Array<IFEProposalCard>;
@@ -74,8 +69,12 @@ const FEProposalMain: React.FC<IFEProposalMain> = ({
           />
         );
       })}
-
-      <FEProposalDocuments />
+      <FEDocumentList 
+        title="Dokumen Tugas Akhir"
+        documentList={['SK Pembimbing', 'SK Penguji']}
+        status='Belum Lengkap'
+        info="Dokumen tugas akhir akan diberikan jika usulan diterima."
+      />
       <Group grow spacing={"md"}>
         <Button
           variant="light"

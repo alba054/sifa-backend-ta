@@ -18,7 +18,7 @@ const FENewTopicPage: React.FC<IFENewTopicPageProps> = ({}) => {
   ]
 
   return (
-    <FEStudentMainlayout breadCrumbs={breadCrumbs}>
+    <FEStudentMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Buat Usulan">
       <Stack>
         <Title order={2} mb="md">
           Buat Susulan Tugas Akhir

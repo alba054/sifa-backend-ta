@@ -7,6 +7,7 @@ import {
   Group,
   Button,
   useMantineTheme,
+  createStyles,
 } from "@mantine/core";
 import { DropzoneProps, Dropzone } from "@mantine/dropzone";
 import CloudUploadIcon from "src/assets/Icons/CloudUploadIcon";
@@ -27,6 +28,7 @@ interface IDocumentInputProps extends Omit<DropzoneProps, "onChange"> {
   placeholder?: string;
   withDelete?: boolean;
   color?: MantineColor;
+  disabled?: boolean;
 }
 
 const DocumentInput: React.FC<IDocumentInputProps> = ({
@@ -37,8 +39,9 @@ const DocumentInput: React.FC<IDocumentInputProps> = ({
   placeholder,
   description = "",
   value,
+  disabled = false,
 }) => {
-  const theme= useMantineTheme();
+  const theme = useMantineTheme();
 
   function handleDrop(files: File[]) {
     onChange(files[0]);
@@ -61,18 +64,22 @@ const DocumentInput: React.FC<IDocumentInputProps> = ({
       required
       label={label}
       styles={{
-        label:{
-          color: theme.colors['divider'],
+        label: {
+          color: theme.colors["divider"],
           marginBottom: "10px",
-          fontSize: "14px"  
-        }
+          fontSize: "14px",
+        },
       }}
     >
       <Dropzone
         onDrop={handleDrop}
-        className="items-center gap-[1px] border-2 border-[#B5C2D1] pt-7 pb-5 rounded-xl border-dashed"
+        className={
+          `items-center gap-[1px] border-2 border-[#B5C2D1] pt-7 pb-5 rounded-xl border-dashed ` +
+          (disabled == true ? `cursor-context-menu` : ``)
+        }
+        disabled={disabled}
       >
-        <Stack className="items-center gap-4">
+        <Stack className="items-center gap-4 cursor-not-allowed">
           <CloudUploadIcon size={32} color={COLORS.DIVIDER} className="mt-1" />
           <Stack spacing={0} align="center">
             {!!placeholder && (
@@ -102,6 +109,7 @@ const DocumentInput: React.FC<IDocumentInputProps> = ({
             variant="light"
             className="bg-error-500 !important py-[10px] h-max rounded-lg text-white hover:bg-error-500"
             onClick={onDelete}
+            disabled={disabled}
           >
             <DeleteOutline size={16} color={"white"} className="mr-2" />
             Hapus File
