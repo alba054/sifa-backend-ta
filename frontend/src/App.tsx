@@ -110,17 +110,18 @@ function App() {
             </Route>
             <Route path="tugas-akhir">
               <Route index element={<FEHomepage />} />
-              <Route path="proposal" element={<FEProposalPage />} />
-              <Route path="proposal/new" element={<FENewTopicPage />} />
-              <Route path="proposal/history" element={<FEProposalHistory />} />
+              <Route path="tugas-akhir" element={<FEProposalPage />} />
+              <Route path="tugas-akhir/buat" element={<FENewTopicPage />} />
+              <Route path="tugas-akhir/riwayat" element={<FEProposalHistory />} />
               <Route path="bebas-lab" element={<FELabFreeApplication />} />
               <Route path="seminar" element={<FESeminar />} />
-              <Route path="seminar/history" element={<FESeminarHistory />} />
-              <Route path="trial-permit" element={<FETrialPermit />} />
-              <Route path="profile">
+              <Route path="seminar/riwayat" element={<FESeminarHistory />} />
+              <Route path="ujian-sidang" element={<FETrialPermit />} />
+              <Route path="profil">
                 <Route path="" element={<FEProfile />} />
                 <Route path="edit" element={<FEEditProfilePage />} />
               </Route>
+              <Route path="wakil-dekan-1" element={<FEHomepage />} />
             </Route>
             <Route path="bantuan" element={<Help />} />
             <Route path="profil" element={<Profile />} />

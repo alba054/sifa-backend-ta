@@ -14,43 +14,17 @@ import FENavbarMenuItem from "./FENavbarMenuItem.component";
 import { useLocation } from "react-router-dom";
 import FEUserNavbarProfileComponent from "../FEUserNavbarProfile.component";
 
-interface IFEMainNavbarProps {}
+export interface IFEMainNavbarProps {
+  menus: Array<INavbarMenuItem>
+}
 
-interface INavbarMenuItem {
+export interface INavbarMenuItem {
   icon: React.FC<IFluentProps>;
   label: string;
   href: string;
 }
 
-const menus: INavbarMenuItem[] = [
-  {
-    icon: HomeOutline,
-    label: "Home",
-    href: FEROUTES.HOMEPAGE,
-  },
-  {
-    icon: HandshakeOutlineIcon,
-    label: "Bebas Lab",
-    href: FEROUTES.LAB_FREE,
-  },
-  {
-    icon: DocumentRibbonIcon,
-    label: "Tugas Akhir",
-    href: FEROUTES.FINAL_EXAM_PROPOSAL,
-  },
-  {
-    icon: FESeminar,
-    label: "Seminar",
-    href: FEROUTES.SEMINAR,
-  },
-  {
-    icon:FEHammerOutline,
-    label: "Ujian Sidang",
-    href: FEROUTES.TRIAL_PERMIT
-  }
-];
-
-const FEMainNavbar: React.FC<IFEMainNavbarProps> = ({}) => {
+const FEMainNavbar: React.FC<IFEMainNavbarProps> = ({menus}) => {
   const [isHover, setIsHover] = useState(false);
   const { pathname } = useLocation();
 

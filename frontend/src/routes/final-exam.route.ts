@@ -1,11 +1,12 @@
 export const FEROUTES = {
   HOMEPAGE: "/tugas-akhir",
   LAB_FREE: "/tugas-akhir/bebas-lab",
-  FINAL_EXAM_PROPOSAL: "/tugas-akhir/proposal",
-  FINAL_EXAM_PROPOSAL_HISTORY: "/tugas-akhir/proposal/history",
-  NEW_FINAL_EXAM_PROPOSAL: "/tugas-akhir/proposal/new",
-  PROFILE: "/tugas-akhir/profile",
+  FINAL_EXAM_PROPOSAL: "/tugas-akhir/tugas-akhir",
+  FINAL_EXAM_PROPOSAL_HISTORY: "/tugas-akhir/tugas-akhir/riwayat",
+  NEW_FINAL_EXAM_PROPOSAL: "/tugas-akhir/tugas-akhir/buat",
+  PROFILE: "/tugas-akhir/profil",
   SEMINAR: "/tugas-akhir/seminar",
-  SEMINAR_HISTORY: "/tugas-akhir/seminar/history",
-  TRIAL_PERMIT: "/tugas-akhir/trial-permit"
+  SEMINAR_HISTORY: "/tugas-akhir/seminar/riwayat",
+  TRIAL_PERMIT: "/tugas-akhir/ujian-sidang",
+  APPROVAL: "/tugas-akhir/persetujuan"
 };

@@ -1,7 +1,7 @@
 import { AppShell, MediaQuery, Stack } from "@mantine/core";
 import React from "react";
 import {
-  DocumentRibbonIcon, FEHammerOutline, FESeminar, HandshakeOutlineIcon,
+  DocumentRibbonIcon, FECheckSquareOutline, FEHammerOutline, FESeminar, HandshakeOutlineIcon,
   HomeOutline
 } from "src/assets/Icons/Fluent";
 import FEBreadCrumbs, {
@@ -23,28 +23,13 @@ const menus: INavbarMenuItem[] = [
     href: FEROUTES.HOMEPAGE,
   },
   {
-    icon: HandshakeOutlineIcon,
-    label: "Bebas Lab",
+    icon: FECheckSquareOutline,
+    label: "Persetujuan",
     href: FEROUTES.LAB_FREE,
   },
-  {
-    icon: DocumentRibbonIcon,
-    label: "Tugas Akhir",
-    href: FEROUTES.FINAL_EXAM_PROPOSAL,
-  },
-  {
-    icon: FESeminar,
-    label: "Seminar",
-    href: FEROUTES.SEMINAR,
-  },
-  {
-    icon:FEHammerOutline,
-    label: "Ujian Sidang",
-    href: FEROUTES.TRIAL_PERMIT
-  }
 ];
 
-const FEStudentMainlayout: React.FC<IMainLayoutProps> = ({
+const FEFirstViceDeanMainLayout: React.FC<IMainLayoutProps> = ({
   children,
   breadCrumbs,
   breadCrumbsCurrentPage
@@ -71,4 +56,4 @@ const FEStudentMainlayout: React.FC<IMainLayoutProps> = ({
     </AppShell>
   );
 };
-export default FEStudentMainlayout;
+export default FEFirstViceDeanMainLayout;
