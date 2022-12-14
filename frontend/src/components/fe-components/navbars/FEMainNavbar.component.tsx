@@ -6,7 +6,8 @@ import {
   HandshakeOutlineIcon,
   HomeOutline,
   IFluentProps,
-  FESeminar
+  FESeminar,
+  FEHammerOutline
 } from "src/assets/Icons/Fluent";
 import UnhasLogo from "src/assets/images/unhas_logo.png";
 import FENavbarMenuItem from "./FENavbarMenuItem.component";
@@ -42,6 +43,11 @@ const menus: INavbarMenuItem[] = [
     label: "Seminar",
     href: FEROUTES.SEMINAR,
   },
+  {
+    icon:FEHammerOutline,
+    label: "Ujian Sidang",
+    href: FEROUTES.TRIAL_PERMIT
+  }
 ];
 
 const FEMainNavbar: React.FC<IFEMainNavbarProps> = ({}) => {

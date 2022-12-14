@@ -1,17 +1,15 @@
 import { Button, Stack, Text, useMantineTheme } from "@mantine/core";
-import { useForm, yupResolver } from "@mantine/form";
-import React, { useState } from "react";
-import FEAlertModal from "src/components/fe-components/FEAlertModal";
+import React from "react";
 import FEDocumentList from "src/components/fe-components/FEDocumentList";
 import FEInformationNotification from "src/components/fe-components/FEInformationNotification";
 import FEProgressBar from "src/components/fe-components/FEProgressBar";
+import FETableHeader1 from "src/components/fe-components/table/FETableHeader1";
 import FESeminarApprovalStatus from "./FESeminarApprovalStatus";
 import FESeminarEvaluation from "./FESeminarEvaluation";
 import FESeminarMainCard from "./FESeminarMainCard";
 import FESeminarTimeInformation from "./FESeminarTimeInformation";
 import {
-  feSeminarValidationFormSchema,
-  IFESeminarValidationFormValues,
+  IFESeminarValidationFormValues
 } from "./FESeminarValidationInterfaces";
 
 export interface IFESeminarMain {
@@ -51,15 +49,9 @@ const FESeminarMain: React.FC<IFESeminarMain> = ({
 }) => {
   const theme = useMantineTheme();
 
-  const form = useForm<IFESeminarValidationFormValues>({
-    validate: yupResolver(feSeminarValidationFormSchema),
-  });
-
   function handleSubmit(values: IFESeminarValidationFormValues) {
     console.log(values);
   }
-
-  const { getInputProps, values, errors, onSubmit } = form;
 
   return (
     <Stack className="gap-8">
@@ -105,11 +97,13 @@ const FESeminarMain: React.FC<IFESeminarMain> = ({
         onlinePlace={seminarTimeInformation.onlinePlace}
         time={seminarTimeInformation.time}
       />
-      <FESeminarEvaluation
-        mentorNotes={seminarMentorNotes}
-        rubric={seminarRubric}
-        score={seminarScore}
-      />
+      <FETableHeader1 title="Pasca-Seminar" >
+        <FESeminarEvaluation
+          mentorNotes={seminarMentorNotes}
+          rubric={seminarRubric}
+          score={seminarScore}
+        />
+      </FETableHeader1>
       <FEDocumentList
         title="Dokumen Seminar"
         documentList={[

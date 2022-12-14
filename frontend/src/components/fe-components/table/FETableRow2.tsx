@@ -1,7 +1,7 @@
 import { Stack, Text } from "@mantine/core";
 import React from "react";
 
-export interface IFESeminarTableRow {
+export interface IFETableRow2 {
   subject: string;
   value: string | JSX.Element;
   withBottomBorder?: boolean;
@@ -9,7 +9,7 @@ export interface IFESeminarTableRow {
   paddingX?: string
 }
 
-const FESeminarTableRow: React.FC<IFESeminarTableRow> = ({
+const FETableRow2: React.FC<IFETableRow2> = ({
   subject,
   value,
   withBottomBorder=true,
@@ -20,7 +20,7 @@ const FESeminarTableRow: React.FC<IFESeminarTableRow> = ({
     <Stack
       className={
         `${paddingX} mb-1 text-primary-text-500 tracking-[0.0015em] bg-white gap-[2px] relative ` +
-        (withBottomBorder ? `border-b border-secondary-500 pb-3` : "")
+        (withBottomBorder ? `border-b border-secondary-500 pb-3` : "pb-1")
       }
     >
       <Text className="text-md font-bold">{subject}</Text>
@@ -29,4 +29,4 @@ const FESeminarTableRow: React.FC<IFESeminarTableRow> = ({
     </Stack>
   );
 };
-export default FESeminarTableRow;
+export default FETableRow2;

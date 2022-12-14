@@ -1,15 +1,15 @@
 import { Button, Stack, Text } from "@mantine/core";
 import { PDF_MIME_TYPE } from "@mantine/dropzone";
 import { useForm, yupResolver } from "@mantine/form";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { LockOutline } from "src/assets/Icons/Fluent";
 import DocumentInput from "src/components/DocumentInput";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
-import FESeminarCardComp from "./FESeminarCardComp";
-import FESeminarFileUpload from "./FESeminarFileUpload";
+import FETableHeader2 from "src/components/fe-components/table/FETableHeader2";
+import FEFileUpload from "src/components/fe-components/FEFileUpload";
 import {
   feSeminarValidationFormSchema,
-  IFESeminarValidationFormValues,
+  IFESeminarValidationFormValues
 } from "./FESeminarValidationInterfaces";
 
 export interface IFESeminarMainCard {
@@ -40,15 +40,16 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({
   }
 
   return (
-    <FESeminarCardComp title={seminarType}>
+    <FETableHeader2 title={seminarType} >
       <FEAlertModal
         opened={isAlertOpen}
         setOpened={setIsAlertOpen}
-        title={"Kunci Seluruh Berkas?"}
+        title={isLocked? "Buka Kunci Berkas?" : "Kunci Seluruh Berkas?"}
         description={
+          isLocked ? "Buka kunci berkas untuk mengubah file-file berkas" :
           "Pastikan SEMUA berkas yang diupload sudah benar. Anda dapat membuka kunci setelah melakukan aksi ini."
         }
-        yesButtonLabel="Kunci"
+        yesButtonLabel={isLocked? "Buka" : "Kunci"}
         onSubmit={handleSubmitAlert}
       />
       <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -60,7 +61,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({
             Berkas Persyaratan Seminar:
           </Text>
           <Stack className="gap-6">
-            <FESeminarFileUpload
+            <FEFileUpload
               title="Draf Proposal"
               documentInput={
                 <DocumentInput
@@ -81,7 +82,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({
                 />
               }
             />
-            <FESeminarFileUpload
+            <FEFileUpload
               title="Slide Presentasi"
               documentInput={
                 <DocumentInput
@@ -103,7 +104,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({
                 />
               }
             />
-            <FESeminarFileUpload
+            <FEFileUpload
               title="SK Pembimbing"
               documentInput={
                 <DocumentInput
@@ -124,7 +125,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({
                 />
               }
             />
-            <FESeminarFileUpload
+            <FEFileUpload
               title="SK Penguji"
               documentInput={
                 <DocumentInput
@@ -145,7 +146,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({
                 />
               }
             />
-            <FESeminarFileUpload
+            <FEFileUpload
               title="Surat Keterangan Aktif Kuliah"
               documentInput={
                 <DocumentInput
@@ -166,7 +167,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({
                 />
               }
             />
-            <FESeminarFileUpload
+            <FEFileUpload
               title="KRS yang memprogramkan mata kuliah Seminar Proposal"
               documentInput={
                 <DocumentInput
@@ -185,7 +186,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({
                 />
               }
             />
-            <FESeminarFileUpload
+            <FEFileUpload
               title="Bukti telah menghadiri Seminar Proposal minimal 5 kali"
               documentInput={
                 <DocumentInput
@@ -225,7 +226,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({
           {isLocked === true ? "Buka Kunci Berkas" : "Kunci Berkas"}
         </Button>
       </form>
-    </FESeminarCardComp>
+    </FETableHeader2>
   );
 };
 export default FESeminarMainCard;

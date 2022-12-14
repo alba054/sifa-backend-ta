@@ -70,20 +70,12 @@ const FESeminar: React.FC<IFESeminar> = ({}) => {
   });
 
   function handleSubmit(values: IFESeminarFormValues) {
+    // Hapus ini nanti kalau sudah bukan dummy data
     seminarData.seminarType= values.seminarType
 
     setIsOpen(false)
     setIsDataExist(true)
   }
-
-  // useEffect(() => {
-  //   if(seminarData===undefined){
-  //     setIsDataExist(false)
-  //   }else{
-  //     setIsDataExist(true)
-  //   }
-  // }, [seminarData])
-  
 
   const buttons: ILFPHeaderButton[] = [
     {

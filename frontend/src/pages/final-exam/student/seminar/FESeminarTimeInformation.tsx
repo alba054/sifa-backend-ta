@@ -1,7 +1,6 @@
 import React from "react";
-import FETableHeader from "src/components/fe-components/FETableHeader";
-import useArray from "src/hooks/fe-hooks/useArray";
-import FESeminarTableRow from "./FESeminarTableRow";
+import FETableHeader from "src/components/fe-components/table/FETableHeader1";
+import FETableRow2 from "src/components/fe-components/table/FETableRow2";
 
 export interface IFESeminarTimeInformation {
   date: string;
@@ -18,18 +17,18 @@ const FESeminarTimeInformation: React.FC<IFESeminarTimeInformation> = ({
 }) => {
   return (
     <FETableHeader title={"Informasi Waktu Seminar"}>
-      <FESeminarTableRow
+      <FETableRow2
         subject="Hari/Tanggal"
         value={date}
         withBottomBorder={true}
       />
-      <FESeminarTableRow subject="Waktu" value={time} withBottomBorder={true} />
-      <FESeminarTableRow
+      <FETableRow2 subject="Waktu" value={time} withBottomBorder={true} />
+      <FETableRow2
         subject="Tempat (Luring)"
         value={offlinePlace}
         withBottomBorder={true}
       />
-      <FESeminarTableRow
+      <FETableRow2
         subject="Tempat (Daring)"
         value={
           <a href={onlinePlace} target="_blank">

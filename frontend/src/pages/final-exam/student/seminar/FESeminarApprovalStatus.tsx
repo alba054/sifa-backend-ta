@@ -4,8 +4,8 @@ import { ProgressClockOutlined } from "src/assets/Icons/Fluent";
 import FERoundedChip, {
   statusChip,
 } from "src/components/fe-components/FERoundedChip";
-import FETableHeader from "src/components/fe-components/FETableHeader";
-import FESeminarTableRow from "./FESeminarTableRow";
+import FETableHeader from "src/components/fe-components/table/FETableHeader1";
+import FETableRow2 from "src/components/fe-components/table/FETableRow2";
 
 export interface IFESeminarApprovalStatus {
   mainMentor: string;
@@ -17,8 +17,8 @@ export interface IFESeminarApprovalStatus {
 const FESeminarApprovalStatus: React.FC<IFESeminarApprovalStatus> = ({mainMentor, sideMentor, mainMentorApproval, sideMentorApproval}) => {
   return (
     <FETableHeader title={"Status Persetujuan Pembimbing"}>
-      <FESeminarTableRow subject="Pembimbing Utama" value={mainMentor} withBottomBorder={true} additionalChildren={<div className="absolute top-3 right-8">{statusChip[`${mainMentorApproval}`]}</div>}/>
-      <FESeminarTableRow subject="Pembimbing Pendamping" value={sideMentor} withBottomBorder={false} additionalChildren={<div className="absolute top-3 right-8">{statusChip[`${mainMentorApproval}`]}</div>}/>
+      <FETableRow2 subject="Pembimbing Utama" value={mainMentor} withBottomBorder={true} additionalChildren={<div className="absolute top-3 right-8">{statusChip[`${mainMentorApproval}`]}</div>}/>
+      <FETableRow2 subject="Pembimbing Pendamping" value={sideMentor} withBottomBorder={false} additionalChildren={<div className="absolute top-3 right-8">{statusChip[`${mainMentorApproval}`]}</div>}/>
     </FETableHeader>
   );
 };

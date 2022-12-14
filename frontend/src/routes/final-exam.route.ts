@@ -6,5 +6,6 @@ export const FEROUTES = {
   NEW_FINAL_EXAM_PROPOSAL: "/tugas-akhir/proposal/new",
   PROFILE: "/tugas-akhir/profile",
   SEMINAR: "/tugas-akhir/seminar",
-  SEMINAR_HISTORY: "/tugas-akhir/seminar/history"
+  SEMINAR_HISTORY: "/tugas-akhir/seminar/history",
+  TRIAL_PERMIT: "/tugas-akhir/trial-permit"
 };

@@ -1,15 +1,13 @@
 import { Stack } from "@mantine/core";
-import { useForm, yupResolver } from "@mantine/form";
 import React, { useEffect, useState } from "react";
+import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
-import LFPHeaderComponent from "src/components/fe-components/LFPHeader.component";
+import LFPHeaderComponent, { ILFPHeaderButton } from "src/components/fe-components/LFPHeader.component";
+import useArray from "src/hooks/fe-hooks/useArray";
 import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import { ILFPHeaderButton } from "src/components/fe-components/LFPHeader.component";
-import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
-import FEProposalMain from "./FEProposalMain";
 import { IFEProposalCard } from "./FEProposalCard";
-import useArray from "src/hooks/fe-hooks/useArray";
+import FEProposalMain from "./FEProposalMain";
 
 interface IFEProposalPageProps {}
 

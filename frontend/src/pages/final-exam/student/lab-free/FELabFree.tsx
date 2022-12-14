@@ -1,22 +1,21 @@
-import { Grid, Stack } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton,
+  ILFPHeaderButton
 } from "src/components/fe-components/LFPHeader.component";
 import FEInputModal from "src/components/FEInputModal";
+import useArray from "src/hooks/fe-hooks/useArray";
+import useMap from "src/hooks/fe-hooks/useMap";
 import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
-import FELabFreeMain from "./FELabFreeMain";
+import { IFELabFreeCardComp } from "./FELabFreeCardComp";
 import FELabFreeForm, { laboratoyObject } from "./FELabFreeForm";
 import {
   feLabFreeFormSchema,
-  IFELabFreeFormValues,
+  IFELabFreeFormValues
 } from "./FELabFreeInterfaces";
-import useArray from "src/hooks/fe-hooks/useArray";
-import useMap, { MapOrEntries } from "src/hooks/fe-hooks/useMap";
-import FELabFreeCardComp, { IFELabFreeCardComp } from "./FELabFreeCardComp";
-import useUpdateEffect from "src/hooks/fe-hooks/useUpdateEffect";
+import FELabFreeMain from "./FELabFreeMain";
 
 interface IFELabFreeProps {}
 

@@ -1,12 +1,12 @@
 import { Stack, Text } from "@mantine/core";
 import React from "react";
 
-export interface IFETableHeader {
+export interface IFETableHeader1 {
   title: string;
   children: any;
 }
 
-const FETableHeader: React.FC<IFETableHeader> = ({ title, children }) => {
+const FETableHeader1: React.FC<IFETableHeader1> = ({ title, children }) => {
   return (
     <div
       className={`pt-[10px] shadow rounded-xl bg-gradient-to-r to-error-400 from-primary-500 !important drop-[0_1px_4px_rgba(0,0,0,0.12)]`}
@@ -20,4 +20,4 @@ const FETableHeader: React.FC<IFETableHeader> = ({ title, children }) => {
     </div>
   );
 };
-export default FETableHeader;
+export default FETableHeader1;
