@@ -11,7 +11,7 @@ export interface IFEProfileCard {
 
 const FEProfileCard: React.FC<IFEProfileCard> = ({ cardTitle, children, bg="bg-gradient-to-b to-error-400 from-primary-500", cardTitleBottomBorderColor="bg-gradient-to-l from-error to-primary" }) => {
   return (
-    <FECard bg={bg}>
+    <FECard bg={bg} leftBorderRadius='xl'>
       <Stack className={`bg-light p-8`}>
       <Stack className="w-fit gap-1 mb-4">
         <Title order={3} className="text-primary-text-500">

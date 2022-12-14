@@ -59,8 +59,7 @@ const FESeminarMain: React.FC<IFESeminarMain> = ({
         description={
           <Text>
             Setelah melengkapi berkas persyaratan seminar, lakukan penguncian
-            berkas dengan menekan tombol
-            <Text className="font-extrabold inline">Kunci Berkas</Text>.
+            berkas dengan menekan tombol <Text className="font-extrabold inline"> Kunci Berkas</Text>.
             Permohonan tidak akan diproses apabila berkas belum lengkap dan
             belum melakukan penguncian berkas.
           </Text>

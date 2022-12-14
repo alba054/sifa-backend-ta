@@ -1,4 +1,4 @@
-import { Button, Group, Stack, useMantineTheme } from "@mantine/core";
+import { Button, Group, Stack } from "@mantine/core";
 import React, { useState } from "react";
 import {
   DeleteOutline,
@@ -18,8 +18,6 @@ const FEProposalMain: React.FC<IFEProposalMain> = ({
   finalExamProposalArray,
   clearFinalExamProposalArray,
 }) => {
-  const theme = useMantineTheme();
-
   const [alertOpened, setAlertOpened] = useState(false);
 
   function handleDeleteProposal() {

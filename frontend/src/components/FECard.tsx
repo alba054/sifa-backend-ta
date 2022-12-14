@@ -9,7 +9,7 @@ export interface IFECard {
 
 const FECard: React.FC<IFECard> = ({ children, bg="bg-gradient-to-b to-error-400 from-primary-500", leftBorderRadius="[12px]"}) => {
   return (
-    <div className={`pl-[6px] shadow rounded-${leftBorderRadius} ${bg} !important`}>
+    <div className={`pl-[6px] shadow rounded-${leftBorderRadius} ${bg} !important z-0`}>
       {children}
     </div>
   );

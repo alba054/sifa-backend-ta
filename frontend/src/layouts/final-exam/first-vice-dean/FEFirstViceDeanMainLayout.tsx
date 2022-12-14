@@ -1,9 +1,6 @@
 import { AppShell, MediaQuery, Stack } from "@mantine/core";
 import React from "react";
-import {
-  DocumentRibbonIcon, FECheckSquareOutline, FEHammerOutline, FESeminar, HandshakeOutlineIcon,
-  HomeOutline
-} from "src/assets/Icons/Fluent";
+import { FECheckSquareOutlineForNavbar, HomeOutline } from "src/assets/Icons/Fluent";
 import FEBreadCrumbs, {
   IFEBreadCrumbsItem
 } from "src/components/fe-components/FEBreadCrumbs";
@@ -23,9 +20,9 @@ const menus: INavbarMenuItem[] = [
     href: FEROUTES.HOMEPAGE,
   },
   {
-    icon: FECheckSquareOutline,
+    icon: FECheckSquareOutlineForNavbar,
     label: "Persetujuan",
-    href: FEROUTES.LAB_FREE,
+    href: FEROUTES.APPROVAL,
   },
 ];
 

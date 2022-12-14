@@ -144,8 +144,8 @@ export const mantineTheme: MantineThemeOverride = {
                 : undefined,
             paddingLeft: "14px",
             paddingRight: "14px",
-            paddingTop: "10px",
-            paddingBottom: "10px",
+            paddingTop: "12px",
+            paddingBottom: "12px",
             borderRadius: "8px",
             height: "max-content"
           },

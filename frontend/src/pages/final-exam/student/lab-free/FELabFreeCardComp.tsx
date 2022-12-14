@@ -130,12 +130,12 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
               {lab}
             </Text>
           </Stack>
-          <Group className="justify-between mt-1 h-10">
+          <Group className="justify-between mt-1 h-12">
             {status == "accepted" ? (
               <Button
                 variant="light"
-                leftIcon={<FEDownloadOutline size={14} color="#5F5AF7" />}
-                className="bg-primary-500/[0.1] text-primary-500 text-md tracking-wide rounded-lg gap-x-2 hover:bg-primary-500/[0.25] my-0 "
+                leftIcon={<FEDownloadOutline size={14} color="#5F5AF7" className="-mr-[2px]" />}
+                className="bg-primary-500/[0.1] text-primary-500 px-6 text-md tracking-wide rounded-lg hover:bg-primary-500/[0.25] my-0 self-end"
               >
                 Unduh Surat
               </Button>
@@ -151,7 +151,7 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
                     <FEPenOutline
                       color={status == "process" ? "#3B82F6" : "#D1D5DB"}
                       className="bg-white"
-                      size={22}
+                      size={23}
                     />
                   </Button>
                 ) : null}
@@ -163,7 +163,7 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
                   <FETrashOutline
                     color="#FF2C56"
                     className="bg-white"
-                    size={22}
+                    size={23}
                   />
                 </Button>
               </Group>
@@ -173,7 +173,7 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
         <FESearchBookOutline
           size={160}
           color={"#F1F1F3"}
-          className="absolute right-2 z-[-1]"
+          className="absolute right-2"
         />
       </Group>
     </FECard>

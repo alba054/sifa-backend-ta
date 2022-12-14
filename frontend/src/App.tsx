@@ -1,45 +1,48 @@
 import { MantineProvider } from "@mantine/core";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ModalsProvider } from "@mantine/modals";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import FEProposalPage from "src/pages/final-exam/student/proposal/FEProposalPage";
 import CustomFonts from "./CustomFonts";
-import Login from "./pages/global/Login/Login";
-import ResetPassword from "./pages/global/ResetPassword/ResetPassword";
-import Home from "./pages/lecturer/Home";
-import Mark from "./pages/lecturer/Mark";
-import Help from "./pages/lecturer/Help";
-import Assessment from "./pages/lecturer/Assesment";
-import Portfolio from "./pages/lecturer/Portfolio";
-import Profile from "./pages/lecturer/Profile";
-import NotFound from "./pages/global/NotFound";
-import AdminHome from "./pages/admin/Home";
+import Accreditation from "./pages/admin/Accreditation";
 import ClassData from "./pages/admin/Assessment/ClassData";
 import AdminClassInformation from "./pages/admin/Assessment/ClassData/ClassInformation";
-import AdminMarkInformation from "./pages/admin/Assessment/MarksData/MarkInformation";
 import MarksData from "./pages/admin/Assessment/MarksData";
+import AdminMarkInformation from "./pages/admin/Assessment/MarksData/MarkInformation";
 import LecturerData from "./pages/admin/DataMaster/LecturerData";
 import AddLecturer from "./pages/admin/DataMaster/LecturerData/AddLecturer";
 import StudentData from "./pages/admin/DataMaster/StudentData";
-import DataStatus from "./pages/admin/Report/DataStatus";
-import CourseCPL from "./pages/admin/Report/CourseCPL";
-import CourseCPLDetail from "./pages/admin/Report/CourseCPL/CourseCPLDetail";
-import StudentCPL from "./pages/admin/Report/StudentCPL";
-import Accreditation from "./pages/admin/Accreditation";
-import Curriculum from "./pages/admin/References/Curriculum";
+import AdminHome from "./pages/admin/Home";
 import CPL from "./pages/admin/References/CPL";
 import CPMK from "./pages/admin/References/CPMK";
+import Curriculum from "./pages/admin/References/Curriculum";
 import RPS from "./pages/admin/References/RPS";
+import CourseCPL from "./pages/admin/Report/CourseCPL";
+import CourseCPLDetail from "./pages/admin/Report/CourseCPL/CourseCPLDetail";
+import DataStatus from "./pages/admin/Report/DataStatus";
+import StudentCPL from "./pages/admin/Report/StudentCPL";
 import Settings from "./pages/admin/Setting";
-import { mantineTheme } from "./themes/mantine.theme";
 import FEHomepage from "./pages/final-exam/FEHomepage";
-import FEProposalPage from "src/pages/final-exam/student/proposal/FEProposalPage";
+import FEApproval from "./pages/final-exam/first-vice-dean/approval/FEApproval";
+import FEMentorAndExaminersApproval from "./pages/final-exam/first-vice-dean/approval/mentor-and-examiners-approval/FEMentorAndExaminersApproval";
+import FEMentorAndExaminersApprovalMore from "./pages/final-exam/first-vice-dean/approval/mentor-and-examiners-approval/more/FEMentorAndExaminersApprovalMore";
 import FELabFreeApplication from "./pages/final-exam/student/lab-free/FELabFree";
-import { ModalsProvider } from "@mantine/modals";
 import FEEditProfilePage from "./pages/final-exam/student/profile/edit-profile/FEEditProfile.page";
 import FEProfile from "./pages/final-exam/student/profile/profile-main/FEProfile.page";
-import FESeminar from "./pages/final-exam/student/seminar/FESeminar";
-import FENewTopicPage from "./pages/final-exam/student/proposal/new/FENewTopic";
 import FEProposalHistory from "./pages/final-exam/student/proposal/history/FEProposalHistory";
+import FENewTopicPage from "./pages/final-exam/student/proposal/new/FENewTopic";
+import FESeminar from "./pages/final-exam/student/seminar/FESeminar";
 import FESeminarHistory from "./pages/final-exam/student/seminar/history/FESeminarHistory";
 import FETrialPermit from "./pages/final-exam/student/trial-permit/FETrialPermit";
+import Login from "./pages/global/Login/Login";
+import NotFound from "./pages/global/NotFound";
+import ResetPassword from "./pages/global/ResetPassword/ResetPassword";
+import Assessment from "./pages/lecturer/Assesment";
+import Help from "./pages/lecturer/Help";
+import Home from "./pages/lecturer/Home";
+import Mark from "./pages/lecturer/Mark";
+import Portfolio from "./pages/lecturer/Portfolio";
+import Profile from "./pages/lecturer/Profile";
+import { mantineTheme } from "./themes/mantine.theme";
 
 function App() {
   return (
@@ -112,7 +115,10 @@ function App() {
               <Route index element={<FEHomepage />} />
               <Route path="tugas-akhir" element={<FEProposalPage />} />
               <Route path="tugas-akhir/buat" element={<FENewTopicPage />} />
-              <Route path="tugas-akhir/riwayat" element={<FEProposalHistory />} />
+              <Route
+                path="tugas-akhir/riwayat"
+                element={<FEProposalHistory />}
+              />
               <Route path="bebas-lab" element={<FELabFreeApplication />} />
               <Route path="seminar" element={<FESeminar />} />
               <Route path="seminar/riwayat" element={<FESeminarHistory />} />
@@ -121,7 +127,13 @@ function App() {
                 <Route path="" element={<FEProfile />} />
                 <Route path="edit" element={<FEEditProfilePage />} />
               </Route>
-              <Route path="wakil-dekan-1" element={<FEHomepage />} />
+              <Route path="persetujuan">
+                <Route index element={<FEApproval />} />
+                <Route path="sk-pembimbing-dan-penguji">
+                  <Route index element={<FEMentorAndExaminersApproval />} />
+                <Route path="nim/:nim" element={<FEMentorAndExaminersApprovalMore />} />
+                </Route>
+              </Route>
             </Route>
             <Route path="bantuan" element={<Help />} />
             <Route path="profil" element={<Profile />} />
