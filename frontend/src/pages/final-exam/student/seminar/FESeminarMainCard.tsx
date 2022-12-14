@@ -40,7 +40,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({
   }
 
   return (
-    <FETableHeader2 title={seminarType} >
+    <FETableHeader2 title={seminarType} paddingX="px-0" >
       <FEAlertModal
         opened={isAlertOpen}
         setOpened={setIsAlertOpen}
