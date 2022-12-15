@@ -11,14 +11,14 @@ import {
 } from "src/assets/Icons/Fluent";
 import FEDateChip from "src/components/fe-components/FEDateChip";
 import FEHomeCard from "src/components/fe-components/FEHomeCard";
-import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
+import FEFirstViceDeanMainLayout from "src/layouts/final-exam/first-vice-dean/FEFirstViceDeanMainLayout";
 
-interface IFEHomepageProps {}
+interface IFEFirstViceDeanHomepageProps {}
 
-const FEHomepage: React.FC<IFEHomepageProps> = ({}) => {
+const FEFirstViceDeanHomepage: React.FC<IFEFirstViceDeanHomepageProps> = ({}) => {
   const theme= useMantineTheme();
   return (
-    <FEStudentMainlayout>
+    <FEFirstViceDeanMainLayout>
       <FEDateChip />
       <Title order={2} mb={"md"}>
         Home
@@ -81,7 +81,7 @@ const FEHomepage: React.FC<IFEHomepageProps> = ({}) => {
           <Link to={"#"} className="text-primary-500">Selengkapnya <FEDoubleArrowOutline size={11} color={theme.colors['primary'][5]} className="inline align-middle " /></Link>
         </Group>
       </Stack>
-    </FEStudentMainlayout>
+    </FEFirstViceDeanMainLayout>
   );
 };
-export default FEHomepage;
+export default FEFirstViceDeanHomepage;
