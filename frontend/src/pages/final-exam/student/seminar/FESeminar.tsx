@@ -17,7 +17,7 @@ import {
 import FESeminarMain, {
   IFESeminarApprovalStatus,
   IFESeminarTimeInformation,
-  IFESeminarMain,
+  IFESeminarData,
 } from "./FESeminarMain";
 
 export interface IFESeminar {}
@@ -44,7 +44,7 @@ const dummyMentorNotes: Array<string> = [
   "Lorem ipsum dolor sit amet consectetur. Velit sit euismod vulputate quis mauris euismod. Suscipit in et egestas molestie pharetra neque bibendum ornare elementum. Proin nunc non penatibus praesent id sed donec.",
 ];
 
-const dummySeminarData: IFESeminarMain = {
+const dummySeminarData: IFESeminarData = {
   seminarType: "Seminar Proposal",
   proposalTitle:
     "Potensi Tumbuhan Libo (Ficus variegata, Blume) Sebagai Sumber Bahan Farmasi Potensial",
@@ -59,7 +59,7 @@ const dummySeminarData: IFESeminarMain = {
 const FESeminar: React.FC<IFESeminar> = ({}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDataExist, setIsDataExist] = useState(false);
-  const seminarData: IFESeminarMain= dummySeminarData
+  const seminarData: IFESeminarData = dummySeminarData;
 
   function handleAddSeminarClick() {
     setIsOpen(true);
@@ -71,17 +71,17 @@ const FESeminar: React.FC<IFESeminar> = ({}) => {
 
   function handleSubmit(values: IFESeminarFormValues) {
     // Hapus ini nanti kalau sudah bukan dummy data
-    seminarData.seminarType= values.seminarType
+    seminarData.seminarType = values.seminarType;
 
-    setIsOpen(false)
-    setIsDataExist(true)
+    setIsOpen(false);
+    setIsDataExist(true);
   }
 
   const buttons: ILFPHeaderButton[] = [
     {
       label: "Riwayat Seminar",
       type: "href",
-      href:FEROUTES.STUDENT_SEMINAR_HISTORY,
+      href: FEROUTES.STUDENT_SEMINAR_HISTORY,
       icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />,
       disabled: false,
     },
@@ -107,14 +107,12 @@ const FESeminar: React.FC<IFESeminar> = ({}) => {
         <LFPHeaderComponent title="Seminar" buttons={buttons} />
         {isDataExist ? (
           <FESeminarMain
-            seminarType={seminarData.seminarType}
-            proposalTitle={seminarData.proposalTitle}
-            currentSeminarProgress={seminarData.currentSeminarProgress}
-            seminarApprovalStatus={seminarData.seminarApprovalStatus}
-            seminarMentorNotes={seminarData.seminarMentorNotes}
-            seminarTimeInformation={seminarData.seminarTimeInformation}
-            seminarRubric={seminarData.seminarRubric}
-            seminarScore={seminarData.seminarScore}
+            seminarData={seminarData}
+            setIsDataExist={
+              ((e) => {
+                setIsDataExist(e);
+              })
+            }
           />
         ) : (
           <LFPEmptyDataComponent
