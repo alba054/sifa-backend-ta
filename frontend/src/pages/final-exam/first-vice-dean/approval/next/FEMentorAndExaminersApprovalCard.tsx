@@ -31,7 +31,7 @@ const FEMentorAndExaminersApprovalCard: React.FC<
             {laboratory}
           </Text>
         </Stack>
-        <FELinkMore color={theme.colors['secondary-text'][5]} to={`${FEROUTES.APPROVAL_MENTOR_AND_EXAMINERS_MORE}/${nim}`} />
+        <FELinkMore color={theme.colors['secondary-text'][5]} to={`nim/${nim}`} />
         <FEBookmarkSingleSearchOutline
           size={120}
           color={"#F1F1F3"}
