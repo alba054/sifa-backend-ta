@@ -23,8 +23,9 @@ import StudentCPL from "./pages/admin/Report/StudentCPL";
 import Settings from "./pages/admin/Setting";
 import FEHomepage from "./pages/final-exam/FEHomepage";
 import FEApproval from "./pages/final-exam/first-vice-dean/approval/FEApproval";
-import FEMentorAndExaminersApproval from "./pages/final-exam/first-vice-dean/approval/mentor-and-examiners-approval/FEMentorAndExaminersApproval";
-import FEMentorAndExaminersApprovalMore from "./pages/final-exam/first-vice-dean/approval/mentor-and-examiners-approval/more/FEMentorAndExaminersApprovalMore";
+import FEMentorAndExaminersApproval from "./pages/final-exam/first-vice-dean/approval/next/FEMentorAndExaminersApproval";
+import FETrialPermitApproval from "./pages/final-exam/first-vice-dean/approval/next/FETrialPermitApproval";
+import FEMentorAndExaminersApprovalMore from "./pages/final-exam/first-vice-dean/approval/next/more/FEMentorAndExaminersApprovalMore";
 import FELabFreeApplication from "./pages/final-exam/student/lab-free/FELabFree";
 import FEEditProfilePage from "./pages/final-exam/student/profile/edit-profile/FEEditProfile.page";
 import FEProfile from "./pages/final-exam/student/profile/profile-main/FEProfile.page";
@@ -131,7 +132,17 @@ function App() {
                 <Route index element={<FEApproval />} />
                 <Route path="sk-pembimbing-dan-penguji">
                   <Route index element={<FEMentorAndExaminersApproval />} />
-                <Route path="nim/:nim" element={<FEMentorAndExaminersApprovalMore />} />
+                  <Route
+                    path="nim/:nim"
+                    element={<FEMentorAndExaminersApprovalMore />}
+                  />
+                </Route>
+                <Route path="ujian-sidang">
+                  <Route index element={<FETrialPermitApproval />} />
+                  <Route
+                    path="nim/:nim"
+                    element={<FEMentorAndExaminersApprovalMore />}
+                  />
                 </Route>
               </Route>
             </Route>

@@ -10,5 +10,7 @@ export const FEROUTES = {
   TRIAL_PERMIT: "/tugas-akhir/ujian-sidang",
   APPROVAL: "/tugas-akhir/persetujuan",
   APPROVAL_MENTOR_AND_EXAMINERS: "/tugas-akhir/persetujuan/sk-pembimbing-dan-penguji",
-  APPROVAL_MENTOR_AND_EXAMINERS_MORE: "/tugas-akhir/persetujuan/sk-pembimbing-dan-penguji/nim"
+  APPROVAL_MENTOR_AND_EXAMINERS_MORE: "/tugas-akhir/persetujuan/sk-pembimbing-dan-penguji/nim",
+  APPROVAL_TRIAL_PERMIT: "/tugas-akhir/persetujuan/ujian-sidang",
+  APPROVAL_TRIAL_PERMIT_MORE: "/tugas-akhir/persetujuan/ujian-sidang/nim"
 };
