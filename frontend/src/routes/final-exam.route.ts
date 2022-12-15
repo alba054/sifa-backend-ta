@@ -8,7 +8,7 @@ export const FEROUTES = {
   STUDENT_SEMINAR: "/tugas-akhir/mahasiswa/seminar",
   STUDENT_SEMINAR_HISTORY: "/tugas-akhir/mahasiswa/seminar/riwayat",
   STUDENT_TRIAL_PERMIT: "/tugas-akhir/mahasiswa/ujian-sidang",
-  FIRST_VICE_DEAN_HOMEPAGE: "/tugas-akhir/mahasiswa",
+  FIRST_VICE_DEAN_HOMEPAGE: "/tugas-akhir/wakil-dekan-1",
   FIRST_VICE_DEAN_APPROVAL: "/tugas-akhir/wakil-dekan-1/persetujuan",
   FIRST_VICE_DEAN_APPROVAL_MENTOR_AND_EXAMINERS: "/tugas-akhir/wakil-dekan-1/persetujuan/sk-pembimbing-dan-penguji",
   FIRST_VICE_DEAN_APPROVAL_MENTOR_AND_EXAMINERS_MORE: "/tugas-akhir/wakil-dekan-1/persetujuan/sk-pembimbing-dan-penguji/nim",
