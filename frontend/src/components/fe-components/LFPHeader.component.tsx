@@ -28,7 +28,7 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
   const addIcon = <AddFilled className={`mr-1 mb-[1px]`} size={14} />;
   return (
     <Group position="apart">
-      <Title order={2} >{title}</Title>
+      <Title order={2}>{title}</Title>
       <Group>
         {buttons.map((button) => {
           return button.type == "modal" ? (
@@ -36,10 +36,15 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
               variant="outline"
               color="primary-text"
               className={`border-[1px] border-[#CACCCE] font-bold disabled`}
-              disabled= {button.disabled}
+              disabled={button.disabled}
               onClick={button.onClick}
+              leftIcon={button.icon ?? addIcon}
+              styles={{
+                leftIcon: {
+                  marginRight: "2px !important"
+                },
+              }}
             >
-              {button.icon?? addIcon}
               {button.label}
             </Button>
           ) : (
@@ -47,11 +52,16 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
               variant="outline"
               color="primary-text"
               className="border-[1px] border-[#CACCCE] font-bold"
-              disabled= {button.disabled}
+              disabled={button.disabled}
               component={Link}
+              leftIcon={button.icon ?? addIcon}
               to={button.href ?? "#"}
+              styles={{
+                leftIcon: {
+                  marginRight: "2px !important"
+                },
+              }}
             >
-              {button.icon?? addIcon}
               {button.label}
             </Button>
           );

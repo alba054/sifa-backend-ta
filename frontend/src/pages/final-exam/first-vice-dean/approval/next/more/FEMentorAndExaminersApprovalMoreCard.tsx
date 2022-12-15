@@ -31,12 +31,19 @@ const FEMentorAndExaminersApprovalMoreCard: React.FC<
 > = ({ SKType, title, lab, status, tanggalPermohonan, passedTime }) => {
   const [isOpenInputModal, setIsOpenInputModal] = useState(false);
   const [isOpenAlertModal, setIsOpenAlertModal] = useState(false);
+  const [isOpenAlertCancelApprovalModal, setIsOpenAlertCancelApprovalModal] =
+    useState(false);
   const [statusChipStatus, setStatusChipStatus] = useState(status);
 
   const { onSubmit, ...form } =
     useForm<IFEMentorAndExaminaRefusalReasonFormSchema>({
       validate: yupResolver(fEMentorAndExaminaRefusalReasonFormSchema),
     });
+
+  function handleCancelApproval() {
+    setStatusChipStatus("process");
+    setIsOpenAlertCancelApprovalModal(false);
+  }
 
   function handleRefuseApproval(values: IFEMentorAndExaminaRefusalReasonForm) {
     console.log(values);
@@ -102,8 +109,17 @@ const FEMentorAndExaminersApprovalMoreCard: React.FC<
         description="Tekan tombol setuju untuk melakukan persetujuan."
         opened={isOpenAlertModal}
         setOpened={setIsOpenAlertModal}
-        yesButtonLabel={'Setuju'}
+        yesButtonLabel={"Setuju"}
         onSubmit={handleAcceptApproval}
+      />
+      <FEAlertModal
+        title="Batalkan Persetujuan?"
+        description="Tekan tombol 'Batalkan Persetujuan' untuk membatalkan persetujuan."
+        opened={isOpenAlertCancelApprovalModal}
+        setOpened={setIsOpenAlertCancelApprovalModal}
+        yesButtonLabel={"Batalkan Persetujuan"}
+        noButtonLabel={"Tidak"}
+        onSubmit={handleCancelApproval}
       />
       <Group className="flex py-6 px-7 border border-[#DFDFDF] relative justify-between rounded-r-xl gap-x-10 drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md bg-white min-2">
         <Stack spacing={"sm"} className="w-full z-20">
@@ -135,22 +151,34 @@ const FEMentorAndExaminersApprovalMoreCard: React.FC<
             </Text>
           </Stack>
           <Group className="justify-between mt-6 h-10">
-            <Group className="gap-4">
+            {statusChipStatus == "process" ? (
+              <Group className="gap-4">
+                <Button
+                  className="text-white bg-primary-500 hover:bg-primary-700 font-bold px-8"
+                  onClick={() => setIsOpenAlertModal(true)}
+                  variant="light"
+                >
+                  Setuju
+                </Button>
+                <Button
+                  variant="light"
+                  color={"primary"}
+                  onClick={() => setIsOpenInputModal(true)}
+                  className="font-bold hover:bg-white px-4"
+                >
+                  Tolak
+                </Button>
+              </Group>
+            ) : (
               <Button
-                className="text-white bg-primary-500 hover:bg-primary-700 font-bold px-8"
-                onClick={() => setIsOpenAlertModal(true)}
-              >
-                Setuju
-              </Button>
-              <Button
+                className="text-error-500 bg-white hover:bg-white font-bold px-8 border-error-500"
+                // onClick={() => setIsOpenAlertCancelApprovalModal(true)}
+                onClick={handleCancelApproval}
                 variant="light"
-                color={"primary"}
-                onClick={() => setIsOpenInputModal(true)}
-                className="font-bold hover:bg-white px-4"
               >
-                Tolak
+                Batalkan Persetujuan
               </Button>
-            </Group>
+            )}
             <Button
               variant="light"
               className="bg-primary-500/[0.1] text-primary-500 px-6 text-md tracking-wide rounded-lg gap-x-2 hover:bg-primary-500/[0.25] my-0 self-end"
