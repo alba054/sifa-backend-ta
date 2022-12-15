@@ -57,14 +57,14 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
     {
       label: "Riwayat Usulan",
       type: "href",
-      href: FEROUTES.FINAL_EXAM_PROPOSAL_HISTORY,
+      href: FEROUTES.STUDENT_FINAL_EXAM_PROPOSAL_HISTORY,
       icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />,
       disabled: false
     },
     {
       label: "Buat Usulan Baru",
       type: "href",
-      href: FEROUTES.NEW_FINAL_EXAM_PROPOSAL,
+      href: FEROUTES.STUDENT_NEW_FINAL_EXAM_PROPOSAL,
       disabled: isDataExist? true : false
     },
   ];

@@ -16,12 +16,12 @@ const FEApproval: React.FC<IFEApproval> = ({}) => {
         <FEApprovalCard
           label="SK Pembimbing dan Penguji"
           description="Skripsi dan Ujian Akhir"
-          to={FEROUTES.APPROVAL_MENTOR_AND_EXAMINERS}
+          to={FEROUTES.FIRST_VICE_DEAN_APPROVAL_MENTOR_AND_EXAMINERS}
         />
         <FEApprovalCard
           label="SK Izin Ujian Sidang"
           description="Permohonan izin ujian sidang"
-          to={FEROUTES.APPROVAL_TRIAL_PERMIT}
+          to={FEROUTES.FIRST_VICE_DEAN_APPROVAL_TRIAL_PERMIT}
         />
       </Group>
     </FEFirstViceDeanMainLayout>

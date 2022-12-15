@@ -17,12 +17,12 @@ const menus: INavbarMenuItem[] = [
   {
     icon: HomeOutline,
     label: "Home",
-    href: FEROUTES.HOMEPAGE,
+    href: FEROUTES.FIRST_VICE_DEAN_HOMEPAGE,
   },
   {
     icon: FECheckSquareOutlineForNavbar,
     label: "Persetujuan",
-    href: FEROUTES.APPROVAL,
+    href: FEROUTES.FIRST_VICE_DEAN_APPROVAL,
   },
 ];
 

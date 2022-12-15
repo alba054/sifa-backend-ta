@@ -52,7 +52,7 @@ const dummyFESeminarHistory: Array<IFESeminarHistoryCard> = [
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
     title: "Seminar",
-    href: FEROUTES.SEMINAR,
+    href: FEROUTES.STUDENT_SEMINAR,
   },
 ];
 

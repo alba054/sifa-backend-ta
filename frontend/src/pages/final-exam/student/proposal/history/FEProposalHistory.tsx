@@ -15,7 +15,7 @@ export interface IFEProposalHistory {}
 const breadCrumbs : Array<IFEBreadCrumbsItem> = [
   {
     title: 'Tugas Akhir',
-    href: FEROUTES.FINAL_EXAM_PROPOSAL
+    href: FEROUTES.STUDENT_FINAL_EXAM_PROPOSAL
   },
 ]
 

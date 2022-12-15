@@ -20,27 +20,27 @@ const menus: INavbarMenuItem[] = [
   {
     icon: HomeOutline,
     label: "Home",
-    href: FEROUTES.HOMEPAGE,
+    href: FEROUTES.STUDENT_HOMEPAGE,
   },
   {
     icon: HandshakeOutlineIcon,
     label: "Bebas Lab",
-    href: FEROUTES.LAB_FREE,
+    href: FEROUTES.STUDENT_LAB_FREE,
   },
   {
     icon: DocumentRibbonIcon,
     label: "Tugas Akhir",
-    href: FEROUTES.FINAL_EXAM_PROPOSAL,
+    href: FEROUTES.STUDENT_FINAL_EXAM_PROPOSAL,
   },
   {
     icon: FESeminar,
     label: "Seminar",
-    href: FEROUTES.SEMINAR,
+    href: FEROUTES.STUDENT_SEMINAR,
   },
   {
     icon:FEHammerOutline,
     label: "Ujian Sidang",
-    href: FEROUTES.TRIAL_PERMIT
+    href: FEROUTES.STUDENT_TRIAL_PERMIT
   }
 ];
 

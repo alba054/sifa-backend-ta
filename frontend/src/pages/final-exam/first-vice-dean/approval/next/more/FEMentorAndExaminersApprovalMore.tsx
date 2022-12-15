@@ -10,11 +10,11 @@ export interface IFEMentorAndExaminersApprovalMore {}
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
     title: "Persetujuan",
-    href: FEROUTES.APPROVAL,
+    href: FEROUTES.FIRST_VICE_DEAN_APPROVAL,
   },
   {
     title: "SK Pembimbing dan Penguji",
-    href: FEROUTES.APPROVAL_MENTOR_AND_EXAMINERS,
+    href: FEROUTES.FIRST_VICE_DEAN_APPROVAL_MENTOR_AND_EXAMINERS,
   },
 ];
 

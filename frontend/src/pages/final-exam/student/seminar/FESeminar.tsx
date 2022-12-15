@@ -81,7 +81,7 @@ const FESeminar: React.FC<IFESeminar> = ({}) => {
     {
       label: "Riwayat Seminar",
       type: "href",
-      href:FEROUTES.SEMINAR_HISTORY,
+      href:FEROUTES.STUDENT_SEMINAR_HISTORY,
       icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />,
       disabled: false,
     },

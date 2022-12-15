@@ -57,7 +57,7 @@ const FEEditProfilePage: React.FC<IFEEditProfilePageProps> = ({}) => {
   const breadCrumbs : Array<IFEBreadCrumbsItem> = [
     {
       title: 'Pengaturan Akun',
-      href: FEROUTES.PROFILE
+      href: FEROUTES.STUDENT_PROFILE
     },
   ]
 

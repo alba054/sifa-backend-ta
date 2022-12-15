@@ -11,7 +11,7 @@ const FEUserNavbarProfileComponent: React.FC<
   IFEUserNavbarProfileComponentProps
 > = ({ isHover }) => {
   return (
-    <Link to={`${FEROUTES.PROFILE}`}>
+    <Link to={`${FEROUTES.STUDENT_PROFILE}`}>
       <Group noWrap>
         <Image
           src="https://img.celebrities.id/okz/600/49j1HU/master_Qs82l8BI82_886_teknik_menggambar_ilustrasi.jpg"

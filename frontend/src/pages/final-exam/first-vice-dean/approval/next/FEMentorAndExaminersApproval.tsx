@@ -18,7 +18,7 @@ const buttons: ILFPHeaderButton[] = [
   {
     label: "Riwayat Usulan",
     type: "href",
-    href: FEROUTES.FINAL_EXAM_PROPOSAL_HISTORY,
+    href: FEROUTES.STUDENT_FINAL_EXAM_PROPOSAL_HISTORY,
     icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />,
     disabled: false,
   },
@@ -27,7 +27,7 @@ const buttons: ILFPHeaderButton[] = [
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
     title: "Persetujuan",
-    href: FEROUTES.APPROVAL,
+    href: FEROUTES.FIRST_VICE_DEAN_APPROVAL,
   },
 ];
 
