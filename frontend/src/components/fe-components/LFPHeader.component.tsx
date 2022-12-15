@@ -1,4 +1,4 @@
-import { Group, Button, Title } from "@mantine/core";
+import { Group, Button, Title, Tooltip, useMantineTheme } from "@mantine/core";
 
 import React from "react";
 import { Link } from "react-router-dom";
@@ -19,51 +19,82 @@ export interface ILFPHeaderButton {
 interface ILFGHeaderComponentProps {
   title: string;
   buttons: Array<ILFPHeaderButton>;
+  disabledButtonTooltipLabel?: string;
 }
 
 const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
   title,
   buttons,
+  disabledButtonTooltipLabel = "Hapus permohonan yang lama untuk membuat permohonan yang baru",
 }) => {
   const addIcon = <AddFilled className={`mr-1 mb-[1px]`} size={14} />;
+  const theme = useMantineTheme();
   return (
     <Group position="apart">
       <Title order={2}>{title}</Title>
       <Group>
         {buttons.map((button) => {
-          return button.type == "modal" ? (
-            <Button
-              variant="outline"
-              color="primary-text"
-              className={`border-[1px] border-[#CACCCE] font-bold disabled`}
-              disabled={button.disabled}
-              onClick={button.onClick}
-              leftIcon={button.icon ?? addIcon}
+          return (
+            <Tooltip
+              label={disabledButtonTooltipLabel}
+              withArrow
+              color={"rgba(255, 255, 255, 0.8)"}
+              position="bottom-end"
+              multiline
+              width={280}
+              radius={"md"}
+              openDelay={100}
               styles={{
-                leftIcon: {
-                  marginRight: "2px !important"
+                tooltip: {
+                  color: theme.colors["primary-text"][5],
+                  border: `1px solid ${theme.colors["secondary"][5]}`,
+                  padding: "8px 16px",
+                  // textAlign: "justify",
+                  letterSpacing: "0.015em",
+                },
+                arrow: {
+                  border: `1px solid ${theme.colors["secondary"][5]}`,
                 },
               }}
+              disabled={!button.disabled}
             >
-              {button.label}
-            </Button>
-          ) : (
-            <Button
-              variant="outline"
-              color="primary-text"
-              className="border-[1px] border-[#CACCCE] font-bold"
-              disabled={button.disabled}
-              component={Link}
-              leftIcon={button.icon ?? addIcon}
-              to={button.href ?? "#"}
-              styles={{
-                leftIcon: {
-                  marginRight: "2px !important"
-                },
-              }}
-            >
-              {button.label}
-            </Button>
+              <div>
+                {button.type == "modal" ? (
+                  <Button
+                    variant="outline"
+                    color="primary-text"
+                    className={`border-[1px] border-[#CACCCE] font-bold disabled`}
+                    disabled={button.disabled}
+                    onClick={button.onClick}
+                    leftIcon={button.icon ?? addIcon}
+                    styles={{
+                      leftIcon: {
+                        marginRight: "2px !important",
+                      },
+                    }}
+                  >
+                    {button.label}
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline"
+                    color="primary-text"
+                    className="border-[1px] border-[#CACCCE] font-bold"
+                    disabled={button.disabled}
+                    component={Link}
+                    leftIcon={button.icon ?? addIcon}
+                    to={button.href ?? "#"}
+                    styles={{
+                      leftIcon: {
+                        marginRight: "2px !important",
+                      },
+                    }}
+                  >
+                    {button.label}
+                  </Button>
+                )}
+              </div>
+            </Tooltip>
           );
         })}
       </Group>

@@ -15,16 +15,16 @@ const dummyTrialPermitData: IFETrialPermitMain = {
   applicationDate: "5 Maret 2022",
   status: "process",
   currentProgress: 1,
-  editPermit:(()=>{}),
-  deletePermit:(()=>{})
+  editPermit: () => {},
+  deletePermit: () => {},
 };
 
 const initialTrialPermitData: IFETrialPermitMain = {
   applicationDate: "",
   status: "process",
   currentProgress: 0,
-  editPermit:(()=>{}),
-  deletePermit:(()=>{})
+  editPermit: () => {},
+  deletePermit: () => {},
 };
 
 const FETrialPermit: React.FC<IFETrialPermit> = ({}) => {
@@ -37,8 +37,8 @@ const FETrialPermit: React.FC<IFETrialPermit> = ({}) => {
     setIsOpen(true);
   }
 
-  function handleDeletePermit(){
-    setIsDataExist(false)
+  function handleDeletePermit() {
+    setIsDataExist(false);
   }
 
   function handleSubmit(values: IFETrialPermitFormValues) {
@@ -74,7 +74,13 @@ const FETrialPermit: React.FC<IFETrialPermit> = ({}) => {
         handleSubmit={handleSubmit as any}
       />
       <Stack spacing={"xl"}>
-        <LFPHeaderComponent title="Izin Ujian Sidang" buttons={buttons} />
+        <LFPHeaderComponent
+          title="Izin Ujian Sidang"
+          buttons={buttons}
+          disabledButtonTooltipLabel={
+            "Hapus permohonan izin ujian sidang untuk membuat permohonan yang baru"
+          }
+        />
         {isDataExist ? (
           <FETrialPermitMain
             applicationDate={trialPermitData.applicationDate}

@@ -259,7 +259,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
 
       <Stack spacing={"xl"}>
         {/* Bebas lab, tugas akhir Header */}
-        <LFPHeaderComponent title="Bebas Lab" buttons={buttons} />
+        <LFPHeaderComponent title="Bebas Lab" buttons={buttons} disabledButtonTooltipLabel={"Hapus permohonan bebas lab yang lama untuk membuat permohonan yang baru"} />
         {isDataExist ? (
           <FELabFreeMain labFreeCardMap={map} possibleLab={possibleLabValue} />
         ) : (

@@ -88,7 +88,7 @@ const FESeminar: React.FC<IFESeminar> = ({}) => {
     {
       label: "Buat Permohonan",
       type: "modal",
-      disabled: false,
+      disabled: isDataExist,
       onClick: handleAddSeminarClick,
     },
   ];
@@ -104,7 +104,7 @@ const FESeminar: React.FC<IFESeminar> = ({}) => {
       />
 
       <Stack spacing={"xl"}>
-        <LFPHeaderComponent title="Seminar" buttons={buttons} />
+        <LFPHeaderComponent title="Seminar" buttons={buttons} disabledButtonTooltipLabel={"Hapus permohonan seminar yang sekarang untuk membuat permohonan yang baru"} />
         {isDataExist ? (
           <FESeminarMain
             seminarData={seminarData}

@@ -72,7 +72,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
   return (
     <FEStudentMainlayout>
       <Stack spacing={"xl"}>
-        <LFPHeaderComponent title="Tugas Akhir" buttons={buttons} />
+        <LFPHeaderComponent title="Tugas Akhir" buttons={buttons} disabledButtonTooltipLabel={'Hapus usulan tugas akhir yang sekarang untuk membuat usulan baru'} />
         {isDataExist ? (
           <FEProposalMain finalExamProposalArray={finalExamProposalArray} clearFinalExamProposalArray={clear} />
         ) : (

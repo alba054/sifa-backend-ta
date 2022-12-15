@@ -74,7 +74,7 @@ const FESeminarHistory: React.FC<IFESeminarHistory> = ({}) => {
       breadCrumbsCurrentPage="Riwayat Seminar"
     >
       <Stack spacing={"xl"}>
-        <Title order={2}>Riwayat Seminar</Title>
+        <Title order={2} mb={2}>Riwayat Seminar</Title>
         {isHistoryExist ? (
             <FESeminarHistoryMain seminarHistoryData={seminarHistoryData} />
         ) : (

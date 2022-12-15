@@ -65,7 +65,7 @@ const FEProposalHistory: React.FC<IFEProposalHistory> = ({}) => {
   return (
     <FEStudentMainlayout breadCrumbs={breadCrumbs}>
       <Stack spacing={"xl"}>
-        <Title order={2}>Riwayat Usulan Tugas Akhir</Title>
+        <Title order={2} mb={'md'}>Riwayat Usulan Tugas Akhir</Title>
         {isHistoryExist ? (
           <FEProposalHistoryMain finalExamProposalHistoryArray={finalExamProposalHistoryArray} handleDeleteFinalExamProposalHistory={remove} />
         ) : (
