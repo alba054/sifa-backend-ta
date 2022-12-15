@@ -24,16 +24,15 @@ export interface IFEMentorAndExaminersApprovalMoreCard {
   status: "process" | "rejected" | "accepted";
   tanggalPermohonan: string;
   passedTime: string;
+  setStatus: ((e:"process" | "rejected" | "accepted")=>void)
 }
 
 const FEMentorAndExaminersApprovalMoreCard: React.FC<
   IFEMentorAndExaminersApprovalMoreCard
-> = ({ SKType, title, lab, status, tanggalPermohonan, passedTime }) => {
+> = ({ SKType, title, lab, status, tanggalPermohonan, passedTime, setStatus }) => {
   const [isOpenInputModal, setIsOpenInputModal] = useState(false);
-  const [isOpenAlertModal, setIsOpenAlertModal] = useState(false);
   const [isOpenAlertCancelApprovalModal, setIsOpenAlertCancelApprovalModal] =
     useState(false);
-  const [statusChipStatus, setStatusChipStatus] = useState(status);
 
   const { onSubmit, ...form } =
     useForm<IFEMentorAndExaminaRefusalReasonFormSchema>({
@@ -41,19 +40,18 @@ const FEMentorAndExaminersApprovalMoreCard: React.FC<
     });
 
   function handleCancelApproval() {
-    setStatusChipStatus("process");
+    setStatus("process");
     setIsOpenAlertCancelApprovalModal(false);
   }
 
   function handleRefuseApproval(values: IFEMentorAndExaminaRefusalReasonForm) {
     console.log(values);
-    setStatusChipStatus("rejected");
+    setStatus("rejected");
     setIsOpenInputModal(false);
   }
 
   function handleAcceptApproval() {
-    setStatusChipStatus("accepted");
-    setIsOpenAlertModal(false);
+    setStatus("accepted");
   }
 
   const statusChip: any = {
@@ -104,14 +102,7 @@ const FEMentorAndExaminersApprovalMoreCard: React.FC<
         children={<FEMentorAndExaminaRefusalReasonForm form={form} />}
         yesButtonLabel="Lakukan Penolakan"
       />
-      <FEAlertModal
-        title="Setujui Data?"
-        description="Tekan tombol setuju untuk melakukan persetujuan."
-        opened={isOpenAlertModal}
-        setOpened={setIsOpenAlertModal}
-        yesButtonLabel={"Setuju"}
-        onSubmit={handleAcceptApproval}
-      />
+    
       <FEAlertModal
         title="Batalkan Persetujuan?"
         description="Tekan tombol 'Batalkan Persetujuan' untuk membatalkan persetujuan."
@@ -124,7 +115,7 @@ const FEMentorAndExaminersApprovalMoreCard: React.FC<
       <Group className="flex py-6 px-7 border border-[#DFDFDF] relative justify-between rounded-r-xl gap-x-10 drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md bg-white min-2">
         <Stack spacing={"sm"} className="w-full z-20">
           <Stack className="gap-2">
-            {statusChip[`${statusChipStatus}`]}
+            {statusChip[`${status}`]}
             {/* {
               <FERoundedChip
                 label={passedTime}
@@ -151,11 +142,11 @@ const FEMentorAndExaminersApprovalMoreCard: React.FC<
             </Text>
           </Stack>
           <Group className="justify-between mt-6 h-10">
-            {statusChipStatus == "process" ? (
+            {status == "process" ? (
               <Group className="gap-4">
                 <Button
                   className="text-white bg-primary-500 hover:bg-primary-700 font-bold px-8"
-                  onClick={() => setIsOpenAlertModal(true)}
+                  onClick={() => setStatus('accepted')}
                   variant="light"
                 >
                   Setuju

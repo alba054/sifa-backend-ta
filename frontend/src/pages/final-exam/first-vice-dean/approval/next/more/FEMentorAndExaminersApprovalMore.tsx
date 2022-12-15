@@ -1,9 +1,21 @@
-import { Grid, Group, MantineProvider, Stack, Title } from "@mantine/core";
-import React from "react";
+import {
+  Button,
+  Grid,
+  Group,
+  MantineProvider,
+  Stack,
+  Title,
+} from "@mantine/core";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
+import useArray from "src/hooks/fe-hooks/useArray";
 import FEFirstViceDeanMainLayout from "src/layouts/final-exam/first-vice-dean/FEFirstViceDeanMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import FEMentorAndExaminersApprovalMoreCard from "./FEMentorAndExaminersApprovalMoreCard";
+import FEMentorAndExaminersApprovalMoreCard, {
+  IFEMentorAndExaminersApprovalMoreCard,
+} from "./FEMentorAndExaminersApprovalMoreCard";
 
 export interface IFEMentorAndExaminersApprovalMore {}
 
@@ -18,14 +30,53 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   },
 ];
 
+const dummyApprovalCardData: Array<IFEMentorAndExaminersApprovalMoreCard> = [
+  {
+    SKType: "mentor",
+    title: "SK Pembimbing",
+    lab: "Lab. Farmakologi Toksikologi",
+    status: "process",
+    tanggalPermohonan: "12 November 2022",
+    passedTime: "4 menit yang lalu",
+    setStatus: (e: "process" | "rejected" | "accepted") => {},
+  },
+  {
+    SKType: "examiner",
+    title: "SK Penguji",
+    lab: "Lab. Farmakologi Toksikologi",
+    status: "process",
+    tanggalPermohonan: "12 November 2022",
+    passedTime: "4 menit yang lalu",
+    setStatus: (e: "process" | "rejected" | "accepted") => {},
+  },
+];
+
 const FEMentorAndExaminersApprovalMore: React.FC<
   IFEMentorAndExaminersApprovalMore
 > = ({}) => {
+  const [isOpenAlertModal, setIsOpenAlertModal] = useState(false);
+
+  const { array: approvalCardDataArray } = useArray(dummyApprovalCardData);
+  const [mentorStatus, setMentorStatus] = useState(approvalCardDataArray[0].status)
+  const [examinerStatus, setExaminerStatus] = useState(approvalCardDataArray[1].status)
+
+  function handleAcceptApproval(){
+    setIsOpenAlertModal(false)
+  }
+
   return (
     <FEFirstViceDeanMainLayout
       breadCrumbs={breadCrumbs}
       breadCrumbsCurrentPage="Devi Selfira (N011181001)"
     >
+      <FEAlertModal
+        title="Konfirmasi Persetujuan"
+        description="Tekan tombol konfirmasi untuk mengkonfirmasi persetujuan."
+        opened={isOpenAlertModal}
+        setOpened={setIsOpenAlertModal}
+        yesButtonLabel={"Konfirmasi"}
+        onSubmit={handleAcceptApproval}
+      />
       <Title order={2} mb={"md"}>
         Devi Selfira (N011181001)
       </Title>
@@ -44,28 +95,52 @@ const FEMentorAndExaminersApprovalMore: React.FC<
         }}
         inherit
       >
-        <Grid gutter={"xl"}>
-          <Grid.Col span={6} xs={12} sm={12} md={6}>
-            <FEMentorAndExaminersApprovalMoreCard
-              SKType="mentor"
-              title="SK Pembimbing"
-              lab="Lab. Farmakologi Toksikologi"
-              status="process"
-              tanggalPermohonan="12 November 2022"
-              passedTime="4 menit yang lalu"
-            />
-          </Grid.Col>
-          <Grid.Col span={6} xs={12} sm={12} md={6}>
-            <FEMentorAndExaminersApprovalMoreCard
-              SKType="examiner"
-              title="SK Penguji"
-              lab="Lab. Farmakologi Toksikologi"
-              status="process"
-              tanggalPermohonan="12 November 2022"
-              passedTime="4 menit yang lalu"
-            />
-          </Grid.Col>
-        </Grid>
+        <Stack>
+          <Grid gutter={"xl"} className="mb-0">
+            <Grid.Col span={6} xs={12} sm={12} md={6}>
+              <FEMentorAndExaminersApprovalMoreCard
+                SKType={approvalCardDataArray[0].SKType}
+                title={approvalCardDataArray[0].title}
+                lab={approvalCardDataArray[0].lab}
+                status={mentorStatus}
+                tanggalPermohonan={approvalCardDataArray[0].tanggalPermohonan}
+                passedTime={approvalCardDataArray[0].passedTime}
+                setStatus={((e)=>{setMentorStatus(e)})}
+              />
+            </Grid.Col>
+            <Grid.Col span={6} xs={12} sm={12} md={6}>
+              <FEMentorAndExaminersApprovalMoreCard
+                SKType={approvalCardDataArray[1].SKType}
+                title={approvalCardDataArray[1].title}
+                lab={approvalCardDataArray[1].lab}
+                status={examinerStatus}
+                tanggalPermohonan={approvalCardDataArray[1].tanggalPermohonan}
+                passedTime={approvalCardDataArray[1].passedTime}
+                setStatus={((e)=>{setExaminerStatus(e)})}
+              />
+            </Grid.Col>
+          </Grid>
+          <Group className="self-end">
+            <Button
+              variant="light"
+              color={"primary"}
+              // onClick={() => setIsOpenInputModal(true)}
+              className="bg-error-500 text-white hover:bg-error-500 px-8"
+              component={Link}
+              to={FEROUTES.FIRST_VICE_DEAN_APPROVAL_MENTOR_AND_EXAMINERS}
+            >
+              Batal
+            </Button>
+            <Button
+              className="text-white bg-primary-500 hover:bg-primary-700 font-bold px-8"
+              onClick={() => setIsOpenAlertModal(true)}
+              variant="light"
+              disabled={mentorStatus=='process' || examinerStatus=='process'}
+            >
+              Konfirmasi Persetujuan
+            </Button>
+          </Group>
+        </Stack>
       </MantineProvider>
     </FEFirstViceDeanMainLayout>
   );

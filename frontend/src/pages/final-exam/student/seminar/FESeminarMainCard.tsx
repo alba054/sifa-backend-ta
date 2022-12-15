@@ -2,7 +2,7 @@ import { Button, Stack, Text } from "@mantine/core";
 import { PDF_MIME_TYPE } from "@mantine/dropzone";
 import { useForm, yupResolver } from "@mantine/form";
 import React, { useState } from "react";
-import { LockOutline } from "src/assets/Icons/Fluent";
+import { FEUnlockOutline, LockOutline } from "src/assets/Icons/Fluent";
 import DocumentInput from "src/components/DocumentInput";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FETableHeader2 from "src/components/fe-components/table/FETableHeader2";
@@ -220,7 +220,7 @@ const FESeminarMainCard: React.FC<IFESeminarMainCard> = ({
             className="w-full"
             leftIcon={
               isLocked === true ? (
-                <LockOutline color="white" size={18} className="mr-[-4px]" />
+                <FEUnlockOutline color="white" size={16} className="mr-[-4px]" />
               ) : (
                 <LockOutline color="white" size={18} className="mr-[-4px]" />
               )
