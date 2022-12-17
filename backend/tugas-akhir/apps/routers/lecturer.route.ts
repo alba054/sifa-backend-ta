@@ -1,5 +1,6 @@
 import express from "express";
 import { LecturerHandler } from "../handlers/lecturer.handler";
+import { AuthenticationMiddleware } from "../middlewares/auth/authentication.middleware";
 import { AuthorizationMiddleware } from "../middlewares/auth/authorization.middleware";
 import { constants } from "../utils/utils";
 
@@ -15,7 +16,8 @@ lecturerRouter.post(
 // * use {departmentID} as query param to get spesific lecturer based on departmentID
 lecturerRouter.get(
   "/",
-  AuthorizationMiddleware.authorize([constants.SUPERUSER_GROUP_ACCESS]),
+  AuthenticationMiddleware.authenticate("admin"),
+  // AuthorizationMiddleware.authorize([constants.SUPERUSER_GROUP_ACCESS]),
   LecturerHandler.getAllLecturers
 );
 

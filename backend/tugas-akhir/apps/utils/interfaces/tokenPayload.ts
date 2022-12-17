@@ -5,4 +5,7 @@ export interface TokenPayload {
   status: number;
   groupAccess: number;
   description: string;
+  departmentID: number;
+  vocationID: number;
+  labID: number;
 }

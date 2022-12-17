@@ -27,6 +27,8 @@ export async function populateGroupAdmin() {
       nama: "Koordinator Seminar",
     },
     { id: constants.DEAN_GROUP_ACCESS, nama: "Dekanat" },
+    { id: constants.SUBSECTIONHEAD_GROUP_ACCESS, nama: "Kasubag" },
+    { id: constants.ADMINHEAD_GROUP_ACCCESS, nama: "KTU" },
   ];
 
   try {

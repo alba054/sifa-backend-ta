@@ -5,6 +5,9 @@ export interface IUser {
   status?: number;
   groupAccess: number;
   description?: string;
+  departmentID?: number;
+  vocationID?: number;
+  labID?: number;
 }
 
 // export interface IStudentRequestSignUp {

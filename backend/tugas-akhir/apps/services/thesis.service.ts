@@ -7,6 +7,12 @@ import { deleteFile, writeToFile } from "../utils/storage";
 import { constants } from "../utils/utils";
 
 export class ThesisService {
+  static async getProposedThesisByHeadMajor(vocationID: number) {
+    const proposedThesis = await Thesis.getProposedThesisByVocation(vocationID);
+
+    return proposedThesis;
+  }
+
   static async editProposedThesis(
     body: IThesisPost,
     nim: string,
