@@ -14,6 +14,9 @@ export class User {
   status: number;
   groupAccess?: number;
   description?: string;
+  departmentID?: number;
+  vocationID?: number;
+  labID?: number;
 
   constructor(username: string, password: string) {
     this.username = username;
@@ -56,6 +59,21 @@ export class User {
 
   setDescription(description: string) {
     this.description = description;
+    return this;
+  }
+
+  setDepartmentID(departmentID?: number) {
+    this.departmentID = departmentID;
+    return this;
+  }
+
+  setVocationID(vocationID?: number) {
+    this.vocationID = vocationID;
+    return this;
+  }
+
+  setLabID(labID?: number) {
+    this.labID = labID;
     return this;
   }
 

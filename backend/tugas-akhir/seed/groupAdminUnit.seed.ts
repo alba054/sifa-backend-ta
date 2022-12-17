@@ -35,6 +35,42 @@ export async function insertSuperUserRole() {
           aksesNama: "admin fakultas",
           aksesUnitId: 0,
         },
+        {
+          aksesGroupId: constants.VOCATION_ADMIN_GROUP_ACCESS,
+          aksesId: constants.VOCATION_ADMIN_GROUP_ACCESS,
+          aksesNama: "admin prodi",
+          aksesUnitId: 0,
+        },
+        {
+          aksesGroupId: constants.LAB_ADMIN_GROUP_ACCESS,
+          aksesId: constants.LAB_ADMIN_GROUP_ACCESS,
+          aksesNama: "admin lab",
+          aksesUnitId: 0,
+        },
+        {
+          aksesGroupId: constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+          aksesId: constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+          aksesNama: "koordinator seminar",
+          aksesUnitId: 0,
+        },
+        {
+          aksesGroupId: constants.DEAN_GROUP_ACCESS,
+          aksesId: constants.DEAN_GROUP_ACCESS,
+          aksesNama: "dekan",
+          aksesUnitId: 0,
+        },
+        {
+          aksesGroupId: constants.SUBSECTIONHEAD_GROUP_ACCESS,
+          aksesId: constants.SUBSECTIONHEAD_GROUP_ACCESS,
+          aksesNama: "kasubag",
+          aksesUnitId: 0,
+        },
+        {
+          aksesGroupId: constants.ADMINHEAD_GROUP_ACCCESS,
+          aksesId: constants.ADMINHEAD_GROUP_ACCCESS,
+          aksesNama: "KTU",
+          aksesUnitId: 0,
+        },
       ],
     });
     console.info("done");

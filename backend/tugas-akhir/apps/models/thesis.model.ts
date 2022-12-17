@@ -5,6 +5,14 @@ import { InternalServerError } from "../utils/error/internalError";
 import { IThesis } from "../utils/interfaces/thesis.interface";
 
 export class Thesis {
+  static async getProposedThesisByVocation(vocationID: number) {
+    const proposedThesis = await prismaDB.tugas_akhir.findMany({
+      where: { mahasiswa: { mhsPrdId: vocationID } },
+    });
+
+    return proposedThesis;
+  }
+
   // * filter statusPermohonan here to ensure consistency on updating
   static async editThesis(thesis: IThesis, thesisID: number) {
     try {

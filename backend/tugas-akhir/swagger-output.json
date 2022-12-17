@@ -5,7 +5,7 @@
     "description": "private REST API for sifa tugas akhir",
     "contact": {
       "name": "NPE Digital",
-      "url": "npedigihouse.tech",
+      "url": "http://npedigihouse.tech",
       "email": "npedigital@gmail.com"
     },
     "version": "3.0.3"
@@ -16,6 +16,7 @@
   "paths": {
     "/api/v0/users/": {
       "post": {
+        "tags": ["users"],
         "description": "",
         "parameters": [
           {
@@ -54,6 +55,7 @@
     },
     "/api/v0/users/students": {
       "get": {
+        "tags": ["users"],
         "description": "",
         "parameters": [
           {
@@ -81,6 +83,7 @@
     },
     "/api/v0/users/login": {
       "post": {
+        "tags": ["users"],
         "description": "",
         "parameters": [
           {
@@ -98,6 +101,7 @@
     },
     "/api/v0/users/{username}/forget-password": {
       "get": {
+        "tags": ["users"],
         "description": "",
         "parameters": [
           {
@@ -121,6 +125,7 @@
     },
     "/api/v0/users/{username}/reset-password/{token}": {
       "post": {
+        "tags": ["users"],
         "description": "",
         "parameters": [
           {
@@ -162,6 +167,7 @@
     },
     "/api/v0/students/{nim}": {
       "get": {
+        "tags": ["students"],
         "description": "",
         "parameters": [
           {
@@ -183,6 +189,7 @@
         }
       },
       "put": {
+        "tags": ["students"],
         "description": "",
         "parameters": [
           {
@@ -218,6 +225,7 @@
     },
     "/api/v0/students/{nim}/reqlabs": {
       "get": {
+        "tags": ["students"],
         "description": "",
         "parameters": [
           {
@@ -239,6 +247,7 @@
         }
       },
       "post": {
+        "tags": ["students"],
         "description": "",
         "parameters": [
           {
@@ -277,6 +286,7 @@
     },
     "/api/v0/students/{nim}/reqlabs/{reqlabsID}": {
       "put": {
+        "tags": ["students"],
         "description": "",
         "parameters": [
           {
@@ -316,6 +326,7 @@
         }
       },
       "delete": {
+        "tags": ["students"],
         "description": "",
         "parameters": [
           {
@@ -345,6 +356,7 @@
     },
     "/api/v0/students/{nim}/thesis": {
       "get": {
+        "tags": ["students"],
         "description": "",
         "parameters": [
           {
@@ -371,6 +383,7 @@
         }
       },
       "post": {
+        "tags": ["students"],
         "description": "",
         "parameters": [
           {
@@ -427,6 +440,7 @@
     },
     "/api/v0/students/{nim}/thesis/{proposalGroupID}": {
       "put": {
+        "tags": ["students"],
         "description": "",
         "parameters": [
           {
@@ -469,6 +483,7 @@
         }
       },
       "delete": {
+        "tags": ["students"],
         "description": "",
         "parameters": [
           {
@@ -498,6 +513,7 @@
     },
     "/api/v0/group-units/": {
       "get": {
+        "tags": ["group-units"],
         "description": "",
         "parameters": [
           {
@@ -518,6 +534,7 @@
         }
       },
       "post": {
+        "tags": ["group-units"],
         "description": "",
         "parameters": [
           {
@@ -550,6 +567,7 @@
     },
     "/api/v0/groups/": {
       "get": {
+        "tags": ["groups"],
         "description": "",
         "parameters": [
           {
@@ -572,6 +590,7 @@
     },
     "/api/v0/lecturers/": {
       "post": {
+        "tags": ["lecturers"],
         "description": "",
         "parameters": [
           {
@@ -605,6 +624,7 @@
         }
       },
       "get": {
+        "tags": ["lecturers"],
         "description": "",
         "parameters": [
           {
@@ -627,6 +647,7 @@
     },
     "/api/v0/lecturers/{nim}": {
       "get": {
+        "tags": ["lecturers"],
         "description": "",
         "parameters": [
           {
@@ -650,6 +671,7 @@
     },
     "/api/v0/departments/": {
       "get": {
+        "tags": ["departments"],
         "description": "",
         "parameters": [
           {
@@ -667,6 +689,7 @@
     },
     "/api/v0/vocations/{departmentID}": {
       "get": {
+        "tags": ["vocations"],
         "description": "",
         "parameters": [
           {
@@ -690,6 +713,7 @@
     },
     "/api/v0/laboratories/": {
       "get": {
+        "tags": ["laboratories"],
         "description": "",
         "parameters": [
           {

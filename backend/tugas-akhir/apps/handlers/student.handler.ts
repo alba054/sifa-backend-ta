@@ -93,13 +93,23 @@ export class StudentHandler {
     next: NextFunction
   ) {
     const { nim } = req.params;
-    const { excludeProposalStatus } = req.query;
+    // * use one of the query params not both
+    const { excludeProposalStatus, proposalStatus } = req.query;
 
     let thesis = await ThesisService.getAllProposedThesis(nim);
+
+    // * if excludeProposalStatus = Belum_Diproses
+    // * display history
     if (typeof excludeProposalStatus !== "undefined") {
       thesis = thesis.filter(
         (th) => th.statusPermohonan !== excludeProposalStatus
       );
+    }
+
+    // * if proposalStatus = "Belum_Diproses"
+    // * display in unchecked thesis
+    if (typeof proposalStatus !== "undefined") {
+      thesis = thesis.filter((th) => th.statusPermohonan === proposalStatus);
     }
 
     return res

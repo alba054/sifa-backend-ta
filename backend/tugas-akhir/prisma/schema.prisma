@@ -296,6 +296,7 @@ model ref_laboratorium {
   // tugas_akhir      tugas_akhir[]
   PRtugas_akhir    tugas_akhir[]      @relation("primary")
   SEtugas_akhir    tugas_akhir[]      @relation("secondary")
+  user             user[]
 
   @@index([labKepalaNip], map: "Index 2")
   @@index([labPrdId], map: "labPrdId")
@@ -762,6 +763,7 @@ model tugas_akhir {
   taFile                                                 String?             @db.VarChar(255)
   taKRS                                                  String?
   taKHS                                                  String?
+  taKRSKHSStatus                                         Valid               @default(Invalid)
   taCatatan                                              String?             @db.Text
   taCatatanMhs                                           String?             @db.Text
   taStatusSk                                             Int?
@@ -794,20 +796,21 @@ model tugas_akhir {
 }
 
 model user {
-  id             Int             @id @default(autoincrement())
-  username       String?         @unique(map: "username") @db.VarChar(30)
-  password       String?         @db.VarChar(100)
-  email          String?         @db.VarChar(100)
-  name           String?         @db.VarChar(100)
-  status         Int?
-  aksesgroup     Int?
-  prodiID        Int?
-  departementID  Int?
-  keterangan     String?         @db.VarChar(100)
-  adm_group_unit adm_group_unit? @relation(fields: [aksesgroup], references: [aksesId], onDelete: Restrict, map: "user_ibfk_1")
-  ref_prodi      ref_prodi?      @relation(fields: [prodiID], references: [prdId], onDelete: Restrict, map: "user_ibfk_2")
-  ref_departemen ref_departemen? @relation(fields: [departementID], references: [dprtId])
-
+  id                   Int                    @id @default(autoincrement())
+  username             String?                @unique(map: "username") @db.VarChar(30)
+  password             String?                @db.VarChar(100)
+  email                String?                @db.VarChar(100)
+  name                 String?                @db.VarChar(100)
+  status               Int?
+  aksesgroup           Int?
+  prodiID              Int?
+  departementID        Int?
+  keterangan           String?                @db.VarChar(100)
+  labID                Int?
+  adm_group_unit       adm_group_unit?        @relation(fields: [aksesgroup], references: [aksesId], onDelete: Restrict, map: "user_ibfk_1")
+  ref_prodi            ref_prodi?             @relation(fields: [prodiID], references: [prdId], onDelete: Restrict, map: "user_ibfk_2")
+  ref_departemen       ref_departemen?        @relation(fields: [departementID], references: [dprtId])
+  ref_laboratorium     ref_laboratorium?      @relation(fields: [labID], references: [labId])
   password_reset_token password_reset_token[]
 
   @@index([aksesgroup], map: "group")
@@ -869,4 +872,9 @@ enum Jenjang {
   S2
   S3
   Profesi_Apoteker
+}
+
+enum Valid {
+  Valid
+  Invalid
 }
