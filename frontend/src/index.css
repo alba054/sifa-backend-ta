@@ -7,3 +7,28 @@
         list-style: decimal;
     }
 } */
+
+* {
+  --var-bg-primary: #5f5af7;
+}
+
+.mantine-Stepper-stepWrapper [data-progress="true"] {
+  background-color: var(--var-bg-primary) !important;
+  color: white;
+}
+
+[data-completed="true"] .mantine-Stepper-stepBody div,
+[data-progress="true"] .mantine-Stepper-stepBody div {
+  color: black !important;
+}
+.mantine-Stepper-stepWrapper [data-progress="true"]::after {
+  position: absolute;
+  z-index: 100;
+  font-size: large;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -5px;
+  background-color: var(--var-bg-primary) !important;
+  content: "...";
+}

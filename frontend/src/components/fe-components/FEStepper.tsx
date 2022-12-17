@@ -18,53 +18,30 @@ const FEStepper: React.FC<IFEStepper> = ({
       iconPosition="right"
       size="sm"
       styles={{
-        // separator:{
-        //   color: "black !important",
-        //   backgroundColor: "black !import"
-        // }
-        root: {
+        steps: {
           display: "flex",
-          flexDirection: "column",
-        },
-        stepDescription: {
-          display: "flex",
-          marginTop: "12px !important",
-          color: theme.colors["secondary"][9],
-          fontWeight: 600,
-          fontSize: "12px !important",
-          letterSpacing: "0.004em",
-          // position: "absolute",
-          // backgroundColor: "red",
-          textAlign: "center",
-          // alignItems: "center",
-          justifyContent: "center",
-          width: "140px !important",
-          height: "28px !important",
-          // marginLeft: "-50px !important"
+          alignItems: "center",
         },
         step: {
+          position: "relative",
           display: "flex",
           flexDirection: "column",
+          alignItems: "center",
           padding: 0,
-          // alignItems: "center !important",
+          paddingBottom: 20,
+          flexGrow: 1,
+        },
+        stepBody: {
+          marginRight: 0,
+          marginTop: 10,
+          top: 30,
+          position: "absolute",
         },
         separator: {
-          marginTop: "-42px !important",
-          // position: "relative",
-          height: "2px !important",
-          // textAlign: "center",
-          // left: "-7% !important",
-          // right: "-5.5vw !important",
-          marginLeft: "-5% !important",
-          marginRight: "-5% !important",
-          zIndex: -10,
-        },
-        stepIcon: {
-          borderWidth: "2px !important",
-          borderColor: theme.colors["primary"][5],
-          color: theme.colors["primary"][5],
-          // width: "40px !important",
-          // backgroundColor: "red"
+          margin: 0,
+          marginTop: -15,
+          marginRight: "-7%",
+          marginLeft: "-7%",
         },
       }}
     >
