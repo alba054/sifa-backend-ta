@@ -1,12 +1,13 @@
 import { Group, MediaQuery, Stack, Title, Text } from "@mantine/core";
-import React from "react";
-import { InfoOutline } from "src/assets/Icons/Fluent";
+import React, { useRef, useState } from "react";
+import { FECloseOutline, InfoOutline } from "src/assets/Icons/Fluent";
 
 export interface IFEInformationNotification {
   title?:string,
   icon?: JSX.Element,
   description: JSX.Element | string,
-  type?: "info" | "warning"
+  type?: "info" | "warning",
+  shown?: boolean
 }
 
 interface typeMapObject {
@@ -27,9 +28,15 @@ const typeMap = new Map<"info"|"warning", typeMapObject>(
 ])
 const FEInformationNotification: React.FC<
   IFEInformationNotification
-> = ({title='Informasi', description, icon, type="info"}) => {
+> = ({title='Informasi', description, icon, type="info", shown=true}) => {
+  const [isShown, setIsShown] = useState(shown)
+
+  function handleClose(){
+    setIsShown(false)
+  }
+
   return (
-    <Group className={`rounded-xl p-5 items-start`} bg={typeMap.get(type)?.bgColor}>
+    <Group className={`rounded-xl p-5 items-start relative ${(isShown)? "" : "hidden"}`} bg={typeMap.get(type)?.bgColor}>
       <MediaQuery smallerThan={"lg"} styles={{ display: "none" }}>
         {icon?? <InfoOutline size={30} color={typeMap.get(type)?.textColor} />}
       </MediaQuery>
@@ -48,6 +55,7 @@ const FEInformationNotification: React.FC<
           {description}
         </Text>
       </Stack>
+      <FECloseOutline size={16} className="absolute right-6 cursor-pointer" color={typeMap.get(type)?.textColor} onClick={handleClose} />
     </Group>
   );
 };
