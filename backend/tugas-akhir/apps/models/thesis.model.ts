@@ -4,10 +4,76 @@ import { BadRequestError } from "../utils/error/badrequestError";
 import { InternalServerError } from "../utils/error/internalError";
 import { IThesis } from "../utils/interfaces/thesis.interface";
 
+interface IThesisApproval {
+  id: number;
+  isApproved: boolean;
+}
+
+interface IBody {
+  title1: IThesisApproval;
+  title2: IThesisApproval;
+}
+
 export class Thesis {
+  static async updateThesisStatus(proposalGroupID: string, body: IBody) {
+    try {
+      const thesisOneStatus = body.title1.isApproved ? "Diterima" : "Ditolak";
+      const thesisTwoStatus = body.title2.isApproved ? "Diterima" : "Ditolak";
+      const thesis1 = await prismaDB.tugas_akhir.updateMany({
+        where: {
+          AND: [
+            { proposalGroupID: proposalGroupID },
+            { taId: body.title1.id },
+            { statusPermohonan: "Belum_Diproses" },
+          ],
+        },
+        data: { statusPermohonan: thesisOneStatus },
+      });
+
+      const thesis2 = await prismaDB.tugas_akhir.updateMany({
+        where: {
+          AND: [
+            { proposalGroupID: proposalGroupID },
+            { taId: body.title2.id },
+            { statusPermohonan: "Belum_Diproses" },
+          ],
+        },
+        data: { statusPermohonan: thesisTwoStatus },
+      });
+
+      return [thesis1, thesis2];
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
+  static async getApprovedThesisByVocation(vocationID: number) {
+    const approvedThesis = await prismaDB.tugas_akhir.findMany({
+      where: {
+        AND: [
+          // { mahasiswa: { mhsPrdId: vocationID } },
+          { statusPermohonan: "Diterima" },
+        ],
+      },
+    });
+
+    return approvedThesis;
+  }
+
   static async getProposedThesisByVocation(vocationID: number) {
     const proposedThesis = await prismaDB.tugas_akhir.findMany({
-      where: { mahasiswa: { mhsPrdId: vocationID } },
+      where: {
+        AND: [
+          // { mahasiswa: { mhsPrdId: vocationID } },
+          { statusPermohonan: "Belum_Diproses" },
+        ],
+      },
     });
 
     return proposedThesis;
