@@ -124,7 +124,6 @@ const FEMentorAndExaminersApprovalMore: React.FC<
             <Button
               variant="light"
               color={"primary"}
-              // onClick={() => setIsOpenInputModal(true)}
               className="bg-error-500 text-white hover:bg-error-500 px-8"
               component={Link}
               to={FEROUTES.FIRST_VICE_DEAN_APPROVAL_MENTOR_AND_EXAMINERS}
