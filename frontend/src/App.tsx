@@ -35,6 +35,7 @@ import FENewTopicPage from "./pages/final-exam/student/proposal/new/FENewTopic";
 import FESeminar from "./pages/final-exam/student/seminar/FESeminar";
 import FESeminarHistory from "./pages/final-exam/student/seminar/history/FESeminarHistory";
 import FETrialPermit from "./pages/final-exam/student/trial-permit/FETrialPermit";
+import FEStudyProgramAdminApproval from "./pages/final-exam/department-admin/approval/FEStudyProgramAdminApproval";
 import Login from "./pages/global/Login/Login";
 import NotFound from "./pages/global/NotFound";
 import ResetPassword from "./pages/global/ResetPassword/ResetPassword";
@@ -148,6 +149,26 @@ function App() {
                       />
                     </Route>
                     <Route path="ujian-sidang">
+                      <Route index element={<FETrialPermitApproval />} />
+                      <Route
+                        path="nim/:nim"
+                        element={<FEMentorAndExaminersApprovalMore />}
+                      />
+                    </Route>
+                  </Route>
+                </Route>
+                <Route path="admin-program-studi">
+                  <Route index element={<FEHomepage />} />
+                  <Route path="persetujuan">
+                    <Route index element={<FEStudyProgramAdminApproval />} />
+                    <Route path="pengajuan-judul-penelitian">
+                      <Route index element={<FEMentorAndExaminersApproval />} />
+                      <Route
+                        path="nim/:nim"
+                        element={<FEMentorAndExaminersApprovalMore />}
+                      />  
+                    </Route>
+                    <Route path="penyusunan-tim-penguji">
                       <Route index element={<FETrialPermitApproval />} />
                       <Route
                         path="nim/:nim"
