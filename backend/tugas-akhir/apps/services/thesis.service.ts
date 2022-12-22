@@ -6,11 +6,39 @@ import { IThesis, IThesisPost } from "../utils/interfaces/thesis.interface";
 import { deleteFile, writeToFile } from "../utils/storage";
 import { constants } from "../utils/utils";
 
+interface IThesisApproval {
+  id: number;
+  isApproved: boolean;
+}
+
+interface IBody {
+  title1: IThesisApproval;
+  title2: IThesisApproval;
+}
+
 export class ThesisService {
+  static async approveOrRejectProposedThesis(
+    proposalGroupID: string,
+    body: IBody
+  ) {
+    const approveThesis = await Thesis.updateThesisStatus(
+      proposalGroupID,
+      body
+    );
+
+    return approveThesis;
+  }
+
   static async getProposedThesisByHeadMajor(vocationID: number) {
     const proposedThesis = await Thesis.getProposedThesisByVocation(vocationID);
 
     return proposedThesis;
+  }
+
+  static async getApprovedThesisByHeadMajor(vocationID: number) {
+    const approvedThesis = await Thesis.getApprovedThesisByVocation(vocationID);
+
+    return approvedThesis;
   }
 
   static async editProposedThesis(

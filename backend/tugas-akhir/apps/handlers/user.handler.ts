@@ -17,6 +17,7 @@ import { UserAsStudent } from "../services/user/UserAsStudent.facade";
 import { UserAsLecturer } from "../services/user/UserAsLecturer.facade";
 import { UserAsLabAdmin } from "../services/user/UserAsLabAdmin.facade";
 import { UserFacade } from "../services/user/User.facade";
+import { UserAsVocationAdmin } from "../services/user/UserAsVocationAdmin.facade";
 
 dotenv.config();
 
@@ -65,7 +66,7 @@ export class UserHandler {
       description: res.locals.user.keterangan,
       departmentID: res.locals.user.departementID,
       labID: res.locals.user.labID,
-      vocationID: res.locals.prodiID,
+      vocationID: res.locals.user.prodiID,
     } as TokenPayload;
 
     let tokenClaims = { subject: tokenPayload.username };
@@ -139,6 +140,12 @@ export class UserHandler {
         insertedUser = await UserAsLecturer.insertUserAsLecturer(newUser);
       } else if (newUser.groupAccess === constants.LAB_ADMIN_GROUP_ACCESS) {
         insertedUser = await UserAsLabAdmin.insertUserAsLabAdmin(newUser);
+      } else if (
+        newUser.groupAccess === constants.VOCATION_ADMIN_GROUP_ACCESS
+      ) {
+        insertedUser = await UserAsVocationAdmin.insertUserAsVocationAdmin(
+          newUser
+        );
       } else {
         insertedUser = await UserFacade.insertUser(newUser);
       }
