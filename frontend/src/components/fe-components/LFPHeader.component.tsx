@@ -33,15 +33,16 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
     <Group position="apart">
       <Title order={2}>{title}</Title>
       <Group>
-        {buttons.map((button) => {
+        {buttons.map((button, e: number) => {
           return (
             <Tooltip
+              key={`tooltip-${e}`}
               label={disabledButtonTooltipLabel}
               withArrow
               color={"rgba(255, 255, 255, 0.8)"}
               position="bottom-end"
               multiline
-              width={280}
+              // width={280}
               radius={"md"}
               openDelay={100}
               styles={{
@@ -51,6 +52,7 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
                   padding: "8px 16px",
                   // textAlign: "justify",
                   letterSpacing: "0.015em",
+                  maxWidth: "280px"
                 },
                 arrow: {
                   border: `1px solid ${theme.colors["secondary"][5]}`,
@@ -61,6 +63,7 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
               <div>
                 {button.type == "modal" ? (
                   <Button
+                    key={e}
                     variant="outline"
                     color="primary-text"
                     className={`border-[1px] border-[#CACCCE] font-bold disabled`}
@@ -77,6 +80,7 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
                   </Button>
                 ) : (
                   <Button
+                    key={e}
                     variant="outline"
                     color="primary-text"
                     className="border-[1px] border-[#CACCCE] font-bold"

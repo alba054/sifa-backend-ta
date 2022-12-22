@@ -16,12 +16,12 @@ const FEStudyProgramAdminApproval: React.FC<IFEStudyProgramAdminApproval> = ({})
         <FEApprovalCard
           label="Judul Penelitian"
           description="Permohonan dan pengajuan judul penelitian"
-          to={FEROUTES.STUDY_PROGRAM_ADMIN_PROPOSAL_SUBMISSION}
+          to={FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL}
         />
         <FEApprovalCard
           label="Tim Penguji"
           description="Penyusunan Tim Penguji"
-          to={FEROUTES.STUDY_PROGRAM_ADMIN_EXAMINERS_TEAM}
+          to={FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_EXAMINERS_TEAM}
         />
       </Group>
     </FEMainlayout>

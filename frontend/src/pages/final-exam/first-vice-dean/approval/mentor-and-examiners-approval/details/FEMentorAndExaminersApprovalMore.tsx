@@ -16,6 +16,9 @@ import { FEROUTES } from "src/routes/final-exam.route";
 import FEMentorAndExaminersApprovalMoreCard, {
   IFEMentorAndExaminersApprovalMoreCard
 } from "./FEMentorAndExaminersApprovalMoreCard";
+import {
+  useParams
+} from "react-router-dom";
 
 export interface IFEMentorAndExaminersApprovalMore {}
 
@@ -54,6 +57,9 @@ const dummyApprovalCardData: Array<IFEMentorAndExaminersApprovalMoreCard> = [
 const FEMentorAndExaminersApprovalMore: React.FC<
   IFEMentorAndExaminersApprovalMore
 > = ({}) => {
+  let { nim } = useParams();
+  console.log(`nim: ${nim}`)
+  
   const [isOpenAlertModal, setIsOpenAlertModal] = useState(false);
 
   const { array: approvalCardDataArray } = useArray(dummyApprovalCardData);

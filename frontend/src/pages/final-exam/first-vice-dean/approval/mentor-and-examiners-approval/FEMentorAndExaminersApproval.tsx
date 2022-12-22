@@ -1,17 +1,18 @@
 import { Stack } from "@mantine/core";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton
+  ILFPHeaderButton,
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import FEMentorAndExaminersApprovalCard, {
-  IFEMentorAndExaminersApprovalCard
-} from "./FEMentorAndExaminersApprovalCard";
+import FEApprovalDetailsCard, {
+  IFEApprovalDetailsCard,
+} from "../../../../../components/fe-components/FEApprovalDetailsCard";
 
 export interface IFEMentorAndExaminersApproval {}
 
@@ -32,28 +33,39 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   },
 ];
 
-const dummyApprovalList: Array<IFEMentorAndExaminersApprovalCard> = [
+const dummyApprovalList: Array<IFEApprovalDetailsCard> = [
   {
     name: "Devi Selfira",
     nim: "N011181001",
-    proposalTitle:
-      "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
-    laboratory: "Lab: Kimia Farmasi",
+    proposalArray: [
+      {
+        proposalTitle:
+          "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
+        laboratory: "Lab: Kimia Farmasi",
+      },
+    ],
   },
   {
     name: "Muh. Yusuf Syam",
     nim: "H071191044",
-    proposalTitle: "Cara Membuat Robot yang Bagus",
-    laboratory: "Lab: DOP",
+    proposalArray: [
+      {
+        proposalTitle: "Cara Membuat Robot yang Bagus",
+        laboratory: "Lab: DOP",
+      },
+    ],
   },
 ];
 
 const FEMentorAndExaminersApproval: React.FC<
   IFEMentorAndExaminersApproval
 > = ({}) => {
+  const navigate = useNavigate();
   const { array: approvalList } = useArray(dummyApprovalList);
   // const { array: approvalList } = useArray([]);
-  const [isDataExist, setIsDataExist] = useState(false);
+  const [isDataExist, setIsDataExist] = useState(
+    approvalList.length > 0 ? true : false
+  );
 
   useEffect(() => {
     if (approvalList.length > 0) {
@@ -71,19 +83,25 @@ const FEMentorAndExaminersApproval: React.FC<
       <LFPHeaderComponent title="SK Pembimbing dan Penguji" buttons={buttons} />
       {isDataExist ? (
         <Stack mt={"md"} className="gap-6">
-          {approvalList.map((approval: IFEMentorAndExaminersApprovalCard) => {
+          {approvalList.map((approval: IFEApprovalDetailsCard, e: number) => {
             return (
-              <FEMentorAndExaminersApprovalCard
+              <FEApprovalDetailsCard
+                key={e}
                 name={approval.name}
                 nim={approval.nim}
-                proposalTitle={approval.proposalTitle}
-                laboratory={approval.laboratory}
+                proposalArray={approval.proposalArray}
+                onClick={() => {
+                  navigate(`nim/${approval.nim}`);
+                }}
               />
             );
           })}
         </Stack>
       ) : (
-        <LFPEmptyDataComponent title="Belum Ada Usulan Persetujuan Terbaru" caption="Untuk melihat riwayat persetujuan yang telah disetujui ataupun di tolak tekan tombol “Riwayat Persetujuan” di pojok kanan atas" />
+        <LFPEmptyDataComponent
+          title="Belum Ada Usulan Persetujuan Terbaru"
+          caption="Untuk melihat riwayat persetujuan yang telah disetujui ataupun di tolak tekan tombol “Riwayat Persetujuan” di pojok kanan atas"
+        />
       )}
     </FEMainlayout>
   );

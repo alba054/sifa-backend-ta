@@ -18,6 +18,9 @@ interface IMainLayoutProps {
 }
 
 const switchMenus: { [role: string | number]: INavbarMenuItem[] } = {
+  0:studentMenus,
+  1:firstViceDeanMenus,
+  2:studyProgramAdminMenus,
   student: studentMenus,
   "first-vice-dean": firstViceDeanMenus,
   "study-program-admin": studyProgramAdminMenus,
@@ -29,8 +32,6 @@ const FEMainlayout: React.FC<IMainLayoutProps> = ({
   breadCrumbsCurrentPage,
 }) => {
   const role = useContext(UserRoleContext);
-  console.log("role yang sekarang", role);
-  console.log(switchMenus[role]);
   return (
     <AppShell
       padding={0}

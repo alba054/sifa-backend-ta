@@ -17,7 +17,9 @@ export const FEROUTES = {
   FIRST_VICE_DEAN_APPROVAL_TRIAL_PERMIT_MORE: "/tugas-akhir/wakil-dekan-1/persetujuan/ujian-sidang/nim",
   STUDY_PROGRAM_ADMIN_HOMEPAGE: "/tugas-akhir/admin-program-studi",
   STUDY_PROGRAM_ADMIN_APPROVAL: "/tugas-akhir/admin-program-studi/persetujuan",
-  STUDY_PROGRAM_ADMIN_PROPOSAL_SUBMISSION: "/tugas-akhir/admin-program-studi/persetujuan/pengajuan-judul-penelitian",
-  STUDY_PROGRAM_ADMIN_PROPOSAL_SUBMISSION_DETAILS: "/tugas-akhir/admin-program-studi/persetujuan/pengajuan-judul-penelitian/nim",
-  STUDY_PROGRAM_ADMIN_EXAMINERS_TEAM: "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji",
+  STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL: "/tugas-akhir/admin-program-studi/persetujuan/judul-penelitian",
+  STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_APPLICATION: "/tugas-akhir/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian",
+  STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_APPLICATION_HISTORY: "/tugas-akhir/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian/riwayat",
+  // STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_APPLICATION_DETAILS: "/tugas-akhir/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian/nim",
+  STUDY_PROGRAM_ADMIN_APPROVAL_EXAMINERS_TEAM: "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji",
 };
