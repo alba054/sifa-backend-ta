@@ -4,7 +4,7 @@ import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, { ILFPHeaderButton } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
-import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import { IFEProposalCard } from "./FEProposalCard";
 import FEProposalMain from "./FEProposalMain";
@@ -70,7 +70,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
   ];
   
   return (
-    <FEStudentMainlayout>
+    <FEMainlayout>
       <Stack spacing={"xl"}>
         <LFPHeaderComponent title="Tugas Akhir" buttons={buttons} disabledButtonTooltipLabel={'Hapus usulan tugas akhir yang sekarang untuk membuat usulan baru'} />
         {isDataExist ? (
@@ -84,7 +84,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
           />
         )}
       </Stack>
-    </FEStudentMainlayout>
+    </FEMainlayout>
   );
 };
 

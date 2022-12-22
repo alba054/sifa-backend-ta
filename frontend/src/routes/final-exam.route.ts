@@ -1,4 +1,5 @@
 export const FEROUTES = {
+  HOMEPAGE: "/tugas-akhir", // Ini yang dikiri tiga duplikatnya
   STUDENT_HOMEPAGE: "/tugas-akhir/mahasiswa",
   STUDENT_LAB_FREE: "/tugas-akhir/mahasiswa/bebas-lab",
   STUDENT_FINAL_EXAM_PROPOSAL: "/tugas-akhir/mahasiswa/tugas-akhir",

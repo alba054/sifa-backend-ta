@@ -1,11 +1,10 @@
 import { Stack, Title } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import ManThinkingAnimation from "src/assets/Icons/ManThinkingAnimation";
-import NoFilesAnimationIcon from "src/assets/Icons/NoFilesAnimationIcon";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import useArray from "src/hooks/fe-hooks/useArray";
-import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import { IFEProposalHistoryCard } from "./FEProposalHistoryCard";
 import FEProposalHistoryMain from "./FEProposalHistoryMain";
@@ -63,7 +62,7 @@ const FEProposalHistory: React.FC<IFEProposalHistory> = ({}) => {
   }, [finalExamProposalHistoryArray])
 
   return (
-    <FEStudentMainlayout breadCrumbs={breadCrumbs}>
+    <FEMainlayout breadCrumbs={breadCrumbs}>
       <Stack spacing={"xl"}>
         <Title order={2} mb={'md'}>Riwayat Usulan Tugas Akhir</Title>
         {isHistoryExist ? (
@@ -79,7 +78,7 @@ const FEProposalHistory: React.FC<IFEProposalHistory> = ({}) => {
           />
         )}
       </Stack>
-    </FEStudentMainlayout>
+    </FEMainlayout>
   );
 };
 export default FEProposalHistory;

@@ -1,29 +1,37 @@
-import { Group, Title, Text, Stack, useMantineTheme } from "@mantine/core";
-import React from "react";
-import { Link } from "react-router-dom";
-import {
-  FEBookmarkMultipleFilled,
-  FEClockRepeatOutline,
-  FEDoubleArrowOutline,
-  FELecturerFilled,
-  FEPersonFilled,
-  PersonFilled,
-} from "src/assets/Icons/Fluent";
+import { Button, Title, useMantineTheme } from "@mantine/core";
+import React, { useContext, useEffect, useState } from "react";
 import FEDateChip from "src/components/fe-components/FEDateChip";
-import FEHomeCard from "src/components/fe-components/FEHomeCard";
-import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
+import { possibleRole, UserRoleChangeContext, UserRoleContext } from "src/components/fe-components/FERoleContext";
+import { TextInput } from "src/components/FormInput";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 
-interface IFEStudentHomepageProps {}
+interface IFEHomepageProps {}
 
-const FEStudentHomepage: React.FC<IFEStudentHomepageProps> = ({}) => {
+const FEHomepage: React.FC<IFEHomepageProps> = ({}) => {
+  const role= useContext(UserRoleContext)
+  const changeRole= useContext(UserRoleChangeContext)
+
+  const [newRole, setNewRole] = useState<possibleRole|null>(null)
+
+  useEffect(() => {
+    setNewRole(role)
+  }, [])
+  
+
   const theme= useMantineTheme();
   return (
-    <FEStudentMainlayout>
+    <FEMainlayout>
       <FEDateChip />
       <Title order={2} mb={"md"}>
         Home
       </Title>
-      <Stack className="gap-4">
+      {
+        role
+      }
+
+        <TextInput onChange={(e)=>{setNewRole(e.currentTarget.value as any)}} />
+        <Button onClick={()=>{changeRole(newRole as any)}}>set</Button>
+      {/* <Stack className="gap-4">
         <Text className="text-xl tracking-1 text-primary-text-500">
           Semester Akhir 2021/2022
         </Text>
@@ -80,8 +88,8 @@ const FEStudentHomepage: React.FC<IFEStudentHomepageProps> = ({}) => {
           </Group>
           <Link to={"#"} className="text-primary-500">Selengkapnya <FEDoubleArrowOutline size={11} color={theme.colors['primary'][5]} className="inline align-middle " /></Link>
         </Group>
-      </Stack>
-    </FEStudentMainlayout>
+      </Stack> */}
+    </FEMainlayout>
   );
 };
-export default FEStudentHomepage;
+export default FEHomepage;

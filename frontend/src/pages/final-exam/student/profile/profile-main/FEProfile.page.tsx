@@ -1,6 +1,6 @@
 import { Stack, Title } from "@mantine/core";
 import React from "react";
-import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import FEProfileChangePassword from "./FEProfileChangePassword";
 import FEProfileDetails, { IFEProfileDetails } from "./FEProfileDetails";
 
@@ -25,7 +25,7 @@ const FEProfile: React.FC<IFEProfile> = ({}) => {
   const profileData: IFEProfileDetails = dummyProfileData;
 
   return (
-    <FEStudentMainlayout>
+    <FEMainlayout>
       <Title order={2} className="text-primary-text-500" mb={"md"}>
         Pengaturan Akun
       </Title>
@@ -33,7 +33,7 @@ const FEProfile: React.FC<IFEProfile> = ({}) => {
         <FEProfileDetails {...profileData} />
         <FEProfileChangePassword />
       </Stack>
-    </FEStudentMainlayout>
+    </FEMainlayout>
   );
 };
 export default FEProfile;

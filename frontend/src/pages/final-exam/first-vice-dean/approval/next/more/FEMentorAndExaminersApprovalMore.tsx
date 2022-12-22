@@ -4,17 +4,17 @@ import {
   Group,
   MantineProvider,
   Stack,
-  Title,
+  Title
 } from "@mantine/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import useArray from "src/hooks/fe-hooks/useArray";
-import FEFirstViceDeanMainLayout from "src/layouts/final-exam/first-vice-dean/FEFirstViceDeanMainLayout";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import FEMentorAndExaminersApprovalMoreCard, {
-  IFEMentorAndExaminersApprovalMoreCard,
+  IFEMentorAndExaminersApprovalMoreCard
 } from "./FEMentorAndExaminersApprovalMoreCard";
 
 export interface IFEMentorAndExaminersApprovalMore {}
@@ -65,7 +65,7 @@ const FEMentorAndExaminersApprovalMore: React.FC<
   }
 
   return (
-    <FEFirstViceDeanMainLayout
+    <FEMainlayout
       breadCrumbs={breadCrumbs}
       breadCrumbsCurrentPage="Devi Selfira (N011181001)"
     >
@@ -141,7 +141,7 @@ const FEMentorAndExaminersApprovalMore: React.FC<
           </Group>
         </Stack>
       </MantineProvider>
-    </FEFirstViceDeanMainLayout>
+    </FEMainlayout>
   );
 };
 export default FEMentorAndExaminersApprovalMore;

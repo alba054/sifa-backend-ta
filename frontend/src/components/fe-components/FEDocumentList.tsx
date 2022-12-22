@@ -41,8 +41,8 @@ const FEDocumentList: React.FC<IFEDocumentList> = ({
         ) : null}
       </Group>
       <Group className="gap-6">
-        {documentList.map((documentDescription) => {
-          return <FEDocumentListCard description={documentDescription} />;
+        {documentList.map((documentDescription:any, e:number) => {
+          return <FEDocumentListCard key={e} description={documentDescription} />;
         })}
       </Group>
       {info && <FESmallInformationNotification info={info} />}

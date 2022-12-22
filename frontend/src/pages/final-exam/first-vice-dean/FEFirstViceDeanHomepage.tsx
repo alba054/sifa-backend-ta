@@ -1,4 +1,4 @@
-import { Group, Title, Text, Stack, useMantineTheme } from "@mantine/core";
+import { Group, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import React from "react";
 import { Link } from "react-router-dom";
 import {
@@ -6,19 +6,18 @@ import {
   FEClockRepeatOutline,
   FEDoubleArrowOutline,
   FELecturerFilled,
-  FEPersonFilled,
-  PersonFilled,
+  FEPersonFilled
 } from "src/assets/Icons/Fluent";
 import FEDateChip from "src/components/fe-components/FEDateChip";
 import FEHomeCard from "src/components/fe-components/FEHomeCard";
-import FEFirstViceDeanMainLayout from "src/layouts/final-exam/first-vice-dean/FEFirstViceDeanMainLayout";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 
 interface IFEFirstViceDeanHomepageProps {}
 
 const FEFirstViceDeanHomepage: React.FC<IFEFirstViceDeanHomepageProps> = ({}) => {
   const theme= useMantineTheme();
   return (
-    <FEFirstViceDeanMainLayout>
+    <FEMainlayout>
       <FEDateChip />
       <Title order={2} mb={"md"}>
         Home
@@ -81,7 +80,7 @@ const FEFirstViceDeanHomepage: React.FC<IFEFirstViceDeanHomepageProps> = ({}) =>
           <Link to={"#"} className="text-primary-500">Selengkapnya <FEDoubleArrowOutline size={11} color={theme.colors['primary'][5]} className="inline align-middle " /></Link>
         </Group>
       </Stack>
-    </FEFirstViceDeanMainLayout>
+    </FEMainlayout>
   );
 };
 export default FEFirstViceDeanHomepage;

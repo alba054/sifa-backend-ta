@@ -4,7 +4,7 @@ import ManThinkingAnimation from "src/assets/Icons/ManThinkingAnimation";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import useArray from "src/hooks/fe-hooks/useArray";
-import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import { IFESeminarHistoryCard } from "./FESeminarHistoryCard";
 import FESeminarHistoryMain from "./FESeminarHistoryMain";
@@ -69,7 +69,7 @@ const FESeminarHistory: React.FC<IFESeminarHistory> = ({}) => {
   }, [seminarHistoryData]);
 
   return (
-    <FEStudentMainlayout
+    <FEMainlayout
       breadCrumbs={breadCrumbs}
       breadCrumbsCurrentPage="Riwayat Seminar"
     >
@@ -90,7 +90,7 @@ const FESeminarHistory: React.FC<IFESeminarHistory> = ({}) => {
           />
         )}
       </Stack>
-    </FEStudentMainlayout>
+    </FEMainlayout>
   );
 };
 export default FESeminarHistory;

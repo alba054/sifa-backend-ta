@@ -8,11 +8,11 @@ import DocumentInput from "src/components/DocumentInput";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import FEProfileCard from "src/components/FEProfileCard";
 import { SelectInput, TextInput } from "src/components/FormInput";
-import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import {
   getFileUrl,
-  getGenderOptions,
+  getGenderOptions
 } from "src/utils/functions/common.function";
 import * as yup from "yup";
 
@@ -62,7 +62,7 @@ const FEEditProfilePage: React.FC<IFEEditProfilePageProps> = ({}) => {
   ]
 
   return (
-    <FEStudentMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Edit Profil">
+    <FEMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Edit Profil">
       <Title order={2} mb={"md"}>
         Edit Profil
       </Title>
@@ -165,7 +165,7 @@ const FEEditProfilePage: React.FC<IFEEditProfilePageProps> = ({}) => {
           </Group>
         </form>
       </FEProfileCard>
-    </FEStudentMainlayout>
+    </FEMainlayout>
   );
 };
 export default FEEditProfilePage;

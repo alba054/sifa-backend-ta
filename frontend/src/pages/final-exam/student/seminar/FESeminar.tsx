@@ -1,23 +1,21 @@
 import { Stack } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton,
+  ILFPHeaderButton
 } from "src/components/fe-components/LFPHeader.component";
 import FEInputModal from "src/components/FEInputModal";
-import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import FESeminarForm from "./FESeminarForm";
 import {
   feSeminarFormSchema,
-  IFESeminarFormValues,
+  IFESeminarFormValues
 } from "./FESeminarInterfaces";
 import FESeminarMain, {
-  IFESeminarApprovalStatus,
-  IFESeminarTimeInformation,
-  IFESeminarData,
+  IFESeminarApprovalStatus, IFESeminarData, IFESeminarTimeInformation
 } from "./FESeminarMain";
 
 export interface IFESeminar {}
@@ -94,7 +92,7 @@ const FESeminar: React.FC<IFESeminar> = ({}) => {
   ];
 
   return (
-    <FEStudentMainlayout>
+    <FEMainlayout>
       <FEInputModal
         opened={isOpen}
         title="Pilih Jenis Seminar"
@@ -123,7 +121,7 @@ const FESeminar: React.FC<IFESeminar> = ({}) => {
           />
         )}
       </Stack>
-    </FEStudentMainlayout>
+    </FEMainlayout>
   );
 };
 export default FESeminar;

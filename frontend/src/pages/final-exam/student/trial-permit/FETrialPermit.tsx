@@ -2,9 +2,9 @@ import { Stack } from "@mantine/core";
 import React, { useState } from "react";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton,
+  ILFPHeaderButton
 } from "src/components/fe-components/LFPHeader.component";
-import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { IFETrialPermitFormValues } from "./FETrialPermitFormValues";
 import FETrialPermitInputModal from "./FETrialPermitInputModal";
 import FETrialPermitMain, { IFETrialPermitMain } from "./FETrialPermitMain";
@@ -66,7 +66,7 @@ const FETrialPermit: React.FC<IFETrialPermit> = ({}) => {
   ];
 
   return (
-    <FEStudentMainlayout>
+    <FEMainlayout>
       <FETrialPermitInputModal
         opened={isOpen}
         title="Permohonan Izin Ujian Sidang"
@@ -98,7 +98,7 @@ const FETrialPermit: React.FC<IFETrialPermit> = ({}) => {
           />
         )}
       </Stack>
-    </FEStudentMainlayout>
+    </FEMainlayout>
   );
 };
 

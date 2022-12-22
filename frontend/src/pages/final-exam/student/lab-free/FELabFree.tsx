@@ -8,7 +8,7 @@ import LFPHeaderComponent, {
 import FEInputModal from "src/components/FEInputModal";
 import useArray from "src/hooks/fe-hooks/useArray";
 import useMap from "src/hooks/fe-hooks/useMap";
-import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { IFELabFreeCardComp } from "./FELabFreeCardComp";
 import FELabFreeForm, { laboratoyObject } from "./FELabFreeForm";
 import {
@@ -247,7 +247,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
   }, []);
 
   return (
-    <FEStudentMainlayout>
+    <FEMainlayout>
       {/* Input modal */}
       <FEInputModal
         opened={isOpen}
@@ -271,7 +271,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
           />
         )}
       </Stack>
-    </FEStudentMainlayout>
+    </FEMainlayout>
   );
 };
 

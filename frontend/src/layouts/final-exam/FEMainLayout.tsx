@@ -1,11 +1,12 @@
 import { AppShell, MediaQuery, Stack } from "@mantine/core";
-import React from "react";
-import { FECheckSquareOutlineForNavbar, HomeOutline } from "src/assets/Icons/Fluent";
+import React, { useContext } from "react";
 import FEBreadCrumbs, {
   IFEBreadCrumbsItem
 } from "src/components/fe-components/FEBreadCrumbs";
+import { UserRoleContext } from "src/components/fe-components/FERoleContext";
 import FEMainNavbar, { INavbarMenuItem } from "src/components/fe-components/navbars/FEMainNavbar.component";
-import { FEROUTES } from "src/routes/final-exam.route";
+import { firstViceDeanMenus } from "./final-exam-const.tsx/first-vice-dean.const";
+import { studentMenus } from "./final-exam-const.tsx/student-role.const";
 
 interface IMainLayoutProps {
   children: any;
@@ -13,24 +14,21 @@ interface IMainLayoutProps {
   breadCrumbsCurrentPage?: string
 }
 
-const menus: INavbarMenuItem[] = [
-  {
-    icon: HomeOutline,
-    label: "Home",
-    href: FEROUTES.FIRST_VICE_DEAN_HOMEPAGE,
-  },
-  {
-    icon: FECheckSquareOutlineForNavbar,
-    label: "Persetujuan",
-    href: FEROUTES.FIRST_VICE_DEAN_APPROVAL,
-  },
-];
+const switchMenus : { [role: string | number]: INavbarMenuItem[] } ={
+  "student":studentMenus,
+  "first-vice-dean":firstViceDeanMenus
+}
 
-const FEFirstViceDeanMainLayout: React.FC<IMainLayoutProps> = ({
+
+
+const FEMainlayout: React.FC<IMainLayoutProps> = ({
   children,
   breadCrumbs,
   breadCrumbsCurrentPage
 }) => {
+  const role= useContext(UserRoleContext)
+  console.log("role yang sekarang",role)
+  console.log(switchMenus[role])
   return (
     <AppShell
       padding={0}
@@ -39,7 +37,7 @@ const FEFirstViceDeanMainLayout: React.FC<IMainLayoutProps> = ({
       navbar={
         <>
           <MediaQuery styles={{ display: "none" }}>
-            <FEMainNavbar menus={menus} />
+            <FEMainNavbar menus={switchMenus[role] || studentMenus} />
           </MediaQuery>
         </>
       }
@@ -53,4 +51,4 @@ const FEFirstViceDeanMainLayout: React.FC<IMainLayoutProps> = ({
     </AppShell>
   );
 };
-export default FEFirstViceDeanMainLayout;
+export default FEMainlayout;

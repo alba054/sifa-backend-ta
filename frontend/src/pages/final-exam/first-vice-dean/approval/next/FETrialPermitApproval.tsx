@@ -3,14 +3,14 @@ import React from "react";
 import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import LFPHeaderComponent, {
-  ILFPHeaderButton,
+  ILFPHeaderButton
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
-import FEFirstViceDeanMainLayout from "src/layouts/final-exam/first-vice-dean/FEFirstViceDeanMainLayout";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 
 import FEMentorAndExaminersApprovalCard, {
-  IFEMentorAndExaminersApprovalCard,
+  IFEMentorAndExaminersApprovalCard
 } from "./FEMentorAndExaminersApprovalCard";
 
 export interface IFETrialPermitApproval {}
@@ -52,7 +52,7 @@ const FETrialPermitApproval: React.FC<IFETrialPermitApproval> = ({}) => {
   const { array: approvalList } = useArray(dummyApprovalList);
 
   return (
-    <FEFirstViceDeanMainLayout
+    <FEMainlayout
       breadCrumbs={breadCrumbs}
       breadCrumbsCurrentPage="Ujian Sidang"
     >
@@ -69,7 +69,7 @@ const FETrialPermitApproval: React.FC<IFETrialPermitApproval> = ({}) => {
           );
         })}
       </Stack>
-    </FEFirstViceDeanMainLayout>
+    </FEMainlayout>
   );
 };
 export default FETrialPermitApproval;

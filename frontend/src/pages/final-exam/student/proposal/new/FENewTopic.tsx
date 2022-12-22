@@ -1,9 +1,7 @@
 import { Stack, Title } from "@mantine/core";
 import React from "react";
-import { Form } from "react-router-dom";
-import FEBreadCrumbs, { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
-import { TextInput } from "src/components/FormInput";
-import FEStudentMainlayout from "src/layouts/final-exam/student/FEStudentMainlayout";
+import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import FENewProposalForm from "./FENewProposalForm";
 
@@ -18,7 +16,7 @@ const FENewTopicPage: React.FC<IFENewTopicPageProps> = ({}) => {
   ]
 
   return (
-    <FEStudentMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Buat Usulan">
+    <FEMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Buat Usulan">
       <Stack>
         <Title order={2} mb="md">
           Buat Susulan Tugas Akhir
@@ -26,7 +24,7 @@ const FENewTopicPage: React.FC<IFENewTopicPageProps> = ({}) => {
 
         <FENewProposalForm />
       </Stack>
-    </FEStudentMainlayout>
+    </FEMainlayout>
   );
 };
 export default FENewTopicPage;

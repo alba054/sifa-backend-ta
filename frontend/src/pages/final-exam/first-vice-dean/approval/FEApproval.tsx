@@ -1,6 +1,6 @@
-import { Group, Stack, Title } from "@mantine/core";
+import { Group, Title } from "@mantine/core";
 import React from "react";
-import FEFirstViceDeanMainLayout from "src/layouts/final-exam/first-vice-dean/FEFirstViceDeanMainLayout";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import FEApprovalCard from "./FEApprovalCard";
 
@@ -8,7 +8,7 @@ export interface IFEApproval {}
 
 const FEApproval: React.FC<IFEApproval> = ({}) => {
   return (
-    <FEFirstViceDeanMainLayout>
+    <FEMainlayout>
       <Title order={2} className="text-primary-text-500" mb={"md"}>
         Persetujuan
       </Title>
@@ -24,7 +24,7 @@ const FEApproval: React.FC<IFEApproval> = ({}) => {
           to={FEROUTES.FIRST_VICE_DEAN_APPROVAL_TRIAL_PERMIT}
         />
       </Group>
-    </FEFirstViceDeanMainLayout>
+    </FEMainlayout>
   );
 };
 export default FEApproval;
