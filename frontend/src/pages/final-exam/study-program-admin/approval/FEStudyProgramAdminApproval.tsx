@@ -4,9 +4,9 @@ import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import FEApprovalCard from "../../../../components/fe-components/FEApprovalCard";
 
-export interface IFEApproval {}
+export interface IFEStudyProgramAdminApproval {}
 
-const FEApproval: React.FC<IFEApproval> = ({}) => {
+const FEStudyProgramAdminApproval: React.FC<IFEStudyProgramAdminApproval> = ({}) => {
   return (
     <FEMainlayout>
       <Title order={2} className="text-primary-text-500" mb={"md"}>
@@ -14,17 +14,17 @@ const FEApproval: React.FC<IFEApproval> = ({}) => {
       </Title>
       <Group spacing={"xl"} grow>
         <FEApprovalCard
-          label="SK Pembimbing dan Penguji"
-          description="Skripsi dan Ujian Akhir"
-          to={FEROUTES.FIRST_VICE_DEAN_APPROVAL_MENTOR_AND_EXAMINERS}
+          label="Judul Penelitian"
+          description="Permohonan dan pengajuan judul penelitian"
+          to={FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL}
         />
         <FEApprovalCard
-          label="SK Izin Ujian Sidang"
-          description="Permohonan izin ujian sidang"
-          to={FEROUTES.FIRST_VICE_DEAN_APPROVAL_TRIAL_PERMIT}
+          label="Tim Penguji"
+          description="Penyusunan Tim Penguji"
+          to={FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_EXAMINERS_TEAM}
         />
       </Group>
     </FEMainlayout>
   );
 };
-export default FEApproval;
+export default FEStudyProgramAdminApproval;

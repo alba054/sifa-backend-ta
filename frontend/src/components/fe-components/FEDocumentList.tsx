@@ -2,6 +2,7 @@ import { Group, Stack, Text, useMantineTheme } from "@mantine/core";
 import React from "react";
 import { FEFileMultipleFilled } from "src/assets/Icons/Fluent";
 import FERoundedChip from "src/components/fe-components/FERoundedChip";
+import { string } from "yup";
 import FEDocumentListCard from "./FEDocumentListCard";
 import FESmallInformationNotification from "./FESmallInformationNotification";
 
@@ -11,6 +12,10 @@ export interface IFEDocumentList {
   documentList: Array<string>;
   status?: "Lengkap" | "Belum Lengkap";
   info?: string;
+  px?: string,
+  py?: string,
+  titleSize?: string,
+  dropShadow?: boolean
 }
 
 const FEDocumentList: React.FC<IFEDocumentList> = ({
@@ -18,13 +23,17 @@ const FEDocumentList: React.FC<IFEDocumentList> = ({
   documentList,
   status,
   info,
+  px='px-8',
+  py='py-8',
+  titleSize='text-[22px]',
+  dropShadow
 }) => {
   const theme = useMantineTheme();
 
   return (
-    <Stack className="p-8 border-[1px] border-secondary-500 box-border rounded-xl drop-shadow-1 shadow-md gap-6">
+    <Stack className={`${px || 'px-8'} ${py || 'py-8'} border-[1px] border-secondary-500 box-border rounded-xl gap-6 ${dropShadow? 'drop-shadow-1 shadow-md' : ''}`}>
       <Group>
-        <Text className="text-[22px] font-bold text-primary-text-500">
+        <Text className={`${titleSize || 'text-[22px]'} font-bold text-primary-text-500`}>
           {title}
         </Text>
         {status == "Belum Lengkap" ? (

@@ -1,4 +1,4 @@
-import { useMantineTheme } from "@mantine/core";
+import { Group, useMantineTheme } from "@mantine/core";
 import React from "react";
 import { Link } from "react-router-dom";
 import { FEDoubleArrowOutline } from "src/assets/Icons/Fluent";
@@ -7,29 +7,31 @@ export interface IFELinkMore {
   to?: string;
   caption?: string;
   color?: string;
+  onClick?: (()=>void);
 }
 
 const FELinkMore: React.FC<IFELinkMore> = ({
   to = "#",
   caption = "Selengkapnya",
   color = "rgb(95 90 247)",
+  onClick
 }) => {
   return (
-    <Link
-      to={to || "#"}
-      className="relative w-fit pr-6"
+    <Group
+      className="relative w-fit pr-6 cursor-pointer"
       color={color}
       style={{
         color: color,
       }}
+      onClick={onClick}
     >
       {caption}
       <FEDoubleArrowOutline
         size={11}
         color={color}
-        className="inline ml-2 absolute top-[5px]"
+        className="inline ml-2 absolute top-[5px] right-2"
       />
-    </Link>
+    </Group>
   );
 };
 export default FELinkMore;

@@ -24,9 +24,9 @@ import StudentCPL from "./pages/admin/Report/StudentCPL";
 import Settings from "./pages/admin/Setting";
 import FEHomepage from "./pages/final-exam/FEHomepage";
 import FEApproval from "./pages/final-exam/first-vice-dean/approval/FEApproval";
-import FEMentorAndExaminersApproval from "./pages/final-exam/first-vice-dean/approval/next/FEMentorAndExaminersApproval";
-import FETrialPermitApproval from "./pages/final-exam/first-vice-dean/approval/next/FETrialPermitApproval";
-import FEMentorAndExaminersApprovalMore from "./pages/final-exam/first-vice-dean/approval/next/more/FEMentorAndExaminersApprovalMore";
+import FEMentorAndExaminersApproval from "./pages/final-exam/first-vice-dean/approval/mentor-and-examiners-approval/FEMentorAndExaminersApproval";
+import FETrialPermitApproval from "./pages/final-exam/first-vice-dean/approval/trial-permit-approval/FETrialPermitApproval";
+import FEMentorAndExaminersApprovalMore from "./pages/final-exam/first-vice-dean/approval/mentor-and-examiners-approval/details/FEMentorAndExaminersApprovalMore";
 import FELabFreeApplication from "./pages/final-exam/student/lab-free/FELabFree";
 import FEEditProfilePage from "./pages/final-exam/student/profile/edit-profile/FEEditProfile.page";
 import FEProfile from "./pages/final-exam/student/profile/profile-main/FEProfile.page";
@@ -35,6 +35,7 @@ import FENewTopicPage from "./pages/final-exam/student/proposal/new/FENewTopic";
 import FESeminar from "./pages/final-exam/student/seminar/FESeminar";
 import FESeminarHistory from "./pages/final-exam/student/seminar/history/FESeminarHistory";
 import FETrialPermit from "./pages/final-exam/student/trial-permit/FETrialPermit";
+import FEStudyProgramAdminApproval from "./pages/final-exam/study-program-admin/approval/FEStudyProgramAdminApproval";
 import Login from "./pages/global/Login/Login";
 import NotFound from "./pages/global/NotFound";
 import ResetPassword from "./pages/global/ResetPassword/ResetPassword";
@@ -45,6 +46,9 @@ import Mark from "./pages/lecturer/Mark";
 import Portfolio from "./pages/lecturer/Portfolio";
 import Profile from "./pages/lecturer/Profile";
 import { mantineTheme } from "./themes/mantine.theme";
+import FEStudyProgramAdminProposal from "./pages/final-exam/study-program-admin/approval/proposal/FEStudyProgramAdminProposal";
+import FEStudyProgramAdminProposalApplication from "./pages/final-exam/study-program-admin/approval/proposal/application/FEStudyProgramAdminProposalApplication";
+import FEStudyProgramAdminProposalApplicationHistory from "./pages/final-exam/study-program-admin/approval/proposal/application/history/FEStudyProgramAdminProposalApplicationHistory";
 
 function App() {
   return (
@@ -148,6 +152,32 @@ function App() {
                       />
                     </Route>
                     <Route path="ujian-sidang">
+                      <Route index element={<FETrialPermitApproval />} />
+                      <Route
+                        path="nim/:nim"
+                        element={<FEMentorAndExaminersApprovalMore />}
+                      />
+                    </Route>
+                  </Route>
+                </Route>
+                <Route path="admin-program-studi">
+                  <Route index element={<FEHomepage />} />
+                  <Route path="persetujuan">
+                    <Route index element={<FEStudyProgramAdminApproval />} />
+                    <Route path="judul-penelitian">
+                      <Route index element={<FEStudyProgramAdminProposal />} />
+                      <Route path="permohonan-judul-penelitian">
+                        <Route
+                          index
+                          element={<FEStudyProgramAdminProposalApplication />}
+                        />
+                        <Route
+                          path="riwayat"
+                          element={<FEStudyProgramAdminProposalApplicationHistory />}
+                        />
+                      </Route>
+                    </Route>
+                    <Route path="penyusunan-tim-penguji">
                       <Route index element={<FETrialPermitApproval />} />
                       <Route
                         path="nim/:nim"

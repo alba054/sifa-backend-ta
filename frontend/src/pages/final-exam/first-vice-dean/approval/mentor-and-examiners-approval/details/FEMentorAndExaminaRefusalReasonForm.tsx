@@ -20,7 +20,6 @@ const FEMentorAndExaminaRefusalReasonForm: React.FC<
   const { getInputProps, errors, setValues } = form;
   return (
     <Stack spacing={"sm"}>
-      {/* Bgmana caranya dapatkan ref nya? */}
       <TextArea
         autosize
         minRows={10}

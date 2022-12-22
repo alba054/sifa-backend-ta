@@ -9,9 +9,9 @@ import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 
-import FEMentorAndExaminersApprovalCard, {
-  IFEMentorAndExaminersApprovalCard
-} from "./FEMentorAndExaminersApprovalCard";
+import FEApprovalDetailsCard, {
+  IFEApprovalDetailsCard
+} from "../../../../../components/fe-components/FEApprovalDetailsCard";
 
 export interface IFETrialPermitApproval {}
 
@@ -32,7 +32,7 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   },
 ];
 
-const dummyApprovalList: Array<IFEMentorAndExaminersApprovalCard> = [
+const dummyApprovalList: Array<IFEApprovalDetailsCard> = [
   {
     name: "Devi Selfira",
     nim: "N011181001",
@@ -58,9 +58,10 @@ const FETrialPermitApproval: React.FC<IFETrialPermitApproval> = ({}) => {
     >
       <LFPHeaderComponent title="Ujian Sidang" buttons={buttons} />
       <Stack mt={"md"} className="gap-6">
-        {approvalList.map((approval: IFEMentorAndExaminersApprovalCard) => {
+        {approvalList.map((approval: IFEApprovalDetailsCard, e:number) => {
           return (
-            <FEMentorAndExaminersApprovalCard
+            <FEApprovalDetailsCard
+              key={e}
               name={approval.name}
               nim={approval.nim}
               proposalTitle={approval.proposalTitle}

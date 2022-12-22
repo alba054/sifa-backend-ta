@@ -185,28 +185,3 @@ export const TextArea = ({ onFocus, onBlur, ...props }: TextareaProps) => {
     </>
   );
 };
-
-export const TextAreaWithRef = ({ onFocus, onBlur, ...props }: TextareaProps, ref:any) => {
-  const [isFocus, setIsFocus] = useState<boolean>(false);
-
-  return (
-    <>
-      <MantineTextArea
-        className="text-primary-500"
-        size="lg"
-        styles={{ ...getDefaultStyle(isFocus, !!props.error) }}
-        onFocus={(e) => {
-          setIsFocus(true);
-          if (!!onFocus) onFocus(e);
-        }}
-        onBlur={(e) => {
-          setIsFocus(false);
-          if (!!onBlur) onBlur(e);
-        }}
-        {...props}
-        ref={ref}
-      />
-    </>
-  );
-};
-

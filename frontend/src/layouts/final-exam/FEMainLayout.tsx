@@ -1,34 +1,37 @@
 import { AppShell, MediaQuery, Stack } from "@mantine/core";
 import React, { useContext } from "react";
 import FEBreadCrumbs, {
-  IFEBreadCrumbsItem
+  IFEBreadCrumbsItem,
 } from "src/components/fe-components/FEBreadCrumbs";
 import { UserRoleContext } from "src/components/fe-components/FERoleContext";
-import FEMainNavbar, { INavbarMenuItem } from "src/components/fe-components/navbars/FEMainNavbar.component";
+import FEMainNavbar, {
+  INavbarMenuItem,
+} from "src/components/fe-components/navbars/FEMainNavbar.component";
 import { firstViceDeanMenus } from "./final-exam-const.tsx/first-vice-dean.const";
 import { studentMenus } from "./final-exam-const.tsx/student-role.const";
+import { studyProgramAdminMenus } from "./final-exam-const.tsx/study-program-admin.const";
 
 interface IMainLayoutProps {
   children: any;
   breadCrumbs?: Array<IFEBreadCrumbsItem>;
-  breadCrumbsCurrentPage?: string
+  breadCrumbsCurrentPage?: string;
 }
 
-const switchMenus : { [role: string | number]: INavbarMenuItem[] } ={
-  "student":studentMenus,
-  "first-vice-dean":firstViceDeanMenus
-}
-
-
+const switchMenus: { [role: string | number]: INavbarMenuItem[] } = {
+  0:studentMenus,
+  1:firstViceDeanMenus,
+  2:studyProgramAdminMenus,
+  student: studentMenus,
+  "first-vice-dean": firstViceDeanMenus,
+  "study-program-admin": studyProgramAdminMenus,
+};
 
 const FEMainlayout: React.FC<IMainLayoutProps> = ({
   children,
   breadCrumbs,
-  breadCrumbsCurrentPage
+  breadCrumbsCurrentPage,
 }) => {
-  const role= useContext(UserRoleContext)
-  console.log("role yang sekarang",role)
-  console.log(switchMenus[role])
+  const role = useContext(UserRoleContext);
   return (
     <AppShell
       padding={0}
@@ -44,7 +47,14 @@ const FEMainlayout: React.FC<IMainLayoutProps> = ({
     >
       <Stack className={`transition-all duration-150 mx-10 my-12`}>
         {typeof breadCrumbs !== "undefined" ? (
-          <FEBreadCrumbs items={breadCrumbs} current={typeof breadCrumbsCurrentPage === "undefined"? "Riwayat Tugas Akhir" : breadCrumbsCurrentPage} />
+          <FEBreadCrumbs
+            items={breadCrumbs}
+            current={
+              typeof breadCrumbsCurrentPage === "undefined"
+                ? "Riwayat Tugas Akhir"
+                : breadCrumbsCurrentPage
+            }
+          />
         ) : null}
         {children}
       </Stack>
