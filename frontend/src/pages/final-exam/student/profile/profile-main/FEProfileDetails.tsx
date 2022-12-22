@@ -24,10 +24,37 @@ import FEProfileCard from "src/components/FEProfileCard";
 import { Link } from "react-router-dom";
 import FERoundedChip from "src/components/fe-components/FERoundedChip";
 
-export interface IFEProfileDetails {}
+export interface IFEProfileDetails {
+  name?: string | null;
+  nim?: string | null;
+  profilePicture?: string | null | undefined;
+  sksPassed?: number | null;
+  title?: string | null;
+  faculty?: string | null;
+  address?: string | null;
+  telephoneNumber?: string | null;
+  placeDateOfBirth?: string | null;
+  gender?: "Laki-laki" | "Perempuan" | null;
+  email?: string | null;
+  academicAdviser?: string | null;
+}
 
-const FEProfileDetails: React.FC<IFEProfileDetails> = ({}) => {
+const FEProfileDetails: React.FC<IFEProfileDetails> = ({
+  name,
+  nim,
+  profilePicture=dummy_profile_picture,
+  sksPassed,
+  title,
+  faculty,
+  address,
+  telephoneNumber,
+  placeDateOfBirth,
+  gender,
+  email,
+  academicAdviser,
+}) => {
   const theme = useMantineTheme();
+  const noData= "-"
 
   return (
     <FEProfileCard
@@ -38,7 +65,7 @@ const FEProfileDetails: React.FC<IFEProfileDetails> = ({}) => {
         <Group spacing={"md"} className="items-center">
           <div className={`relative rounded-full overflow-hidden mr-6`}>
             <Image
-              src={dummy_profile_picture}
+              src={profilePicture || dummy_profile_picture}
               width={86}
               height={86}
               alt="Foto Profil"
@@ -47,23 +74,23 @@ const FEProfileDetails: React.FC<IFEProfileDetails> = ({}) => {
           <Stack className="gap-[2px]">
             <Group spacing={"lg"}>
               <Text className="text-[24px] font-semibold text-primary-text-500">
-                Muhammad Takdim
+                {name || noData}
               </Text>
               <Text className="-ml-4 text-secondary-text-500 text-[16px] top-[2px] relative">
-                (N071191042)
+                ({nim || noData})
               </Text>
               <FERoundedChip label="Aktif" type="blue" />
             </Group>
             <Text className="inline-flex gap-2 text-secondary-text-500 tracking-01">
-              S1{" "}
+              {title || noData}
               <Text className="text-[10px] align-middle top-1 relative">
                 &#x2022;
               </Text>
-              Farmasi
+              {faculty || noData}
             </Text>
             <Text className="text-secondary-text-500">
-              Jumlah SKS yang telah dilulusi:{" "}
-              <Text className="inline font-bold">144</Text>
+              Jumlah SKS yang telah dilulusi:
+              <Text className="inline font-bold">{sksPassed || noData}</Text>
             </Text>
           </Stack>
         </Group>
@@ -77,7 +104,7 @@ const FEProfileDetails: React.FC<IFEProfileDetails> = ({}) => {
             size={20}
             color={theme.colors.primary[5]}
             className="mr-1"
-          />{" "}
+          />
           Edit Profil
         </Button>
       </Group>
@@ -90,36 +117,36 @@ const FEProfileDetails: React.FC<IFEProfileDetails> = ({}) => {
           <Group>
             <FEProfilePrivacyInformationComp
               label="Alamat"
-              value="Jl. Arsitektur III Blok D 75 Kompleks UNHAS Antang"
+              value={address || noData}
               icon={<FEHomeOutline color={theme.colors.secondary[9]} />}
             />
             <FEProfilePrivacyInformationComp
               label="Nomor Telepon"
-              value="082293410911"
+              value={telephoneNumber || noData}
               icon={<FECallOutline color={theme.colors.secondary[9]} />}
             />
           </Group>
           <Group>
             <FEProfilePrivacyInformationComp
               label="Tempat/Tanggal Lahir"
-              value="Makassar, 15 Mei 2001"
+              value={placeDateOfBirth || noData}
               icon={<CakeOutline color={theme.colors.secondary[9]} />}
             />
             <FEProfilePrivacyInformationComp
               label="Gender"
-              value="Laki-laki"
+              value={gender || noData}
               icon={<GenderOutline color={theme.colors.secondary[9]} />}
             />
           </Group>
           <Group>
             <FEProfilePrivacyInformationComp
               label="Email"
-              value="takdimu123@gmail.com"
+              value={email || noData}
               icon={<FEMailOutline color={theme.colors.secondary[9]} />}
             />
             <FEProfilePrivacyInformationComp
               label="Penasehat Akademik"
-              value="Yayu Mulsiani Evary, S.Si., Pharm.Sci., Apt. (0005028901)"
+              value={academicAdviser || noData}
               icon={<TalkingOutline color={theme.colors.secondary[9]} />}
             />
           </Group>

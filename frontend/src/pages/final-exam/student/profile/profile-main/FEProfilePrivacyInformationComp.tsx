@@ -4,7 +4,7 @@ import { HomeOutline } from "src/assets/Icons/Fluent";
 
 export interface IFEProfilePrivacyInformationComp {
   label: string,
-  value: string,
+  value?: string | null,
   icon: JSX.Element
 }
 
