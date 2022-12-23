@@ -45,8 +45,8 @@ const FEStepper: React.FC<IFEStepper> = ({
         },
       }}
     >
-      {progressStages.map((currDesc) => {
-        return <Stepper.Step description={currDesc} />;
+      {progressStages.map((currDesc:string, e:number) => {
+        return <Stepper.Step key={e} description={currDesc} />;
       })}
     </Stepper>
   );

@@ -113,7 +113,8 @@ module.exports = {
     letterSpacing:{
       "01": "0.001em",
       "1": "0.0015em",
-      "2": "0.0025em"
+      "2": "0.0025em",
+      "4": "0.004em"
     },
     dropShadow:{
       "1": "0px 1px 4px rgba(0, 0, 0, 0.12)"

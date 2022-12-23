@@ -49,6 +49,7 @@ import { mantineTheme } from "./themes/mantine.theme";
 import FEStudyProgramAdminProposal from "./pages/final-exam/study-program-admin/approval/proposal/FEStudyProgramAdminProposal";
 import FEStudyProgramAdminProposalApplication from "./pages/final-exam/study-program-admin/approval/proposal/application/FEStudyProgramAdminProposalApplication";
 import FEStudyProgramAdminProposalApplicationHistory from "./pages/final-exam/study-program-admin/approval/proposal/application/history/FEStudyProgramAdminProposalApplicationHistory";
+import FEStudentHomepage from "./pages/final-exam/student/home/FEStudentHomepage";
 
 function App() {
   return (
@@ -121,7 +122,7 @@ function App() {
               <Route path="tugas-akhir">
                 <Route index element={<FEHomepage />} />
                 <Route path="mahasiswa">
-                  <Route index element={<FEHomepage />} />
+                  <Route index element={<FEStudentHomepage />} />
                   <Route path="tugas-akhir" element={<FEProposalPage />} />
                   <Route path="tugas-akhir/buat" element={<FENewTopicPage />} />
                   <Route
