@@ -24,20 +24,20 @@ const lastApplicationDone = 3;
 const labValue: Array<laboratoyObject> = [
   {
     id: 0,
-    labLabel: "Laboratorium Fisika",
-    labValue: "Laboratorium Fisika",
+    labLabel: "Fisika",
+    labValue: "Fisika",
     show: true,
   },
   {
     id: 1,
-    labLabel: "Laboratorium Bio Farmaka",
-    labValue: "Laboratorium Bio Farmaka",
+    labLabel: "Bio Farmaka",
+    labValue: "Bio Farmaka",
     show: true,
   },
   {
     id: 2,
-    labLabel: "Laboratorium Matematika",
-    labValue: "Laboratorium Matematika",
+    labLabel: "Matematika",
+    labValue: "Matematika",
     show: true,
   },
 ];
