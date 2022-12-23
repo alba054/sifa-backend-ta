@@ -1,6 +1,6 @@
 import { Group, useMantineTheme } from "@mantine/core";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FEDoubleArrowOutline } from "src/assets/Icons/Fluent";
 
 export interface IFELinkMore {
@@ -16,6 +16,7 @@ const FELinkMore: React.FC<IFELinkMore> = ({
   color = "rgb(95 90 247)",
   onClick
 }) => {
+  const navigate= useNavigate()
   return (
     <Group
       className="relative w-fit pr-6 cursor-pointer"
@@ -23,7 +24,10 @@ const FELinkMore: React.FC<IFELinkMore> = ({
       style={{
         color: color,
       }}
-      onClick={onClick}
+
+      onClick={(to=="#")? onClick : ()=>{
+        navigate(to)
+      }}
     >
       {caption}
       <FEDoubleArrowOutline

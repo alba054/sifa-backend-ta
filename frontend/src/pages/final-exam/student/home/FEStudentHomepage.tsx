@@ -1,19 +1,68 @@
-import { Title, useMantineTheme, Text, Stack, Group } from "@mantine/core";
-import React from "react";
-import { FEArrowCircleOutline } from "src/assets/Icons/Fluent";
+import { Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import React, { useState } from "react";
 import FEDateChip from "src/components/fe-components/FEDateChip";
 import FEInformationNotification from "src/components/fe-components/FEInformationNotification";
-import FELinkMore from "src/components/fe-components/FELinkMore";
-import FEProgressBar from "src/components/fe-components/FEProgressBar";
+import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import FEStudentHomepageGuidance from "./FEStudentHomepageGuidance";
-import FEStudentHomepageLabFree from "./FEStudentHomepageLabFree";
-import FEStudentHomepageProposalApplications from "./FEStudentHomepageProposalApplications";
+import FEStudentHomepageLabFree, {
+  IFEStudentHomepageLabFree,
+} from "./FEStudentHomepageLabFree";
+import { IFEStudentHomepageLabFreeCard } from "./FEStudentHomepageLabFreeCard";
+import FEStudentHomepageProposalApplications, {
+  IFEStudentHomepageProposalApplications,
+} from "./FEStudentHomepageProposalApplications";
 
 interface IFEStudentHomepageProps {}
 
-const FEStudentHomepage: React.FC<IFEStudentHomepageProps> = ({}) => {console.log('START')
+const dummyStudentProposalApplicationsData: IFEStudentHomepageProposalApplications =
+  {
+    proposalComp: {
+      currentProgress: 1,
+      date: "20 November 2022",
+      status: "process",
+    },
+    // seminarComp: {
+    //   currentProgress: 3,
+    //   date: "20 November 2022",
+    //   status: "rejected",
+    // },
+    // trialPermitComp: {
+    //   currentProgress: 6,
+    //   date: "20 Desember 2022",
+    //   status: "accepted",
+    // },
+  };
+
+const dummyStudentLabFreeDataArray: Array<IFEStudentHomepageLabFreeCard> = [
+  {
+    title: "Permohonan #1",
+    lab: "Fisika",
+    status: "process",
+  },
+  {
+    title: "Permohonan #2",
+    lab: "Bio Farmaka",
+    status: "rejected",
+  },
+  {
+    title: "Permohonan #3",
+    lab: "Matematika",
+    status: "accepted",
+  },
+];
+
+const FEStudentHomepage: React.FC<IFEStudentHomepageProps> = ({}) => {
+  const [studentProposalApplicationsData] = useState(
+    dummyStudentProposalApplicationsData
+  );
+  const { array: studentLabFreeDataArray } = useArray(
+    dummyStudentLabFreeDataArray
+  );
+  
+
   const theme = useMantineTheme();
+
   return (
     <FEMainlayout>
       <FEDateChip />
@@ -38,9 +87,11 @@ const FEStudentHomepage: React.FC<IFEStudentHomepageProps> = ({}) => {console.lo
         title="Tugas Akhir Mahasiswa"
       />
       <Stack className="gap-8">
-        <FEStudentHomepageProposalApplications />
-        <FEStudentHomepageLabFree />
-        <FEStudentHomepageGuidance />
+        <FEStudentHomepageProposalApplications
+          {...studentProposalApplicationsData}
+        />
+        <FEStudentHomepageLabFree labFreeApplicationArray={studentLabFreeDataArray} />
+        <FEStudentHomepageGuidance isMentored={true} />
       </Stack>
     </FEMainlayout>
   );

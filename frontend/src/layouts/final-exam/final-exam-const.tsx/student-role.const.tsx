@@ -1,4 +1,4 @@
-import { DocumentRibbonIcon, FEHammerOutline, FESeminar, HandshakeOutlineIcon, HomeOutline } from "src/assets/Icons/Fluent";
+import { DocumentRibbonIcon, FEBookOutline, FEHammerOutline, FESeminar, HandshakeOutlineIcon, HomeOutline } from "src/assets/Icons/Fluent";
 import { INavbarMenuItem } from "src/components/fe-components/navbars/FEMainNavbar.component";
 import { FEROUTES } from "src/routes/final-exam.route";
 
@@ -27,5 +27,9 @@ export const studentMenus: INavbarMenuItem[] = [
     icon:FEHammerOutline,
     label: "Ujian Sidang",
     href: FEROUTES.STUDENT_TRIAL_PERMIT
+  },{
+    icon:FEBookOutline,
+    label: "Bimbingan",
+    href: FEROUTES.STUDENT_GUIDANCE
   }
 ];

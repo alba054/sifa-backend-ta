@@ -50,6 +50,7 @@ import FEStudyProgramAdminProposal from "./pages/final-exam/study-program-admin/
 import FEStudyProgramAdminProposalApplication from "./pages/final-exam/study-program-admin/approval/proposal/application/FEStudyProgramAdminProposalApplication";
 import FEStudyProgramAdminProposalApplicationHistory from "./pages/final-exam/study-program-admin/approval/proposal/application/history/FEStudyProgramAdminProposalApplicationHistory";
 import FEStudentHomepage from "./pages/final-exam/student/home/FEStudentHomepage";
+import FEStudentGuidance from "./pages/final-exam/student/guidance/FEStudentGuidance";
 
 function App() {
   return (
@@ -136,6 +137,7 @@ function App() {
                     element={<FESeminarHistory />}
                   />
                   <Route path="ujian-sidang" element={<FETrialPermit />} />
+                  <Route path="bimbingan" element={<FEStudentGuidance />} />
                   <Route path="profil">
                     <Route path="" element={<FEProfile />} />
                     <Route path="edit" element={<FEEditProfilePage />} />

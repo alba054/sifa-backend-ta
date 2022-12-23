@@ -127,7 +127,7 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
               {/* <Text className="inline-block text-xs text-secondary-text-200 ">Tanggal Permohonan: 14 November 2022</Text> */}
             </Text>
             <Text className="text-secondary-text-500 text-[18px] font-normal">
-              {lab}
+              Laboratorium {lab}
             </Text>
           </Stack>
           <Group className="justify-between mt-1 h-12">

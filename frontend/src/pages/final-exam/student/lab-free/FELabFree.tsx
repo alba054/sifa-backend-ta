@@ -49,7 +49,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
       {
         title: "Permohonan #1",
         index: 0,
-        lab: "Laboratorium Fisika",
+        lab: "Fisika",
         status: "process",
         tanggalPermohonan: new Date()
           .toLocaleDateString("id", {
@@ -67,7 +67,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
       {
         title: "Permohonan #2",
         index: 1,
-        lab: "Laboratorium Bio Farmaka",
+        lab: "Bio Farmaka",
         status: "rejected",
         tanggalPermohonan: new Date()
           .toLocaleDateString("id", {
@@ -85,7 +85,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
       {
         title: "Permohonan #3",
         index: 2,
-        lab: "Laboratorium Matematika",
+        lab: "Matematika",
         status: "accepted",
         tanggalPermohonan: new Date()
           .toLocaleDateString("id", {

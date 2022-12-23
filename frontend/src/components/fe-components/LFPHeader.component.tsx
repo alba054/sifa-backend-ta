@@ -39,7 +39,7 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
               key={`tooltip-${e}`}
               label={disabledButtonTooltipLabel}
               withArrow
-              color={"rgba(255, 255, 255, 0.8)"}
+              color={"rgba(255, 255, 255, 0.9)"}
               position="bottom-end"
               multiline
               // width={280}
