@@ -22,5 +22,7 @@ export const FEROUTES = {
   STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_APPLICATION: "/tugas-akhir/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian",
   STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_APPLICATION_HISTORY: "/tugas-akhir/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian/riwayat",
   // STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_APPLICATION_DETAILS: "/tugas-akhir/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian/nim",
+  STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_SUBMISSION: "/tugas-akhir/admin-program-studi/persetujuan/judul-penelitian/pengajuan-judul-penelitian",
+  STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_SUBMISSION_HISTORY: "/tugas-akhir/admin-program-studi/persetujuan/judul-penelitian/pengajuan-judul-penelitian/riwayat",
   STUDY_PROGRAM_ADMIN_APPROVAL_EXAMINERS_TEAM: "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji",
 };

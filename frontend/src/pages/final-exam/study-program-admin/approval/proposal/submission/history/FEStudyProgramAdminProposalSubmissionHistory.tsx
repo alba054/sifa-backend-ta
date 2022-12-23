@@ -1,4 +1,3 @@
-import { Title } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { FETrashOutline } from "src/assets/Icons/Fluent";
 import ManThinkingAnimation from "src/assets/Icons/ManThinkingAnimation";
@@ -6,15 +5,15 @@ import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton,
+  ILFPHeaderButton
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import FEStudyProgramAdminProposalApplicationHistoryMain from "./FEStudyProgramAdminProposalApplicationHistoryMain";
-import { IFEStudyProgramAdminProposalApplicationHistoryMainCard } from "./FEStudyProgramAdminProposalApplicationHistoryMainCard";
+import FEStudyProgramAdminProposalSubmissionHistoryMain from "./FEStudyProgramAdminProposalSubmissionHistoryMain";
+import { IFEStudyProgramAdminProposalSubmissionHistoryMainCard } from "./FEStudyProgramAdminProposalSubmissionHistoryMainCard";
 
-export interface IFEStudyProgramAdminProposalApplicationHistory {}
+export interface IFEStudyProgramAdminProposalSubmissionHistory {}
 
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
@@ -26,61 +25,61 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
     href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL,
   },
   {
-    title: "Permohonan Judul Penelitian",
-    href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_APPLICATION,
+    title: "Pengajuan Judul Penelitian",
+    href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_SUBMISSION,
   },
 ];
 
-const dummyProposalApplicationHistoryData: Array<IFEStudyProgramAdminProposalApplicationHistoryMainCard> =
+const dummySubmissionList: Array<IFEStudyProgramAdminProposalSubmissionHistoryMainCard> =
   [
     {
-      name: "Devi Selfira",
-      nim: "N011181001",
+      name: "Juwita Hafiva Sari",
+      nim: "N011181010",
+      laboratory: "Kimia Farmasi",
+      laboratoryChairman: "NursiahHasyim, Dra., CES.",
+      completionDate: "14 November 2022",
+      entryDate: "7 November 2022",
+      proposalTitle:
+        "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
       status: "accepted",
-      acceptedProposal: {
-        proposalTitle:
-          "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
-        laboratory: "Kimia Farmasi",
-        proposer: "Dosen (Rangga Meidianto Asri S.Si., M.Si., Apt.)",
-      },
     },
+    
     {
-      name: "Muh. Yusuf Syam",
-      nim: "H071191044",
-      status: "rejected",
-      refusedProposal: [
-        {
-          proposalTitle:
-            "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
-          laboratory: "Kimia Farmasi",
-          proposer: "Dosen (Rangga Meidianto Asri S.Si., M.Si., Apt.)",
-        },
-      ],
+      name: "Indah Lestari",
+      nim: "N011191004",
+      laboratory: "Mikrobiologi Farmasi",
+      laboratoryChairman: "Abdul Rahim, S.Si., M.Si., Ph.D., Apt.",
+      completionDate: "1 November 2022",
+      entryDate: "7 November 2022",
+      proposalTitle:
+        "Pengujian Aktivitas Antioksidan dan Analisis Mikrobiologi terhadap Lama Waktu Penyimpanan Teh Daun Gaharu (Aquilaria Malaccensis Lamk.) dalam Kemasan Siap Minum",
+      status: "accepted",
     },
   ];
 
-const FEStudyProgramAdminProposalApplicationHistory: React.FC<
-  IFEStudyProgramAdminProposalApplicationHistory
+const FEStudyProgramAdminProposalSubmissionHistory: React.FC<
+  IFEStudyProgramAdminProposalSubmissionHistory
 > = ({}) => {
   const {
-    array: proposalApplicationHistoryData,
+    array: proposalSubmissionHistoryData,
     remove,
     clear,
-  } = useArray(dummyProposalApplicationHistoryData);
+  } = useArray(dummySubmissionList);
+
   const [isHistoryExist, setIsHistoryExist] = useState(true);
   const [isAlertOpened, setIsAlertOpened] = useState(false);
 
   function handleDelete(index: number) {
     remove(index);
   }
-
+  
   useEffect(() => {
-    if (proposalApplicationHistoryData.length <= 0) {
+    if (proposalSubmissionHistoryData.length <= 0) {
       setIsHistoryExist(false);
     } else {
       setIsHistoryExist(true);
     }
-  }, [proposalApplicationHistoryData]);
+  }, [proposalSubmissionHistoryData]);
 
   const buttons: ILFPHeaderButton[] = [
     {
@@ -88,7 +87,7 @@ const FEStudyProgramAdminProposalApplicationHistory: React.FC<
       type: "modal",
       disabled: !isHistoryExist,
       onClick: () => setIsAlertOpened(true),
-      icon: <FETrashOutline className="mr-1" size={16}  />,
+      icon: <FETrashOutline className="mr-1" size={16} />,
     },
   ];
 
@@ -98,7 +97,7 @@ const FEStudyProgramAdminProposalApplicationHistory: React.FC<
       breadCrumbsCurrentPage="Riwayat Persetujuan"
     >
       <FEAlertModal
-        title="Kosongkan Riwayat Permohonan?"
+        title="Kosongkan Riwayat Pengajuan?"
         description="Dengan mengklik tombol “Kosongkan”, semua data riwayat akan terhapus. Data yang telah dihapus tidak dapat dikembalikan"
         opened={isAlertOpened}
         setOpened={setIsAlertOpened}
@@ -110,19 +109,19 @@ const FEStudyProgramAdminProposalApplicationHistory: React.FC<
       />
 
       <LFPHeaderComponent
-        title="Riwayat Permohonan Judul Penelitian"
+        title="Riwayat Pengajuan Judul Penelitian"
         buttons={buttons}
         disabledButtonTooltipLabel={"Riwayat kosong"}
       />
       {isHistoryExist ? (
-        <FEStudyProgramAdminProposalApplicationHistoryMain
-          proposalApplicationHistoryData={proposalApplicationHistoryData}
+        <FEStudyProgramAdminProposalSubmissionHistoryMain
+          proposalSubmissionHistoryData={proposalSubmissionHistoryData}
           handleDelete={handleDelete}
         />
       ) : (
         <LFPEmptyDataComponent
-          title="Riwayat Persetujuan Masih Kosong"
-          caption="Belum ada mahasiswa mengajukan persetujuan"
+          title="Riwayat Pengajuan Masih Kosong"
+          caption="Belum ada judul yang diajukan ke kepala laboratorium yang bersangkutan"
           icon={
             <ManThinkingAnimation
               width={400}
@@ -134,4 +133,4 @@ const FEStudyProgramAdminProposalApplicationHistory: React.FC<
     </FEMainlayout>
   );
 };
-export default FEStudyProgramAdminProposalApplicationHistory;
+export default FEStudyProgramAdminProposalSubmissionHistory;

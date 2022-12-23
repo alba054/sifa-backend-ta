@@ -51,6 +51,8 @@ import FEStudyProgramAdminProposalApplication from "./pages/final-exam/study-pro
 import FEStudyProgramAdminProposalApplicationHistory from "./pages/final-exam/study-program-admin/approval/proposal/application/history/FEStudyProgramAdminProposalApplicationHistory";
 import FEStudentHomepage from "./pages/final-exam/student/home/FEStudentHomepage";
 import FEStudentGuidance from "./pages/final-exam/student/guidance/FEStudentGuidance";
+import FEStudyProgramAdminProposalSubmission from "./pages/final-exam/study-program-admin/approval/proposal/submission/FEStudyProgramAdminProposalSubmission";
+import FEStudyProgramAdminProposalSubmissionHistory from "./pages/final-exam/study-program-admin/approval/proposal/submission/history/FEStudyProgramAdminProposalSubmissionHistory";
 
 function App() {
   return (
@@ -177,6 +179,16 @@ function App() {
                         <Route
                           path="riwayat"
                           element={<FEStudyProgramAdminProposalApplicationHistory />}
+                        />
+                      </Route>
+                      <Route path="pengajuan-judul-penelitian">
+                        <Route
+                          index
+                          element={<FEStudyProgramAdminProposalSubmission />}
+                        />
+                        <Route
+                          path="riwayat"
+                          element={<FEStudyProgramAdminProposalSubmissionHistory />}
                         />
                       </Route>
                     </Route>

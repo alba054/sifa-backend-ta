@@ -31,7 +31,7 @@ const FEStudyProgramAdminProposal: React.FC<
         <FEApprovalCard
           label="Pengajuan Judul Penelitian"
           description="Disposisi dokumen"
-          to={FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_EXAMINERS_TEAM}
+          to={FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_SUBMISSION}
         />
       </Group>
     </FEMainlayout>
