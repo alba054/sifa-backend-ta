@@ -16,5 +16,5 @@ export async function getVocations(departmentID: number) {
     }
   );
 
-  return vocations;
+  return await vocations.json();
 }

@@ -13,5 +13,5 @@ export async function getDepartments() {
     },
   });
 
-  return departments;
+  return await departments.json();
 }

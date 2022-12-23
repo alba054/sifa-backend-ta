@@ -14,7 +14,7 @@ export async function getStudent(nim: string) {
     },
   });
 
-  return student;
+  return await student.json();
 }
 
 interface IPutStudent {
@@ -29,7 +29,7 @@ export async function putStudent(nim: string, body: IPutStudent) {
     },
   });
 
-  return student;
+  return await student.json();
 }
 
 export async function getStudentReqLabs(nim: string) {
@@ -43,7 +43,7 @@ export async function getStudentReqLabs(nim: string) {
     }
   );
 
-  return studentReqLabs;
+  return await studentReqLabs.json();
 }
 
 interface IPostStudentReqLabs {
@@ -65,7 +65,7 @@ export async function postStudentReqLabs(
     }
   );
 
-  return studentReqLabs;
+  return await studentReqLabs.json();
 }
 
 interface IPutStudentReqLabs {
@@ -87,7 +87,7 @@ export async function putStudentReqLabs(
     }
   );
 
-  return studentReqLabs;
+  return await studentReqLabs.json();
 }
 
 export async function deleteStudentReqLabs(nim: string, reqlabId: string) {
@@ -101,7 +101,7 @@ export async function deleteStudentReqLabs(nim: string, reqlabId: string) {
     }
   );
 
-  return studentReqLabs;
+  return await studentReqLabs.json();
 }
 
 export async function getStudentThesis(nim: string) {
@@ -115,7 +115,7 @@ export async function getStudentThesis(nim: string) {
     }
   );
 
-  return studentThesis;
+  return await studentThesis.json();
 }
 
 interface IPostStudentThesis {
@@ -140,7 +140,7 @@ export async function postStudentThesis(nim: string, body: IPostStudentThesis) {
     }
   );
 
-  return studentThesis;
+  return await studentThesis.json();
 }
 
 export interface IPutStudentThesis {
@@ -164,7 +164,7 @@ export async function putStudentThesis(
     }
   );
 
-  return studentThesis;
+  return await studentThesis.json();
 }
 
 export async function deleteStudentThesis(nim: string, thesisID: number) {
@@ -178,5 +178,5 @@ export async function deleteStudentThesis(nim: string, thesisID: number) {
     }
   );
 
-  return studentThesis;
+  return await studentThesis.json();
 }

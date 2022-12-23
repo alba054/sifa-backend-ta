@@ -20,7 +20,7 @@ export async function postUsers(body: IPostUser) {
     },
   });
 
-  return users;
+  return await users.json();
 }
 
 export async function getUserStudents(body: IPostUser) {
@@ -35,7 +35,7 @@ export async function getUserStudents(body: IPostUser) {
     }
   );
 
-  return userStudents;
+  return await userStudents.json();
 }
 
 export async function login(authorization: string) {
@@ -46,7 +46,7 @@ export async function login(authorization: string) {
     },
   });
 
-  return loginResp;
+  return await loginResp.json();
 }
 
 export async function forgetPassword(username: string) {
@@ -60,7 +60,7 @@ export async function forgetPassword(username: string) {
     }
   );
 
-  return fpResp;
+  return await fpResp.json();
 }
 
 interface IUpdatePassword {
@@ -82,5 +82,5 @@ export async function updatePassword(
     }
   );
 
-  return fpResp;
+  return await fpResp.json();
 }

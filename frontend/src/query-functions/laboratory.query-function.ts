@@ -13,5 +13,5 @@ export async function getLaboratories() {
     },
   });
 
-  return laboratories;
+  return await laboratories.json();
 }

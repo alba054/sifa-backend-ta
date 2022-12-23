@@ -13,7 +13,7 @@ export async function getGroupUnits() {
     },
   });
 
-  return groupUnits;
+  return await groupUnits.json();
 }
 
 interface IPostGroupUnit {
@@ -29,5 +29,5 @@ export async function postGroupUnits(groupUnitParams: IPostGroupUnit) {
     },
   });
 
-  return newGroupUnit;
+  return await newGroupUnit.json();
 }

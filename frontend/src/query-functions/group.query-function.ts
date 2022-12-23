@@ -13,5 +13,5 @@ export async function getGroups() {
     },
   });
 
-  return groups;
+  return await groups.json();
 }

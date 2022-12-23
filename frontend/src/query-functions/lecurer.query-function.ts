@@ -13,7 +13,7 @@ export async function getLecturers() {
     },
   });
 
-  return lecturers;
+  return await lecturers.json();
 }
 
 export async function getLecturer(nim: number) {
@@ -24,7 +24,7 @@ export async function getLecturer(nim: number) {
     },
   });
 
-  return lecturer;
+  return await lecturer.json();
 }
 
 interface IPostLecturer {
@@ -41,5 +41,5 @@ export async function postLecturer(lecturerData: IPostLecturer) {
     },
   });
 
-  return newLecturer;
+  return await newLecturer.json();
 }
