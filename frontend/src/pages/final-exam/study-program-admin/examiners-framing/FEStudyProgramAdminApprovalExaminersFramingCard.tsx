@@ -1,13 +1,11 @@
 import { Button, Group, Stack, Text, useMantineTheme } from "@mantine/core";
-import React, { useEffect } from "react";
+import React from "react";
 import { FEBookmarkSingleSearchOutline } from "src/assets/Icons/Fluent";
 import FELinkMore from "src/components/fe-components/FELinkMore";
-import FECard from "src/components/FECard";
-import { FEROUTES } from "src/routes/final-exam.route";
 import {
-  approvalChip,
-  statusChip,
+  approvalChip
 } from "src/components/fe-components/FERoundedChip";
+import FECard from "src/components/FECard";
 import { FEStatus } from "src/utils/const/type";
 
 export interface IFEStudyProgramAdminApprovalExaminersFramingCard {

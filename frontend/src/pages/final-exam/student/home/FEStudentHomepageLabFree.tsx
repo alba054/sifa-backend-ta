@@ -1,10 +1,9 @@
 import { Group, ScrollArea, Stack, Text } from "@mantine/core";
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import FELinkMore from "src/components/fe-components/FELinkMore";
-import useUpdateEffect from "src/hooks/fe-hooks/useUpdateEffect";
 import { FEROUTES } from "src/routes/final-exam.route";
 import FEStudentHomepageLabFreeCard, {
-  IFEStudentHomepageLabFreeCard,
+  IFEStudentHomepageLabFreeCard
 } from "./FEStudentHomepageLabFreeCard";
 
 export interface IFEStudentHomepageLabFree {
@@ -50,6 +49,7 @@ const FEStudentHomepageLabFree: React.FC<IFEStudentHomepageLabFree> = ({
             <FELinkMore
               caption="Lihat Lebih Lengkap"
               to={FEROUTES.STUDENT_LAB_FREE}
+              scrollTop
             />
           </Stack>
           <ScrollArea

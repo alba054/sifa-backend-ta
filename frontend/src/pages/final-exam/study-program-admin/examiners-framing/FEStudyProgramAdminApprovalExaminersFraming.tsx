@@ -1,17 +1,17 @@
 import { Stack } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton,
+  ILFPHeaderButton
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import FEStudyProgramAdminApprovalExaminersFramingCard, {
-  IFEStudyProgramAdminApprovalExaminersFramingCard,
+  IFEStudyProgramAdminApprovalExaminersFramingCard
 } from "./FEStudyProgramAdminApprovalExaminersFramingCard";
 export interface IFEStudyProgramAdminApprovalExaminersFraming {}
 

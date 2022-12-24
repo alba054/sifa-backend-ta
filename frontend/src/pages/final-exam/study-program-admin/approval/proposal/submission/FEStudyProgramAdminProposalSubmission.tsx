@@ -5,13 +5,13 @@ import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import FEInformationNotification from "src/components/fe-components/FEInformationNotification";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton,
+  ILFPHeaderButton
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import FEStudyProgramAdminProposalSubmissionCard, {
-  IFEStudyProgramAdminProposalSubmissionCard,
+  IFEStudyProgramAdminProposalSubmissionCard
 } from "./FEStudyProgramAdminProposalSubmissionCard";
 
 export interface IFEStudyProgramAdminProposalSubmission {}

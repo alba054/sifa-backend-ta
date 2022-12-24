@@ -1,10 +1,7 @@
 import {
   Button,
   Group,
-  Modal,
-  useMantineTheme,
-  Text,
-  Stack,
+  Modal, Stack, Text, useMantineTheme
 } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import React, { useEffect, useState } from "react";
@@ -15,11 +12,10 @@ import FEDocumentList from "src/components/fe-components/FEDocumentList";
 import FEInformationNotification from "src/components/fe-components/FEInformationNotification";
 import FERoundedChip from "src/components/fe-components/FERoundedChip";
 import FESmallInformationNotification from "src/components/fe-components/FESmallInformationNotification";
-import FETableHeader1 from "src/components/fe-components/table/FETableHeader1";
-import { RadioGroup, SelectInput } from "src/components/FormInput";
+import { RadioGroup } from "src/components/FormInput";
 import {
   feProposalApplicationModalForm,
-  IFEProposalApplicationModalForm,
+  IFEProposalApplicationModalForm
 } from "./FEStudyProgramAdminProposalApplicationModalFormInterfaces";
 
 export interface IFEStudyProgramAdminProposalApplicationModal {
@@ -200,10 +196,12 @@ const FEStudyProgramAdminProposalApplicationModal: React.FC<
               value={values}
               data={[
                 {
+                  key: "0",
                   label: "Judul Pertama",
                   value: "0",
                 },
                 {
+                  key: "1",
                   label: "Judul Kedua",
                   value: "1",
                 },

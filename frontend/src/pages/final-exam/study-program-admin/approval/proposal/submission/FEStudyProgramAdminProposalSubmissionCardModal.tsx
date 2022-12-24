@@ -1,13 +1,9 @@
 import {
-  Modal,
-  Stack,
-  useMantineTheme,
-  Text,
-  Group,
   Button,
-  Divider,
+  Divider, Group, Modal,
+  Stack, Text, useMantineTheme
 } from "@mantine/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 
 export interface IFEStudyProgramAdminProposalSubmissionCardModal {

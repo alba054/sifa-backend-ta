@@ -1,4 +1,4 @@
-import { Modal, Stack, useMantineTheme, Text, Group } from "@mantine/core";
+import { Group, Modal, Stack, Text, useMantineTheme } from "@mantine/core";
 import React from "react";
 import { approvalChip } from "src/components/fe-components/FERoundedChip";
 import { IFEStudyProgramAdminApprovalExaminersFramingCardExaminer } from "../FEStudyProgramAdminApprovalExaminersFramingCard";

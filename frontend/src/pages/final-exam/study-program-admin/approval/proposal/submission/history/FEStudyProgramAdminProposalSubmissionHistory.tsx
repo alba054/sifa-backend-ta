@@ -5,7 +5,7 @@ import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton
+  ILFPHeaderButton,
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
@@ -43,7 +43,7 @@ const dummySubmissionList: Array<IFEStudyProgramAdminProposalSubmissionHistoryMa
         "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
       status: "accepted",
     },
-    
+
     {
       name: "Indah Lestari",
       nim: "N011191004",
@@ -72,7 +72,7 @@ const FEStudyProgramAdminProposalSubmissionHistory: React.FC<
   function handleDelete(index: number) {
     remove(index);
   }
-  
+
   useEffect(() => {
     if (proposalSubmissionHistoryData.length <= 0) {
       setIsHistoryExist(false);

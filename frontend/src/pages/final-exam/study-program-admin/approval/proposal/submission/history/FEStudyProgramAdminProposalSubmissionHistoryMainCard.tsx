@@ -2,16 +2,11 @@ import { Button, Group, Stack, Text, useMantineTheme } from "@mantine/core";
 import React, { useState } from "react";
 import {
   FEBookmarkSingleSearchOutline,
-  FECheckOutline,
-  FEPenOutline,
-  FEPersonFilled,
-  FETrashOutline,
+  FECheckOutline, FETrashOutline
 } from "src/assets/Icons/Fluent";
-import { IProposal } from "src/components/fe-components/FEApprovalDetailsCard";
+import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FERoundedChip from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
-import { statusChip } from "src/components/fe-components/FERoundedChip";
-import FEAlertModal from "src/components/fe-components/FEAlertModal";
 
 export interface IFEStudyProgramAdminProposalSubmissionHistoryMainCard {
   index?: number;

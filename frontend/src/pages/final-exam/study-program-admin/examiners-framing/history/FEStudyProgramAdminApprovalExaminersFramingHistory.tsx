@@ -1,7 +1,7 @@
 import { Stack } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FEClockRepeatOutline, FETrashOutline } from "src/assets/Icons/Fluent";
+import { FETrashOutline } from "src/assets/Icons/Fluent";
 import ManThinkingAnimation from "src/assets/Icons/ManThinkingAnimation";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
@@ -137,7 +137,8 @@ const FEStudyProgramAdminApprovalExaminersFramingHistory: React.FC<
           setIsAlertOpened(false);
         }}
       />
-      <LFPHeaderComponent title="Riwayat Penyusunan Tim Penguji" buttons={buttons} />
+      <LFPHeaderComponent title="Riwayat Penyusunan Tim Penguji" buttons={buttons} 
+        disabledButtonTooltipLabel={"Riwayat kosong"} />
       {isDataExist ? (
         <Stack mt={"md"} className="gap-6">
           {proposalHistoryList.map(

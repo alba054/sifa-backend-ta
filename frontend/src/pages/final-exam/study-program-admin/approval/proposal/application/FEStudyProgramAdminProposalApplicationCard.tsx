@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FEApprovalDetailsCard, {
-  IProposal,
+  IProposal
 } from "src/components/fe-components/FEApprovalDetailsCard";
-import FEInputModal from "src/components/FEInputModal";
 import FEStudyProgramAdminProposalApplicationModal from "./FEStudyProgramAdminProposalApplicationModal";
 import { IFEProposalApplicationModalForm } from "./FEStudyProgramAdminProposalApplicationModalFormInterfaces";
 

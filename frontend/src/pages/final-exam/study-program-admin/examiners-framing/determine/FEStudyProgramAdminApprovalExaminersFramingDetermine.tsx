@@ -1,17 +1,16 @@
 import {
-  Stack,
-  Title,
-  Text,
+  Button,
   Divider,
   Group,
-  Button,
+  Stack,
+  Text,
+  Title,
   Tooltip,
   useMantineTheme,
 } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FEArrowCircleOutline } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FEBackNavigate from "src/components/fe-components/FEBackNavigate";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
@@ -20,7 +19,6 @@ import { approvalChip } from "src/components/fe-components/FERoundedChip";
 import { SelectInput } from "src/components/FormInput";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import { FEStatus } from "src/utils/const/type";
 import { IFEStudyProgramAdminApprovalExaminersFramingCard } from "../FEStudyProgramAdminApprovalExaminersFramingCard";
 import {
   feStudyProgramAdminApprovalExaminersFramingDetermineFormInterfaces,
@@ -171,7 +169,6 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
         values.proposedSecondExaminers !=
           currentProposal!.proposedSecondExaminers!.name)
     ) {
-      console.log("1");
       return false;
     }
     // Kalau dua duanya null dan salah satu nilainya berubah nilainya maka tidak disable
@@ -181,7 +178,6 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
       (values.proposedFirstExaminers != null ||
         values.proposedSecondExaminers != null)
     ) {
-      console.log("1.5");
       return false;
     }
     //  kalau dua duanya null maka disable
@@ -191,44 +187,15 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
       values.proposedFirstExaminers == null &&
       values.proposedSecondExaminers == null
     ) {
-      console.log("2");
       return true;
     }
-
-    // if (
-    //   values.proposedFirstExaminers == null &&
-    //   values.proposedSecondExaminers == null
-    // ) {
-    //   return true;
-    // }
-
-    // //  Yang di bawah ndada gunanya supaya nda errorji
-    // else if (
-    //   currentProposal.proposedFirstExaminers == null ||
-    //   currentProposal.proposedSecondExaminers == null
-    // ) {
-    //   return true;
-    // }
-
     // Kalau dua2nya accept maka disable
     else if (
       proposedFirstExaminersStatus === "accepted" &&
       proposedSecondExaminerStatus === "accepted"
     ) {
-      console.log("3");
       return true;
-    }
-    // Kalau ada satu rejected maka tidak disable
-    // else if (
-    //   currentProposal!.proposedFirstExaminers!.approvalStatus === "rejected" ||
-    //   currentProposal!.proposedSecondExaminers!.approvalStatus === "rejected"
-    // ) {
-    //   return false;
-    // }
-
-    // Kalau select inputnya berubah maka tidak disable
-    else {
-      console.log("4");
+    } else {
       return true;
     }
   }
@@ -293,7 +260,7 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
           {currentProposal.name} ({currentProposal.nim})
         </Title>
       </Group>
-      
+
       <FEInformationNotification
         description={
           <Text>
@@ -316,7 +283,6 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
             {currentProposal.proposalTitle}
           </Text>
         </Stack>
-        
 
         <Stack className="gap-0">
           <Text className="font-bold text-lg text-primary-text-500">
@@ -374,22 +340,27 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
             <SelectInput
               data={[
                 {
+                  key: "0",
                   label: "Herlina Rante, S.Si., M.Si.",
                   value: "Herlina Rante, S.Si., M.Si.",
                 },
                 {
+                  key: "1",
                   label: "Dra. Aisyah Fatmawaty",
                   value: "Dra. Aisyah Fatmawaty",
                 },
                 {
+                  key: "2",
                   label: "Prof. Dr. Jack Sully",
                   value: "Prof. Dr. Jack Sully",
                 },
                 {
+                  key: "3",
                   label: "Drs. Kus Haryono, MS.",
                   value: "Drs. Kus Haryono, MS.",
                 },
                 {
+                  key: "4",
                   label: "Prof. Dr. M.Natsir Djide, M.S.",
                   value: "Prof. Dr. M.Natsir Djide, M.S.",
                 },
@@ -408,12 +379,6 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
                   : proposedFirstExaminersStatus !== "rejected"
               }
               {...getInputProps("proposedFirstExaminers")}
-              // error={errors?.[`${name}.${"firstLaboratory" as keyof TOffer}`]}
-              // name={"firstLaboratory" as keyof TOffer}
-              // onChange={(e) =>
-              //   handleInputChange("firstLaboratory" as keyof TOffer, e)
-              // }
-              // value={value?.firstLaboratory}
               size={"md"}
             />
           </Stack>
@@ -429,22 +394,27 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
             <SelectInput
               data={[
                 {
+                  key: "0",
                   label: "Herlina Rante, S.Si., M.Si.",
                   value: "Herlina Rante, S.Si., M.Si.",
                 },
                 {
+                  key: "1",
                   label: "Dra. Aisyah Fatmawaty",
                   value: "Dra. Aisyah Fatmawaty",
                 },
                 {
+                  key: "2",
                   label: "Prof. Dr. Jack Sully",
                   value: "Prof. Dr. Jack Sully",
                 },
                 {
+                  key: "3",
                   label: "Drs. Kus Haryono, MS.",
                   value: "Drs. Kus Haryono, MS.",
                 },
                 {
+                  key: "4",
                   label: "Prof. Dr. M.Natsir Djide, M.S.",
                   value: "Prof. Dr. M.Natsir Djide, M.S.",
                 },
@@ -463,13 +433,6 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
                   : proposedSecondExaminerStatus !== "rejected"
               }
               {...getInputProps("proposedSecondExaminers")}
-              // error={errors?.[`${name}.${"secondLaboratory" as keyof TOffer}`]}
-              // name={"secondLaboratory" as keyof TOffer}
-              // onChange={(e) =>
-              //   handleInputChange("secondLaboratory" as keyof TOffer, e)
-              // }
-              // disabled={!value?.firstLaboratory}
-              // value={value?.secondLaboratory}
               size={"md"}
             />
           </Stack>

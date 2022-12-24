@@ -48,6 +48,7 @@ const FEStudentHomepageProposalApplications: React.FC<
                       <FELinkMore
                         caption="Lihat Lebih Lengkap"
                         to={FEROUTES.STUDENT_FINAL_EXAM_PROPOSAL}
+                        scrollTop
                       />
                     </Group>
 
@@ -83,6 +84,7 @@ const FEStudentHomepageProposalApplications: React.FC<
                       <FELinkMore
                         caption="Lihat Lebih Lengkap"
                         to={FEROUTES.STUDENT_SEMINAR}
+                        scrollTop
                       />
                     </Group>
 
@@ -118,6 +120,7 @@ const FEStudentHomepageProposalApplications: React.FC<
                       <FELinkMore
                         caption="Lihat Lebih Lengkap"
                         to={FEROUTES.STUDENT_TRIAL_PERMIT}
+                        scrollTop
                       />
                     </Group>
 
