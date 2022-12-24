@@ -10,7 +10,9 @@ import LFPHeaderComponent, {
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import FEStudyProgramAdminApprovalExaminersFramingCard, { IFEStudyProgramAdminApprovalExaminersFramingCard } from "./FEStudyProgramAdminApprovalExaminersFramingCard";
+import FEStudyProgramAdminApprovalExaminersFramingCard, {
+  IFEStudyProgramAdminApprovalExaminersFramingCard,
+} from "./FEStudyProgramAdminApprovalExaminersFramingCard";
 export interface IFEStudyProgramAdminApprovalExaminersFraming {}
 
 const buttons: ILFPHeaderButton[] = [
@@ -30,40 +32,65 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   },
 ];
 
-const dummyProposalList: Array<IFEStudyProgramAdminApprovalExaminersFramingCard> = [
-  {
-    name: "Indah Lestari",
-    nim: "N011191004",
-    proposalTitle: "Pengujian Aktivitas Antioksidan dan Analisis Mikrobiologi terhadap Lama Waktu Penyimpanan Teh Daun Gaharu (Aquilaria Malaccensis Lamk.) dalam Kemasan Siap Minum ",
-    laboratory: "Kimia Farmasi",
-  },
-  {
-    name: "Devi Selfira",
-    nim: "N011181001",
-    proposalTitle:
-      "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
-    laboratory: "Kimia Farmasi",
-  },
-  {
-    name: "Muh. Yusuf Syam",
-    nim: "H071191044",
-    proposalTitle: "Penerapan Machine Learning untuk Lab",
-    laboratory: "Farmasi",
-  },
-];
+const dummyProposalList: Array<IFEStudyProgramAdminApprovalExaminersFramingCard> =
+  [
+    {
+      name: "Indah Lestari",
+      nim: "N011191004",
+      proposalTitle:
+        "Pengujian Aktivitas Antioksidan dan Analisis Mikrobiologi terhadap Lama Waktu Penyimpanan Teh Daun Gaharu (Aquilaria Malaccensis Lamk.) dalam Kemasan Siap Minum ",
+      laboratory: "Kimia Farmasi",
+      laboratoryChairman: "Abdul Rahim, S.Si., M.Si., Ph.D., Apt.",
+      mainMentor: "Abdul Rahim, S.Si., M.Si., Ph.D., Apt.",
+      sideMentor: "Prof. Dr. Jack Sully.",
+      proposedFirstExaminers: {
+        name: "Prof. Dr. M.Natsir Djide, M.S.",
+        approvalStatus: "accepted",
+      },
+      proposedSecondExaminers: {
+        name: "Drs. Kus Haryono, MS.",
+        approvalStatus: "process",
+      },
+    },
+    {
+      name: "Devi Selfira",
+      nim: "N011181001",
+      proposalTitle:
+        "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
+      laboratory: "Kimia Farmasi",
+      laboratoryChairman: "Abdul Rahim, S.Si., M.Si., Ph.D., Apt.",
+      mainMentor: "Abdul Rahim, S.Si., M.Si., Ph.D., Apt.",
+      sideMentor: "Prof. Dr. Jack Sully.",
+      proposedFirstExaminers: {
+        name: "Prof. Dr. Jack Sully",
+        approvalStatus: "rejected",
+      },
+    },
+    {
+      name: "Muh. Yusuf Syam",
+      nim: "H071191044",
+      proposalTitle: "Penerapan Machine Learning untuk Lab",
+      laboratory: "Farmasi",
+      laboratoryChairman: "Abdul Rahim, S.Si., M.Si., Ph.D., Apt.",
+      mainMentor: "Abdul Rahim, S.Si., M.Si., Ph.D., Apt.",
+      sideMentor: "Prof. Dr. Jack Sully.",
+    },
+  ];
 
 const FEStudyProgramAdminApprovalExaminersFraming: React.FC<
   IFEStudyProgramAdminApprovalExaminersFraming
 > = ({}) => {
   const { array: proposalList, remove } = useArray(dummyProposalList);
+  const navigate = useNavigate();
 
   const [isDataExist, setIsDataExist] = useState(
     proposalList.length > 0 ? true : false
   );
 
-  function handleSubmit() {
-    console.log('a')
-    // console.log(index, acceptedProposal, approvalResult)
+  function onClickCard(nim: string) {
+    // console.log(nim);
+    navigate(`${nim}`);
+    window.scrollTo(0, 0);
     // remove(index);
   }
 
@@ -80,21 +107,25 @@ const FEStudyProgramAdminApprovalExaminersFraming: React.FC<
       breadCrumbs={breadCrumbs}
       breadCrumbsCurrentPage="Penyusunan Tim Penguji"
     >
-      <LFPHeaderComponent
-        title="Penyusunan Tim Penguji"
-        buttons={buttons}
-      />
+      <LFPHeaderComponent title="Penyusunan Tim Penguji" buttons={buttons} />
       {isDataExist ? (
         <Stack mt={"md"} className="gap-6">
-          {proposalList.map((proposal: IFEStudyProgramAdminApprovalExaminersFramingCard, e: number) => {
-            return (
-              <FEStudyProgramAdminApprovalExaminersFramingCard
-                key={e}
-                onClick={handleSubmit}
-                {...proposal}
-              />
-            );
-          })}
+          {proposalList.map(
+            (
+              proposal: IFEStudyProgramAdminApprovalExaminersFramingCard,
+              e: number
+            ) => {
+              return (
+                <FEStudyProgramAdminApprovalExaminersFramingCard
+                  key={e}
+                  onClickCard={(nim: string) => {
+                    onClickCard(nim);
+                  }}
+                  {...proposal}
+                />
+              );
+            }
+          )}
         </Stack>
       ) : (
         <LFPEmptyDataComponent

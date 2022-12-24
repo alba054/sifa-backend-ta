@@ -54,6 +54,8 @@ import FEStudentGuidance from "./pages/final-exam/student/guidance/FEStudentGuid
 import FEStudyProgramAdminProposalSubmission from "./pages/final-exam/study-program-admin/approval/proposal/submission/FEStudyProgramAdminProposalSubmission";
 import FEStudyProgramAdminProposalSubmissionHistory from "./pages/final-exam/study-program-admin/approval/proposal/submission/history/FEStudyProgramAdminProposalSubmissionHistory";
 import FEStudyProgramAdminApprovalExaminersFraming from "./pages/final-exam/study-program-admin/examiners-framing/FEStudyProgramAdminApprovalExaminersFraming";
+import FEStudyProgramAdminApprovalExaminersFramingCard from "./pages/final-exam/study-program-admin/examiners-framing/FEStudyProgramAdminApprovalExaminersFramingCard";
+import FEStudyProgramAdminApprovalExaminersFramingDetermine from "./pages/final-exam/study-program-admin/examiners-framing/determine/FEStudyProgramAdminApprovalExaminersFramingDetermine";
 
 function App() {
   return (
@@ -195,11 +197,9 @@ function App() {
                     </Route>
                     <Route path="penyusunan-tim-penguji">
                       <Route index element={<FEStudyProgramAdminApprovalExaminersFraming />} />
-                      <Route
-                        path="nim/:nim"
-                        element={<FEMentorAndExaminersApprovalMore />}
-                      />
                     </Route>
+                    
+                    <Route path="penyusunan-tim-penguji/:nim" element={<FEStudyProgramAdminApprovalExaminersFramingDetermine />} />
                   </Route>
                 </Route>
               </Route>
