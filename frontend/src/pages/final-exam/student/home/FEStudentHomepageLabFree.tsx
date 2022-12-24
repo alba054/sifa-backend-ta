@@ -1,5 +1,5 @@
 import { Group, ScrollArea, Stack, Text } from "@mantine/core";
-import React, { useEffect, useReducer, useRef } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import FELinkMore from "src/components/fe-components/FELinkMore";
 import useUpdateEffect from "src/hooks/fe-hooks/useUpdateEffect";
 import { FEROUTES } from "src/routes/final-exam.route";
@@ -24,10 +24,19 @@ const FEStudentHomepageLabFree: React.FC<IFEStudentHomepageLabFree> = ({
 
   // console.log(score)
 
-  // useEffect(() => {
-  //   window.addEventListener("resize", forceUpdate, false);
-  //   (()=>{forceUpdate()})
-  // }, []);
+  const [scrollBarWidth, setscrollBarWidth] = useState(
+    ((window.innerWidth - 190) * 0.985) | 0
+  );
+
+  useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => {
+        setscrollBarWidth(((window.innerWidth - 190) * 0.985) | 0);
+      },
+      false
+    );
+  }, []);
 
   // console.log(((window.innerWidth-190)*0.985 | 0))
   return (
@@ -45,7 +54,7 @@ const FEStudentHomepageLabFree: React.FC<IFEStudentHomepageLabFree> = ({
           </Stack>
           <ScrollArea
             style={{
-              width: ((window.innerWidth - 190) * 0.985) | 0,
+              width: scrollBarWidth,
               height: 160,
             }}
           >

@@ -50,6 +50,21 @@ const dummyStudentLabFreeDataArray: Array<IFEStudentHomepageLabFreeCard> = [
     lab: "Matematika",
     status: "accepted",
   },
+  {
+    title: "Permohonan #3",
+    lab: "Matematika",
+    status: "accepted",
+  },
+  {
+    title: "Permohonan #3",
+    lab: "Matematika",
+    status: "accepted",
+  },
+  {
+    title: "Permohonan #3",
+    lab: "Matematika",
+    status: "accepted",
+  },
 ];
 
 const FEStudentHomepage: React.FC<IFEStudentHomepageProps> = ({}) => {
