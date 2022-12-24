@@ -1,29 +1,26 @@
-import { Stack, Text, useMantineTheme } from "@mantine/core";
+import { Group, Stack, Text, useMantineTheme } from "@mantine/core";
 import React, { useEffect } from "react";
 import { FEBookmarkSingleSearchOutline } from "src/assets/Icons/Fluent";
 import FELinkMore from "src/components/fe-components/FELinkMore";
 import FECard from "src/components/FECard";
 import { FEROUTES } from "src/routes/final-exam.route";
+import { FEStatus } from "src/utils/const/type";
+import { approvalChip } from "./FERoundedChip";
 
-export interface IFEApprovalDetailsCard {
+export interface IFEApprovalDetailsCardWithStatus {
   name: string;
   nim: string;
-  proposalArray: Array<IProposal>;
-  onClick?: (()=>void)
-}
-
-export interface IProposal {
   proposalTitle: string;
   laboratory: string;
   proposer?: string;
+  mentorCertificateApprovalStatus?: FEStatus, 
+  examinersCertificateApprovalStatus?: FEStatus, 
+  onClick?: () => void;
 }
 
-const FEApprovalDetailsCard: React.FC<IFEApprovalDetailsCard> = ({
-  name,
-  nim,
-  proposalArray,
-  onClick
-}) => {
+const FEApprovalDetailsCardWithStatus: React.FC<
+  IFEApprovalDetailsCardWithStatus
+> = ({ name, nim, proposalTitle, laboratory, proposer, onClick, examinersCertificateApprovalStatus="process", mentorCertificateApprovalStatus="process" }) => {
   const theme = useMantineTheme();
 
   return (
@@ -35,34 +32,27 @@ const FEApprovalDetailsCard: React.FC<IFEApprovalDetailsCard> = ({
           </Text>
           <Stack className="gap-4">
             <Stack className="gap-0">
-              <Text className="font-bold text-xl text-primary-text-500">
-                Judul Pertama
-              </Text>
               <Text className="text-[18px] font-semibold text-primary-500 tracking-1 mb-1">
-                {proposalArray[0].proposalTitle}
+                {proposalTitle}
               </Text>
               <Text className="text-secondary-text-500 text-lg tracking-1 font-semibold">
-                Lab. {proposalArray[0].laboratory}
+                Lab. {laboratory}
               </Text>
             </Stack>
-            <Stack className="gap-0">
+            <Stack className="gap-4">
               <Text className="font-bold text-xl text-primary-text-500">
-                Judul Kedua
+                Status
               </Text>
-              {proposalArray.length >= 2 ? (
-                <>
-                  <Text className="text-[18px] font-semibold text-primary-500 tracking-1 mb-1">
-                    {proposalArray[1].proposalTitle}
-                  </Text>
-                  <Text className="text-secondary-text-500 text-lg tracking-1 font-semibold">
-                    Lab. {proposalArray[1].laboratory}
-                  </Text>
-                </>
-              ) : (
-                <Text className="text-secondary-text-500 text-lg tracking-1 font-semibold">
-                  Tidak Mengajukan Judul
-                </Text>
-              )}
+              <Stack className="gap-2">
+                <Group>
+                  <Text className="text-secondary-text-500 text-lg font-semibold tracking-1">SK Pembimbing</Text>
+                  {approvalChip[mentorCertificateApprovalStatus || "process"]}
+                </Group>
+                <Group>
+                  <Text className="text-secondary-text-500 text-lg font-semibold tracking-1">SK Penguji</Text>
+                  {approvalChip[examinersCertificateApprovalStatus || "process"]}
+                </Group>
+              </Stack>
             </Stack>
           </Stack>
         </Stack>
@@ -80,4 +70,4 @@ const FEApprovalDetailsCard: React.FC<IFEApprovalDetailsCard> = ({
     </FECard>
   );
 };
-export default FEApprovalDetailsCard;
+export default FEApprovalDetailsCardWithStatus;

@@ -152,3 +152,24 @@ export const approvalChip: any = {
     />
   ),
 };
+
+export const approvalChipNoIcon: any = {
+  process: (
+    <FERoundedChip
+      label="Menunggu Persetujuan"
+      type="green"
+    />
+  ),
+  rejected: (
+    <FERoundedChip
+      label="Ditolak"
+      type="red"
+    />
+  ),
+  accepted: (
+    <FERoundedChip
+      label="Disetujui"
+      type="blue"
+    />
+  ),
+};

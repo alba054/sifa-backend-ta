@@ -10,12 +10,14 @@ export const FEROUTES = {
   STUDENT_SEMINAR_HISTORY: "/tugas-akhir/mahasiswa/seminar/riwayat",
   STUDENT_TRIAL_PERMIT: "/tugas-akhir/mahasiswa/ujian-sidang",
   STUDENT_GUIDANCE: "/tugas-akhir/mahasiswa/bimbingan",
+  // ====================================================================================================
   FIRST_VICE_DEAN_HOMEPAGE: "/tugas-akhir/wakil-dekan-1",
   FIRST_VICE_DEAN_APPROVAL: "/tugas-akhir/wakil-dekan-1/persetujuan",
   FIRST_VICE_DEAN_APPROVAL_MENTOR_AND_EXAMINERS: "/tugas-akhir/wakil-dekan-1/persetujuan/sk-pembimbing-dan-penguji",
   FIRST_VICE_DEAN_APPROVAL_MENTOR_AND_EXAMINERS_MORE: "/tugas-akhir/wakil-dekan-1/persetujuan/sk-pembimbing-dan-penguji/nim",
   FIRST_VICE_DEAN_APPROVAL_TRIAL_PERMIT: "/tugas-akhir/wakil-dekan-1/persetujuan/ujian-sidang",
   FIRST_VICE_DEAN_APPROVAL_TRIAL_PERMIT_MORE: "/tugas-akhir/wakil-dekan-1/persetujuan/ujian-sidang/nim",
+  // ====================================================================================================
   STUDY_PROGRAM_ADMIN_HOMEPAGE: "/tugas-akhir/admin-program-studi",
   STUDY_PROGRAM_ADMIN_APPROVAL: "/tugas-akhir/admin-program-studi/persetujuan",
   STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL: "/tugas-akhir/admin-program-studi/persetujuan/judul-penelitian",
@@ -27,5 +29,12 @@ export const FEROUTES = {
   STUDY_PROGRAM_ADMIN_APPROVAL_EXAMINERS_TEAM: "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji",
   // STUDY_PROGRAM_ADMIN_APPROVAL_EXAMINERS_TEAM_DETERMINE: "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji/",STUDY_PROGRAM_ADMIN_APPROVAL_EXAMINERS_TEAM: "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji",
   STUDY_PROGRAM_ADMIN_APPROVAL_EXAMINERS_TEAM_HISTORY: "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji/riwayat",
-  
+  // ====================================================================================================
+  SUBSECTION_CHAIRMAN_HOMEPAGE: "/tugas-akhir/kasubag",
+  SUBSECTION_CHAIRMAN_APPROVAL: "/tugas-akhir/kasubag/persetujuan",
+  SUBSECTION_CHAIRMAN_APPROVAL_MENTOR_AND_EXAMINERS: "/tugas-akhir/kasubag/persetujuan/sk-pembimbing-dan-penguji",
+  SUBSECTION_CHAIRMAN_APPROVAL_MENTOR_AND_EXAMINERS_MORE: "/tugas-akhir/kasubag/persetujuan/sk-pembimbing-dan-penguji/nim",
+  SUBSECTION_CHAIRMAN_APPROVAL_MENTOR_AND_EXAMINERS_HISTORY: "/tugas-akhir/kasubag/persetujuan/sk-pembimbing-dan-penguji/riwayat",
+  SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT: "/tugas-akhir/kasubag/persetujuan/ujian-sidang",
+  SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_MORE: "/tugas-akhir/kasubag/persetujuan/ujian-sidang/nim",
 };

@@ -58,6 +58,11 @@ import FEStudyProgramAdminApprovalExaminersFramingCard from "./pages/final-exam/
 import FEStudyProgramAdminApprovalExaminersFramingDetermine from "./pages/final-exam/study-program-admin/examiners-framing/determine/FEStudyProgramAdminApprovalExaminersFramingDetermine";
 import FEStudyProgramAdminApprovalExaminersFramingHistoryModal from "./pages/final-exam/study-program-admin/examiners-framing/history/FEStudyProgramAdminApprovalExaminersFramingHistoryModal";
 import FEStudyProgramAdminApprovalExaminersFramingHistory from "./pages/final-exam/study-program-admin/examiners-framing/history/FEStudyProgramAdminApprovalExaminersFramingHistory";
+import FESubsectionChairmanApproval from "./pages/final-exam/subsection-chairman/approval/FESubsectionChairmanApproval";
+import FESubsectionChairmanMentorAndExaminersApproval from "./pages/final-exam/subsection-chairman/approval/mentor-and-examiners-approval/FESubsectionChairmanMentorAndExaminersApproval";
+import FESubsectionChairmanMentorAndExaminersApprovalMore from "./pages/final-exam/subsection-chairman/approval/mentor-and-examiners-approval/details/FESubsectionChairmanMentorAndExaminersApprovalMore";
+import FESubsectionChairmanTrialPermitApproval from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/FESubsectionChairmanTrialPermitApproval";
+import FESubsectionChairmanMentorAndExaminersApprovalHistory from "./pages/final-exam/subsection-chairman/approval/mentor-and-examiners-approval/history/FESubsectionChairmanMentorAndExaminersApprovalHistory";
 
 function App() {
   return (
@@ -170,6 +175,48 @@ function App() {
                     </Route>
                   </Route>
                 </Route>
+
+                <Route path="kasubag">
+                  <Route index element={<FEHomepage />} />
+                  <Route path="persetujuan">
+                    <Route index element={<FESubsectionChairmanApproval />} />
+                    <Route path="sk-pembimbing-dan-penguji">
+                      <Route
+                        index
+                        element={
+                          <FESubsectionChairmanMentorAndExaminersApproval />
+                        }
+                      />
+                    </Route>
+                    <Route
+                      path="sk-pembimbing-dan-penguji/:nim"
+                      element={
+                        <FESubsectionChairmanMentorAndExaminersApprovalMore  />
+                      }
+                    />
+                    
+                    <Route
+                      path="sk-pembimbing-dan-penguji/riwayat"
+                      element={
+                        <FESubsectionChairmanMentorAndExaminersApprovalHistory  />
+                      }
+                    />
+
+                    <Route path="ujian-sidang">
+                      <Route
+                        index
+                        element={<FESubsectionChairmanTrialPermitApproval />}
+                      />
+                    </Route>
+
+                    <Route
+                      path="ujian-sidang/:nim"
+                      element={
+                        <FESubsectionChairmanMentorAndExaminersApprovalMore />
+                      }
+                    />
+                  </Route>
+                </Route>
                 <Route path="admin-program-studi">
                   <Route index element={<FEHomepage />} />
                   <Route path="persetujuan">
@@ -208,7 +255,7 @@ function App() {
                           <FEStudyProgramAdminApprovalExaminersFraming />
                         }
                       />
-                      
+
                       <Route
                         path="riwayat"
                         element={
