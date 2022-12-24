@@ -49,7 +49,7 @@ const dummyProposalList: Array<IFEStudyProgramAdminApprovalExaminersFramingCard>
       },
       proposedSecondExaminers: {
         name: "Drs. Kus Haryono, MS.",
-        approvalStatus: "process",
+        approvalStatus: "accepted",
       },
     },
     {
@@ -63,6 +63,10 @@ const dummyProposalList: Array<IFEStudyProgramAdminApprovalExaminersFramingCard>
       sideMentor: "Prof. Dr. Jack Sully.",
       proposedFirstExaminers: {
         name: "Prof. Dr. Jack Sully",
+        approvalStatus: "process",
+      },
+      proposedSecondExaminers: {
+        name: "Drs. Kus Haryono, MS.",
         approvalStatus: "rejected",
       },
     },

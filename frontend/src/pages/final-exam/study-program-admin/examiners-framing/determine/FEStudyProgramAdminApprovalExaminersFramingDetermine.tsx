@@ -1,14 +1,30 @@
-import { Stack, Title, Text, Divider, Group, Button } from "@mantine/core";
-import React from "react";
+import {
+  Stack,
+  Title,
+  Text,
+  Divider,
+  Group,
+  Button,
+  Tooltip,
+  useMantineTheme,
+} from "@mantine/core";
+import { useForm, yupResolver } from "@mantine/form";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FEArrowCircleOutline } from "src/assets/Icons/Fluent";
+import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FEBackNavigate from "src/components/fe-components/FEBackNavigate";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import { approvalChip } from "src/components/fe-components/FERoundedChip";
 import { SelectInput } from "src/components/FormInput";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
+import { FEStatus } from "src/utils/const/type";
 import { IFEStudyProgramAdminApprovalExaminersFramingCard } from "../FEStudyProgramAdminApprovalExaminersFramingCard";
+import {
+  feStudyProgramAdminApprovalExaminersFramingDetermineFormInterfaces,
+  IFEStudyProgramAdminApprovalExaminersFramingDetermineFormInterfaces,
+} from "./FEStudyProgramAdminApprovalExaminersFramingDetermineFormInterfaces";
 
 export interface IFEStudyProgramAdminApprovalExaminersFramingDetermine {}
 
@@ -24,8 +40,7 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
 ];
 
 const dummyProposalData: any = {
-  N011191004: 
-  {
+  N011191004: {
     name: "Indah Lestari",
     nim: "N011191004",
     proposalTitle:
@@ -40,11 +55,13 @@ const dummyProposalData: any = {
     },
     proposedSecondExaminers: {
       name: "Drs. Kus Haryono, MS.",
-      approvalStatus: "process",
+      approvalStatus: "accepted",
     },
   },
-  N011181001: 
-  {
+  // process rejected accepted
+  // a-a , r-r, p-p, a-r, a-p, r-p
+
+  N011181001: {
     name: "Devi Selfira",
     nim: "N011181001",
     proposalTitle:
@@ -55,11 +72,14 @@ const dummyProposalData: any = {
     sideMentor: "Prof. Dr. Jack Sully.",
     proposedFirstExaminers: {
       name: "Prof. Dr. Jack Sully",
+      approvalStatus: "process",
+    },
+    proposedSecondExaminers: {
+      name: "Drs. Kus Haryono, MS.",
       approvalStatus: "rejected",
     },
   },
-  H071191044: 
-  {
+  H071191044: {
     name: "Muh. Yusuf Syam",
     nim: "H071191044",
     proposalTitle: "Penerapan Machine Learning untuk Lab",
@@ -74,18 +94,187 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
   IFEStudyProgramAdminApprovalExaminersFramingDetermine
 > = ({}) => {
   let { nim } = useParams();
-  const currentProposal : IFEStudyProgramAdminApprovalExaminersFramingCard = dummyProposalData[nim!];
+  const currentProposal: IFEStudyProgramAdminApprovalExaminersFramingCard =
+    dummyProposalData[nim!];
   const navigate = useNavigate();
+  const theme = useMantineTheme();
+  const [isAlertOpened, setIsAlertOpened] = useState(false);
+
+  const [proposedFirstExaminersStatus, setProposedFirstExaminersStatus] =
+    useState<any>(null);
+  const [proposedSecondExaminerStatus, setProposedSecondExaminerStatus] =
+    useState<any>(null);
+
+  useEffect(() => {
+    setProposedFirstExaminersStatus(
+      currentProposal.proposedFirstExaminers == null
+        ? null
+        : currentProposal.proposedFirstExaminers.approvalStatus
+    );
+    setProposedSecondExaminerStatus(
+      currentProposal.proposedSecondExaminers == null
+        ? null
+        : currentProposal.proposedSecondExaminers.approvalStatus
+    );
+  }, []);
+
+  const [bothExaminersChoosen] = useState(() => {
+    if (
+      currentProposal.proposedFirstExaminers == null ||
+      currentProposal.proposedSecondExaminers == null
+    ) {
+      return false;
+    } else if (
+      currentProposal.proposedFirstExaminers.approvalStatus === "accepted" &&
+      currentProposal.proposedSecondExaminers.approvalStatus === "accepted"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
+  const { ...form } =
+    useForm<IFEStudyProgramAdminApprovalExaminersFramingDetermineFormInterfaces>(
+      {
+        validate: yupResolver(
+          feStudyProgramAdminApprovalExaminersFramingDetermineFormInterfaces
+        ),
+      }
+    );
+
+  const { getInputProps, errors, setValues, values } = form;
+
+  useEffect(() => {
+    setValues({
+      proposedFirstExaminers:
+        currentProposal.proposedFirstExaminers == null
+          ? undefined
+          : currentProposal.proposedFirstExaminers.name,
+      proposedSecondExaminers:
+        currentProposal.proposedSecondExaminers == null
+          ? undefined
+          : currentProposal.proposedSecondExaminers.name,
+    });
+  }, []);
+
+  function determineExaminersDisabled() {
+    // Kalau dua duanya tidak null dan salah satunya berubah nilainya maka tidak disable
+    if (
+      currentProposal.proposedFirstExaminers != null &&
+      currentProposal.proposedSecondExaminers != null &&
+      (values.proposedFirstExaminers !=
+        currentProposal!.proposedFirstExaminers!.name ||
+        values.proposedSecondExaminers !=
+          currentProposal!.proposedSecondExaminers!.name)
+    ) {
+      console.log("1");
+      return false;
+    }
+    // Kalau dua duanya null dan salah satu nilainya berubah nilainya maka tidak disable
+    else if (
+      currentProposal.proposedFirstExaminers == null &&
+      currentProposal.proposedSecondExaminers == null &&
+      (values.proposedFirstExaminers != null ||
+        values.proposedSecondExaminers != null)
+    ) {
+      console.log("1.5");
+      return false;
+    }
+    //  kalau dua duanya null maka disable
+    else if (
+      currentProposal.proposedFirstExaminers == null &&
+      currentProposal.proposedSecondExaminers == null &&
+      values.proposedFirstExaminers == null &&
+      values.proposedSecondExaminers == null
+    ) {
+      console.log("2");
+      return true;
+    }
+
+    // if (
+    //   values.proposedFirstExaminers == null &&
+    //   values.proposedSecondExaminers == null
+    // ) {
+    //   return true;
+    // }
+
+    // //  Yang di bawah ndada gunanya supaya nda errorji
+    // else if (
+    //   currentProposal.proposedFirstExaminers == null ||
+    //   currentProposal.proposedSecondExaminers == null
+    // ) {
+    //   return true;
+    // }
+
+    // Kalau dua2nya accept maka disable
+    else if (
+      proposedFirstExaminersStatus === "accepted" &&
+      proposedSecondExaminerStatus === "accepted"
+    ) {
+      console.log("3");
+      return true;
+    }
+    // Kalau ada satu rejected maka tidak disable
+    // else if (
+    //   currentProposal!.proposedFirstExaminers!.approvalStatus === "rejected" ||
+    //   currentProposal!.proposedSecondExaminers!.approvalStatus === "rejected"
+    // ) {
+    //   return false;
+    // }
+
+    // Kalau select inputnya berubah maka tidak disable
+    else {
+      console.log("4");
+      return true;
+    }
+  }
+
+  const [isDetermineExaminersDisabled, setIsDetermineExaminersDisabled] =
+    useState(determineExaminersDisabled);
+
+  useEffect(() => {
+    setIsDetermineExaminersDisabled(determineExaminersDisabled);
+  }, [values]);
+
+  function handleDetermineExaminers() {
+    if(values.proposedFirstExaminers != null && (proposedFirstExaminersStatus == null || proposedFirstExaminersStatus === 'rejected')){
+      setProposedFirstExaminersStatus('process')
+    }
+    
+    if(values.proposedSecondExaminers != null && (proposedSecondExaminerStatus == null || proposedSecondExaminerStatus === 'rejected')){
+      setProposedSecondExaminerStatus('process')
+    }
+
+    if(values.proposedFirstExaminers != null && values.proposedSecondExaminers != null){
+      setIsDetermineExaminersDisabled(true)
+    }
+
+    setIsAlertOpened(false);
+  }
+
+  function handleEnd(){
+    navigate(-1)
+  }
+
   return (
     <FEMainlayout
       breadCrumbs={breadCrumbs}
       breadCrumbsCurrentPage={`${currentProposal.name} (${currentProposal.nim})`}
     >
+      <FEAlertModal
+        title="Susun Tim Penguji?"
+        description="Susun tim penguji, kedua penguji yang diusulkan harus menyetujui untuk menyelesaikan penyusunan tim penguji"
+        opened={isAlertOpened}
+        setOpened={setIsAlertOpened}
+        yesButtonLabel="Susun"
+        onSubmit={handleDetermineExaminers}
+      />
       <Group mb={"sm"}>
         {/* Tanya Fajri */}
         <FEBackNavigate navigate={navigate} />
         <Title order={2} className="text-primary-text-500">
-        {currentProposal.name} ({currentProposal.nim})
+          {currentProposal.name} ({currentProposal.nim})
         </Title>
       </Group>
       <Stack className="gap-4">
@@ -112,7 +301,7 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
             Kepala Laboratorium
           </Text>
           <Text className="text-secondary-text-500 text-lg tracking-1 font-semibold">
-          {currentProposal.laboratoryChairman}
+            {currentProposal.laboratoryChairman}
           </Text>
         </Stack>
         <Stack className="gap-0">
@@ -146,14 +335,46 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
               <Text className="font-bold text-lg text-primary-text-500">
                 Penguji Pertama
               </Text>
-              {approvalChip["process"]}
+
+              {proposedFirstExaminersStatus == null
+                ? null
+                : approvalChip[proposedFirstExaminersStatus]}
             </Group>
             <SelectInput
               data={[
-                { label: "Herlina Rante, S.Si., M.Si.", value: "1" },
-                { label: "Dra. Aisyah Fatmawaty", value: "2" },
-              ]}
+                {
+                  label: "Herlina Rante, S.Si., M.Si.",
+                  value: "Herlina Rante, S.Si., M.Si.",
+                },
+                {
+                  label: "Dra. Aisyah Fatmawaty",
+                  value: "Dra. Aisyah Fatmawaty",
+                },
+                {
+                  label: "Prof. Dr. Jack Sully",
+                  value: "Prof. Dr. Jack Sully",
+                },
+                {
+                  label: "Drs. Kus Haryono, MS.",
+                  value: "Drs. Kus Haryono, MS.",
+                },
+                {
+                  label: "Prof. Dr. M.Natsir Djide, M.S.",
+                  value: "Prof. Dr. M.Natsir Djide, M.S.",
+                },
+              ].filter((examiner) => examiner.value !== values.proposedSecondExaminers)}
               placeholder="Pilih penguji pertama"
+              value={
+                values.proposedFirstExaminers == null
+                  ? undefined
+                  : values.proposedFirstExaminers
+              }
+              disabled={
+                proposedFirstExaminersStatus == null
+                  ? false
+                  : proposedFirstExaminersStatus !== "rejected"
+              }
+              {...getInputProps("proposedFirstExaminers")}
               // error={errors?.[`${name}.${"firstLaboratory" as keyof TOffer}`]}
               // name={"firstLaboratory" as keyof TOffer}
               // onChange={(e) =>
@@ -168,14 +389,45 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
               <Text className="font-bold text-lg text-primary-text-500">
                 Penguji Kedua
               </Text>
-              {approvalChip["process"]}
+              {proposedSecondExaminerStatus == null
+                ? null
+                : approvalChip[proposedSecondExaminerStatus]}
             </Group>
             <SelectInput
               data={[
-                { label: "Herlina Rante, S.Si., M.Si.", value: "1" },
-                { label: "Dra. Aisyah Fatmawaty", value: "2" },
-              ]}
+                {
+                  label: "Herlina Rante, S.Si., M.Si.",
+                  value: "Herlina Rante, S.Si., M.Si.",
+                },
+                {
+                  label: "Dra. Aisyah Fatmawaty",
+                  value: "Dra. Aisyah Fatmawaty",
+                },
+                {
+                  label: "Prof. Dr. Jack Sully",
+                  value: "Prof. Dr. Jack Sully",
+                },
+                {
+                  label: "Drs. Kus Haryono, MS.",
+                  value: "Drs. Kus Haryono, MS.",
+                },
+                {
+                  label: "Prof. Dr. M.Natsir Djide, M.S.",
+                  value: "Prof. Dr. M.Natsir Djide, M.S.",
+                },
+              ].filter((examiner) => examiner.value !== values.proposedFirstExaminers)}
               placeholder="Pilih penguji kedua"
+              value={
+                values.proposedSecondExaminers == null
+                  ? undefined
+                  : values.proposedSecondExaminers
+              }
+              disabled={
+                proposedSecondExaminerStatus == null
+                  ? false
+                  : proposedSecondExaminerStatus !== "rejected"
+              }
+              {...getInputProps("proposedSecondExaminers")}
               // error={errors?.[`${name}.${"secondLaboratory" as keyof TOffer}`]}
               // name={"secondLaboratory" as keyof TOffer}
               // onChange={(e) =>
@@ -187,12 +439,55 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
             />
           </Stack>
         </Group>
-        <Button
-          variant="light"
-          className="bg-primary-500 text-white hover:bg-primary-500"
+        <Tooltip
+          label={((): string => {
+            if (bothExaminersChoosen) {
+              return `Kedua penguji telah menyetujui, silahkan menekan tombol "Selesai" di bawah untuk menyelesaikan penyusunan tim penguji`;
+            } else if (
+              currentProposal.proposedFirstExaminers == null ||
+              currentProposal.proposedSecondExaminers == null ||
+              proposedFirstExaminersStatus === "rejected" ||
+              proposedSecondExaminerStatus === "rejected"
+            ) {
+              return "Silahkan pilih setidaknya satu penguji untuk mengajukan penyusunan tim penguji";
+            } else {
+              return "Proses persetujuan sedang dalam proses";
+            }
+          })()}
+          withArrow
+          color={"rgba(255, 255, 255, 0.95)"}
+          position="top-start"
+          multiline
+          radius={"md"}
+          openDelay={100}
+          styles={{
+            tooltip: {
+              color: theme.colors["primary-text"][5],
+              border: `1px solid ${theme.colors["secondary"][5]}`,
+              padding: "8px 16px",
+              letterSpacing: "0.015em",
+              maxWidth: "280px",
+            },
+            arrow: {
+              border: `1px solid ${theme.colors["secondary"][5]}`,
+            },
+          }}
+          disabled={!isDetermineExaminersDisabled}
         >
-          Ajukan Penyusunan Tim
-        </Button>
+          <div>
+            <Button
+              variant="light"
+              className="bg-primary-500 text-white hover:bg-primary-500 w-full"
+              onClick={() => {
+                setIsAlertOpened(true);
+              }}
+              disabled={isDetermineExaminersDisabled}
+              type="submit"
+            >
+              Ajukan Penyusunan Tim
+            </Button>
+          </div>
+        </Tooltip>
       </Stack>
       <Group grow>
         <Button
@@ -204,13 +499,40 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
         >
           Batal
         </Button>
-        <Button
-          variant="light"
-          className="bg-primary-500 text-white hover:bg-primary-500"
-          disabled
+
+        <Tooltip
+          label={"Kedua penguji belum menyetujui pengajuan tim penguji"}
+          withArrow
+          color={"rgba(255, 255, 255, 0.95)"}
+          position="top-start"
+          multiline
+          radius={"md"}
+          openDelay={100}
+          styles={{
+            tooltip: {
+              color: theme.colors["primary-text"][5],
+              border: `1px solid ${theme.colors["secondary"][5]}`,
+              padding: "8px 16px",
+              letterSpacing: "0.015em",
+              maxWidth: "280px",
+            },
+            arrow: {
+              border: `1px solid ${theme.colors["secondary"][5]}`,
+            },
+          }}
+          disabled={bothExaminersChoosen}
         >
-          Selesai
-        </Button>
+          <div>
+            <Button
+              variant="light"
+              className="bg-primary-500 text-white hover:bg-primary-500 w-[100%]"
+              disabled={!bothExaminersChoosen}
+              onClick={handleEnd}
+            >
+              Selesai
+            </Button>
+          </div>
+        </Tooltip>
       </Group>
     </FEMainlayout>
   );
