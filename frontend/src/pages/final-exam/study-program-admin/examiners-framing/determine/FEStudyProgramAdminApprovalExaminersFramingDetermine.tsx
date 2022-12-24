@@ -15,6 +15,7 @@ import { FEArrowCircleOutline } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FEBackNavigate from "src/components/fe-components/FEBackNavigate";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
+import FEInformationNotification from "src/components/fe-components/FEInformationNotification";
 import { approvalChip } from "src/components/fe-components/FERoundedChip";
 import { SelectInput } from "src/components/FormInput";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
@@ -106,6 +107,8 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
     useState<any>(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     setProposedFirstExaminersStatus(
       currentProposal.proposedFirstExaminers == null
         ? null
@@ -238,23 +241,36 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
   }, [values]);
 
   function handleDetermineExaminers() {
-    if(values.proposedFirstExaminers != null && (proposedFirstExaminersStatus == null || proposedFirstExaminersStatus === 'rejected')){
-      setProposedFirstExaminersStatus('process')
-    }
-    
-    if(values.proposedSecondExaminers != null && (proposedSecondExaminerStatus == null || proposedSecondExaminerStatus === 'rejected')){
-      setProposedSecondExaminerStatus('process')
+    // Kalau penguji pertama disubmit
+    if (
+      values.proposedFirstExaminers != null &&
+      (proposedFirstExaminersStatus == null ||
+        proposedFirstExaminersStatus === "rejected")
+    ) {
+      setProposedFirstExaminersStatus("process");
     }
 
-    if(values.proposedFirstExaminers != null && values.proposedSecondExaminers != null){
-      setIsDetermineExaminersDisabled(true)
+    // Kalau penguji kedua disubmit
+    if (
+      values.proposedSecondExaminers != null &&
+      (proposedSecondExaminerStatus == null ||
+        proposedSecondExaminerStatus === "rejected")
+    ) {
+      setProposedSecondExaminerStatus("process");
+    }
+
+    if (
+      values.proposedFirstExaminers != null &&
+      values.proposedSecondExaminers != null
+    ) {
+      setIsDetermineExaminersDisabled(true);
     }
 
     setIsAlertOpened(false);
   }
 
-  function handleEnd(){
-    navigate(-1)
+  function handleEnd() {
+    navigate(-1);
   }
 
   return (
@@ -277,6 +293,20 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
           {currentProposal.name} ({currentProposal.nim})
         </Title>
       </Group>
+      
+      <FEInformationNotification
+        description={
+          <Text>
+            Penyusunan tim penguji dapat diselesaikan ketika semua penguji
+            menyetujui, tekan tombol{" "}
+            <Text className="inline font-bold">“Selesai”</Text> untuk
+            menyelesaikan penyusunan tim penguji. Ketika ada penguji menolak,
+            tekan tombol{" "}
+            <Text className="inline font-bold">“Pilih Penguji”</Text> untuk
+            memilih pengganti penguji yang menolak.
+          </Text>
+        }
+      />
       <Stack className="gap-4">
         <Stack className="gap-0">
           <Text className="font-bold text-[18px] text-primary-text-500">
@@ -286,6 +316,7 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
             {currentProposal.proposalTitle}
           </Text>
         </Stack>
+        
 
         <Stack className="gap-0">
           <Text className="font-bold text-lg text-primary-text-500">
@@ -362,7 +393,9 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
                   label: "Prof. Dr. M.Natsir Djide, M.S.",
                   value: "Prof. Dr. M.Natsir Djide, M.S.",
                 },
-              ].filter((examiner) => examiner.value !== values.proposedSecondExaminers)}
+              ].filter(
+                (examiner) => examiner.value !== values.proposedSecondExaminers
+              )}
               placeholder="Pilih penguji pertama"
               value={
                 values.proposedFirstExaminers == null
@@ -415,7 +448,9 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
                   label: "Prof. Dr. M.Natsir Djide, M.S.",
                   value: "Prof. Dr. M.Natsir Djide, M.S.",
                 },
-              ].filter((examiner) => examiner.value !== values.proposedFirstExaminers)}
+              ].filter(
+                (examiner) => examiner.value !== values.proposedFirstExaminers
+              )}
               placeholder="Pilih penguji kedua"
               value={
                 values.proposedSecondExaminers == null
@@ -444,8 +479,8 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
             if (bothExaminersChoosen) {
               return `Kedua penguji telah menyetujui, silahkan menekan tombol "Selesai" di bawah untuk menyelesaikan penyusunan tim penguji`;
             } else if (
-              currentProposal.proposedFirstExaminers == null ||
-              currentProposal.proposedSecondExaminers == null ||
+              values.proposedFirstExaminers == null ||
+              values.proposedSecondExaminers == null ||
               proposedFirstExaminersStatus === "rejected" ||
               proposedSecondExaminerStatus === "rejected"
             ) {

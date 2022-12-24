@@ -1,38 +1,31 @@
 import { Stack } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
+import { useNavigate } from "react-router-dom";
+import { FEClockRepeatOutline, FETrashOutline } from "src/assets/Icons/Fluent";
+import ManThinkingAnimation from "src/assets/Icons/ManThinkingAnimation";
+import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton,
+  ILFPHeaderButton
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import FEStudyProgramAdminApprovalExaminersFramingCard, {
-  IFEStudyProgramAdminApprovalExaminersFramingCard,
-} from "./FEStudyProgramAdminApprovalExaminersFramingCard";
-export interface IFEStudyProgramAdminApprovalExaminersFraming {}
-
-const buttons: ILFPHeaderButton[] = [
-  {
-    label: "Riwayat Penyusunan",
-    type: "href",
-    href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_EXAMINERS_TEAM_HISTORY,
-    icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />,
-    disabled: false,
-  },
-];
+import FEStudyProgramAdminApprovalExaminersFramingHistoryCard, { IFEStudyProgramAdminApprovalExaminersFramingHistoryCard } from "./FEStudyProgramAdminApprovalExaminersFramingHistoryCard";
+export interface IFEStudyProgramAdminApprovalExaminersFramingHistory {}
 
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
     title: "Persetujuan",
     href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL,
-  },
+  },{
+    title: "Penyusunan Tim Penguji",
+    href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_EXAMINERS_TEAM
+  }
 ];
 
-const dummyProposalList: Array<IFEStudyProgramAdminApprovalExaminersFramingCard> =
+const dummyProposalHistoryList: Array<IFEStudyProgramAdminApprovalExaminersFramingHistoryCard> =
   [
     {
       name: "Indah Lestari",
@@ -63,11 +56,11 @@ const dummyProposalList: Array<IFEStudyProgramAdminApprovalExaminersFramingCard>
       sideMentor: "Prof. Dr. Jack Sully.",
       proposedFirstExaminers: {
         name: "Prof. Dr. Jack Sully",
-        approvalStatus: "process",
+        approvalStatus: "accepted",
       },
       proposedSecondExaminers: {
         name: "Drs. Kus Haryono, MS.",
-        approvalStatus: "rejected",
+        approvalStatus: "accepted",
       },
     },
     {
@@ -78,18 +71,28 @@ const dummyProposalList: Array<IFEStudyProgramAdminApprovalExaminersFramingCard>
       laboratoryChairman: "Abdul Rahim, S.Si., M.Si., Ph.D., Apt.",
       mainMentor: "Abdul Rahim, S.Si., M.Si., Ph.D., Apt.",
       sideMentor: "Prof. Dr. Jack Sully.",
+      proposedFirstExaminers: {
+        name: "Prof. Dr. Jack Sully",
+        approvalStatus: "accepted",
+      },
+      proposedSecondExaminers: {
+        name: "Drs. Kus Haryono, MS.",
+        approvalStatus: "accepted",
+      },
     },
   ];
 
-const FEStudyProgramAdminApprovalExaminersFraming: React.FC<
-  IFEStudyProgramAdminApprovalExaminersFraming
+const FEStudyProgramAdminApprovalExaminersFramingHistory: React.FC<
+  IFEStudyProgramAdminApprovalExaminersFramingHistory
 > = ({}) => {
-  const { array: proposalList, remove } = useArray(dummyProposalList);
+  const { array: proposalHistoryList, remove, clear } = useArray(dummyProposalHistoryList);
   const navigate = useNavigate();
 
   const [isDataExist, setIsDataExist] = useState(
-    proposalList.length > 0 ? true : false
+    proposalHistoryList.length > 0 ? true : false
   );
+
+  const [isAlertOpened, setIsAlertOpened] = useState(false)
 
   function onDelete(index: number) {
     remove(index)
@@ -100,28 +103,50 @@ const FEStudyProgramAdminApprovalExaminersFraming: React.FC<
   }
 
   useEffect(() => {
-    if (proposalList.length > 0) {
+    if (proposalHistoryList.length > 0) {
       setIsDataExist(true);
     } else {
       setIsDataExist(false);
     }
-  }, [proposalList]);
+  }, [proposalHistoryList]);
+
+  const buttons: ILFPHeaderButton[] = [
+    {
+      label: "Kosongkan Riwayat",
+      type: "modal",
+      disabled: !isDataExist,
+      onClick: () => setIsAlertOpened(true),
+      icon: <FETrashOutline className="mr-1" size={16} />,
+    },
+  ];
 
   return (
     <FEMainlayout
       breadCrumbs={breadCrumbs}
-      breadCrumbsCurrentPage="Penyusunan Tim Penguji"
-    >
-      <LFPHeaderComponent title="Penyusunan Tim Penguji" buttons={buttons} />
+      breadCrumbsCurrentPage="Riwayat Penyusunan Tim Penguji"
+    > 
+    
+    <FEAlertModal
+        title="Kosongkan Riwayat Penyusunan?"
+        description="Dengan mengklik tombol “Kosongkan”, semua data riwayat akan terhapus. Data yang telah dihapus tidak dapat dikembalikan"
+        opened={isAlertOpened}
+        setOpened={setIsAlertOpened}
+        yesButtonLabel={"Kosongkan"}
+        onSubmit={() => {
+          clear();
+          setIsAlertOpened(false);
+        }}
+      />
+      <LFPHeaderComponent title="Riwayat Penyusunan Tim Penguji" buttons={buttons} />
       {isDataExist ? (
         <Stack mt={"md"} className="gap-6">
-          {proposalList.map(
+          {proposalHistoryList.map(
             (
-              proposal: IFEStudyProgramAdminApprovalExaminersFramingCard,
+              proposal: IFEStudyProgramAdminApprovalExaminersFramingHistoryCard,
               e: number
             ) => {
               return (
-                <FEStudyProgramAdminApprovalExaminersFramingCard
+                <FEStudyProgramAdminApprovalExaminersFramingHistoryCard
                   key={e}
                   index={e}
                   onDelete={(e: number) => {
@@ -134,12 +159,19 @@ const FEStudyProgramAdminApprovalExaminersFraming: React.FC<
           )}
         </Stack>
       ) : (
-        <LFPEmptyDataComponent
-          title="Belum Ada Permintaan Penyusunan Tim Penguji"
-          caption="Riwayat penyusunan tim penguji yang telah disetujui berada di “History Penyusunan di pojok kanan atas"
-        />
-      )}
+        (
+          <LFPEmptyDataComponent
+          title="Riwayat Penyusunan Kosong"
+          caption="Belum ada riwayat penyusunan tim penguji yang diajukan"
+            icon={
+              <ManThinkingAnimation
+                width={400}
+                className="overflow-hidden z-[-1]"
+              />
+            }
+          />
+        ))}
     </FEMainlayout>
   );
 };
-export default FEStudyProgramAdminApprovalExaminersFraming;
+export default FEStudyProgramAdminApprovalExaminersFramingHistory;

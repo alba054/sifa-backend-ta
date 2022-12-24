@@ -1,4 +1,4 @@
-import { Group, Stack, Text, useMantineTheme } from "@mantine/core";
+import { Button, Group, Stack, Text, useMantineTheme } from "@mantine/core";
 import React, { useEffect } from "react";
 import { FEBookmarkSingleSearchOutline } from "src/assets/Icons/Fluent";
 import FELinkMore from "src/components/fe-components/FELinkMore";
@@ -11,16 +11,17 @@ import {
 import { FEStatus } from "src/utils/const/type";
 
 export interface IFEStudyProgramAdminApprovalExaminersFramingCard {
+  index?: number;
   name: string;
   nim: string;
   proposalTitle: string;
   laboratory: string;
-  laboratoryChairman: string,
-  mainMentor: string,
-  sideMentor: string, 
+  laboratoryChairman: string;
+  mainMentor: string;
+  sideMentor: string;
   proposedFirstExaminers?: IFEStudyProgramAdminApprovalExaminersFramingCardExaminer;
   proposedSecondExaminers?: IFEStudyProgramAdminApprovalExaminersFramingCardExaminer;
-  onClickCard?: (e:string) => void;
+  onDelete?: (e: number) => void;
 }
 
 export interface IFEStudyProgramAdminApprovalExaminersFramingCardExaminer {
@@ -31,12 +32,24 @@ export interface IFEStudyProgramAdminApprovalExaminersFramingCardExaminer {
 
 const FEStudyProgramAdminApprovalExaminersFramingCard: React.FC<
   IFEStudyProgramAdminApprovalExaminersFramingCard
-> = ({ name, nim, proposalTitle, laboratory, laboratoryChairman, onClickCard, proposedFirstExaminers, proposedSecondExaminers, mainMentor, sideMentor }) => {
+> = ({
+  index,
+  name,
+  nim,
+  proposalTitle,
+  laboratory,
+  laboratoryChairman,
+  onDelete,
+  proposedFirstExaminers,
+  proposedSecondExaminers,
+  mainMentor,
+  sideMentor,
+}) => {
   const theme = useMantineTheme();
 
   return (
-    <FECard bg="bg-primary-500" leftBorderRadius="xl" >
-      <Stack className="bg-white px-8 py-6 justify-between relative border rounded-r-xl border-secondary-500 cursor-pointer" onClick={()=>{onClickCard!(nim)}} >
+    <FECard bg="bg-primary-500" leftBorderRadius="xl">
+      <Stack className="bg-white px-8 py-6 justify-between relative border rounded-r-xl border-secondary-500">
         <Stack className="gap-1 mb-4 z-10">
           <Text className="text-2xl font-bold text-primary-text-500 mb-2">
             {name} ({nim})
@@ -58,25 +71,52 @@ const FEStudyProgramAdminApprovalExaminersFramingCard: React.FC<
                 </Text>
                 <Group>
                   <Text className="text-secondary-text-500 text-lg tracking-1">
-                    {(proposedFirstExaminers==null)? "Belum Diusulkan" : proposedFirstExaminers.name}
+                    {proposedFirstExaminers == null
+                      ? "Belum Diusulkan"
+                      : proposedFirstExaminers.name}
                   </Text>
-                  
-                  {(proposedFirstExaminers==null)? null : approvalChip[proposedFirstExaminers.approvalStatus]}
+
+                  {proposedFirstExaminers == null
+                    ? null
+                    : approvalChip[proposedFirstExaminers.approvalStatus]}
                 </Group>
               </Stack>
               <Stack className="gap-0">
                 <Text className="font-bold text-lg text-primary-text-500">
                   Penguji Kedua
                 </Text>
-                
+
                 <Group>
                   <Text className="text-secondary-text-500 text-lg tracking-1">
-                    {(proposedSecondExaminers==null)? "Belum Diusulkan" : proposedSecondExaminers.name}
+                    {proposedSecondExaminers == null
+                      ? "Belum Diusulkan"
+                      : proposedSecondExaminers.name}
                   </Text>
-                  {(proposedSecondExaminers==null)? null : approvalChip[proposedSecondExaminers.approvalStatus]}
+                  {proposedSecondExaminers == null
+                    ? null
+                    : approvalChip[proposedSecondExaminers.approvalStatus]}
                 </Group>
               </Stack>
             </Stack>
+            <Group className="justify-between">
+              <div className="self-end">
+                <FELinkMore to={nim} />
+              </div>
+              {proposedFirstExaminers != null &&
+              proposedSecondExaminers != null &&
+              proposedFirstExaminers.approvalStatus === "accepted" &&
+              proposedSecondExaminers.approvalStatus === "accepted" ? (
+                <Button
+                  variant="light"
+                  className="bg-primary-500 text-white hover:bg-primary-500 px-10"
+                  onClick={() => {
+                    onDelete!(index!);
+                  }}
+                >
+                  Selesai
+                </Button>
+              ) : null}
+            </Group>
           </Stack>
         </Stack>
         <FEBookmarkSingleSearchOutline

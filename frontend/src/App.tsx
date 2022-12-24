@@ -56,6 +56,8 @@ import FEStudyProgramAdminProposalSubmissionHistory from "./pages/final-exam/stu
 import FEStudyProgramAdminApprovalExaminersFraming from "./pages/final-exam/study-program-admin/examiners-framing/FEStudyProgramAdminApprovalExaminersFraming";
 import FEStudyProgramAdminApprovalExaminersFramingCard from "./pages/final-exam/study-program-admin/examiners-framing/FEStudyProgramAdminApprovalExaminersFramingCard";
 import FEStudyProgramAdminApprovalExaminersFramingDetermine from "./pages/final-exam/study-program-admin/examiners-framing/determine/FEStudyProgramAdminApprovalExaminersFramingDetermine";
+import FEStudyProgramAdminApprovalExaminersFramingHistoryModal from "./pages/final-exam/study-program-admin/examiners-framing/history/FEStudyProgramAdminApprovalExaminersFramingHistoryModal";
+import FEStudyProgramAdminApprovalExaminersFramingHistory from "./pages/final-exam/study-program-admin/examiners-framing/history/FEStudyProgramAdminApprovalExaminersFramingHistory";
 
 function App() {
   return (
@@ -181,7 +183,9 @@ function App() {
                         />
                         <Route
                           path="riwayat"
-                          element={<FEStudyProgramAdminProposalApplicationHistory />}
+                          element={
+                            <FEStudyProgramAdminProposalApplicationHistory />
+                          }
                         />
                       </Route>
                       <Route path="pengajuan-judul-penelitian">
@@ -191,15 +195,34 @@ function App() {
                         />
                         <Route
                           path="riwayat"
-                          element={<FEStudyProgramAdminProposalSubmissionHistory />}
+                          element={
+                            <FEStudyProgramAdminProposalSubmissionHistory />
+                          }
                         />
                       </Route>
                     </Route>
                     <Route path="penyusunan-tim-penguji">
-                      <Route index element={<FEStudyProgramAdminApprovalExaminersFraming />} />
+                      <Route
+                        index
+                        element={
+                          <FEStudyProgramAdminApprovalExaminersFraming />
+                        }
+                      />
+                      
+                      <Route
+                        path="riwayat"
+                        element={
+                          <FEStudyProgramAdminApprovalExaminersFramingHistory />
+                        }
+                      />
                     </Route>
-                    
-                    <Route path="penyusunan-tim-penguji/:nim" element={<FEStudyProgramAdminApprovalExaminersFramingDetermine />} />
+
+                    <Route
+                      path="penyusunan-tim-penguji/:nim"
+                      element={
+                        <FEStudyProgramAdminApprovalExaminersFramingDetermine />
+                      }
+                    />
                   </Route>
                 </Route>
               </Route>

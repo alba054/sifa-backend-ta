@@ -118,7 +118,7 @@ export const statusChipNoIcon: any = {
 export const approvalChip: any = {
   process: (
     <FERoundedChip
-      label="Dalam Proses"
+      label="Menunggu Persetujuan"
       type="green"
       leftIcon={
         <ProgressClockOutlined
