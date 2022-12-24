@@ -5,7 +5,7 @@ import {
 
 const endpoint = `/api/v0/groups/`;
 
-export async function getGroups() {
+export async function qfGetGroups() {
   const groups = await fetch(getFormattedUrlEndpoint(endpoint), {
     method: "GET",
     headers: {

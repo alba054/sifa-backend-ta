@@ -5,7 +5,7 @@ import {
 
 const endpoint = `/api/v0/group-units/`;
 
-export async function getGroupUnits() {
+export async function qfGetGroupUnits() {
   const groupUnits = await fetch(getFormattedUrlEndpoint(endpoint), {
     method: "GET",
     headers: {
@@ -20,7 +20,7 @@ interface IPostGroupUnit {
   accessName: "any";
   groupID: "any";
 }
-export async function postGroupUnits(groupUnitParams: IPostGroupUnit) {
+export async function qfPostGroupUnits(groupUnitParams: IPostGroupUnit) {
   const newGroupUnit = await fetch(getFormattedUrlEndpoint(endpoint), {
     method: "POST",
     body: JSON.stringify(groupUnitParams),

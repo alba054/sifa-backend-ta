@@ -11,7 +11,7 @@ interface IPostUser {
   username: "any";
   groupAccess: "any";
 }
-export async function postUsers(body: IPostUser) {
+export async function qfPostUsers(body: IPostUser) {
   const users = await fetch(getFormattedUrlEndpoint(`${endpoint}`), {
     method: "POST",
     body: JSON.stringify(body),
@@ -23,7 +23,7 @@ export async function postUsers(body: IPostUser) {
   return await users.json();
 }
 
-export async function getUserStudents(body: IPostUser) {
+export async function qfGetUserStudents(body: IPostUser) {
   const userStudents = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/students`),
     {
@@ -38,7 +38,7 @@ export async function getUserStudents(body: IPostUser) {
   return await userStudents.json();
 }
 
-export async function login(authorization: string) {
+export async function qfLogin(authorization: string) {
   const loginResp = await fetch(getFormattedUrlEndpoint(`${endpoint}`), {
     method: "POST",
     headers: {
@@ -49,7 +49,7 @@ export async function login(authorization: string) {
   return await loginResp.json();
 }
 
-export async function forgetPassword(username: string) {
+export async function qfForgetPassword(username: string) {
   const fpResp = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${username}/forget-password/`),
     {
@@ -66,7 +66,7 @@ export async function forgetPassword(username: string) {
 interface IUpdatePassword {
   password: "any";
 }
-export async function updatePassword(
+export async function qfUpdatePassword(
   username: string,
   token: string,
   body: IUpdatePassword

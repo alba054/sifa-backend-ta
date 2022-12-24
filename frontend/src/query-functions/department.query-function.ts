@@ -5,7 +5,7 @@ import {
 
 const endpoint = `/api/v0/departments/`;
 
-export async function getDepartments() {
+export async function qfGetDepartments() {
   const departments = await fetch(getFormattedUrlEndpoint(endpoint), {
     method: "GET",
     headers: {

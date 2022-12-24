@@ -5,7 +5,7 @@ import {
 
 const endpoint = `/api/v0/vocations`;
 
-export async function getVocations(departmentID: number) {
+export async function qfGetVocations(departmentID: number) {
   const vocations = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${departmentID}`),
     {

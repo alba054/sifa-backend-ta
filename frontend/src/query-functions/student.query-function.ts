@@ -6,7 +6,7 @@ import {
 
 const endpoint = "/api/v0/students/";
 
-export async function getStudent(nim: string) {
+export async function qfGetStudent(nim: string) {
   const student = await fetch(getFormattedUrlEndpoint(`${endpoint}/${nim}`), {
     method: "GET",
     headers: {
@@ -20,7 +20,7 @@ export async function getStudent(nim: string) {
 interface IPutStudent {
   birthDate: "any";
 }
-export async function putStudent(nim: string, body: IPutStudent) {
+export async function qfPutStudent(nim: string, body: IPutStudent) {
   const student = await fetch(getFormattedUrlEndpoint(`${endpoint}/${nim}`), {
     method: "PUT",
     body: JSON.stringify(body),
@@ -32,7 +32,7 @@ export async function putStudent(nim: string, body: IPutStudent) {
   return await student.json();
 }
 
-export async function getStudentReqLabs(nim: string) {
+export async function qfGetStudentReqLabs(nim: string) {
   const studentReqLabs = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/reqlabs`),
     {
@@ -50,7 +50,7 @@ interface IPostStudentReqLabs {
   labID: "any";
   studentNIM: "any";
 }
-export async function postStudentReqLabs(
+export async function qfPostStudentReqLabs(
   nim: string,
   body: IPostStudentReqLabs
 ) {
@@ -71,7 +71,7 @@ export async function postStudentReqLabs(
 interface IPutStudentReqLabs {
   labID: "any";
 }
-export async function putStudentReqLabs(
+export async function qfPutStudentReqLabs(
   nim: string,
   reqlabId: string,
   body: IPutStudentReqLabs
@@ -90,7 +90,7 @@ export async function putStudentReqLabs(
   return await studentReqLabs.json();
 }
 
-export async function deleteStudentReqLabs(nim: string, reqlabId: string) {
+export async function qfDeleteStudentReqLabs(nim: string, reqlabId: string) {
   const studentReqLabs = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/reqlabs/${reqlabId}`),
     {
@@ -104,7 +104,7 @@ export async function deleteStudentReqLabs(nim: string, reqlabId: string) {
   return await studentReqLabs.json();
 }
 
-export async function getStudentThesis(nim: string) {
+export async function qfGetStudentThesis(nim: string) {
   const studentThesis = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/thesis`),
     {
@@ -128,7 +128,10 @@ interface IPostStudentThesis {
   labID2_2nd: "any";
   lecturerPropose_2nd: "any";
 }
-export async function postStudentThesis(nim: string, body: IPostStudentThesis) {
+export async function qfPostStudentThesis(
+  nim: string,
+  body: IPostStudentThesis
+) {
   const studentThesis = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/thesis`),
     {
@@ -148,7 +151,7 @@ export interface IPutStudentThesis {
   title_2nd: "any";
 }
 
-export async function putStudentThesis(
+export async function qfPutStudentThesis(
   nim: string,
   thesisID: number,
   body: IPutStudentThesis
@@ -167,7 +170,7 @@ export async function putStudentThesis(
   return await studentThesis.json();
 }
 
-export async function deleteStudentThesis(nim: string, thesisID: number) {
+export async function qfDeleteStudentThesis(nim: string, thesisID: number) {
   const studentThesis = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/thesis/${thesisID}`),
     {
