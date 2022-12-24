@@ -4,6 +4,7 @@ import { FEArrowCircleOutline } from "src/assets/Icons/Fluent";
 import FELinkMore from "src/components/fe-components/FELinkMore";
 import FEProgressBar from "src/components/fe-components/FEProgressBar";
 import { FEROUTES } from "src/routes/final-exam.route";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFEStudentHomepageProposalApplications {
   proposalComp?: IFEStudentHomepageProposalApplicationComp;
@@ -13,7 +14,7 @@ export interface IFEStudentHomepageProposalApplications {
 
 interface IFEStudentHomepageProposalApplicationComp {
   currentProgress: number;
-  status: "process" | "accepted" | "rejected";
+  status: FEStatus;
   date: string;
 }
 

@@ -15,6 +15,7 @@ import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FERoundedChip, { statusChip } from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
 import FEInputModal from "src/components/FEInputModal";
+import { FEStatus } from "src/utils/const/type";
 import FELabFreeForm from "./FELabFreeForm";
 import {
   feLabFreeFormSchema,
@@ -25,7 +26,7 @@ export interface IFELabFreeCardComp {
   title: string;
   index: any;
   lab: string;
-  status: "process" | "rejected" | "accepted";
+  status: FEStatus;
   tanggalPermohonan: string;
   handleDeleteLab: (index: number, lab:string) => void;
   handleUpdateLab: (

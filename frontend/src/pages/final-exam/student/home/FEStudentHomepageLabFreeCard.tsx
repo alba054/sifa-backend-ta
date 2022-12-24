@@ -16,11 +16,12 @@ import FERoundedChip, {
   statusChip,
 } from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFEStudentHomepageLabFreeCard {
   title: string;
   lab: string;
-  status: "process" | "rejected" | "accepted";
+  status: FEStatus;
 }
 
 const FEStudentHomepageLabFreeCard: React.FC<IFEStudentHomepageLabFreeCard> = ({
