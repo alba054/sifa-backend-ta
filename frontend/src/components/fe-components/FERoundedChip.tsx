@@ -65,3 +65,41 @@ export const statusChip: any = {
     />
   ),
 };
+
+export const approvalChip: any = {
+  process: (
+    <FERoundedChip
+      label="Dalam Proses"
+      type="green"
+      leftIcon={
+        <ProgressClockOutlined
+          size={14}
+          color={"#1E9E63"}
+          className="items-center"
+        />
+      }
+    />
+  ),
+  rejected: (
+    <FERoundedChip
+      label="Ditolak"
+      type="red"
+      leftIcon={
+        <FECloseOutline
+          color="#FF2C56"
+          size={12}
+          className="items-center pb-[1px]"
+        />
+      }
+    />
+  ),
+  accepted: (
+    <FERoundedChip
+      label="Disetujui"
+      type="blue"
+      leftIcon={
+        <FECheckOutline color="#5F5AF7" size={14} className="items-center" />
+      }
+    />
+  ),
+};

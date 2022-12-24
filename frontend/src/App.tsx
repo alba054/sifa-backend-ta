@@ -53,6 +53,7 @@ import FEStudentHomepage from "./pages/final-exam/student/home/FEStudentHomepage
 import FEStudentGuidance from "./pages/final-exam/student/guidance/FEStudentGuidance";
 import FEStudyProgramAdminProposalSubmission from "./pages/final-exam/study-program-admin/approval/proposal/submission/FEStudyProgramAdminProposalSubmission";
 import FEStudyProgramAdminProposalSubmissionHistory from "./pages/final-exam/study-program-admin/approval/proposal/submission/history/FEStudyProgramAdminProposalSubmissionHistory";
+import FEStudyProgramAdminApprovalExaminersFraming from "./pages/final-exam/study-program-admin/examiners-framing/FEStudyProgramAdminApprovalExaminersFraming";
 
 function App() {
   return (
@@ -193,7 +194,7 @@ function App() {
                       </Route>
                     </Route>
                     <Route path="penyusunan-tim-penguji">
-                      <Route index element={<FETrialPermitApproval />} />
+                      <Route index element={<FEStudyProgramAdminApprovalExaminersFraming />} />
                       <Route
                         path="nim/:nim"
                         element={<FEMentorAndExaminersApprovalMore />}
