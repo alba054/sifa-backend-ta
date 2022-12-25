@@ -1,1 +1,1 @@
-export const SERVER_URL = "http://34.101.189.154"
+export const API_URL = process.env.API_URL;
