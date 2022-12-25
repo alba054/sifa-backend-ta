@@ -13,14 +13,14 @@ import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import FESubsectionChairmanMentorAndExaminersApprovalMoreCard, {
-  IFESubsectionChairmanMentorAndExaminersApprovalMoreCard,
-} from "./FESubsectionChairmanMentorAndExaminersApprovalMoreCard";
+import FEHeadAdministratorMentorAndExaminersApprovalMoreCard, {
+  IFEHeadAdministratorMentorAndExaminersApprovalMoreCard,
+} from "./FEHeadAdministratorMentorAndExaminersApprovalMoreCard";
 import { useParams } from "react-router-dom";
 import FEDisabledTooltip from "src/components/fe-components/FEDisabledTooltip";
 import { FEStatus } from "src/utils/const/type";
 
-export interface IFESubsectionChairmanMentorAndExaminersApprovalMore {
+export interface IFEHeadAdministratorMentorAndExaminersApprovalMore {
 }
 
 export interface IApprovalMore {
@@ -28,17 +28,17 @@ export interface IApprovalMore {
   nim: string;
   proposalTitle: string;
   laboratory: string;
-  sk: Array<IFESubsectionChairmanMentorAndExaminersApprovalMoreCard>;
+  sk: Array<IFEHeadAdministratorMentorAndExaminersApprovalMoreCard>;
 }
 
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
     title: "Persetujuan",
-    href: FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL,
+    href: FEROUTES.HEAD_ADMINISTRATOR_APPROVAL,
   },
   {
     title: "SK Pembimbing dan Penguji",
-    href: FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL_MENTOR_AND_EXAMINERS,
+    href: FEROUTES.HEAD_ADMINISTRATOR_APPROVAL_MENTOR_AND_EXAMINERS,
   },
 ];
 
@@ -92,8 +92,8 @@ const dummyProposalData: {
   },
 };
 
-const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
-  IFESubsectionChairmanMentorAndExaminersApprovalMore
+const FEHeadAdministratorMentorAndExaminersApprovalMore: React.FC<
+  IFEHeadAdministratorMentorAndExaminersApprovalMore
 > = ({}) => {
   let { nim } = useParams();
 
@@ -148,7 +148,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
         <Stack>
           <Grid gutter={"xl"} className="mb-0">
             <Grid.Col span={6} xs={12} sm={12} md={6}>
-              <FESubsectionChairmanMentorAndExaminersApprovalMoreCard
+              <FEHeadAdministratorMentorAndExaminersApprovalMoreCard
                 SKType={approvalCardDataArray[0].SKType}
                 status={mentorStatus}
                 applicationDate={approvalCardDataArray[0].applicationDate}
@@ -159,7 +159,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
               />
             </Grid.Col>
             <Grid.Col span={6} xs={12} sm={12} md={6}>
-              <FESubsectionChairmanMentorAndExaminersApprovalMoreCard
+              <FEHeadAdministratorMentorAndExaminersApprovalMoreCard
                 SKType={approvalCardDataArray[1].SKType}
                 status={examinerStatus}
                 applicationDate={approvalCardDataArray[1].applicationDate}
@@ -202,4 +202,4 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
     </FEMainlayout>
   );
 };
-export default FESubsectionChairmanMentorAndExaminersApprovalMore;
+export default FEHeadAdministratorMentorAndExaminersApprovalMore;

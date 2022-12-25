@@ -2,26 +2,24 @@ import { Button, Group, Stack, Text, useMantineTheme } from "@mantine/core";
 import React, { useState } from "react";
 import {
   FEBookmarkSingleSearchOutline,
-  FETrashOutline,
+  FETrashOutline
 } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
-import FELinkMore from "src/components/fe-components/FELinkMore";
 import { approvalChip } from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
-import { FEStatus } from "src/utils/const/type";
-import { IFESubsectionChairmanMentorAndExaminersApprovalMoreCard } from "../details/FESubsectionChairmanMentorAndExaminersApprovalMoreCard";
-export interface IFESubsectionChairmanMentorAndExaminersApprovalHistoryCard {
+import { IFEHeadAdministratorMentorAndExaminersApprovalMoreCard } from "../details/FEHeadAdministratorMentorAndExaminersApprovalMoreCard";
+export interface IFEHeadAdministratorMentorAndExaminersApprovalHistoryCard {
   index?: number;
   name: string;
   nim: string;
   proposalTitle: string;
   laboratory: string;
-  sk: Array<IFESubsectionChairmanMentorAndExaminersApprovalMoreCard>;
+  sk: Array<IFEHeadAdministratorMentorAndExaminersApprovalMoreCard>;
   onDelete?: (e: number) => void;
 }
 
-const FESubsectionChairmanMentorAndExaminersApprovalHistoryCard: React.FC<
-  IFESubsectionChairmanMentorAndExaminersApprovalHistoryCard
+const FEHeadAdministratorMentorAndExaminersApprovalHistoryCard: React.FC<
+  IFEHeadAdministratorMentorAndExaminersApprovalHistoryCard
 > = ({ index, name, nim, proposalTitle, laboratory, sk, onDelete }) => {
   const theme = useMantineTheme();
   const [isAlertOpened, setIsAlertOpened] = useState(false);
@@ -60,11 +58,11 @@ const FESubsectionChairmanMentorAndExaminersApprovalHistoryCard: React.FC<
               <Stack className="gap-4">
                 {sk.map(
                   (
-                    currSK: IFESubsectionChairmanMentorAndExaminersApprovalMoreCard,
+                    currSK: IFEHeadAdministratorMentorAndExaminersApprovalMoreCard,
                     e: number
                   ) => {
                     return (
-                      <Stack className="gap-0">
+                      <Stack className="gap-2">
                         <Group key={e}>
                           <Text className="text-primary-text-500 text-lg font-semibold tracking-1">
                             SK{" "}
@@ -118,4 +116,4 @@ const FESubsectionChairmanMentorAndExaminersApprovalHistoryCard: React.FC<
     </FECard>
   );
 };
-export default FESubsectionChairmanMentorAndExaminersApprovalHistoryCard;
+export default FEHeadAdministratorMentorAndExaminersApprovalHistoryCard;

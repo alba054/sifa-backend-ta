@@ -1,27 +1,25 @@
-import { Button, Group, Stack, Text, useMantineTheme } from "@mantine/core";
+import { Button, Group, Stack, useMantineTheme, Text } from "@mantine/core";
 import React, { useState } from "react";
 import {
   FEBookmarkSingleSearchOutline,
   FETrashOutline,
 } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
-import FELinkMore from "src/components/fe-components/FELinkMore";
 import { approvalChip } from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
-import { FEStatus } from "src/utils/const/type";
-import { IFESubsectionChairmanMentorAndExaminersApprovalMoreCard } from "../details/FESubsectionChairmanMentorAndExaminersApprovalMoreCard";
-export interface IFESubsectionChairmanMentorAndExaminersApprovalHistoryCard {
+import { IFEHeadAdministratorTrialPermitApprovalApplicationDetailsCard } from "../details/FEHeadAdministratorTrialPermitApprovalApplicationDetailsCard";
+export interface IFEHeadAdministratorTrialPermitApprovalHistoryCard {
   index?: number;
   name: string;
   nim: string;
   proposalTitle: string;
   laboratory: string;
-  sk: Array<IFESubsectionChairmanMentorAndExaminersApprovalMoreCard>;
+  sk: IFEHeadAdministratorTrialPermitApprovalApplicationDetailsCard;
   onDelete?: (e: number) => void;
 }
 
-const FESubsectionChairmanMentorAndExaminersApprovalHistoryCard: React.FC<
-  IFESubsectionChairmanMentorAndExaminersApprovalHistoryCard
+const FEHeadAdministratorTrialPermitApprovalHistoryCard: React.FC<
+  IFEHeadAdministratorTrialPermitApprovalHistoryCard
 > = ({ index, name, nim, proposalTitle, laboratory, sk, onDelete }) => {
   const theme = useMantineTheme();
   const [isAlertOpened, setIsAlertOpened] = useState(false);
@@ -58,44 +56,31 @@ const FESubsectionChairmanMentorAndExaminersApprovalHistoryCard: React.FC<
                 Status
               </Text>
               <Stack className="gap-4">
-                {sk.map(
-                  (
-                    currSK: IFESubsectionChairmanMentorAndExaminersApprovalMoreCard,
-                    e: number
-                  ) => {
-                    return (
-                      <Stack className="gap-0">
-                        <Group key={e}>
-                          <Text className="text-primary-text-500 text-lg font-semibold tracking-1">
-                            SK{" "}
-                            {" " +
-                              (currSK.SKType === "examiner"
-                                ? "Penguji"
-                                : "Pembimbing")}
-                          </Text>
-                          {approvalChip[currSK.status]}
-                        </Group>
-                        {currSK.status === "rejected" ? (
-                          <Text className="text-secondary-text-500 font-semibold tracking-4 text-justify">
-                            Alasan Penolakan:{" "}
-                            <Text className="inline text-error-500">
-                            {
-                              currSK.refusalReason?.split('\n').map((item:string, e:number)=>{
-                                return(
-                                  <span key={e}>
-                                  {item}
-                                  <br/>
-                                  </span>
-                                )
-                              })
-                            }
-                            </Text>
-                          </Text>
-                        ) : null}
-                      </Stack>
-                    );
-                  }
-                )}
+                <Stack className="gap-2">
+                  <Group>
+                    <Text className="text-primary-text-500 text-lg font-semibold tracking-1">
+                      SK Izin Ujian Sidang
+                    </Text>
+                    {approvalChip[sk.status]}
+                  </Group>
+                  {sk.status === "rejected" ? (
+                    <Text className="text-secondary-text-500 font-semibold tracking-4 text-justify">
+                      Alasan Penolakan:{" "}
+                      <Text className="inline text-error-500">
+                        {sk.refusalReason
+                          ?.split("\n")
+                          .map((item: string, e: number) => {
+                            return (
+                              <span key={e}>
+                                {item}
+                                <br />
+                              </span>
+                            );
+                          })}
+                      </Text>
+                    </Text>
+                  ) : null}
+                </Stack>
               </Stack>
             </Stack>
           </Stack>
@@ -118,4 +103,4 @@ const FESubsectionChairmanMentorAndExaminersApprovalHistoryCard: React.FC<
     </FECard>
   );
 };
-export default FESubsectionChairmanMentorAndExaminersApprovalHistoryCard;
+export default FEHeadAdministratorTrialPermitApprovalHistoryCard;
