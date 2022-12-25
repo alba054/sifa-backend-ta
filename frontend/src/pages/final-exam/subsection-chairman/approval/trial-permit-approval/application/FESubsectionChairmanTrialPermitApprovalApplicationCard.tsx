@@ -1,4 +1,4 @@
-import { Button, Group, Stack, Text } from "@mantine/core";
+import { Group, Stack, Text } from "@mantine/core";
 import React from "react";
 import { FESearchBookOutline } from "src/assets/Icons/Fluent";
 import FELinkMore from "src/components/fe-components/FELinkMore";
@@ -26,8 +26,7 @@ const FESubsectionChairmanTrialPermitApprovalApplicationCard: React.FC<
         </Stack>
           <Text className="font-semibold text-2xl text-primary-text-500 inline-block">
             {name} ({nim})
-            {/* <Text className="inline-block text-xs text-secondary-text-200 ">Tanggal Permohonan: 14 November 2022</Text> */}
-          </Text>
+            </Text>
         <FELinkMore to={nim} />
       </Stack>
       <FESearchBookOutline

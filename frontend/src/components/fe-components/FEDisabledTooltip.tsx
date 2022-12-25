@@ -1,21 +1,23 @@
 import { Tooltip, useMantineTheme } from '@mantine/core';
+import { FloatingPosition } from '@mantine/core/lib/Floating';
 import React, { Children } from 'react';
 
 export interface IFEDisabledTooltip {
   label:string,
   maxWidth?:number,
   isDisabled?:boolean,
-  children: JSX.Element
+  children: JSX.Element,
+  position?: FloatingPosition; 
 }
 
-const FEDisabledTooltip: React.FC<IFEDisabledTooltip> = ({ label, maxWidth=280, isDisabled=false, children }) => {
+const FEDisabledTooltip: React.FC<IFEDisabledTooltip> = ({ label, maxWidth=280, isDisabled=false, children, position='bottom-end' }) => {
   const theme= useMantineTheme();
   return (
     <Tooltip
               label={label}
               withArrow
               color={"rgba(255, 255, 255, 0.9)"}
-              position="bottom-end"
+              position={position || "bottom-end"}
               multiline
               // width={280}
               radius={"md"}

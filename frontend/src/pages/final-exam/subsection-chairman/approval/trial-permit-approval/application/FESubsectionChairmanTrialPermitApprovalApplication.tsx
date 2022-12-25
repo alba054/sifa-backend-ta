@@ -1,21 +1,15 @@
-import { Stack } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FEClockRepeatOutline, FETrashOutline } from "src/assets/Icons/Fluent";
-import ManThinkingAnimation from "src/assets/Icons/ManThinkingAnimation";
+import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton,
+  ILFPHeaderButton
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import { FEStatus } from "src/utils/const/type";
-import FESubsectionChairmanTrialPermitApprovalApplicationCard, {
-  IFESubsectionChairmanTrialPermitApprovalApplicationCard,
-} from "./FESubsectionChairmanTrialPermitApprovalApplicationCard";
+import { IFESubsectionChairmanTrialPermitApprovalApplicationCard } from "./FESubsectionChairmanTrialPermitApprovalApplicationCard";
 import FESubsectionChairmanTrialPermitApprovalApplicationMain from "./FESubsectionChairmanTrialPermitApprovalApplicationMain";
 export interface IFESubsectionChairmanTrialPermitApprovalApplication {}
 
@@ -36,7 +30,7 @@ const buttons: ILFPHeaderButton[] = [
     type: "href",
     icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />,
     disabled: false,
-    href: FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION_HISTORY
+    href: FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION_HISTORY,
   },
 ];
 
@@ -60,23 +54,27 @@ const dummyTrialPermitApprovalApplicationData: Array<IFESubsectionChairmanTrialP
       nim: "H071191040",
       status: "process",
     },
+    {
+      applicationDate: "15 November 2022",
+      name: "Richard Enrico",
+      nim: "H071191055",
+      status: "rejected",
+    },
   ];
 
 const FESubsectionChairmanTrialPermitApprovalApplication: React.FC<
   IFESubsectionChairmanTrialPermitApprovalApplication
 > = ({}) => {
-  const { array: trialPermitApprovalApplicationData, remove, clear } = useArray(dummyTrialPermitApprovalApplicationData);
-  const navigate = useNavigate();
-
+  const {
+    array: trialPermitApprovalApplicationData,
+    remove,
+    clear,
+  } = useArray(dummyTrialPermitApprovalApplicationData);
   const [isDataExist, setIsDataExist] = useState(
     trialPermitApprovalApplicationData.length > 0 ? true : false
   );
 
   const [isAlertOpened, setIsAlertOpened] = useState(false);
-
-  function onDelete(index: number) {
-    remove(index);
-  }
 
   useEffect(() => {
     if (trialPermitApprovalApplicationData.length > 0) {
@@ -108,7 +106,9 @@ const FESubsectionChairmanTrialPermitApprovalApplication: React.FC<
         disabledButtonTooltipLabel={"Riwayat kosong"}
       />
       {isDataExist ? (
-        <FESubsectionChairmanTrialPermitApprovalApplicationMain trialPermitApplicationArray={trialPermitApprovalApplicationData}  />
+        <FESubsectionChairmanTrialPermitApprovalApplicationMain
+          trialPermitApplicationArray={trialPermitApprovalApplicationData}
+        />
       ) : (
         <LFPEmptyDataComponent
           title="Belum Ada Usulan Persetujuan Terbaru"

@@ -2,16 +2,13 @@ import {
   Grid, MantineProvider, Stack
 } from "@mantine/core";
 import React from "react";
-import useArray from "src/hooks/fe-hooks/useArray";
 import FESubsectionChairmanTrialPermitApprovalApplicationCard, { IFESubsectionChairmanTrialPermitApprovalApplicationCard } from "./FESubsectionChairmanTrialPermitApprovalApplicationCard";
 
 export interface IFESubsectionChairmanTrialPermitApprovalApplicationMain {
   trialPermitApplicationArray: Array<IFESubsectionChairmanTrialPermitApprovalApplicationCard>
 }
 
-const FESubsectionChairmanTrialPermitApprovalApplicationMain: React.FC<IFESubsectionChairmanTrialPermitApprovalApplicationMain> = ({ trialPermitApplicationArray }) => {
-  const { array, set: setArray, push, filter, update, remove, clear } = useArray(trialPermitApplicationArray)
-  
+const FESubsectionChairmanTrialPermitApprovalApplicationMain: React.FC<IFESubsectionChairmanTrialPermitApprovalApplicationMain> = ({ trialPermitApplicationArray }) => {  
   return (
     <Stack spacing="md">
       <MantineProvider
@@ -31,10 +28,10 @@ const FESubsectionChairmanTrialPermitApprovalApplicationMain: React.FC<IFESubsec
       >
       <Grid className="mt-0" gutter={"xl"}>
 
-          {array.map((application:IFESubsectionChairmanTrialPermitApprovalApplicationCard, e: number) => {
+          {trialPermitApplicationArray.map((application:IFESubsectionChairmanTrialPermitApprovalApplicationCard, e: number) => {
             return (
               <Grid.Col span={6} xs={12} sm={12} md={6}>
-                <FESubsectionChairmanTrialPermitApprovalApplicationCard key={e}  {...application} />
+                <FESubsectionChairmanTrialPermitApprovalApplicationCard key={e} {...application} />
               </Grid.Col>
             );
           })}
