@@ -47,10 +47,11 @@ const dummyProposalHistoryList: Array<IFESubsectionChairmanMentorAndExaminersApp
         },
         {
           SKType: "examiner",
-          status: "process",
+          status: "rejected",
           applicationDate: "12 November 2022",
           passedTime: "4 menit yang lalu",
           setStatus: (e: FEStatus) => {},
+          refusalReason: "Berkas tidak valid",
         },
       ],
     },
@@ -66,6 +67,7 @@ const dummyProposalHistoryList: Array<IFESubsectionChairmanMentorAndExaminersApp
           applicationDate: "12 Desember 2022",
           passedTime: "40 menit yang lalu",
           setStatus: (e: FEStatus) => {},
+          refusalReason: "Judulnya jelek",
         },
         {
           SKType: "examiner",
@@ -73,6 +75,8 @@ const dummyProposalHistoryList: Array<IFESubsectionChairmanMentorAndExaminersApp
           applicationDate: "12 November 2022",
           passedTime: "4 menit yang lalu",
           setStatus: (e: FEStatus) => {},
+          refusalReason:
+            "Berikut beberapa alasan penolakan yang saya lakukan:\n1. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil eligendi cupiditate beatae exercitationem praesentium blanditiis quisquam totam eum. Id reiciendis eius nesciunt quis repellendus nihil expedita. Cum ad eius voluptatum!\n2. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum officia doloribus reiciendis! Doloribus quis sequi cum omnis, eos est autem optio fuga quae illo perferendis non ea dicta blanditiis placeat dignissimos tempore natus vero at. Voluptatem aperiam ab vero voluptatibus consectetur quidem dolorum id ipsam, officiis laudantium quod et dignissimos, laboriosam nobis, inventore tempore labore? Repudiandae exercitationem dolores asperiores neque voluptas perspiciatis velit earum, voluptate non recusandae qui unde doloribus, iusto officiis. Consectetur fugiat, a repellendus ducimus possimus eos debitis quidem cum! Veritatis cupiditate nesciunt facilis mollitia nam corrupti rem veniam voluptate, facere possimus at, atque obcaecati commodi, nemo nihil!\n3. Kamu Jelek!",
         },
       ],
     },

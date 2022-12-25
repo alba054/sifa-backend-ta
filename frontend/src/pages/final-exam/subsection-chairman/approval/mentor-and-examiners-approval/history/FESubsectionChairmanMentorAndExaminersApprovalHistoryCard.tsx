@@ -57,23 +57,42 @@ const FESubsectionChairmanMentorAndExaminersApprovalHistoryCard: React.FC<
               <Text className="font-bold text-xl text-primary-text-500">
                 Status
               </Text>
-              <Stack className="gap-2">
+              <Stack className="gap-4">
                 {sk.map(
                   (
                     currSK: IFESubsectionChairmanMentorAndExaminersApprovalMoreCard,
                     e: number
                   ) => {
                     return (
-                      <Group key={e}>
-                        <Text className="text-secondary-text-500 text-lg font-semibold tracking-1">
-                          SK{" "}
-                          {" " +
-                            (currSK.SKType === "examiner"
-                              ? "Penguji"
-                              : "Pembimbing")}
-                        </Text>
-                        {approvalChip[currSK.status]}
-                      </Group>
+                      <Stack className="gap-0">
+                        <Group key={e}>
+                          <Text className="text-primary-text-500 text-lg font-semibold tracking-1">
+                            SK{" "}
+                            {" " +
+                              (currSK.SKType === "examiner"
+                                ? "Penguji"
+                                : "Pembimbing")}
+                          </Text>
+                          {approvalChip[currSK.status]}
+                        </Group>
+                        {currSK.status === "rejected" ? (
+                          <Text className="text-secondary-text-500 font-semibold tracking-4 text-justify">
+                            Alasan Penolakan:{" "}
+                            <Text className="inline text-error-500">
+                            {
+                              currSK.refusalReason?.split('\n').map((item:string, e:number)=>{
+                                return(
+                                  <span>
+                                  {item}
+                                  <br/>
+                                  </span>
+                                )
+                              })
+                            }
+                            </Text>
+                          </Text>
+                        ) : null}
+                      </Stack>
                     );
                   }
                 )}
