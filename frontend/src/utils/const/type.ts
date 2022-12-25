@@ -1,0 +1,1 @@
+export type FEStatus = "process" | "accepted" | "rejected"

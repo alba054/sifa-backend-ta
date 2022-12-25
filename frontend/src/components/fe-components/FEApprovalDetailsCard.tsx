@@ -41,7 +41,7 @@ const FEApprovalDetailsCard: React.FC<IFEApprovalDetailsCard> = ({
               <Text className="text-[18px] font-semibold text-primary-500 tracking-1 mb-1">
                 {proposalArray[0].proposalTitle}
               </Text>
-              <Text className="text-secondary-text-500 text-lg tracking-1">
+              <Text className="text-secondary-text-500 text-lg tracking-1 font-semibold">
                 Lab. {proposalArray[0].laboratory}
               </Text>
             </Stack>
@@ -54,12 +54,12 @@ const FEApprovalDetailsCard: React.FC<IFEApprovalDetailsCard> = ({
                   <Text className="text-[18px] font-semibold text-primary-500 tracking-1 mb-1">
                     {proposalArray[1].proposalTitle}
                   </Text>
-                  <Text className="text-secondary-text-500 text-lg tracking-1">
+                  <Text className="text-secondary-text-500 text-lg tracking-1 font-semibold">
                     Lab. {proposalArray[1].laboratory}
                   </Text>
                 </>
               ) : (
-                <Text className="text-secondary-text-500 text-lg tracking-1">
+                <Text className="text-secondary-text-500 text-lg tracking-1 font-semibold">
                   Tidak Mengajukan Judul
                 </Text>
               )}

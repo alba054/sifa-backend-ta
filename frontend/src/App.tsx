@@ -49,6 +49,25 @@ import { mantineTheme } from "./themes/mantine.theme";
 import FEStudyProgramAdminProposal from "./pages/final-exam/study-program-admin/approval/proposal/FEStudyProgramAdminProposal";
 import FEStudyProgramAdminProposalApplication from "./pages/final-exam/study-program-admin/approval/proposal/application/FEStudyProgramAdminProposalApplication";
 import FEStudyProgramAdminProposalApplicationHistory from "./pages/final-exam/study-program-admin/approval/proposal/application/history/FEStudyProgramAdminProposalApplicationHistory";
+import FEStudentHomepage from "./pages/final-exam/student/home/FEStudentHomepage";
+import FEStudentGuidance from "./pages/final-exam/student/guidance/FEStudentGuidance";
+import FEStudyProgramAdminProposalSubmission from "./pages/final-exam/study-program-admin/approval/proposal/submission/FEStudyProgramAdminProposalSubmission";
+import FEStudyProgramAdminProposalSubmissionHistory from "./pages/final-exam/study-program-admin/approval/proposal/submission/history/FEStudyProgramAdminProposalSubmissionHistory";
+import FEStudyProgramAdminApprovalExaminersFraming from "./pages/final-exam/study-program-admin/examiners-framing/FEStudyProgramAdminApprovalExaminersFraming";
+import FEStudyProgramAdminApprovalExaminersFramingCard from "./pages/final-exam/study-program-admin/examiners-framing/FEStudyProgramAdminApprovalExaminersFramingCard";
+import FEStudyProgramAdminApprovalExaminersFramingDetermine from "./pages/final-exam/study-program-admin/examiners-framing/determine/FEStudyProgramAdminApprovalExaminersFramingDetermine";
+import FEStudyProgramAdminApprovalExaminersFramingHistoryModal from "./pages/final-exam/study-program-admin/examiners-framing/history/FEStudyProgramAdminApprovalExaminersFramingHistoryModal";
+import FEStudyProgramAdminApprovalExaminersFramingHistory from "./pages/final-exam/study-program-admin/examiners-framing/history/FEStudyProgramAdminApprovalExaminersFramingHistory";
+import FESubsectionChairmanApproval from "./pages/final-exam/subsection-chairman/approval/FESubsectionChairmanApproval";
+import FESubsectionChairmanMentorAndExaminersApproval from "./pages/final-exam/subsection-chairman/approval/mentor-and-examiners-approval/FESubsectionChairmanMentorAndExaminersApproval";
+import FESubsectionChairmanMentorAndExaminersApprovalMore from "./pages/final-exam/subsection-chairman/approval/mentor-and-examiners-approval/details/FESubsectionChairmanMentorAndExaminersApprovalMore";
+import FESubsectionChairmanTrialPermitApproval from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/FESubsectionChairmanTrialPermitApproval";
+import FESubsectionChairmanMentorAndExaminersApprovalHistory from "./pages/final-exam/subsection-chairman/approval/mentor-and-examiners-approval/history/FESubsectionChairmanMentorAndExaminersApprovalHistory";
+import FESubsectionChairmanTrialPermitApprovalApplication from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/FESubsectionChairmanTrialPermitApprovalApplication";
+import FESubsectionChairmanTrialPermitApprovalApplicationDetails from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/details/FESubsectionChairmanTrialPermitApprovalApplicationDetails";
+import FESubsectionChairmanTrialPermitApprovalApplicationHistoryCard from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/history/FESubsectionChairmanTrialPermitApprovalApplicationHistoryCard";
+import FESubsectionChairmanTrialPermitApprovalApplicationHistory from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/history/FESubsectionChairmanTrialPermitApprovalApplicationHistory";
+
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
@@ -125,6 +144,18 @@ function App() {
                     <Route index element={<Settings />} />
                   </Route>
                 </Route>
+                <Route path="akreditasi">
+                  <Route index element={<Accreditation />} />
+                </Route>
+                <Route path="referensi">
+                  <Route path="kurikulum-matakuliah" element={<Curriculum />} />
+                  <Route path="cpl" element={<CPL />} />
+                  <Route path="cpmk" element={<CPMK />} />
+                  <Route path="rps" element={<RPS />} />
+                </Route>
+                <Route path="manajemen-pengguna">
+                  <Route index element={<Settings />} />
+                </Route>
                 <Route path="tugas-akhir">
                   <Route index element={<FEHomepage />} />
                   <Route path="mahasiswa">
@@ -176,6 +207,58 @@ function App() {
                       </Route>
                     </Route>
                   </Route>
+                  <Route path="kasubag">
+                    <Route index element={<FEHomepage />} />
+                    <Route path="persetujuan">
+                      <Route index element={<FESubsectionChairmanApproval />} />
+                      <Route path="sk-pembimbing-dan-penguji">
+                        <Route
+                          index
+                          element={
+                            <FESubsectionChairmanMentorAndExaminersApproval />
+                          }
+                        />
+                      </Route>
+                      <Route
+                        path="sk-pembimbing-dan-penguji/:nim"
+                        element={
+                          <FESubsectionChairmanMentorAndExaminersApprovalMore />
+                        }
+                      />
+                      <Route
+                        path="sk-pembimbing-dan-penguji/riwayat"
+                        element={
+                          <FESubsectionChairmanMentorAndExaminersApprovalHistory />
+                        }
+                      />
+                      <Route path="izin-ujian-sidang">
+                        <Route
+                          index
+                          element={<FESubsectionChairmanTrialPermitApproval />}
+                        />
+                        <Route path="surat-permohonan">
+                          <Route
+                            index
+                            element={
+                              <FESubsectionChairmanTrialPermitApprovalApplication />
+                            }
+                          />
+                          <Route
+                            path="riwayat"
+                            element={
+                              <FESubsectionChairmanTrialPermitApprovalApplicationHistory />
+                            }
+                          />
+                        </Route>
+                        <Route
+                          path="surat-permohonan/:nim"
+                          element={
+                            <FESubsectionChairmanTrialPermitApprovalApplicationDetails />
+                          }
+                        />
+                      </Route>
+                    </Route>
+                  </Route>
                   <Route path="admin-program-studi">
                     <Route index element={<FEHomepage />} />
                     <Route path="persetujuan">
@@ -188,7 +271,7 @@ function App() {
                         <Route path="permohonan-judul-penelitian">
                           <Route
                             index
-                            element={<FEStudyProgramAdminProposalApplication />}
+                            element={<FEMentorAndExaminersApproval />}
                           />
                           <Route
                             path="riwayat"
@@ -197,14 +280,41 @@ function App() {
                             }
                           />
                         </Route>
+                        <Route path="pengajuan-judul-penelitian">
+                          <Route
+                            index
+                            element={<FEStudyProgramAdminProposalSubmission />}
+                          />
+                          <Route
+                            path="riwayat"
+                            element={
+                              <FEStudyProgramAdminProposalSubmissionHistory />
+                            }
+                          />
+                        </Route>
                       </Route>
                       <Route path="penyusunan-tim-penguji">
-                        <Route index element={<FETrialPermitApproval />} />
                         <Route
-                          path="nim/:nim"
-                          element={<FEMentorAndExaminersApprovalMore />}
+                          index
+                          element={
+                            <FEStudyProgramAdminApprovalExaminersFraming />
+                          }
+                        />
+
+                        <Route
+                          path="riwayat"
+                          element={
+                            <FEStudyProgramAdminApprovalExaminersFramingHistory />
+                          }
                         />
                       </Route>
+
+                      <Route
+                        path="penyusunan-tim-penguji/:nim"
+                        element={
+                          <FEStudyProgramAdminApprovalExaminersFramingDetermine />
+                        }
+                      />
                     </Route>
                   </Route>
                 </Route>

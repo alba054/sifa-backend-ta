@@ -1,7 +1,8 @@
 import { Group, Stack, Text, useMantineTheme } from "@mantine/core";
 import React from "react";
 import { FEBookmarkSingleSearchOutline, PersonFilled } from "src/assets/Icons/Fluent";
-import FERoundedChip from "src/components/fe-components/FERoundedChip";
+import FERoundedChip, {statusChipNoIcon} from "src/components/fe-components/FERoundedChip";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFEProposalCard {
   proposalNumber: string;
@@ -10,16 +11,16 @@ export interface IFEProposalCard {
   laboratory: string;
   mainMentor?: string;
   sideMentor?: string;
-  status: "Dalam Proses" | "Diterima" | "Ditolak";
+  status: FEStatus;
 }
 
 const statusMap = new Map<
-  "Dalam Proses" | "Diterima" | "Ditolak",
+  FEStatus,
   "green" | "blue" | "red"
 >([
-  ["Dalam Proses", "green"],
-  ["Diterima", "blue"],
-  ["Ditolak", "red"],
+  ["process", "green"],
+  ["accepted", "blue"],
+  ["rejected", "red"],
 ]);
 
 const FEProposalCard: React.FC<IFEProposalCard> = ({
@@ -79,7 +80,7 @@ const FEProposalCard: React.FC<IFEProposalCard> = ({
           <Text className="text-lg font-bold tracking text-primary-text-500">
             Status
           </Text>
-          <FERoundedChip label={status} type={statusMap.get(status)} />
+          {statusChipNoIcon[status]}
         </Stack>
       </Stack>
       <FEBookmarkSingleSearchOutline

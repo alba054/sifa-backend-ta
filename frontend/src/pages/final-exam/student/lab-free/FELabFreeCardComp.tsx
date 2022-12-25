@@ -15,6 +15,7 @@ import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FERoundedChip, { statusChip } from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
 import FEInputModal from "src/components/FEInputModal";
+import { FEStatus } from "src/utils/const/type";
 import FELabFreeForm from "./FELabFreeForm";
 import {
   feLabFreeFormSchema,
@@ -25,7 +26,7 @@ export interface IFELabFreeCardComp {
   title: string;
   index: any;
   lab: string;
-  status: "process" | "rejected" | "accepted";
+  status: FEStatus;
   tanggalPermohonan: string;
   handleDeleteLab: (index: number, lab:string) => void;
   handleUpdateLab: (
@@ -127,7 +128,7 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
               {/* <Text className="inline-block text-xs text-secondary-text-200 ">Tanggal Permohonan: 14 November 2022</Text> */}
             </Text>
             <Text className="text-secondary-text-500 text-[18px] font-normal">
-              {lab}
+              Laboratorium {lab}
             </Text>
           </Stack>
           <Group className="justify-between mt-1 h-12">

@@ -20,7 +20,7 @@ const dummyFEProposalData: Array<IFEProposalCard> = [
     laboratory: "Lab: Biofarmaka, Farmasetika",
     mainMentor: "Belum ditentukan",
     sideMentor: "Belum ditentukan",
-    status: "Dalam Proses",
+    status: "accepted",
   },
   {
     proposalNumber: "2",
@@ -30,7 +30,7 @@ const dummyFEProposalData: Array<IFEProposalCard> = [
     laboratory: "Lab: Kimia Farmasi",
     mainMentor: "Belum ditentukan",
     sideMentor: "Belum ditentukan",
-    status: "Ditolak",
+    status: "rejected",
   },
 ];
 

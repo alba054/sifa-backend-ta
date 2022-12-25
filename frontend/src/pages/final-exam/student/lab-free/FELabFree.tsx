@@ -24,20 +24,20 @@ const lastApplicationDone = 3;
 const labValue: Array<laboratoyObject> = [
   {
     id: 0,
-    labLabel: "Laboratorium Fisika",
-    labValue: "Laboratorium Fisika",
+    labLabel: "Fisika",
+    labValue: "Fisika",
     show: true,
   },
   {
     id: 1,
-    labLabel: "Laboratorium Bio Farmaka",
-    labValue: "Laboratorium Bio Farmaka",
+    labLabel: "Bio Farmaka",
+    labValue: "Bio Farmaka",
     show: true,
   },
   {
     id: 2,
-    labLabel: "Laboratorium Matematika",
-    labValue: "Laboratorium Matematika",
+    labLabel: "Matematika",
+    labValue: "Matematika",
     show: true,
   },
 ];
@@ -49,7 +49,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
       {
         title: "Permohonan #1",
         index: 0,
-        lab: "Laboratorium Fisika",
+        lab: "Fisika",
         status: "process",
         tanggalPermohonan: new Date()
           .toLocaleDateString("id", {
@@ -67,7 +67,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
       {
         title: "Permohonan #2",
         index: 1,
-        lab: "Laboratorium Bio Farmaka",
+        lab: "Bio Farmaka",
         status: "rejected",
         tanggalPermohonan: new Date()
           .toLocaleDateString("id", {
@@ -85,7 +85,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
       {
         title: "Permohonan #3",
         index: 2,
-        lab: "Laboratorium Matematika",
+        lab: "Matematika",
         status: "accepted",
         tanggalPermohonan: new Date()
           .toLocaleDateString("id", {
