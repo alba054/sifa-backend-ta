@@ -68,13 +68,13 @@ import FESubsectionChairmanTrialPermitApprovalApplicationDetails from "./pages/f
 import FESubsectionChairmanTrialPermitApprovalApplicationHistoryCard from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/history/FESubsectionChairmanTrialPermitApprovalApplicationHistoryCard";
 import FESubsectionChairmanTrialPermitApprovalApplicationHistory from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/history/FESubsectionChairmanTrialPermitApprovalApplicationHistory";
 
-import { QueryClient, QueryClientProvider } from "react-query";
+// import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    // <QueryClientProvider client={queryClient}>
       <MantineProvider
         withCSSVariables
         withGlobalStyles
@@ -140,21 +140,9 @@ function App() {
                     <Route path="cpmk" element={<CPMK />} />
                     <Route path="rps" element={<RPS />} />
                   </Route>
-                  <Route path="manajemen-pengguna">
+                  {/* <Route path="manajemen-pengguna">
                     <Route index element={<Settings />} />
-                  </Route>
-                </Route>
-                <Route path="akreditasi">
-                  <Route index element={<Accreditation />} />
-                </Route>
-                <Route path="referensi">
-                  <Route path="kurikulum-matakuliah" element={<Curriculum />} />
-                  <Route path="cpl" element={<CPL />} />
-                  <Route path="cpmk" element={<CPMK />} />
-                  <Route path="rps" element={<RPS />} />
-                </Route>
-                <Route path="manajemen-pengguna">
-                  <Route index element={<Settings />} />
+                  </Route> */}
                 </Route>
                 <Route path="tugas-akhir">
                   <Route index element={<FEHomepage />} />
@@ -326,7 +314,7 @@ function App() {
           </FERoleProvider>
         </ModalsProvider>
       </MantineProvider>
-    </QueryClientProvider>
+    // </QueryClientProvider>
   );
 }
 
