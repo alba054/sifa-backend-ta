@@ -19,7 +19,7 @@ const FESubsectionChairmanTrialPermitApprovalApplicationHistoryCard: React.FC<
 > = ({ index, status, name, nim, applicationDate, onDelete }) => {
   const [isAlertOpened, setIsAlertOpened] = useState(false);
   return (
-    <Group className="flex py-6 px-7 border border-[#DFDFDF] relative justify-between rounded-xl gap-x-10 drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md bg-white -z-10">
+    <Group className="flex py-6 px-7 border border-[#DFDFDF] relative justify-between rounded-xl gap-x-10 drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md bg-white">
       <FEAlertModal
         title="Hapus Riwayat Persetujuan?"
         description={`Data riwayat persetujuan SK pembimbing dan penguji ${name} yang telah dihapus tidak dapat dikembalikan.`}
@@ -47,7 +47,7 @@ const FESubsectionChairmanTrialPermitApprovalApplicationHistoryCard: React.FC<
           onClick={() => {
             setIsAlertOpened(true);
           }}
-          className="p-0 m-0 bg-transparent hover:bg-transparent absolute right-6 bottom-6 z-10"
+          className="p-0 m-0 bg-transparent hover:bg-transparent absolute right-6 bottom-6 z-20"
         >
           <FETrashOutline color="#FF2C56" className="bg-white" size={23} />
         </Button>
