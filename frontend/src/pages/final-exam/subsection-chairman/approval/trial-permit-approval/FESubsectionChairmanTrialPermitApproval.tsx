@@ -1,76 +1,43 @@
-import { Stack } from "@mantine/core";
+import { Group, Title } from "@mantine/core";
 import React from "react";
-import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
-import LFPHeaderComponent, {
-  ILFPHeaderButton
-} from "src/components/fe-components/LFPHeader.component";
-import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-
-import FEApprovalDetailsCard, {
-  IFEApprovalDetailsCard
-} from "../../../../../components/fe-components/FEApprovalDetailsCard";
+import FEApprovalCard from "../../../../../components/fe-components/FEApprovalCard";
 
 export interface IFESubsectionChairmanTrialPermitApproval {}
-
-const buttons: ILFPHeaderButton[] = [
-  {
-    label: "Riwayat Usulan",
-    type: "href",
-    href: FEROUTES.STUDENT_FINAL_EXAM_PROPOSAL_HISTORY,
-    icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />,
-    disabled: false,
-  },
-];
 
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
     title: "Persetujuan",
-    href: FEROUTES.FIRST_VICE_DEAN_APPROVAL,
+    href: FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL,
   },
 ];
 
-const dummyApprovalList: Array<IFEApprovalDetailsCard> = [
-  {
-    name: "Devi Selfira",
-    nim: "N011181001",
-    proposalTitle:
-      "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
-    laboratory: "Lab: Kimia Farmasi",
-  },
-  {
-    name: "Muh. Yusuf Syam",
-    nim: "H071191044",
-    proposalTitle: "Cara Membuat Robot yang Bagus",
-    laboratory: "Lab: DOP",
-  },
-];
-
-const FESubsectionChairmanTrialPermitApproval: React.FC<IFESubsectionChairmanTrialPermitApproval> = ({}) => {
-  const { array: approvalList } = useArray(dummyApprovalList);
-
+const FESubsectionChairmanApproval: React.FC<
+  IFESubsectionChairmanTrialPermitApproval
+> = ({}) => {
   return (
     <FEMainlayout
       breadCrumbs={breadCrumbs}
-      breadCrumbsCurrentPage="Ujian Sidang"
+      breadCrumbsCurrentPage={"Izin Ujian Sidang"}
     >
-      <LFPHeaderComponent title="Ujian Sidang" buttons={buttons} />
-      <Stack mt={"md"} className="gap-6">
-        {approvalList.map((approval: IFEApprovalDetailsCard, e:number) => {
-          return (
-            <FEApprovalDetailsCard
-              key={e}
-              name={approval.name}
-              nim={approval.nim}
-              proposalTitle={approval.proposalTitle}
-              laboratory={approval.laboratory}
-            />
-          );
-        })}
-      </Stack>
+      <Title order={2} className="text-primary-text-500" mb={"md"}>
+        Izin Ujian Sidang
+      </Title>
+      <Group spacing={"xl"} grow>
+        <FEApprovalCard
+          label="Surat Permohonan"
+          description="Kelengkapan berkas dan pembuatan surat"
+          to={FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION}
+        />
+        <FEApprovalCard
+          label="Status Surat Permohonan"
+          description="Validasi dari Tata Usaha"
+          to={FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT}
+        />
+      </Group>
     </FEMainlayout>
   );
 };
-export default FESubsectionChairmanTrialPermitApproval;
+export default FESubsectionChairmanApproval;

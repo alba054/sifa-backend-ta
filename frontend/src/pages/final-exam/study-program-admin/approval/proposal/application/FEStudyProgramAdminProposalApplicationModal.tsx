@@ -219,7 +219,7 @@ const FEStudyProgramAdminProposalApplicationModal: React.FC<
           </Stack>
         </Stack>
       </div>
-      <Group position="right" mt={"md"} className="pt-4" grow>
+      <Group mt={"md"} className="pt-4" grow>
         <Button
           variant="light"
           className="text-white bg-primary-500 hover:bg-primary-700 font-bold"

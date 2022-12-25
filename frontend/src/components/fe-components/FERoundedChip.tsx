@@ -95,24 +95,9 @@ export const statusChip: any = {
 };
 
 export const statusChipNoIcon: any = {
-  process: (
-    <FERoundedChip
-      label="Dalam Proses"
-      type="green"
-    />
-  ),
-  rejected: (
-    <FERoundedChip
-      label="Ditolak"
-      type="red"
-    />
-  ),
-  accepted: (
-    <FERoundedChip
-      label="Diterima"
-      type="blue"
-    />
-  ),
+  process: <FERoundedChip label="Dalam Proses" type="green" />,
+  rejected: <FERoundedChip label="Ditolak" type="red" />,
+  accepted: <FERoundedChip label="Diterima" type="blue" />,
 };
 
 export const approvalChip: any = {
@@ -154,22 +139,57 @@ export const approvalChip: any = {
 };
 
 export const approvalChipNoIcon: any = {
+  process: <FERoundedChip label="Menunggu Persetujuan" type="green" />,
+  rejected: <FERoundedChip label="Ditolak" type="red" />,
+  accepted: <FERoundedChip label="Disetujui" type="blue" />,
+};
+
+export const approvalChip2: any = {
+  waiting: (
+    <Group className={"bg-[#94A3B8]/[0.15] text-[#94A3B8] py-[3px] px-3 gap-0 rounded-full max-w-max box-content"}>
+      {
+        <ProgressClockOutlined
+          size={14}
+          color={"#94A3B8"}
+          className="items-center"
+        />
+      }
+      <Text className={"text-[13px] pl-[6px]"}>{"Menunggu Persetujuan"}</Text>
+    </Group>
+  ),
   process: (
     <FERoundedChip
-      label="Menunggu Persetujuan"
+      label="Dalam Proses"
       type="green"
+      leftIcon={
+        <ProgressClockOutlined
+          size={14}
+          color={"#1E9E63"}
+          className="items-center"
+        />
+      }
     />
   ),
   rejected: (
     <FERoundedChip
       label="Ditolak"
       type="red"
+      leftIcon={
+        <FECloseOutline
+          color="#FF2C56"
+          size={12}
+          className="items-center pb-[1px]"
+        />
+      }
     />
   ),
   accepted: (
     <FERoundedChip
       label="Disetujui"
       type="blue"
+      leftIcon={
+        <FECheckOutline color="#5F5AF7" size={14} className="items-center" />
+      }
     />
   ),
 };
