@@ -1,6 +1,6 @@
 import { API_URL } from "src/utils/const/api";
 import {
-  getAuthorizationHeader,
+  getTokenAuthorizationHeader,
   getFormattedUrlEndpoint,
 } from "./utils.query-function";
 
@@ -10,22 +10,22 @@ export async function qfGetStudent(nim: string) {
   const student = await fetch(getFormattedUrlEndpoint(`${endpoint}/${nim}`), {
     method: "GET",
     headers: {
-      ...getAuthorizationHeader(),
+      ...getTokenAuthorizationHeader(),
     },
   });
 
   return await student.json();
 }
 
-interface IPutStudent {
-  birthDate: "any";
+export interface IQFPutStudent {
+  birthDate: string;
 }
-export async function qfPutStudent(nim: string, body: IPutStudent) {
+export async function qfPutStudent(nim: string, body: IQFPutStudent) {
   const student = await fetch(getFormattedUrlEndpoint(`${endpoint}/${nim}`), {
     method: "PUT",
     body: JSON.stringify(body),
     headers: {
-      ...getAuthorizationHeader(),
+      ...getTokenAuthorizationHeader(),
     },
   });
 
@@ -38,7 +38,7 @@ export async function qfGetStudentReqLabs(nim: string) {
     {
       method: "GET",
       headers: {
-        ...getAuthorizationHeader(),
+        ...getTokenAuthorizationHeader(),
       },
     }
   );
@@ -46,13 +46,13 @@ export async function qfGetStudentReqLabs(nim: string) {
   return await studentReqLabs.json();
 }
 
-interface IPostStudentReqLabs {
-  labID: "any";
-  studentNIM: "any";
+export interface IQFPostStudentReqLabs {
+  labID: string;
+  studentNIM: string;
 }
 export async function qfPostStudentReqLabs(
   nim: string,
-  body: IPostStudentReqLabs
+  body: IQFPostStudentReqLabs
 ) {
   const studentReqLabs = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/reqlabs`),
@@ -60,7 +60,7 @@ export async function qfPostStudentReqLabs(
       method: "POST",
       body: JSON.stringify(body),
       headers: {
-        ...getAuthorizationHeader(),
+        ...getTokenAuthorizationHeader(),
       },
     }
   );
@@ -68,13 +68,13 @@ export async function qfPostStudentReqLabs(
   return await studentReqLabs.json();
 }
 
-interface IPutStudentReqLabs {
-  labID: "any";
+export interface IQFPutStudentReqLabs {
+  labID: string;
 }
 export async function qfPutStudentReqLabs(
   nim: string,
   reqlabId: string,
-  body: IPutStudentReqLabs
+  body: IQFPutStudentReqLabs
 ) {
   const studentReqLabs = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/reqlabs/${reqlabId}`),
@@ -82,7 +82,7 @@ export async function qfPutStudentReqLabs(
       method: "PUT",
       body: JSON.stringify(body),
       headers: {
-        ...getAuthorizationHeader(),
+        ...getTokenAuthorizationHeader(),
       },
     }
   );
@@ -96,7 +96,7 @@ export async function qfDeleteStudentReqLabs(nim: string, reqlabId: string) {
     {
       method: "DELETE",
       headers: {
-        ...getAuthorizationHeader(),
+        ...getTokenAuthorizationHeader(),
       },
     }
   );
@@ -110,7 +110,7 @@ export async function qfGetStudentThesis(nim: string) {
     {
       method: "GET",
       headers: {
-        ...getAuthorizationHeader(),
+        ...getTokenAuthorizationHeader(),
       },
     }
   );
@@ -118,27 +118,24 @@ export async function qfGetStudentThesis(nim: string) {
   return await studentThesis.json();
 }
 
-interface IPostStudentThesis {
-  title_1st: "any";
-  title_2nd: "any";
-  labID_1st: "any";
-  labID2_1st: "any";
-  lecturerPropose_1st: "any";
-  labID_2nd: "any";
-  labID2_2nd: "any";
-  lecturerPropose_2nd: "any";
+export interface IQFPostStudentThesis {
+  title_1st: string;
+  title_2nd: string;
+  labID_1st: string;
+  labID2_1st: string;
+  lecturerPropose_1st?: string;
+  labID_2nd: string;
+  labID2_2nd: string;
+  lecturerPropose_2nd?: string;
 }
-export async function qfPostStudentThesis(
-  nim: string,
-  body: IPostStudentThesis
-) {
+export async function qfPostStudentThesis() {
   const studentThesis = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/thesis`),
     {
       method: "POST",
       body: JSON.stringify(body),
       headers: {
-        ...getAuthorizationHeader(),
+        ...getTokenAuthorizationHeader(),
       },
     }
   );
@@ -146,15 +143,14 @@ export async function qfPostStudentThesis(
   return await studentThesis.json();
 }
 
-export interface IPutStudentThesis {
-  title_1st: "any";
-  title_2nd: "any";
+export interface IQFPutStudentThesis {
+  title_1st: string;
+  title_2nd: string;
 }
-
 export async function qfPutStudentThesis(
   nim: string,
   thesisID: number,
-  body: IPutStudentThesis
+  body: IQFPutStudentThesis
 ) {
   const studentThesis = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/thesis/${thesisID}`),
@@ -162,7 +158,7 @@ export async function qfPutStudentThesis(
       method: "PUT",
       body: JSON.stringify(body),
       headers: {
-        ...getAuthorizationHeader(),
+        ...getTokenAuthorizationHeader(),
       },
     }
   );
@@ -176,7 +172,7 @@ export async function qfDeleteStudentThesis(nim: string, thesisID: number) {
     {
       method: "DELETE",
       headers: {
-        ...getAuthorizationHeader(),
+        ...getTokenAuthorizationHeader(),
       },
     }
   );

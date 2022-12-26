@@ -1,5 +1,5 @@
 import {
-  getAuthorizationHeader,
+  getBasicAuthorizationHeader,
   getFormattedUrlEndpoint,
 } from "./utils.query-function";
 
@@ -16,7 +16,7 @@ export async function qfPostUsers(body: IPostUser) {
     method: "POST",
     body: JSON.stringify(body),
     headers: {
-      ...getAuthorizationHeader(),
+      ...getBasicAuthorizationHeader(),
     },
   });
 
@@ -30,7 +30,7 @@ export async function qfGetUserStudents(body: IPostUser) {
       method: "GET",
       body: JSON.stringify(body),
       headers: {
-        ...getAuthorizationHeader(),
+        ...getBasicAuthorizationHeader(),
       },
     }
   );
@@ -42,7 +42,7 @@ export async function qfLogin(authorization: string) {
   const loginResp = await fetch(getFormattedUrlEndpoint(`${endpoint}`), {
     method: "POST",
     headers: {
-      ...getAuthorizationHeader(authorization),
+      ...getBasicAuthorizationHeader(authorization),
     },
   });
 
@@ -55,7 +55,7 @@ export async function qfForgetPassword(username: string) {
     {
       method: "GET",
       headers: {
-        ...getAuthorizationHeader(),
+        ...getBasicAuthorizationHeader(),
       },
     }
   );
@@ -77,7 +77,7 @@ export async function qfUpdatePassword(
       method: "POST",
       body: JSON.stringify(body),
       headers: {
-        ...getAuthorizationHeader(),
+        ...getBasicAuthorizationHeader(),
       },
     }
   );

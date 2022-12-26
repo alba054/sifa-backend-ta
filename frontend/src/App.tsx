@@ -70,7 +70,7 @@ import FESubsectionChairmanTrialPermitApprovalApplicationHistory from "./pages/f
 
 import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({});
 
 function App() {
   return (
