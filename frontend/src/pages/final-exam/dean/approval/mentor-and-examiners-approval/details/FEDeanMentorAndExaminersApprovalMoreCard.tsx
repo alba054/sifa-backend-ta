@@ -1,25 +1,18 @@
 import { Button, Group, Stack, Text } from "@mantine/core";
-import { useForm, yupResolver } from "@mantine/form";
 import React, { useState } from "react";
 import {
   FECheckOutline,
   FECloseOutline,
   FESearchBookOutline,
-  ProgressClockOutlined,
+  ProgressClockOutlined
 } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FEDisabledTooltip from "src/components/fe-components/FEDisabledTooltip";
 import FERoundedChip from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
-import FEInputModal from "src/components/FEInputModal";
 import { FEStatus } from "src/utils/const/type";
-import FEMentorAndExaminaRefusalReasonForm, {
-  feSubsectionChairmanMentorAndExaminaRefusalReasonFormSchema,
-  IFESubsectionChairmanMentorAndExaminaRefusalReasonForm,
-  IFESubsectionChairmanMentorAndExaminaRefusalReasonFormSchema,
-} from "./FESubsectionChairmanMentorAndExaminaRefusalReasonForm";
 
-export interface IFESubsectionChairmanMentorAndExaminersApprovalMoreCard {
+export interface IFEDeanMentorAndExaminersApprovalMoreCard {
   SKType: "examiner" | "mentor";
   initialStatus?: FEStatus;
   status: FEStatus;
@@ -29,38 +22,22 @@ export interface IFESubsectionChairmanMentorAndExaminersApprovalMoreCard {
   refusalReason?: string;
 }
 
-const FESubsectionChairmanMentorAndExaminersApprovalMoreCard: React.FC<
-  IFESubsectionChairmanMentorAndExaminersApprovalMoreCard
+const FEDeanMentorAndExaminersApprovalMoreCard: React.FC<
+  IFEDeanMentorAndExaminersApprovalMoreCard
 > = ({
   SKType,
-  initialStatus = "process",
+  initialStatus,
   status,
   applicationDate,
   passedTime,
   setStatus,
 }) => {
-  const [isOpenInputModal, setIsOpenInputModal] = useState(false);
   const [isOpenAlertCancelApprovalModal, setIsOpenAlertCancelApprovalModal] =
     useState(false);
-
-  const { onSubmit, ...form } =
-    useForm<IFESubsectionChairmanMentorAndExaminaRefusalReasonFormSchema>({
-      validate: yupResolver(
-        feSubsectionChairmanMentorAndExaminaRefusalReasonFormSchema
-      ),
-    });
 
   function handleCancelApproval() {
     setStatus("process");
     setIsOpenAlertCancelApprovalModal(false);
-  }
-
-  function handleRefuseApproval(
-    values: IFESubsectionChairmanMentorAndExaminaRefusalReasonForm
-  ) {
-    console.log(values);
-    setStatus("rejected");
-    setIsOpenInputModal(false);
   }
 
   function handleAcceptApproval() {
@@ -83,7 +60,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMoreCard: React.FC<
     ),
     rejected: (
       <FERoundedChip
-        label="Ditolak"
+        label="Tidak Ditandatangani"
         type="red"
         leftIcon={
           <FECloseOutline
@@ -96,7 +73,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMoreCard: React.FC<
     ),
     accepted: (
       <FERoundedChip
-        label="Diterima"
+        label="Telah Ditandatangani"
         type="blue"
         leftIcon={
           <FECheckOutline color="#5F5AF7" size={14} className="items-center" />
@@ -107,26 +84,6 @@ const FESubsectionChairmanMentorAndExaminersApprovalMoreCard: React.FC<
 
   return (
     <FECard bg={`bg-primary`} leftBorderRadius={"xl"}>
-      <FEInputModal
-        opened={isOpenInputModal}
-        setOpened={setIsOpenInputModal}
-        title={`Alasan Penolakan SK ${
-          SKType == "examiner" ? "Penguji" : "Pembimbing"
-        }`}
-        onSubmit={onSubmit(handleRefuseApproval as any) as any}
-        children={<FEMentorAndExaminaRefusalReasonForm form={form} />}
-        yesButtonLabel="Lakukan Penolakan"
-      />
-
-      <FEAlertModal
-        title="Batalkan Persetujuan?"
-        description="Tekan tombol 'Batalkan Persetujuan' untuk membatalkan persetujuan."
-        opened={isOpenAlertCancelApprovalModal}
-        setOpened={setIsOpenAlertCancelApprovalModal}
-        yesButtonLabel={"Batalkan Persetujuan"}
-        noButtonLabel={"Tidak"}
-        onSubmit={handleCancelApproval}
-      />
       <Group className="flex py-6 px-7 border border-[#DFDFDF] relative justify-between rounded-r-xl gap-x-10 drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md bg-white min-2">
         <Stack spacing={"sm"} className="w-full z-20">
           <Stack className="gap-2">
@@ -153,7 +110,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMoreCard: React.FC<
                   variant="light"
                   disabled
                 >
-                  Batalkan Persetujuan
+                  Batalkan Penandatanganan
                 </Button>
               </FEDisabledTooltip>
             ) : status == "process" ? (
@@ -163,15 +120,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMoreCard: React.FC<
                   onClick={() => setStatus("accepted")}
                   variant="light"
                 >
-                  Setuju
-                </Button>
-                <Button
-                  variant="light"
-                  color={"primary"}
-                  onClick={() => setIsOpenInputModal(true)}
-                  className="font-bold hover:bg-white px-4"
-                >
-                  Tolak
+                  Tanda Tangani
                 </Button>
               </Group>
             ) : (
@@ -181,7 +130,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMoreCard: React.FC<
                 onClick={handleCancelApproval}
                 variant="light"
               >
-                Batalkan Persetujuan
+                Batalkan Penandatanganan
               </Button>
             )}
             <Button
@@ -201,4 +150,4 @@ const FESubsectionChairmanMentorAndExaminersApprovalMoreCard: React.FC<
     </FECard>
   );
 };
-export default FESubsectionChairmanMentorAndExaminersApprovalMoreCard;
+export default FEDeanMentorAndExaminersApprovalMoreCard;

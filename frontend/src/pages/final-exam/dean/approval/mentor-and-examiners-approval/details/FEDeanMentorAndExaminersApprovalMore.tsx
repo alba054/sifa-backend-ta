@@ -4,7 +4,7 @@ import {
   Group,
   MantineProvider,
   Stack,
-  Title,
+  Title
 } from "@mantine/core";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,32 +13,26 @@ import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import FESubsectionChairmanMentorAndExaminersApprovalMoreCard, {
-  IFESubsectionChairmanMentorAndExaminersApprovalMoreCard,
-} from "./FESubsectionChairmanMentorAndExaminersApprovalMoreCard";
-import { useParams } from "react-router-dom";
+import FEDeanMentorAndExaminersApprovalMoreCard, {
+  IFEDeanMentorAndExaminersApprovalMoreCard
+} from "./FEDeanMentorAndExaminersApprovalMoreCard";
+import {
+  useParams
+} from "react-router-dom";
 import FEDisabledTooltip from "src/components/fe-components/FEDisabledTooltip";
+import { IApprovalMore } from "src/pages/final-exam/head-administrator/approval/mentor-and-examiners-approval/details/FEHeadAdministratorMentorAndExaminersApprovalMore";
 import { FEStatus } from "src/utils/const/type";
 
-export interface IFESubsectionChairmanMentorAndExaminersApprovalMore {
-}
-
-export interface IApprovalMore {
-  name: string;
-  nim: string;
-  proposalTitle: string;
-  laboratory: string;
-  sk: Array<IFESubsectionChairmanMentorAndExaminersApprovalMoreCard>;
-}
+export interface IFEDeanMentorAndExaminersApprovalMore {}
 
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
     title: "Persetujuan",
-    href: FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL,
+    href: FEROUTES.DEAN_APPROVAL,
   },
   {
     title: "SK Pembimbing dan Penguji",
-    href: FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL_MENTOR_AND_EXAMINERS,
+    href: FEROUTES.DEAN_APPROVAL_MENTOR_AND_EXAMINERS,
   },
 ];
 
@@ -92,36 +86,34 @@ const dummyProposalData: {
   },
 };
 
-const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
-  IFESubsectionChairmanMentorAndExaminersApprovalMore
+const FEDeanMentorAndExaminersApprovalMore: React.FC<
+  IFEDeanMentorAndExaminersApprovalMore
 > = ({}) => {
   let { nim } = useParams();
-
+  console.log(`nim: ${nim}`)
+  
   const [isOpenAlertModal, setIsOpenAlertModal] = useState(false);
 
   const [proposalData,] = useState(dummyProposalData[nim!]) 
   const { array: approvalCardDataArray } = useArray(proposalData.sk);
-  const [mentorStatus, setMentorStatus] = useState(
-    approvalCardDataArray[0].status
-  );
-  const [examinerStatus, setExaminerStatus] = useState(
-    approvalCardDataArray[1].status
-  );
+  const [mentorStatus, setMentorStatus] = useState(approvalCardDataArray[0].status)
+  const [examinerStatus, setExaminerStatus] = useState(approvalCardDataArray[1].status)
+
   const navigate= useNavigate()
 
-  function handleAcceptApproval() {
-    setIsOpenAlertModal(false);
+  function handleAcceptApproval(){
+    setIsOpenAlertModal(false)
     navigate(-1)
   }
-  
+
   return (
     <FEMainlayout
       breadCrumbs={breadCrumbs}
       breadCrumbsCurrentPage={`${proposalData.name} (${proposalData.nim})`}
     >
       <FEAlertModal
-        title="Konfirmasi Persetujuan"
-        description="Persetujuan yang telah dikonfirmasi tidak dapat diubah, pastikan pilihan anda sudah benar"
+        title="Konfirmasi Penandatanganan?"
+        description="Tekan tombol konfirmasi untuk mengkonfirmasi penandatanganan."
         opened={isOpenAlertModal}
         setOpened={setIsOpenAlertModal}
         yesButtonLabel={"Konfirmasi"}
@@ -148,7 +140,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
         <Stack>
           <Grid gutter={"xl"} className="mb-0">
             <Grid.Col span={6} xs={12} sm={12} md={6}>
-              <FESubsectionChairmanMentorAndExaminersApprovalMoreCard
+              <FEDeanMentorAndExaminersApprovalMoreCard
                 SKType={approvalCardDataArray[0].SKType}
                 initialStatus= {approvalCardDataArray[0].status}
                 status={mentorStatus}
@@ -160,7 +152,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
               />
             </Grid.Col>
             <Grid.Col span={6} xs={12} sm={12} md={6}>
-              <FESubsectionChairmanMentorAndExaminersApprovalMoreCard
+              <FEDeanMentorAndExaminersApprovalMoreCard
                 SKType={approvalCardDataArray[1].SKType}
                 initialStatus= {approvalCardDataArray[1].status}
                 status={examinerStatus}
@@ -182,7 +174,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
               Batal
             </Button>
             <FEDisabledTooltip
-              label="Setujui / tolak setidaknya satu SK untuk mengkonfirmasi persetujuan"
+              label="Tanda tangan pada setidaknya satu SK untuk mengkonfirmasi penandatanganan"
               isDisabled={
                 (approvalCardDataArray[0].status != mentorStatus || approvalCardDataArray[1].status != examinerStatus)
               }
@@ -195,7 +187,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
                   !(approvalCardDataArray[0].status != mentorStatus || approvalCardDataArray[1].status != examinerStatus) 
                 }
               >
-                Konfirmasi Persetujuan
+                Konfirmasi Penandatanganan
               </Button>
             </FEDisabledTooltip>
           </Group>
@@ -204,4 +196,4 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
     </FEMainlayout>
   );
 };
-export default FESubsectionChairmanMentorAndExaminersApprovalMore;
+export default FEDeanMentorAndExaminersApprovalMore;

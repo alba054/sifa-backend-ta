@@ -6,22 +6,22 @@ import {
 } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FELinkMore from "src/components/fe-components/FELinkMore";
-import { approvalChip } from "src/components/fe-components/FERoundedChip";
+import { deanApprovalChip } from "../FEDeanMentorAndExaminersApproval";
 import FECard from "src/components/FECard";
 import { FEStatus } from "src/utils/const/type";
-import { IFESubsectionChairmanMentorAndExaminersApprovalMoreCard } from "../details/FESubsectionChairmanMentorAndExaminersApprovalMoreCard";
-export interface IFESubsectionChairmanMentorAndExaminersApprovalHistoryCard {
+import { IFEDeanMentorAndExaminersApprovalMoreCard } from "../details/FEDeanMentorAndExaminersApprovalMoreCard";
+export interface IFEDeanMentorAndExaminersApprovalHistoryCard {
   index?: number;
   name: string;
   nim: string;
   proposalTitle: string;
   laboratory: string;
-  sk: Array<IFESubsectionChairmanMentorAndExaminersApprovalMoreCard>;
+  sk: Array<IFEDeanMentorAndExaminersApprovalMoreCard>;
   onDelete?: (e: number) => void;
 }
 
-const FESubsectionChairmanMentorAndExaminersApprovalHistoryCard: React.FC<
-  IFESubsectionChairmanMentorAndExaminersApprovalHistoryCard
+const FEDeanMentorAndExaminersApprovalHistoryCard: React.FC<
+  IFEDeanMentorAndExaminersApprovalHistoryCard
 > = ({ index, name, nim, proposalTitle, laboratory, sk, onDelete }) => {
   const theme = useMantineTheme();
   const [isAlertOpened, setIsAlertOpened] = useState(false);
@@ -60,7 +60,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalHistoryCard: React.FC<
               <Stack className="gap-4">
                 {sk.map(
                   (
-                    currSK: IFESubsectionChairmanMentorAndExaminersApprovalMoreCard,
+                    currSK: IFEDeanMentorAndExaminersApprovalMoreCard,
                     e: number
                   ) => {
                     return (
@@ -73,7 +73,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalHistoryCard: React.FC<
                                 ? "Penguji"
                                 : "Pembimbing")}
                           </Text>
-                          {approvalChip[currSK.status]}
+                          {deanApprovalChip[currSK.status]}
                         </Group>
                         {currSK.status === "rejected" ? (
                           <Text className="text-secondary-text-500 font-semibold tracking-4 text-justify">
@@ -118,4 +118,4 @@ const FESubsectionChairmanMentorAndExaminersApprovalHistoryCard: React.FC<
     </FECard>
   );
 };
-export default FESubsectionChairmanMentorAndExaminersApprovalHistoryCard;
+export default FEDeanMentorAndExaminersApprovalHistoryCard;

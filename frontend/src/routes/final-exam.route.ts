@@ -48,5 +48,11 @@ export const FEROUTES = {
   HEAD_ADMINISTRATOR_APPROVAL_TRIAL_PERMIT: "/tugas-akhir/ktu/persetujuan/sk-izin-ujian-sidang",
   HEAD_ADMINISTRATOR_APPROVAL_TRIAL_PERMIT_APPLICATION: "/tugas-akhir/ktu/persetujuan/sk-izin-ujian-sidang",
   HEAD_ADMINISTRATOR_APPROVAL_TRIAL_PERMIT_APPLICATION_HISTORY: "/tugas-akhir/ktu/persetujuan/sk-izin-ujian-sidang/riwayat",
-
+  // ====================================================================================================
+  DEAN_HOMEPAGE: "/tugas-akhir/dekan",
+  DEAN_APPROVAL: "/tugas-akhir/dekan/persetujuan",
+  DEAN_APPROVAL_MENTOR_AND_EXAMINERS: "/tugas-akhir/dekan/persetujuan/sk-pembimbing-dan-penguji",
+  DEAN_APPROVAL_MENTOR_AND_EXAMINERS_DETAILS: "/tugas-akhir/dekan/persetujuan/sk-pembimbing-dan-penguji/nim",
+  DEAN_APPROVAL_MENTOR_AND_EXAMINERS_HISTORY: "/tugas-akhir/dekan/persetujuan/sk-pembimbing-dan-penguji/riwayat",
+  
 };

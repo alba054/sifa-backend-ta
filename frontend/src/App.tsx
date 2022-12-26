@@ -21,6 +21,10 @@ import CourseCPL from "./pages/admin/Report/CourseCPL";
 import CourseCPLDetail from "./pages/admin/Report/CourseCPL/CourseCPLDetail";
 import DataStatus from "./pages/admin/Report/DataStatus";
 import StudentCPL from "./pages/admin/Report/StudentCPL";
+import FEDeanApproval from "./pages/final-exam/dean/approval/FEDeanApproval";
+import FEDeanMentorAndExaminersApprovalMore from "./pages/final-exam/dean/approval/mentor-and-examiners-approval/details/FEDeanMentorAndExaminersApprovalMore";
+import FEDeanMentorAndExaminersApproval from "./pages/final-exam/dean/approval/mentor-and-examiners-approval/FEDeanMentorAndExaminersApproval";
+import FEDeanMentorAndExaminersApprovalHistory from "./pages/final-exam/dean/approval/mentor-and-examiners-approval/history/FEDeanMentorAndExaminersApprovalHistory";
 import FEHomepage from "./pages/final-exam/FEHomepage";
 import FEApproval from "./pages/final-exam/first-vice-dean/approval/FEApproval";
 import FEMentorAndExaminersApprovalMore from "./pages/final-exam/first-vice-dean/approval/mentor-and-examiners-approval/details/FEMentorAndExaminersApprovalMore";
@@ -337,6 +341,27 @@ function App() {
                       element={
                         <FEStudyProgramAdminApprovalExaminersFramingDetermine />
                       }
+                    />
+                  </Route>
+                </Route>
+                <Route path="dekan">
+                  <Route index element={<FEHomepage />} />
+                  <Route path="persetujuan">
+                    <Route index element={<FEDeanApproval />} />
+                    <Route path="sk-pembimbing-dan-penguji">
+                      <Route
+                        index
+                        element={<FEDeanMentorAndExaminersApproval />}
+                      />
+                      
+                      <Route
+                        path="riwayat"
+                        element={<FEDeanMentorAndExaminersApprovalHistory />}
+                      />
+                    </Route>
+                    <Route
+                      path="sk-pembimbing-dan-penguji/:nim"
+                      element={<FEDeanMentorAndExaminersApprovalMore />}
                     />
                   </Route>
                 </Route>
