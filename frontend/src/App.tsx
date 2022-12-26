@@ -63,7 +63,6 @@ import FESubsectionChairmanMentorAndExaminersApprovalHistory from "./pages/final
 import FESubsectionChairmanTrialPermitApprovalApplicationDetails from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/details/FESubsectionChairmanTrialPermitApprovalApplicationDetails";
 import FESubsectionChairmanTrialPermitApprovalApplication from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/FESubsectionChairmanTrialPermitApprovalApplication";
 import FESubsectionChairmanTrialPermitApprovalApplicationHistory from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/history/FESubsectionChairmanTrialPermitApprovalApplicationHistory";
-import FESubsectionChairmanTrialPermitApproval from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/FESubsectionChairmanTrialPermitApproval";
 import Login from "./pages/global/Login/Login";
 import NotFound from "./pages/global/NotFound";
 import ResetPassword from "./pages/global/ResetPassword/ResetPassword";
@@ -218,29 +217,21 @@ function App() {
                     <Route path="izin-ujian-sidang">
                       <Route
                         index
-                        element={<FESubsectionChairmanTrialPermitApproval />}
+                        element={<FESubsectionChairmanTrialPermitApprovalApplication />}
                       />
-                      <Route path="surat-permohonan">
-                        <Route
-                          index
-                          element={
-                            <FESubsectionChairmanTrialPermitApprovalApplication />
-                          }
-                        />
                         <Route
                           path="riwayat"
                           element={
                             <FESubsectionChairmanTrialPermitApprovalApplicationHistory />
                           }
                         />
-                      </Route>
-                      <Route
-                        path="surat-permohonan/:nim"
+                    </Route>
+                    <Route
+                        path="izin-ujian-sidang/:nim"
                         element={
                           <FESubsectionChairmanTrialPermitApprovalApplicationDetails />
                         }
                       />
-                    </Route>
                   </Route>
                 </Route>
                 <Route path="ktu">

@@ -36,8 +36,8 @@ export const FEROUTES = {
   SUBSECTION_CHAIRMAN_APPROVAL_MENTOR_AND_EXAMINERS_MORE: "/tugas-akhir/kasubag/persetujuan/sk-pembimbing-dan-penguji/nim",
   SUBSECTION_CHAIRMAN_APPROVAL_MENTOR_AND_EXAMINERS_HISTORY: "/tugas-akhir/kasubag/persetujuan/sk-pembimbing-dan-penguji/riwayat",
   SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT: "/tugas-akhir/kasubag/persetujuan/izin-ujian-sidang",
-  SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION: "/tugas-akhir/kasubag/persetujuan/izin-ujian-sidang/surat-permohonan",
-  SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION_HISTORY: "/tugas-akhir/kasubag/persetujuan/izin-ujian-sidang/surat-permohonan/riwayat",
+  SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION: "/tugas-akhir/kasubag/persetujuan/izin-ujian-sidang",
+  SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION_HISTORY: "/tugas-akhir/kasubag/persetujuan/izin-ujian-sidang/riwayat",
   SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION_STATUS: "/tugas-akhir/kasubag/persetujuan/izin-ujian-sidang/status-surat-permohonan",
   // ====================================================================================================
   HEAD_ADMINISTRATOR_HOMEPAGE: "/tugas-akhir/ktu",

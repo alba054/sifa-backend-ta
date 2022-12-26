@@ -21,7 +21,7 @@ const FESubsectionChairmanTrialPermitApprovalApplicationCard: React.FC<
         <Stack className="gap-2">
           {approvalChip2[status]}
           <Text className="text-sm text-secondary-text-500 ">
-          Tanggal di keluarkan Surat Permohohnan: {applicationDate}
+          Tanggal di keluarkan Surat Permohonan: {applicationDate}
           </Text>
         </Stack>
           <Text className="font-semibold text-2xl text-primary-text-500 inline-block">

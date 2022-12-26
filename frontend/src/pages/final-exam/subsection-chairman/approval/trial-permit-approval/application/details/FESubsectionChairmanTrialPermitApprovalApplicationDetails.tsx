@@ -19,10 +19,6 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
     title: "Izin Ujian Sidang",
     href: FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT,
   },
-  {
-    title: "Surat Permohonan",
-    href: FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION,
-  },
 ];
 
 const dummyApplicationData: {
