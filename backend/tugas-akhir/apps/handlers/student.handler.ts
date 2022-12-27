@@ -136,9 +136,13 @@ export class StudentHandler {
     try {
       if (
         typeof body.title_1st === "undefined" ||
-        typeof body.title_2nd === "undefined"
+        typeof body.title_2nd === "undefined" ||
+        typeof body.labID_1st === "undefined" ||
+        typeof body.labID_2nd === "undefined"
       ) {
-        throw new BadRequestError("provide title_1st and title_2nd");
+        throw new BadRequestError(
+          "provide title_1st, title_2nd, labID_1st, labID_2nd"
+        );
       }
 
       const proposalGroupID = uuidv4();

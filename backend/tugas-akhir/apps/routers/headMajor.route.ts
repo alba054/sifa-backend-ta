@@ -29,4 +29,24 @@ headMajorRouter
     HeadMajorHandler.approveProposedThesis
   );
 
+// * get approved thesis detail
+// * create approval or approved thesis by headmajor
+headMajorRouter
+  .route("/thesis/approved/:id")
+  .get(
+    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    HeadMajorHandler.getApprovedThesisDetail
+  )
+  .post(
+    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    HeadMajorHandler.createApprovalOfApprovedThesis
+  );
+
+headMajorRouter
+  .route("/dispositions/:thesisID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    HeadMajorHandler.getDispositionOfApprovedThesis
+  );
+
 export default headMajorRouter;

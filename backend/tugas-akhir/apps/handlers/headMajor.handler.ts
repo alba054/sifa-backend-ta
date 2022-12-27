@@ -3,14 +3,16 @@ import { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import { constants, createResponse } from "../utils/utils";
 import { ThesisService } from "../services/thesis.service";
-import { NotFoundError } from "../utils/error/notFoundError";
 import { BadRequestError } from "../utils/error/badrequestError";
+import { ThesisHeadMajorDispositionService } from "../services/thesisHeadMajorDisposition.service";
+import { NotFoundError } from "../utils/error/notFoundError";
 
 dotenv.config();
 
 interface IThesisApproval {
   id: number;
   isApproved: boolean;
+  note?: string;
 }
 
 interface IBody {
@@ -18,7 +20,94 @@ interface IBody {
   title2: IThesisApproval;
 }
 
+interface IHeadMajorApproval {
+  thesisID: number;
+  departmentName: string;
+}
+
 export class HeadMajorHandler {
+  static async getDispositionOfApprovedThesis(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { thesisID } = req.params;
+
+    const thesisDisposition =
+      await ThesisHeadMajorDispositionService.getDispositionOfApprovedThesis(
+        Number(thesisID)
+      );
+
+    if (thesisDisposition === null) {
+      return next(new NotFoundError("disposition is not found"));
+    }
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get disposition",
+          thesisDisposition
+        )
+      );
+  }
+
+  static async createApprovalOfApprovedThesis(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { id } = req.params;
+    const { departmentName } = req.body;
+
+    try {
+      if (typeof departmentName === "undefined") {
+        throw new BadRequestError("provide departmentName");
+      }
+      const body = {
+        thesisID: Number(id),
+        departmentName,
+      } as IHeadMajorApproval;
+
+      const thesisDisposition =
+        await ThesisHeadMajorDispositionService.createDisposition(body);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully create disposition"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getApprovedThesisDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { id } = req.params;
+
+    const approvedThesis = await ThesisService.getApprovedThesisDetail(
+      Number(id)
+    );
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get approved thesis detail",
+          approvedThesis
+        )
+      );
+  }
+
   static async approveProposedThesis(
     req: Request,
     res: Response,

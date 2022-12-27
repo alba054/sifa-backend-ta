@@ -17,6 +17,12 @@ interface IBody {
 }
 
 export class ThesisService {
+  static async getApprovedThesisDetail(id: number) {
+    const approvedThesis = await Thesis.getApprovedThesisDetail(id);
+
+    return approvedThesis;
+  }
+
   static async approveOrRejectProposedThesis(
     proposalGroupID: string,
     body: IBody
