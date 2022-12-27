@@ -769,6 +769,8 @@ model tugas_akhir {
   taStatusSk                                             Int?
   taDosenPengusul                                        Int?
   proposalGroupID                                        String
+  tanggalMasuk                                           DateTime            @default(now())
+  tanggalPenyelesaian                                    DateTime?
   ref_permohonan_ref_permohonanTotugas_akhir_taStatusPmb StatusPermohonan    @default(Belum_Diproses)
   ref_permohonan_ref_permohonanTotugas_akhir_taStatusKep StatusPermohonan    @default(Belum_Diproses)
   statusPermohonan                                       StatusPermohonan    @default(Belum_Diproses)
@@ -790,9 +792,17 @@ model tugas_akhir {
   sk_penguji_dep                                         sk_penguji_dep[]
   // @@index([taStatusPmb], map: "taStatus")
   // @@index([taStatusKep], map: "taStatusKep")
+  disposisi_kaprodi                                      disposisi_kaprodi[]
 
   @@index([taLabId], map: "taLabId")
   @@index([taMhsNim], map: "taMhsNim")
+}
+
+model disposisi_kaprodi {
+  id              Int         @id @default(autoincrement())
+  tugas_akhirTaId Int         @unique
+  departmentName  String
+  tugas_akhir     tugas_akhir @relation(fields: [tugas_akhirTaId], references: [taId])
 }
 
 model user {
