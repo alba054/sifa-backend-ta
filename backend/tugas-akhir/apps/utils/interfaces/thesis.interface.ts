@@ -37,6 +37,8 @@ export interface IThesisPost {
   labID_2nd: number;
   labID2_2nd?: number;
   lecturerPropose_2nd?: number;
+  krs: string;
+  khs: string;
 }
 
 // export interface IApprovalApprovedThesis {
