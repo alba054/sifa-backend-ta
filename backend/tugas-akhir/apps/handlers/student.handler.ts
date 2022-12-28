@@ -14,6 +14,7 @@ import {
 import { LabFreeService } from "../services/labFree.service";
 import { IThesis, IThesisPost } from "../utils/interfaces/thesis.interface";
 import { ThesisService } from "../services/thesis.service";
+import { decodeBase64 } from "../utils/decoder";
 
 dotenv.config();
 
@@ -138,63 +139,111 @@ export class StudentHandler {
         typeof body.title_1st === "undefined" ||
         typeof body.title_2nd === "undefined" ||
         typeof body.labID_1st === "undefined" ||
-        typeof body.labID_2nd === "undefined"
+        typeof body.labID_2nd === "undefined" ||
+        typeof body.krs === "undefined" ||
+        typeof body.khs === "undefined"
       ) {
         throw new BadRequestError(
-          "provide title_1st, title_2nd, labID_1st, labID_2nd"
+          "provide title_1st, title_2nd, labID_1st, labID_2nd, KRS, KHS"
         );
       }
 
       const proposalGroupID = uuidv4();
       const path = `${constants.KRS_AND_KHS_PATH}/${nim}`; // * path to save krs and khs
 
-      if (typeof req.files === "undefined") {
-        throw new BadRequestError("provide files");
-      }
+      // !UNUSED: used by multer
+      // if (typeof req.files === "undefined") {
+      //   throw new BadRequestError("provide files");
+      // }
 
-      if (Array.isArray(req.files)) {
-        if (req.files.length !== 2) {
-          throw new BadRequestError("provide 2 files");
-        }
+      // !UNUSED: extension is obtained from multer originalName property
+      // title1 += "." + req.files[0].originalname.split(".")[1];
+      // title2 += "." + req.files[1].originalname.split(".")[1];
 
-        title1 += "." + req.files[0].originalname.split(".")[1];
-        title2 += "." + req.files[1].originalname.split(".")[1];
+      title1 += ".pdf";
+      title2 += ".pdf";
 
-        const KRSPath = `${path}/${title1}`;
-        const KHSPath = `${path}/${title2}`;
+      const krsBuffer = decodeBase64(body.krs);
+      const khsBuffer = decodeBase64(body.khs);
+      const KRSPath = `${path}/${title1}`;
+      const KHSPath = `${path}/${title2}`;
 
-        const thesis = [
-          {
-            studentNIM: nim,
-            title: body.title_1st,
-            KHSPath: KHSPath,
-            KRSPath: KRSPath,
-            labID: body.labID_1st,
-            labID2: body.labID2_1st,
-            lecturerPropose: body.lecturerPropose_1st,
-            proposalGroupID,
-          } as IThesis,
-          {
-            studentNIM: nim,
-            title: body.title_2nd,
-            KHSPath: KHSPath,
-            KRSPath: KRSPath,
-            labID: body.labID_2nd,
-            labID2: body.labID2_2nd,
-            lecturerPropose: body.lecturerPropose_2nd,
-            proposalGroupID,
-          } as IThesis,
-        ];
+      const thesis = [
+        {
+          studentNIM: nim,
+          title: body.title_1st,
+          KHSPath: KHSPath,
+          KRSPath: KRSPath,
+          labID: body.labID_1st,
+          labID2: body.labID2_1st,
+          lecturerPropose: body.lecturerPropose_1st,
+          proposalGroupID,
+        } as IThesis,
+        {
+          studentNIM: nim,
+          title: body.title_2nd,
+          KHSPath: KHSPath,
+          KRSPath: KRSPath,
+          labID: body.labID_2nd,
+          labID2: body.labID2_2nd,
+          lecturerPropose: body.lecturerPropose_2nd,
+          proposalGroupID,
+        } as IThesis,
+      ];
 
-        await ThesisService.insertProposedThesis(
-          thesis,
-          path,
-          title1,
-          title2,
-          req.files[0].buffer,
-          req.files[1].buffer
-        );
-      }
+      await ThesisService.insertProposedThesis(
+        thesis,
+        path,
+        title1,
+        title2,
+        krsBuffer,
+        khsBuffer
+      );
+
+      // !UNUSED: uploaded using multer
+      // if (Array.isArray(req.files)) {
+      //   if (req.files.length !== 2) {
+      //     throw new BadRequestError("provide 2 files");
+      //   }
+
+      //   title1 += "." + req.files[0].originalname.split(".")[1];
+      //   title2 += "." + req.files[1].originalname.split(".")[1];
+
+      //   const KRSPath = `${path}/${title1}`;
+      //   const KHSPath = `${path}/${title2}`;
+
+      //   const thesis = [
+      //     {
+      //       studentNIM: nim,
+      //       title: body.title_1st,
+      //       KHSPath: KHSPath,
+      //       KRSPath: KRSPath,
+      //       labID: body.labID_1st,
+      //       labID2: body.labID2_1st,
+      //       lecturerPropose: body.lecturerPropose_1st,
+      //       proposalGroupID,
+      //     } as IThesis,
+      //     {
+      //       studentNIM: nim,
+      //       title: body.title_2nd,
+      //       KHSPath: KHSPath,
+      //       KRSPath: KRSPath,
+      //       labID: body.labID_2nd,
+      //       labID2: body.labID2_2nd,
+      //       lecturerPropose: body.lecturerPropose_2nd,
+      //       proposalGroupID,
+      //     } as IThesis,
+      //   ];
+
+      //   await ThesisService.insertProposedThesis(
+      //     thesis,
+      //     path,
+      //     title1,
+      //     title2,
+      //     req.files[0].buffer,
+      //     req.files[1].buffer
+      //   );
+      // }
 
       return res
         .status(201)
