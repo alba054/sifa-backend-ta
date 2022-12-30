@@ -69,6 +69,7 @@ import FESubsectionChairmanTrialPermitApprovalApplicationHistoryCard from "./pag
 import FESubsectionChairmanTrialPermitApprovalApplicationHistory from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/history/FESubsectionChairmanTrialPermitApprovalApplicationHistory";
 
 import { QueryClient, QueryClientProvider } from "react-query";
+import DataProvider from "./contexts/data.context";
 
 const queryClient = new QueryClient({});
 
@@ -81,51 +82,71 @@ function App() {
         withNormalizeCSS
         theme={mantineTheme}
       >
-        <ModalsProvider>
-          <CustomFonts />
-          <FERoleProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="login" element={<Login />} />
-                <Route path="reset-password" element={<ResetPassword />} />
-                <Route path="nilai">
-                  <Route index element={<Mark />} />
-                  <Route path="penilaian" element={<Assessment />} />
-                  <Route path="portfolio" element={<Portfolio />} />
-                </Route>
-                <Route path="admin">
-                  <Route index element={<AdminHome />} />
-                  <Route path="penilaian">
-                    <Route path="data-kelas">
-                      <Route index element={<ClassData />} />
-                      <Route path=":id" element={<AdminClassInformation />} />
-                    </Route>
-                    <Route path="data-nilai">
-                      <Route index element={<MarksData />} />
-                      <Route path=":id" element={<AdminMarkInformation />} />
-                    </Route>
+        <DataProvider>
+          <ModalsProvider>
+            <CustomFonts />
+            <FERoleProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="login" element={<Login />} />
+                  <Route path="reset-password" element={<ResetPassword />} />
+                  <Route path="nilai">
+                    <Route index element={<Mark />} />
+                    <Route path="penilaian" element={<Assessment />} />
+                    <Route path="portfolio" element={<Portfolio />} />
                   </Route>
-                  <Route path="master-data">
-                    <Route path="data-dosen">
-                      <Route index element={<LecturerData />} />
-                      <Route path="tambah-dosen" element={<AddLecturer />} />
+                  <Route path="admin">
+                    <Route index element={<AdminHome />} />
+                    <Route path="penilaian">
+                      <Route path="data-kelas">
+                        <Route index element={<ClassData />} />
+                        <Route path=":id" element={<AdminClassInformation />} />
+                      </Route>
+                      <Route path="data-nilai">
+                        <Route index element={<MarksData />} />
+                        <Route path=":id" element={<AdminMarkInformation />} />
+                      </Route>
                     </Route>
-                    <Route path="data-mahasiswa">
-                      <Route index element={<StudentData />} />
+                    <Route path="master-data">
+                      <Route path="data-dosen">
+                        <Route index element={<LecturerData />} />
+                        <Route path="tambah-dosen" element={<AddLecturer />} />
+                      </Route>
+                      <Route path="data-mahasiswa">
+                        <Route index element={<StudentData />} />
+                      </Route>
                     </Route>
-                  </Route>
-                  <Route path="laporan">
-                    <Route path="status-pendataan">
-                      <Route index element={<DataStatus />} />
+                    <Route path="laporan">
+                      <Route path="status-pendataan">
+                        <Route index element={<DataStatus />} />
+                      </Route>
+                      <Route path="cpl-matakuliah">
+                        <Route index element={<CourseCPL />} />
+                        <Route
+                          path=":matakuliah"
+                          element={<CourseCPLDetail />}
+                        />
+                      </Route>
+                      <Route path="cpl-mahasiswa">
+                        <Route index element={<StudentCPL />} />
+                        {/* <Route path=":matakuliah" element={<CourseCPLDetail />} /> */}
+                      </Route>
                     </Route>
-                    <Route path="cpl-matakuliah">
-                      <Route index element={<CourseCPL />} />
-                      <Route path=":matakuliah" element={<CourseCPLDetail />} />
+                    <Route path="akreditasi">
+                      <Route index element={<Accreditation />} />
                     </Route>
-                    <Route path="cpl-mahasiswa">
-                      <Route index element={<StudentCPL />} />
-                      {/* <Route path=":matakuliah" element={<CourseCPLDetail />} /> */}
+                    <Route path="referensi">
+                      <Route
+                        path="kurikulum-matakuliah"
+                        element={<Curriculum />}
+                      />
+                      <Route path="cpl" element={<CPL />} />
+                      <Route path="cpmk" element={<CPMK />} />
+                      <Route path="rps" element={<RPS />} />
+                    </Route>
+                    <Route path="manajemen-pengguna">
+                      <Route index element={<Settings />} />
                     </Route>
                   </Route>
                   <Route path="akreditasi">
@@ -143,188 +164,186 @@ function App() {
                   <Route path="manajemen-pengguna">
                     <Route index element={<Settings />} />
                   </Route>
-                </Route>
-                <Route path="akreditasi">
-                  <Route index element={<Accreditation />} />
-                </Route>
-                <Route path="referensi">
-                  <Route path="kurikulum-matakuliah" element={<Curriculum />} />
-                  <Route path="cpl" element={<CPL />} />
-                  <Route path="cpmk" element={<CPMK />} />
-                  <Route path="rps" element={<RPS />} />
-                </Route>
-                <Route path="manajemen-pengguna">
-                  <Route index element={<Settings />} />
-                </Route>
-                <Route path="tugas-akhir">
-                  <Route index element={<FEHomepage />} />
-                  <Route path="mahasiswa">
+                  <Route path="tugas-akhir">
                     <Route index element={<FEHomepage />} />
-                    <Route path="tugas-akhir" element={<FEProposalPage />} />
-                    <Route
-                      path="tugas-akhir/buat"
-                      element={<FENewTopicPage />}
-                    />
-                    <Route
-                      path="tugas-akhir/riwayat"
-                      element={<FEProposalHistory />}
-                    />
-                    <Route
-                      path="bebas-lab"
-                      element={<FELabFreeApplication />}
-                    />
-                    <Route path="seminar" element={<FESeminar />} />
-                    <Route
-                      path="seminar/riwayat"
-                      element={<FESeminarHistory />}
-                    />
-                    <Route path="ujian-sidang" element={<FETrialPermit />} />
-                    <Route path="profil">
-                      <Route path="" element={<FEProfile />} />
-                      <Route path="edit" element={<FEEditProfilePage />} />
-                    </Route>
-                  </Route>
-                  <Route path="wakil-dekan-1">
-                    <Route index element={<FEHomepage />} />
-                    <Route path="persetujuan">
-                      <Route index element={<FEApproval />} />
-                      <Route path="sk-pembimbing-dan-penguji">
-                        <Route
-                          index
-                          element={<FEMentorAndExaminersApproval />}
-                        />
-                        <Route
-                          path="nim/:nim"
-                          element={<FEMentorAndExaminersApprovalMore />}
-                        />
-                      </Route>
-                      <Route path="ujian-sidang">
-                        <Route index element={<FETrialPermitApproval />} />
-                        <Route
-                          path="nim/:nim"
-                          element={<FEMentorAndExaminersApprovalMore />}
-                        />
-                      </Route>
-                    </Route>
-                  </Route>
-                  <Route path="kasubag">
-                    <Route index element={<FEHomepage />} />
-                    <Route path="persetujuan">
-                      <Route index element={<FESubsectionChairmanApproval />} />
-                      <Route path="sk-pembimbing-dan-penguji">
-                        <Route
-                          index
-                          element={
-                            <FESubsectionChairmanMentorAndExaminersApproval />
-                          }
-                        />
-                      </Route>
+                    <Route path="mahasiswa">
+                      <Route index element={<FEHomepage />} />
+                      <Route path="tugas-akhir" element={<FEProposalPage />} />
                       <Route
-                        path="sk-pembimbing-dan-penguji/:nim"
-                        element={
-                          <FESubsectionChairmanMentorAndExaminersApprovalMore />
-                        }
+                        path="tugas-akhir/buat"
+                        element={<FENewTopicPage />}
                       />
                       <Route
-                        path="sk-pembimbing-dan-penguji/riwayat"
-                        element={
-                          <FESubsectionChairmanMentorAndExaminersApprovalHistory />
-                        }
+                        path="tugas-akhir/riwayat"
+                        element={<FEProposalHistory />}
                       />
-                      <Route path="izin-ujian-sidang">
-                        <Route
-                          index
-                          element={<FESubsectionChairmanTrialPermitApproval />}
-                        />
-                        <Route path="surat-permohonan">
-                          <Route
-                            index
-                            element={
-                              <FESubsectionChairmanTrialPermitApprovalApplication />
-                            }
-                          />
-                          <Route
-                            path="riwayat"
-                            element={
-                              <FESubsectionChairmanTrialPermitApprovalApplicationHistory />
-                            }
-                          />
-                        </Route>
-                        <Route
-                          path="surat-permohonan/:nim"
-                          element={
-                            <FESubsectionChairmanTrialPermitApprovalApplicationDetails />
-                          }
-                        />
+                      <Route
+                        path="bebas-lab"
+                        element={<FELabFreeApplication />}
+                      />
+                      <Route path="seminar" element={<FESeminar />} />
+                      <Route
+                        path="seminar/riwayat"
+                        element={<FESeminarHistory />}
+                      />
+                      <Route path="ujian-sidang" element={<FETrialPermit />} />
+                      <Route path="profil">
+                        <Route path="" element={<FEProfile />} />
+                        <Route path="edit" element={<FEEditProfilePage />} />
                       </Route>
                     </Route>
-                  </Route>
-                  <Route path="admin-program-studi">
-                    <Route index element={<FEHomepage />} />
-                    <Route path="persetujuan">
-                      <Route index element={<FEStudyProgramAdminApproval />} />
-                      <Route path="judul-penelitian">
-                        <Route
-                          index
-                          element={<FEStudyProgramAdminProposal />}
-                        />
-                        <Route path="permohonan-judul-penelitian">
+                    <Route path="wakil-dekan-1">
+                      <Route index element={<FEHomepage />} />
+                      <Route path="persetujuan">
+                        <Route index element={<FEApproval />} />
+                        <Route path="sk-pembimbing-dan-penguji">
                           <Route
                             index
                             element={<FEMentorAndExaminersApproval />}
                           />
                           <Route
-                            path="riwayat"
-                            element={
-                              <FEStudyProgramAdminProposalApplicationHistory />
-                            }
+                            path="nim/:nim"
+                            element={<FEMentorAndExaminersApprovalMore />}
                           />
                         </Route>
-                        <Route path="pengajuan-judul-penelitian">
+                        <Route path="ujian-sidang">
+                          <Route index element={<FETrialPermitApproval />} />
                           <Route
-                            index
-                            element={<FEStudyProgramAdminProposalSubmission />}
-                          />
-                          <Route
-                            path="riwayat"
-                            element={
-                              <FEStudyProgramAdminProposalSubmissionHistory />
-                            }
+                            path="nim/:nim"
+                            element={<FEMentorAndExaminersApprovalMore />}
                           />
                         </Route>
                       </Route>
-                      <Route path="penyusunan-tim-penguji">
+                    </Route>
+                    <Route path="kasubag">
+                      <Route index element={<FEHomepage />} />
+                      <Route path="persetujuan">
                         <Route
                           index
+                          element={<FESubsectionChairmanApproval />}
+                        />
+                        <Route path="sk-pembimbing-dan-penguji">
+                          <Route
+                            index
+                            element={
+                              <FESubsectionChairmanMentorAndExaminersApproval />
+                            }
+                          />
+                        </Route>
+                        <Route
+                          path="sk-pembimbing-dan-penguji/:nim"
                           element={
-                            <FEStudyProgramAdminApprovalExaminersFraming />
+                            <FESubsectionChairmanMentorAndExaminersApprovalMore />
                           }
                         />
+                        <Route
+                          path="sk-pembimbing-dan-penguji/riwayat"
+                          element={
+                            <FESubsectionChairmanMentorAndExaminersApprovalHistory />
+                          }
+                        />
+                        <Route path="izin-ujian-sidang">
+                          <Route
+                            index
+                            element={
+                              <FESubsectionChairmanTrialPermitApproval />
+                            }
+                          />
+                          <Route path="surat-permohonan">
+                            <Route
+                              index
+                              element={
+                                <FESubsectionChairmanTrialPermitApprovalApplication />
+                              }
+                            />
+                            <Route
+                              path="riwayat"
+                              element={
+                                <FESubsectionChairmanTrialPermitApprovalApplicationHistory />
+                              }
+                            />
+                          </Route>
+                          <Route
+                            path="surat-permohonan/:nim"
+                            element={
+                              <FESubsectionChairmanTrialPermitApprovalApplicationDetails />
+                            }
+                          />
+                        </Route>
+                      </Route>
+                    </Route>
+                    <Route path="admin-program-studi">
+                      <Route index element={<FEHomepage />} />
+                      <Route path="persetujuan">
+                        <Route
+                          index
+                          element={<FEStudyProgramAdminApproval />}
+                        />
+                        <Route path="judul-penelitian">
+                          <Route
+                            index
+                            element={<FEStudyProgramAdminProposal />}
+                          />
+                          <Route path="permohonan-judul-penelitian">
+                            <Route
+                              index
+                              element={<FEMentorAndExaminersApproval />}
+                            />
+                            <Route
+                              path="riwayat"
+                              element={
+                                <FEStudyProgramAdminProposalApplicationHistory />
+                              }
+                            />
+                          </Route>
+                          <Route path="pengajuan-judul-penelitian">
+                            <Route
+                              index
+                              element={
+                                <FEStudyProgramAdminProposalSubmission />
+                              }
+                            />
+                            <Route
+                              path="riwayat"
+                              element={
+                                <FEStudyProgramAdminProposalSubmissionHistory />
+                              }
+                            />
+                          </Route>
+                        </Route>
+                        <Route path="penyusunan-tim-penguji">
+                          <Route
+                            index
+                            element={
+                              <FEStudyProgramAdminApprovalExaminersFraming />
+                            }
+                          />
+
+                          <Route
+                            path="riwayat"
+                            element={
+                              <FEStudyProgramAdminApprovalExaminersFramingHistory />
+                            }
+                          />
+                        </Route>
 
                         <Route
-                          path="riwayat"
+                          path="penyusunan-tim-penguji/:nim"
                           element={
-                            <FEStudyProgramAdminApprovalExaminersFramingHistory />
+                            <FEStudyProgramAdminApprovalExaminersFramingDetermine />
                           }
                         />
                       </Route>
-
-                      <Route
-                        path="penyusunan-tim-penguji/:nim"
-                        element={
-                          <FEStudyProgramAdminApprovalExaminersFramingDetermine />
-                        }
-                      />
                     </Route>
                   </Route>
-                </Route>
-                <Route path="bantuan" element={<Help />} />
-                <Route path="profil" element={<Profile />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </FERoleProvider>
-        </ModalsProvider>
+                  <Route path="bantuan" element={<Help />} />
+                  <Route path="profil" element={<Profile />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </FERoleProvider>
+          </ModalsProvider>
+        </DataProvider>
       </MantineProvider>
     </QueryClientProvider>
   );

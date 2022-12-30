@@ -38,11 +38,11 @@ export async function qfGetUserStudents(body: IPostUser) {
   return await userStudents.json();
 }
 
-export async function qfLogin(authorization: string) {
+export async function qfLogin() {
   const loginResp = await fetch(getFormattedUrlEndpoint(`${endpoint}`), {
     method: "POST",
     headers: {
-      ...getBasicAuthorizationHeader(authorization),
+      ...getBasicAuthorizationHeader(),
     },
   });
 

@@ -63,7 +63,7 @@ const FEProposalApplicationForm: React.FC<IFEProposalApplicationFormProps> = ({
         onChange={(e) =>
           handleInputChange("title" as keyof TOffer, e.target.value)
         }
-        value={value?.title}
+        value={value?.title || ""}
         size={"md"}
       />
 

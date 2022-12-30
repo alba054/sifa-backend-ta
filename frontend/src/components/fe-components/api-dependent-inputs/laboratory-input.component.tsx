@@ -1,9 +1,7 @@
 import { SelectItem, SelectProps } from "@mantine/core";
 import React from "react";
-import { useQuery } from "react-query";
 import { SelectInput } from "src/components/FormInput";
-import { LABORATORY_KEY } from "src/query-functions/const.query-function";
-import { qfGetLaboratories } from "src/query-functions/laboratory.query-function";
+import { useLaboratoryData } from "src/contexts/laboratory-data.context";
 
 interface ILaboratoryInputProps extends Omit<SelectProps, "data"> {
   shouldDisabled?: string;
@@ -23,10 +21,7 @@ const LaboratoryInput: React.FC<ILaboratoryInputProps> = ({
   shouldDisabled,
   ...props
 }) => {
-  const { data, isLoading, status } = useQuery(
-    LABORATORY_KEY,
-    qfGetLaboratories
-  );
+  const { data, isLoading } = useLaboratoryData();
 
   const selectItems = data?.data?.map((data: ILaboratoryDataItem) => {
     const selectItem: SelectItem = {

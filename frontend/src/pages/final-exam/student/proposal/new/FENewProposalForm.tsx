@@ -11,6 +11,7 @@ import {
   qfPostStudentThesis,
 } from "src/query-functions/student.query-function";
 import { COLORS } from "src/themes/colors.theme";
+import { ParseFileBase64 } from "src/utils/functions/common.function";
 import FEProposalApplicationForm from "./FENewProposalApplicationForm";
 import {
   feNewProposalFormSchema,
@@ -30,11 +31,12 @@ const FENewProposalForm: React.FC<IFENewProposalFormProps> = ({}) => {
     qfPostStudentThesis,
     {}
   );
-  function handleSubmit(values: IFENewProposalFormValues) {
-    console.log(values);
-
+  async function handleSubmit(values: IFENewProposalFormValues) {
     const firstOffer = values.firstOffer;
     const secondOffer = values.secondOffer;
+
+    const khsBase64 = await ParseFileBase64(values.academicRecord);
+    const krsBase64 = await ParseFileBase64(values.krs);
 
     const postNewProposal: IQFPostStudentThesis = {
       labID_1st: firstOffer.firstLaboratory,
@@ -45,8 +47,11 @@ const FENewProposalForm: React.FC<IFENewProposalFormProps> = ({}) => {
       labID2_2nd: secondOffer.secondLaboratory,
       title_2nd: secondOffer.title,
       lecturerPropose_2nd: secondOffer.lecturer,
+      khs: khsBase64,
+      krs: krsBase64,
     };
-    mutate();
+    console.log(postNewProposal);
+    mutate(postNewProposal);
   }
   // console.log(values);
 

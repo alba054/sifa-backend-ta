@@ -1,4 +1,5 @@
 import { API_URL } from "src/utils/const/api";
+import { getLoggedInUserNim } from "src/utils/functions/cookies.function";
 import {
   getTokenAuthorizationHeader,
   getFormattedUrlEndpoint,
@@ -127,20 +128,30 @@ export interface IQFPostStudentThesis {
   labID_2nd: string;
   labID2_2nd: string;
   lecturerPropose_2nd?: string;
+  krs: string;
+  khs: string;
 }
-export async function qfPostStudentThesis() {
-  const studentThesis = await fetch(
-    getFormattedUrlEndpoint(`${endpoint}/${nim}/thesis`),
-    {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        ...getTokenAuthorizationHeader(),
-      },
-    }
-  );
 
-  return await studentThesis.json();
+export async function qfPostStudentThesis(body: IQFPostStudentThesis) {
+  try {
+    const nim = getLoggedInUserNim();
+    const studentThesis = await fetch(
+      getFormattedUrlEndpoint(`${endpoint}/${nim}/thesis`),
+      {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          ...getTokenAuthorizationHeader(),
+        },
+      }
+    );
+    const resp = await studentThesis.json();
+    console.log(resp);
+
+    return resp;
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export interface IQFPutStudentThesis {

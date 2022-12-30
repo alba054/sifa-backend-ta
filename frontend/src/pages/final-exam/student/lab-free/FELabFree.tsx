@@ -3,9 +3,10 @@ import { useForm, yupResolver } from "@mantine/form";
 import React, { useEffect, useState } from "react";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton
+  ILFPHeaderButton,
 } from "src/components/fe-components/LFPHeader.component";
 import FEInputModal from "src/components/FEInputModal";
+import { useLaboratoryData } from "src/contexts/laboratory-data.context";
 import useArray from "src/hooks/fe-hooks/useArray";
 import useMap from "src/hooks/fe-hooks/useMap";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
@@ -13,7 +14,7 @@ import { IFELabFreeCardComp } from "./FELabFreeCardComp";
 import FELabFreeForm, { laboratoyObject } from "./FELabFreeForm";
 import {
   feLabFreeFormSchema,
-  IFELabFreeFormValues
+  IFELabFreeFormValues,
 } from "./FELabFreeInterfaces";
 import FELabFreeMain from "./FELabFreeMain";
 
@@ -100,19 +101,14 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
     ],
   ]);
 
-  
+  const { data } = useLaboratoryData();
 
+  console.log(data?.data);
   const [isOpen, setIsOpen] = useState(false);
   const [isDataExist, setIsDataExist] = useState(true);
   const [applicationDone, setapplicationDone] = useState(lastApplicationDone);
   const [map, actions] = useMap(dummyLab);
-  const {
-    array: possibleLabValue,
-    set: setArray,
-    push,
-    remove,
-    clear,
-  } = useArray(JSON.parse(JSON.stringify(labValue))); // <-- Wrong way?
+  const { array: possibleLabValue } = useArray(data?.data || []); // <-- Wrong way?
 
   function handleAddApplicationClick() {
     setIsOpen(true);
@@ -224,8 +220,8 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
     },
   ];
 
-  if (map.size===possibleLabValue.length){
-    buttons[0].disabled= true
+  if (map.size === possibleLabValue.length) {
+    buttons[0].disabled = true;
   }
 
   useEffect(() => {
@@ -241,8 +237,8 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
       }
     }
 
-    if (prevLabValue.length===possibleLabValue.length){
-      buttons[0].disabled= true
+    if (prevLabValue.length === possibleLabValue.length) {
+      buttons[0].disabled = true;
     }
   }, []);
 
@@ -259,7 +255,13 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
 
       <Stack spacing={"xl"}>
         {/* Bebas lab, tugas akhir Header */}
-        <LFPHeaderComponent title="Bebas Lab" buttons={buttons} disabledButtonTooltipLabel={"Hapus permohonan bebas lab yang lama untuk membuat permohonan yang baru"} />
+        <LFPHeaderComponent
+          title="Bebas Lab"
+          buttons={buttons}
+          disabledButtonTooltipLabel={
+            "Hapus permohonan bebas lab yang lama untuk membuat permohonan yang baru"
+          }
+        />
         {isDataExist ? (
           <FELabFreeMain labFreeCardMap={map} possibleLab={possibleLabValue} />
         ) : (
