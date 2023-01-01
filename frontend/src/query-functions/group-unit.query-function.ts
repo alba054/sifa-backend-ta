@@ -1,5 +1,5 @@
 import {
-  getAuthorizationHeader,
+  getBasicAuthorizationHeader,
   getFormattedUrlEndpoint,
 } from "./utils.query-function";
 
@@ -9,7 +9,7 @@ export async function qfGetGroupUnits() {
   const groupUnits = await fetch(getFormattedUrlEndpoint(endpoint), {
     method: "GET",
     headers: {
-      ...getAuthorizationHeader(),
+      ...getBasicAuthorizationHeader(),
     },
   });
 
@@ -25,7 +25,7 @@ export async function qfPostGroupUnits(groupUnitParams: IPostGroupUnit) {
     method: "POST",
     body: JSON.stringify(groupUnitParams),
     headers: {
-      ...getAuthorizationHeader(),
+      ...getBasicAuthorizationHeader(),
     },
   });
 

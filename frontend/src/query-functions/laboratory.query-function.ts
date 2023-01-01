@@ -1,5 +1,5 @@
 import {
-  getAuthorizationHeader,
+  getBasicAuthorizationHeader,
   getFormattedUrlEndpoint,
 } from "./utils.query-function";
 
@@ -9,7 +9,7 @@ export async function qfGetLaboratories() {
   const laboratories = await fetch(getFormattedUrlEndpoint(endpoint), {
     method: "GET",
     headers: {
-      ...getAuthorizationHeader(),
+      ...getBasicAuthorizationHeader(),
     },
   });
 

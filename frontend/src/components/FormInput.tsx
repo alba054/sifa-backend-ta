@@ -141,6 +141,7 @@ export const RadioGroup = ({
       {data.map(({ label, value, ...radio }) => {
         return (
           <Radio
+            key={label + value}
             size="lg"
             onFocus={(e) => {
               setIsFocus(true);

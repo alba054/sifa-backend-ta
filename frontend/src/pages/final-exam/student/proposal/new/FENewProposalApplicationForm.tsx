@@ -1,5 +1,7 @@
 import { Stack, Title } from "@mantine/core";
 import React, { useEffect, useRef, useState } from "react";
+import LaboratoryInput from "src/components/fe-components/api-dependent-inputs/laboratory-input.component";
+import LecturerInput from "src/components/fe-components/api-dependent-inputs/lecturer-input.component";
 import { RadioGroup, SelectInput, TextInput } from "src/components/FormInput";
 import { IFENewProposalFormValues } from "./FENewProposalInterfaces";
 
@@ -61,16 +63,12 @@ const FEProposalApplicationForm: React.FC<IFEProposalApplicationFormProps> = ({
         onChange={(e) =>
           handleInputChange("title" as keyof TOffer, e.target.value)
         }
-        value={value?.title}
+        value={value?.title || ""}
         size={"md"}
       />
 
       <div className={`grid grid-cols-2 gap-x-12`}>
-        <SelectInput
-          data={[
-            { label: "Lab 1", value: "1" },
-            { label: "Lab 2", value: "2" },
-          ]}
+        <LaboratoryInput
           required
           placeholder="Biofarmaka"
           label="Laboratorium 1"
@@ -82,13 +80,10 @@ const FEProposalApplicationForm: React.FC<IFEProposalApplicationFormProps> = ({
           value={value?.firstLaboratory}
           size={"md"}
         />
-        <SelectInput
-          data={[
-            { label: "Lab 1", value: "1" },
-            { label: "Lab 2", value: "2" },
-          ].filter((lab) => lab.value !== value?.firstLaboratory)}
+        <LaboratoryInput
           placeholder="Pilih laboratorium kedua jika diperlukan"
           label="Laboratorium 2"
+          shouldDisabled={value?.firstLaboratory}
           error={errors?.[`${name}.${"secondLaboratory" as keyof TOffer}`]}
           name={"secondLaboratory" as keyof TOffer}
           onChange={(e) =>
@@ -124,7 +119,7 @@ const FEProposalApplicationForm: React.FC<IFEProposalApplicationFormProps> = ({
         />
 
         {state.proposalIdeaOrigin === "LECTURER" && (
-          <SelectInput
+          <LecturerInput
             data={[
               {
                 label: "Pak Hendra",

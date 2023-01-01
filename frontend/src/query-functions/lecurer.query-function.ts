@@ -1,5 +1,5 @@
 import {
-  getAuthorizationHeader,
+  getBasicAuthorizationHeader,
   getFormattedUrlEndpoint,
 } from "./utils.query-function";
 
@@ -9,7 +9,7 @@ export async function qfGetLecturers() {
   const lecturers = await fetch(getFormattedUrlEndpoint(endpoint), {
     method: "GET",
     headers: {
-      ...getAuthorizationHeader(),
+      ...getBasicAuthorizationHeader(),
     },
   });
 
@@ -20,7 +20,7 @@ export async function qfGetLecturer(nim: number) {
   const lecturer = await fetch(getFormattedUrlEndpoint(`${endpoint}/${nim}`), {
     method: "GET",
     headers: {
-      ...getAuthorizationHeader(),
+      ...getBasicAuthorizationHeader(),
     },
   });
 
@@ -37,7 +37,7 @@ export async function qfPostLecturer(lecturerData: IPostLecturer) {
     method: "POST",
     body: JSON.stringify(lecturerData),
     headers: {
-      ...getAuthorizationHeader(),
+      ...getBasicAuthorizationHeader(),
     },
   });
 

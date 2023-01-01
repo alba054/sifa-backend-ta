@@ -1,5 +1,5 @@
 import {
-  getAuthorizationHeader,
+  getBasicAuthorizationHeader,
   getFormattedUrlEndpoint,
 } from "./utils.query-function";
 
@@ -11,7 +11,7 @@ export async function qfGetVocations(departmentID: number) {
     {
       method: "GET",
       headers: {
-        ...getAuthorizationHeader(),
+        ...getBasicAuthorizationHeader(),
       },
     }
   );
