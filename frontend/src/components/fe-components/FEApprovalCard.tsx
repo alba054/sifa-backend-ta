@@ -27,7 +27,7 @@ const FEApprovalCard: React.FC<IFEApprovalCard> = ({
         <FESearchBookOutline
           size={80}
           color={"#F1F1F3"}
-          className="absolute right-6 top-6"
+          className="absolute right-6 top-6 -z-10"
         />
       </Stack>
     </Link>

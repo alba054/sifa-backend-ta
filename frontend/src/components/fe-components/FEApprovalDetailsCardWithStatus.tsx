@@ -13,14 +13,25 @@ export interface IFEApprovalDetailsCardWithStatus {
   proposalTitle: string;
   laboratory: string;
   proposer?: string;
-  mentorCertificateApprovalStatus?: FEStatus, 
-  examinersCertificateApprovalStatus?: FEStatus, 
+  mentorCertificateApprovalStatus?: FEStatus;
+  examinersCertificateApprovalStatus?: FEStatus;
+  chip?: any;
   onClick?: () => void;
 }
 
 const FEApprovalDetailsCardWithStatus: React.FC<
   IFEApprovalDetailsCardWithStatus
-> = ({ name, nim, proposalTitle, laboratory, proposer, onClick, examinersCertificateApprovalStatus="process", mentorCertificateApprovalStatus="process" }) => {
+> = ({
+  name,
+  nim,
+  proposalTitle,
+  laboratory,
+  proposer,
+  onClick,
+  chip= approvalChip,
+  examinersCertificateApprovalStatus = "process",
+  mentorCertificateApprovalStatus = "process",
+}) => {
   const theme = useMantineTheme();
 
   return (
@@ -45,12 +56,16 @@ const FEApprovalDetailsCardWithStatus: React.FC<
               </Text>
               <Stack className="gap-2">
                 <Group>
-                  <Text className="text-secondary-text-500 text-lg font-semibold tracking-1">SK Pembimbing</Text>
-                  {approvalChip[mentorCertificateApprovalStatus || "process"]}
+                  <Text className="text-secondary-text-500 text-lg font-semibold tracking-1">
+                    SK Pembimbing
+                  </Text>
+                  {chip[mentorCertificateApprovalStatus || "process"]}
                 </Group>
                 <Group>
-                  <Text className="text-secondary-text-500 text-lg font-semibold tracking-1">SK Penguji</Text>
-                  {approvalChip[examinersCertificateApprovalStatus || "process"]}
+                  <Text className="text-secondary-text-500 text-lg font-semibold tracking-1">
+                    SK Penguji
+                  </Text>
+                  {chip[examinersCertificateApprovalStatus || "process"]}
                 </Group>
               </Stack>
             </Stack>

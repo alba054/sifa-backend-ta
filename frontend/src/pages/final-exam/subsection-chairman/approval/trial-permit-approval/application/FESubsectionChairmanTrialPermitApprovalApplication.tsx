@@ -18,10 +18,6 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
     title: "Persetujuan",
     href: FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL,
   },
-  {
-    title: "Izin Ujian Sidang",
-    href: FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT,
-  },
 ];
 
 const buttons: ILFPHeaderButton[] = [
@@ -87,7 +83,7 @@ const FESubsectionChairmanTrialPermitApprovalApplication: React.FC<
   return (
     <FEMainlayout
       breadCrumbs={breadCrumbs}
-      breadCrumbsCurrentPage="Surat Permohonan"
+      breadCrumbsCurrentPage="Izin Ujian Sidang"
     >
       <FEAlertModal
         title="Kosongkan Riwayat Penyusunan?"
@@ -101,7 +97,7 @@ const FESubsectionChairmanTrialPermitApprovalApplication: React.FC<
         }}
       />
       <LFPHeaderComponent
-        title="Surat Permohonan"
+        title="Surat Permohonan Izin Ujian Sidang"
         buttons={buttons}
         disabledButtonTooltipLabel={"Riwayat kosong"}
       />

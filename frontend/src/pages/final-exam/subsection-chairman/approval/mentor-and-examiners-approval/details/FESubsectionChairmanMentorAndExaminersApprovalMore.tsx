@@ -54,7 +54,7 @@ const dummyProposalData: {
     sk: [
       {
         SKType: "mentor",
-        status: "process",
+        status: "accepted",
         applicationDate: "12 November 2022",
         passedTime: "4 menit yang lalu",
         setStatus: (e: FEStatus) => {},
@@ -111,8 +111,9 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
 
   function handleAcceptApproval() {
     setIsOpenAlertModal(false);
+    navigate(-1)
   }
-
+  
   return (
     <FEMainlayout
       breadCrumbs={breadCrumbs}
@@ -120,7 +121,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
     >
       <FEAlertModal
         title="Konfirmasi Persetujuan"
-        description="Tekan tombol konfirmasi untuk mengkonfirmasi persetujuan."
+        description="Persetujuan yang telah dikonfirmasi tidak dapat diubah, pastikan pilihan anda sudah benar"
         opened={isOpenAlertModal}
         setOpened={setIsOpenAlertModal}
         yesButtonLabel={"Konfirmasi"}
@@ -149,6 +150,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
             <Grid.Col span={6} xs={12} sm={12} md={6}>
               <FESubsectionChairmanMentorAndExaminersApprovalMoreCard
                 SKType={approvalCardDataArray[0].SKType}
+                initialStatus= {approvalCardDataArray[0].status}
                 status={mentorStatus}
                 applicationDate={approvalCardDataArray[0].applicationDate}
                 passedTime={approvalCardDataArray[0].passedTime}
@@ -160,6 +162,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
             <Grid.Col span={6} xs={12} sm={12} md={6}>
               <FESubsectionChairmanMentorAndExaminersApprovalMoreCard
                 SKType={approvalCardDataArray[1].SKType}
+                initialStatus= {approvalCardDataArray[1].status}
                 status={examinerStatus}
                 applicationDate={approvalCardDataArray[1].applicationDate}
                 passedTime={approvalCardDataArray[1].passedTime}
@@ -179,9 +182,9 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
               Batal
             </Button>
             <FEDisabledTooltip
-              label="Kedua SK belum ditolak / disetujui"
+              label="Setujui / tolak setidaknya satu SK untuk mengkonfirmasi persetujuan"
               isDisabled={
-                !(mentorStatus == "process" || examinerStatus == "process")
+                (approvalCardDataArray[0].status != mentorStatus || approvalCardDataArray[1].status != examinerStatus)
               }
             >
               <Button
@@ -189,7 +192,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalMore: React.FC<
                 onClick={() => setIsOpenAlertModal(true)}
                 variant="light"
                 disabled={
-                  mentorStatus == "process" || examinerStatus == "process"
+                  !(approvalCardDataArray[0].status != mentorStatus || approvalCardDataArray[1].status != examinerStatus) 
                 }
               >
                 Konfirmasi Persetujuan

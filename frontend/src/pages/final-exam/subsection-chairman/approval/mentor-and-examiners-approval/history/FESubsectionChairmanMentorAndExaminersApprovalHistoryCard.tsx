@@ -64,7 +64,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalHistoryCard: React.FC<
                     e: number
                   ) => {
                     return (
-                      <Stack className="gap-0">
+                      <Stack className="gap-2">
                         <Group key={e}>
                           <Text className="text-primary-text-500 text-lg font-semibold tracking-1">
                             SK{" "}
@@ -82,7 +82,7 @@ const FESubsectionChairmanMentorAndExaminersApprovalHistoryCard: React.FC<
                             {
                               currSK.refusalReason?.split('\n').map((item:string, e:number)=>{
                                 return(
-                                  <span>
+                                  <span key={e}>
                                   {item}
                                   <br/>
                                   </span>

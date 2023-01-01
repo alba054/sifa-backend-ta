@@ -7,6 +7,7 @@ import { IThesis } from "../utils/interfaces/thesis.interface";
 interface IThesisApproval {
   id: number;
   isApproved: boolean;
+  note?: string;
 }
 
 interface IBody {
@@ -15,10 +16,50 @@ interface IBody {
 }
 
 export class Thesis {
+  static async getApprovedThesisByLab(labID: number) {
+    const approvedThesis = await prismaDB.tugas_akhir.findMany({
+      where: {
+        AND: [
+          { statusPermohonan: "Diterima" },
+          // { OR: [{ taLabId: labID }, { taLabId2: labID }] },
+        ],
+      },
+    });
+
+    return approvedThesis;
+  }
+
+  static async getApprovedThesisDetail(id: number) {
+    const approvedThesis = await prismaDB.tugas_akhir.findMany({
+      where: {
+        AND: [{ taId: id }, { statusPermohonan: "Diterima" }],
+      },
+      include: {
+        pengusul: true,
+        mahasiswa: true,
+        ref_laboratorium: true,
+        ref_laboratorium2: true,
+        pembimbing: true,
+      },
+    });
+
+    return approvedThesis[0];
+
+    // try {
+    // } catch (error) {
+    //   return null;
+    // }
+  }
+
   static async updateThesisStatus(proposalGroupID: string, body: IBody) {
     try {
       const thesisOneStatus = body.title1.isApproved ? "Diterima" : "Ditolak";
       const thesisTwoStatus = body.title2.isApproved ? "Diterima" : "Ditolak";
+      const resolveDateOne = thesisOneStatus === "Diterima" ? new Date() : null;
+      const resolveDateTwo = thesisTwoStatus === "Diterima" ? new Date() : null;
+
+      const noteThesisOne = body.title1.note;
+      const noteThesisTwo = body.title2.note;
       const thesis1 = await prismaDB.tugas_akhir.updateMany({
         where: {
           AND: [
@@ -27,7 +68,11 @@ export class Thesis {
             { statusPermohonan: "Belum_Diproses" },
           ],
         },
-        data: { statusPermohonan: thesisOneStatus },
+        data: {
+          statusPermohonan: thesisOneStatus,
+          taCatatan: noteThesisOne,
+          tanggalPenyelesaian: resolveDateOne,
+        },
       });
 
       const thesis2 = await prismaDB.tugas_akhir.updateMany({
@@ -38,7 +83,11 @@ export class Thesis {
             { statusPermohonan: "Belum_Diproses" },
           ],
         },
-        data: { statusPermohonan: thesisTwoStatus },
+        data: {
+          statusPermohonan: thesisTwoStatus,
+          taCatatanMhs: noteThesisTwo,
+          tanggalPenyelesaian: resolveDateTwo,
+        },
       });
 
       return [thesis1, thesis2];

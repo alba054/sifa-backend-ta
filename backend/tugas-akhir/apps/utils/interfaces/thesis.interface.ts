@@ -30,11 +30,18 @@ export interface IThesis {
 
 export interface IThesisPost {
   title_1st: string;
-  labID_1st?: number;
+  labID_1st: number;
   labID2_1st?: number;
   lecturerPropose_1st?: number;
   title_2nd: string;
-  labID_2nd?: number;
+  labID_2nd: number;
   labID2_2nd?: number;
   lecturerPropose_2nd?: number;
+  krs: string;
+  khs: string;
 }
+
+// export interface IApprovalApprovedThesis {
+//   thesisID: number;
+//   departmentName: string;
+// }

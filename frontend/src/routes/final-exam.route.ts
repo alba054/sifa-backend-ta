@@ -36,7 +36,23 @@ export const FEROUTES = {
   SUBSECTION_CHAIRMAN_APPROVAL_MENTOR_AND_EXAMINERS_MORE: "/tugas-akhir/kasubag/persetujuan/sk-pembimbing-dan-penguji/nim",
   SUBSECTION_CHAIRMAN_APPROVAL_MENTOR_AND_EXAMINERS_HISTORY: "/tugas-akhir/kasubag/persetujuan/sk-pembimbing-dan-penguji/riwayat",
   SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT: "/tugas-akhir/kasubag/persetujuan/izin-ujian-sidang",
-  SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION: "/tugas-akhir/kasubag/persetujuan/izin-ujian-sidang/surat-permohonan",
-  SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION_HISTORY: "/tugas-akhir/kasubag/persetujuan/izin-ujian-sidang/surat-permohonan/riwayat",
+  SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION: "/tugas-akhir/kasubag/persetujuan/izin-ujian-sidang",
+  SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION_HISTORY: "/tugas-akhir/kasubag/persetujuan/izin-ujian-sidang/riwayat",
   SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT_APPLICATION_STATUS: "/tugas-akhir/kasubag/persetujuan/izin-ujian-sidang/status-surat-permohonan",
+  // ====================================================================================================
+  HEAD_ADMINISTRATOR_HOMEPAGE: "/tugas-akhir/ktu",
+  HEAD_ADMINISTRATOR_APPROVAL: "/tugas-akhir/ktu/persetujuan",
+  HEAD_ADMINISTRATOR_APPROVAL_MENTOR_AND_EXAMINERS: "/tugas-akhir/ktu/persetujuan/sk-pembimbing-dan-penguji",
+  HEAD_ADMINISTRATOR_APPROVAL_MENTOR_AND_EXAMINERS_MORE: "/tugas-akhir/ktu/persetujuan/sk-pembimbing-dan-penguji/nim",
+  HEAD_ADMINISTRATOR_APPROVAL_MENTOR_AND_EXAMINERS_HISTORY: "/tugas-akhir/ktu/persetujuan/sk-pembimbing-dan-penguji/riwayat",
+  HEAD_ADMINISTRATOR_APPROVAL_TRIAL_PERMIT: "/tugas-akhir/ktu/persetujuan/sk-izin-ujian-sidang",
+  HEAD_ADMINISTRATOR_APPROVAL_TRIAL_PERMIT_APPLICATION: "/tugas-akhir/ktu/persetujuan/sk-izin-ujian-sidang",
+  HEAD_ADMINISTRATOR_APPROVAL_TRIAL_PERMIT_APPLICATION_HISTORY: "/tugas-akhir/ktu/persetujuan/sk-izin-ujian-sidang/riwayat",
+  // ====================================================================================================
+  DEAN_HOMEPAGE: "/tugas-akhir/dekan",
+  DEAN_APPROVAL: "/tugas-akhir/dekan/persetujuan",
+  DEAN_APPROVAL_MENTOR_AND_EXAMINERS: "/tugas-akhir/dekan/persetujuan/sk-pembimbing-dan-penguji",
+  DEAN_APPROVAL_MENTOR_AND_EXAMINERS_DETAILS: "/tugas-akhir/dekan/persetujuan/sk-pembimbing-dan-penguji/nim",
+  DEAN_APPROVAL_MENTOR_AND_EXAMINERS_HISTORY: "/tugas-akhir/dekan/persetujuan/sk-pembimbing-dan-penguji/riwayat",
+  
 };

@@ -21,12 +21,24 @@ import CourseCPL from "./pages/admin/Report/CourseCPL";
 import CourseCPLDetail from "./pages/admin/Report/CourseCPL/CourseCPLDetail";
 import DataStatus from "./pages/admin/Report/DataStatus";
 import StudentCPL from "./pages/admin/Report/StudentCPL";
-import Settings from "./pages/admin/Setting";
+import FEDeanApproval from "./pages/final-exam/dean/approval/FEDeanApproval";
+import FEDeanMentorAndExaminersApprovalMore from "./pages/final-exam/dean/approval/mentor-and-examiners-approval/details/FEDeanMentorAndExaminersApprovalMore";
+import FEDeanMentorAndExaminersApproval from "./pages/final-exam/dean/approval/mentor-and-examiners-approval/FEDeanMentorAndExaminersApproval";
+import FEDeanMentorAndExaminersApprovalHistory from "./pages/final-exam/dean/approval/mentor-and-examiners-approval/history/FEDeanMentorAndExaminersApprovalHistory";
 import FEHomepage from "./pages/final-exam/FEHomepage";
 import FEApproval from "./pages/final-exam/first-vice-dean/approval/FEApproval";
+import FEMentorAndExaminersApprovalMore from "./pages/final-exam/first-vice-dean/approval/mentor-and-examiners-approval/details/FEMentorAndExaminersApprovalMore";
 import FEMentorAndExaminersApproval from "./pages/final-exam/first-vice-dean/approval/mentor-and-examiners-approval/FEMentorAndExaminersApproval";
 import FETrialPermitApproval from "./pages/final-exam/first-vice-dean/approval/trial-permit-approval/FETrialPermitApproval";
-import FEMentorAndExaminersApprovalMore from "./pages/final-exam/first-vice-dean/approval/mentor-and-examiners-approval/details/FEMentorAndExaminersApprovalMore";
+import FEHeadAdministratorApproval from "./pages/final-exam/head-administrator/approval/FEHeadAdministratorApproval";
+import FEHeadAdministratorMentorAndExaminersApprovalMore from "./pages/final-exam/head-administrator/approval/mentor-and-examiners-approval/details/FEHeadAdministratorMentorAndExaminersApprovalMore";
+import FEHeadAdministratorMentorAndExaminersApproval from "./pages/final-exam/head-administrator/approval/mentor-and-examiners-approval/FEHeadAdministratorMentorAndExaminersApproval";
+import FEHeadAdministratorMentorAndExaminersApprovalHistory from "./pages/final-exam/head-administrator/approval/mentor-and-examiners-approval/history/FEHeadAdministratorMentorAndExaminersApprovalHistory";
+import FEHeadAdministratorTrialPermitApprovalApplicationDetails from "./pages/final-exam/head-administrator/approval/trial-permit-approval/application/details/FEHeadAdministratorTrialPermitApprovalApplicationDetails";
+import FEHeadAdministratorTrialPermitApprovalApplication from "./pages/final-exam/head-administrator/approval/trial-permit-approval/application/FEHeadAdministratorTrialPermitApprovalApplication";
+import FEHeadAdministratorTrialPermitApprovalHistory from "./pages/final-exam/head-administrator/approval/trial-permit-approval/application/history/FEHeadAdministratorTrialPermitApprovalHistory";
+import FEStudentGuidance from "./pages/final-exam/student/guidance/FEStudentGuidance";
+import FEStudentHomepage from "./pages/final-exam/student/home/FEStudentHomepage";
 import FELabFreeApplication from "./pages/final-exam/student/lab-free/FELabFree";
 import FEEditProfilePage from "./pages/final-exam/student/profile/edit-profile/FEEditProfile.page";
 import FEProfile from "./pages/final-exam/student/profile/profile-main/FEProfile.page";
@@ -36,6 +48,21 @@ import FESeminar from "./pages/final-exam/student/seminar/FESeminar";
 import FESeminarHistory from "./pages/final-exam/student/seminar/history/FESeminarHistory";
 import FETrialPermit from "./pages/final-exam/student/trial-permit/FETrialPermit";
 import FEStudyProgramAdminApproval from "./pages/final-exam/study-program-admin/approval/FEStudyProgramAdminApproval";
+import FEStudyProgramAdminProposalApplication from "./pages/final-exam/study-program-admin/approval/proposal/application/FEStudyProgramAdminProposalApplication";
+import FEStudyProgramAdminProposalApplicationHistory from "./pages/final-exam/study-program-admin/approval/proposal/application/history/FEStudyProgramAdminProposalApplicationHistory";
+import FEStudyProgramAdminProposal from "./pages/final-exam/study-program-admin/approval/proposal/FEStudyProgramAdminProposal";
+import FEStudyProgramAdminProposalSubmission from "./pages/final-exam/study-program-admin/approval/proposal/submission/FEStudyProgramAdminProposalSubmission";
+import FEStudyProgramAdminProposalSubmissionHistory from "./pages/final-exam/study-program-admin/approval/proposal/submission/history/FEStudyProgramAdminProposalSubmissionHistory";
+import FEStudyProgramAdminApprovalExaminersFramingDetermine from "./pages/final-exam/study-program-admin/examiners-framing/determine/FEStudyProgramAdminApprovalExaminersFramingDetermine";
+import FEStudyProgramAdminApprovalExaminersFraming from "./pages/final-exam/study-program-admin/examiners-framing/FEStudyProgramAdminApprovalExaminersFraming";
+import FEStudyProgramAdminApprovalExaminersFramingHistory from "./pages/final-exam/study-program-admin/examiners-framing/history/FEStudyProgramAdminApprovalExaminersFramingHistory";
+import FESubsectionChairmanApproval from "./pages/final-exam/subsection-chairman/approval/FESubsectionChairmanApproval";
+import FESubsectionChairmanMentorAndExaminersApprovalMore from "./pages/final-exam/subsection-chairman/approval/mentor-and-examiners-approval/details/FESubsectionChairmanMentorAndExaminersApprovalMore";
+import FESubsectionChairmanMentorAndExaminersApproval from "./pages/final-exam/subsection-chairman/approval/mentor-and-examiners-approval/FESubsectionChairmanMentorAndExaminersApproval";
+import FESubsectionChairmanMentorAndExaminersApprovalHistory from "./pages/final-exam/subsection-chairman/approval/mentor-and-examiners-approval/history/FESubsectionChairmanMentorAndExaminersApprovalHistory";
+import FESubsectionChairmanTrialPermitApprovalApplicationDetails from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/details/FESubsectionChairmanTrialPermitApprovalApplicationDetails";
+import FESubsectionChairmanTrialPermitApprovalApplication from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/FESubsectionChairmanTrialPermitApprovalApplication";
+import FESubsectionChairmanTrialPermitApprovalApplicationHistory from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/history/FESubsectionChairmanTrialPermitApprovalApplicationHistory";
 import Login from "./pages/global/Login/Login";
 import NotFound from "./pages/global/NotFound";
 import ResetPassword from "./pages/global/ResetPassword/ResetPassword";
@@ -46,27 +73,6 @@ import Mark from "./pages/lecturer/Mark";
 import Portfolio from "./pages/lecturer/Portfolio";
 import Profile from "./pages/lecturer/Profile";
 import { mantineTheme } from "./themes/mantine.theme";
-import FEStudyProgramAdminProposal from "./pages/final-exam/study-program-admin/approval/proposal/FEStudyProgramAdminProposal";
-import FEStudyProgramAdminProposalApplication from "./pages/final-exam/study-program-admin/approval/proposal/application/FEStudyProgramAdminProposalApplication";
-import FEStudyProgramAdminProposalApplicationHistory from "./pages/final-exam/study-program-admin/approval/proposal/application/history/FEStudyProgramAdminProposalApplicationHistory";
-import FEStudentHomepage from "./pages/final-exam/student/home/FEStudentHomepage";
-import FEStudentGuidance from "./pages/final-exam/student/guidance/FEStudentGuidance";
-import FEStudyProgramAdminProposalSubmission from "./pages/final-exam/study-program-admin/approval/proposal/submission/FEStudyProgramAdminProposalSubmission";
-import FEStudyProgramAdminProposalSubmissionHistory from "./pages/final-exam/study-program-admin/approval/proposal/submission/history/FEStudyProgramAdminProposalSubmissionHistory";
-import FEStudyProgramAdminApprovalExaminersFraming from "./pages/final-exam/study-program-admin/examiners-framing/FEStudyProgramAdminApprovalExaminersFraming";
-import FEStudyProgramAdminApprovalExaminersFramingCard from "./pages/final-exam/study-program-admin/examiners-framing/FEStudyProgramAdminApprovalExaminersFramingCard";
-import FEStudyProgramAdminApprovalExaminersFramingDetermine from "./pages/final-exam/study-program-admin/examiners-framing/determine/FEStudyProgramAdminApprovalExaminersFramingDetermine";
-import FEStudyProgramAdminApprovalExaminersFramingHistoryModal from "./pages/final-exam/study-program-admin/examiners-framing/history/FEStudyProgramAdminApprovalExaminersFramingHistoryModal";
-import FEStudyProgramAdminApprovalExaminersFramingHistory from "./pages/final-exam/study-program-admin/examiners-framing/history/FEStudyProgramAdminApprovalExaminersFramingHistory";
-import FESubsectionChairmanApproval from "./pages/final-exam/subsection-chairman/approval/FESubsectionChairmanApproval";
-import FESubsectionChairmanMentorAndExaminersApproval from "./pages/final-exam/subsection-chairman/approval/mentor-and-examiners-approval/FESubsectionChairmanMentorAndExaminersApproval";
-import FESubsectionChairmanMentorAndExaminersApprovalMore from "./pages/final-exam/subsection-chairman/approval/mentor-and-examiners-approval/details/FESubsectionChairmanMentorAndExaminersApprovalMore";
-import FESubsectionChairmanTrialPermitApproval from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/FESubsectionChairmanTrialPermitApproval";
-import FESubsectionChairmanMentorAndExaminersApprovalHistory from "./pages/final-exam/subsection-chairman/approval/mentor-and-examiners-approval/history/FESubsectionChairmanMentorAndExaminersApprovalHistory";
-import FESubsectionChairmanTrialPermitApprovalApplication from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/FESubsectionChairmanTrialPermitApprovalApplication";
-import FESubsectionChairmanTrialPermitApprovalApplicationDetails from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/details/FESubsectionChairmanTrialPermitApprovalApplicationDetails";
-import FESubsectionChairmanTrialPermitApprovalApplicationHistoryCard from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/history/FESubsectionChairmanTrialPermitApprovalApplicationHistoryCard";
-import FESubsectionChairmanTrialPermitApprovalApplicationHistory from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/history/FESubsectionChairmanTrialPermitApprovalApplicationHistory";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import DataProvider from "./contexts/data.context";
@@ -149,20 +155,21 @@ function App() {
                       <Route index element={<Settings />} />
                     </Route>
                   </Route>
-                  <Route path="akreditasi">
-                    <Route index element={<Accreditation />} />
+                  <Route path="data-mahasiswa">
+                    <Route index element={<StudentData />} />
                   </Route>
-                  <Route path="referensi">
-                    <Route
-                      path="kurikulum-matakuliah"
-                      element={<Curriculum />}
-                    />
-                    <Route path="cpl" element={<CPL />} />
-                    <Route path="cpmk" element={<CPMK />} />
-                    <Route path="rps" element={<RPS />} />
+                </Route>
+                <Route path="laporan">
+                  <Route path="status-pendataan">
+                    <Route index element={<DataStatus />} />
                   </Route>
-                  <Route path="manajemen-pengguna">
-                    <Route index element={<Settings />} />
+                  <Route path="cpl-matakuliah">
+                    <Route index element={<CourseCPL />} />
+                    <Route path=":matakuliah" element={<CourseCPLDetail />} />
+                  </Route>
+                  <Route path="cpl-mahasiswa">
+                    <Route index element={<StudentCPL />} />
+                    {/* <Route path=":matakuliah" element={<CourseCPLDetail />} /> */}
                   </Route>
                   <Route path="tugas-akhir">
                     <Route index element={<FEHomepage />} />
@@ -330,11 +337,54 @@ function App() {
                         <Route
                           path="penyusunan-tim-penguji/:nim"
                           element={
-                            <FEStudyProgramAdminApprovalExaminersFramingDetermine />
+                            <FEStudyProgramAdminProposalSubmissionHistory />
                           }
                         />
                       </Route>
                     </Route>
+                    <Route path="penyusunan-tim-penguji">
+                      <Route
+                        index
+                        element={
+                          <FEStudyProgramAdminApprovalExaminersFraming />
+                        }
+                      />
+
+                      <Route
+                        path="riwayat"
+                        element={
+                          <FEStudyProgramAdminApprovalExaminersFramingHistory />
+                        }
+                      />
+                    </Route>
+
+                    <Route
+                      path="penyusunan-tim-penguji/:nim"
+                      element={
+                        <FEStudyProgramAdminApprovalExaminersFramingDetermine />
+                      }
+                    />
+                  </Route>
+                </Route>
+                <Route path="dekan">
+                  <Route index element={<FEHomepage />} />
+                  <Route path="persetujuan">
+                    <Route index element={<FEDeanApproval />} />
+                    <Route path="sk-pembimbing-dan-penguji">
+                      <Route
+                        index
+                        element={<FEDeanMentorAndExaminersApproval />}
+                      />
+                      
+                      <Route
+                        path="riwayat"
+                        element={<FEDeanMentorAndExaminersApprovalHistory />}
+                      />
+                    </Route>
+                    <Route
+                      path="sk-pembimbing-dan-penguji/:nim"
+                      element={<FEDeanMentorAndExaminersApprovalMore />}
+                    />
                   </Route>
                   <Route path="bantuan" element={<Help />} />
                   <Route path="profil" element={<Profile />} />

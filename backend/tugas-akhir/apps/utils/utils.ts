@@ -14,7 +14,7 @@ export const createResponse = (
   return { status, message };
 };
 
-const ACCESS_TOKEN_EXP = 24 * 60 * 60;
+const ACCESS_TOKEN_EXP = 24 * 60 * 60 * 30; // * 1 month
 const PASSWORD_RESET_TOKEN_EXP = 5 * 60 * 1000;
 // * path to uploaded file
 // * change this if using object storage

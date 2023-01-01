@@ -19,7 +19,7 @@ const FESubsectionChairmanApproval: React.FC<IFESubsectionChairmanApproval> = ({
           to={FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL_MENTOR_AND_EXAMINERS}
         />
         <FEApprovalCard
-          label="SK Izin Ujian Sidang"
+          label="Izin Ujian Sidang"
           description="Validasi berkas dan Surat Permohonan"
           to={FEROUTES.SUBSECTION_CHAIRMAN_APPROVAL_TRIAL_PERMIT}
         />

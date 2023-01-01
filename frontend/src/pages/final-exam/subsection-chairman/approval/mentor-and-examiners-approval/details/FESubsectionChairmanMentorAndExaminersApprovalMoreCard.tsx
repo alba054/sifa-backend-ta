@@ -8,35 +8,46 @@ import {
   ProgressClockOutlined,
 } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
+import FEDisabledTooltip from "src/components/fe-components/FEDisabledTooltip";
 import FERoundedChip from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
 import FEInputModal from "src/components/FEInputModal";
 import { FEStatus } from "src/utils/const/type";
 import FEMentorAndExaminaRefusalReasonForm, {
   feSubsectionChairmanMentorAndExaminaRefusalReasonFormSchema,
-  IFESubsectionChairmanMentorAndExaminaRefusalReasonForm, 
-  IFESubsectionChairmanMentorAndExaminaRefusalReasonFormSchema
+  IFESubsectionChairmanMentorAndExaminaRefusalReasonForm,
+  IFESubsectionChairmanMentorAndExaminaRefusalReasonFormSchema,
 } from "./FESubsectionChairmanMentorAndExaminaRefusalReasonForm";
 
 export interface IFESubsectionChairmanMentorAndExaminersApprovalMoreCard {
   SKType: "examiner" | "mentor";
-  status: "process" | "rejected" | "accepted";
+  initialStatus?: FEStatus;
+  status: FEStatus;
   applicationDate: string;
   passedTime: string;
-  setStatus: ((e:FEStatus)=>void),
-  refusalReason?: string
+  setStatus: (e: FEStatus) => void;
+  refusalReason?: string;
 }
 
 const FESubsectionChairmanMentorAndExaminersApprovalMoreCard: React.FC<
   IFESubsectionChairmanMentorAndExaminersApprovalMoreCard
-> = ({ SKType, status, applicationDate, passedTime, setStatus }) => {
+> = ({
+  SKType,
+  initialStatus = "process",
+  status,
+  applicationDate,
+  passedTime,
+  setStatus,
+}) => {
   const [isOpenInputModal, setIsOpenInputModal] = useState(false);
   const [isOpenAlertCancelApprovalModal, setIsOpenAlertCancelApprovalModal] =
     useState(false);
 
   const { onSubmit, ...form } =
     useForm<IFESubsectionChairmanMentorAndExaminaRefusalReasonFormSchema>({
-      validate: yupResolver(feSubsectionChairmanMentorAndExaminaRefusalReasonFormSchema),
+      validate: yupResolver(
+        feSubsectionChairmanMentorAndExaminaRefusalReasonFormSchema
+      ),
     });
 
   function handleCancelApproval() {
@@ -44,7 +55,9 @@ const FESubsectionChairmanMentorAndExaminersApprovalMoreCard: React.FC<
     setIsOpenAlertCancelApprovalModal(false);
   }
 
-  function handleRefuseApproval(values: IFESubsectionChairmanMentorAndExaminaRefusalReasonForm) {
+  function handleRefuseApproval(
+    values: IFESubsectionChairmanMentorAndExaminaRefusalReasonForm
+  ) {
     console.log(values);
     setStatus("rejected");
     setIsOpenInputModal(false);
@@ -97,12 +110,14 @@ const FESubsectionChairmanMentorAndExaminersApprovalMoreCard: React.FC<
       <FEInputModal
         opened={isOpenInputModal}
         setOpened={setIsOpenInputModal}
-        title={`Alasan Penolakan SK ${(SKType=='examiner'? "Penguji" : "Pembimbing")}`}
+        title={`Alasan Penolakan SK ${
+          SKType == "examiner" ? "Penguji" : "Pembimbing"
+        }`}
         onSubmit={onSubmit(handleRefuseApproval as any) as any}
         children={<FEMentorAndExaminaRefusalReasonForm form={form} />}
         yesButtonLabel="Lakukan Penolakan"
       />
-    
+
       <FEAlertModal
         title="Batalkan Persetujuan?"
         description="Tekan tombol 'Batalkan Persetujuan' untuk membatalkan persetujuan."
@@ -122,15 +137,30 @@ const FESubsectionChairmanMentorAndExaminersApprovalMoreCard: React.FC<
           </Stack>
           <Stack className="gap-0">
             <Text className="font-semibold text-2xl text-primary-text-500 inline-block">
-              SK {" "+(SKType=='examiner'? "Penguji" : "Pembimbing")}
+              SK {" " + (SKType == "examiner" ? "Penguji" : "Pembimbing")}
             </Text>
           </Stack>
           <Group className="justify-between mt-2 h-10">
-            {status == "process" ? (
+            {initialStatus !== "process" ? (
+              <FEDisabledTooltip
+                label="Anda telah mengkonfirmasi persetujuan / penolakan SK ini"
+                position="bottom-start"
+              >
+                <Button
+                  className="font-bold hover:bg-white px-4"
+                  // onClick={() => setIsOpenAlertCancelApprovalModal(true)}
+                  // onClick={handleCancelApproval}
+                  variant="light"
+                  disabled
+                >
+                  Batalkan Persetujuan
+                </Button>
+              </FEDisabledTooltip>
+            ) : status == "process" ? (
               <Group className="gap-4">
                 <Button
                   className="text-white bg-primary-500 hover:bg-primary-700 font-bold px-8"
-                  onClick={() => setStatus('accepted')}
+                  onClick={() => setStatus("accepted")}
                   variant="light"
                 >
                   Setuju
@@ -145,9 +175,9 @@ const FESubsectionChairmanMentorAndExaminersApprovalMoreCard: React.FC<
                 </Button>
               </Group>
             ) : (
-              <Button 
-              className="font-bold hover:bg-white px-4"
-              // onClick={() => setIsOpenAlertCancelApprovalModal(true)}
+              <Button
+                className="font-bold hover:bg-white px-4"
+                // onClick={() => setIsOpenAlertCancelApprovalModal(true)}
                 onClick={handleCancelApproval}
                 variant="light"
               >
