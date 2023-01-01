@@ -30,6 +30,8 @@ model bebas_lab {
   blMhsNim         String           @db.Char(12)
   blLabId          Int
   blTglSurat       DateTime?        @db.Date
+  created_at       DateTime         @default(now())
+  updated_at       DateTime?        @default(now())
   // blStatus         Int?
   blTahun          Int?
   ref_permohonan   StatusPermohonan @default(Belum_Diproses)
