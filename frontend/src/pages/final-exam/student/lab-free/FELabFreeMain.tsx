@@ -91,6 +91,7 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap, possibleLab }
               <Grid.Col span={6} xs={12} sm={12} md={6}>
                 <FELabFreeCardComp
                   key={e}
+                  labId={LabFreeCard.labId}
                   index={LabFreeCard.index}
                   title={LabFreeCard.title}
                   lab={LabFreeCard.lab}

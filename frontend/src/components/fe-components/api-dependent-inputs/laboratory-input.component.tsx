@@ -4,7 +4,7 @@ import { SelectInput } from "src/components/FormInput";
 import { useLaboratoryData } from "src/contexts/laboratory-data.context";
 
 interface ILaboratoryInputProps extends Omit<SelectProps, "data"> {
-  shouldDisabled?: string;
+  shouldDisabled?: string[];
 }
 
 interface ILaboratoryDataItem {
@@ -22,12 +22,13 @@ const LaboratoryInput: React.FC<ILaboratoryInputProps> = ({
   ...props
 }) => {
   const { data, isLoading } = useLaboratoryData();
-
   const selectItems = data?.data?.map((data: ILaboratoryDataItem) => {
     const selectItem: SelectItem = {
       value: data.labId + "",
       label: data.labNama,
-      disabled: !!shouldDisabled ? shouldDisabled === data.labId + "" : false,
+      disabled: !!shouldDisabled
+        ? shouldDisabled.includes(data.labId + "")
+        : false,
     };
 
     return selectItem;

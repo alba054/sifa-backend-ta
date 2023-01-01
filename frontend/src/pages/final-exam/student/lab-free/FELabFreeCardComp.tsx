@@ -12,7 +12,9 @@ import {
   ProgressClockOutlined,
 } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
-import FERoundedChip, { statusChip } from "src/components/fe-components/FERoundedChip";
+import FERoundedChip, {
+  statusChip,
+} from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
 import FEInputModal from "src/components/FEInputModal";
 import { FEStatus } from "src/utils/const/type";
@@ -26,9 +28,10 @@ export interface IFELabFreeCardComp {
   title: string;
   index: any;
   lab: string;
+  labId: string;
   status: FEStatus;
   tanggalPermohonan: string;
-  handleDeleteLab: (index: number, lab:string) => void;
+  handleDeleteLab: (index: number, lab: string) => void;
   handleUpdateLab: (
     index: string | number,
     title: string,
@@ -37,7 +40,7 @@ export interface IFELabFreeCardComp {
     status: "process" | "rejected" | "accepted",
     tanggalPermohonan: string
   ) => void;
-  possibleLabValue?: Map<string|number, string|number>;
+  possibleLabValue?: Map<string | number, string | number>;
 }
 
 const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
@@ -45,13 +48,14 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
   title,
   lab,
   status,
+  labId,
   tanggalPermohonan,
   handleDeleteLab,
   handleUpdateLab,
-  possibleLabValue= []
+  possibleLabValue = [],
 }) => {
   const theme = useMantineTheme();
-  
+
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const [isOpenAlertModal, setIsOpenAlertModal] = useState(false);
 
@@ -89,10 +93,10 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
   }, []);
 
   function handleSubmitDelete(e: IFELabFreeFormValues) {
-    handleDeleteLab(index, lab);
+    handleDeleteLab(index, labId);
     setIsOpenAlertModal(false);
   }
-  
+
   return (
     <FECard bg={`bg-primary`} leftBorderRadius={"xl"}>
       <Group className="flex py-6 px-7 border border-[#DFDFDF] relative justify-between rounded-r-xl gap-x-10 drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md bg-white">
@@ -102,7 +106,13 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
           title="Ubah Laboratorium"
           setOpened={setIsOpenEditModal}
           onSubmit={form.onSubmit(handleSubmitEdit) as any}
-          children={<FELabFreeForm form={form} data={possibleLabValue} />}
+          children={
+            <FELabFreeForm
+              selectedLabIds={[]}
+              form={form}
+              data={possibleLabValue}
+            />
+          }
           noButtonLabel="Batal"
           yesButtonLabel="Ubah Laboratorium Permohonan"
         />
@@ -135,7 +145,13 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
             {status == "accepted" ? (
               <Button
                 variant="light"
-                leftIcon={<FEDownloadOutline size={14} color="#5F5AF7" className="-mr-[2px]" />}
+                leftIcon={
+                  <FEDownloadOutline
+                    size={14}
+                    color="#5F5AF7"
+                    className="-mr-[2px]"
+                  />
+                }
                 className="bg-primary-500/[0.1] text-primary-500 px-6 text-md tracking-wide rounded-lg hover:bg-primary-500/[0.25] my-0 self-end"
               >
                 Unduh Surat

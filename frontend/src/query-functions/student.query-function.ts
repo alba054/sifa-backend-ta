@@ -33,7 +33,8 @@ export async function qfPutStudent(nim: string, body: IQFPutStudent) {
   return await student.json();
 }
 
-export async function qfGetStudentReqLabs(nim: string) {
+export async function qfGetStudentReqLabs() {
+  const nim = getLoggedInUserNim();
   const studentReqLabs = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/reqlabs`),
     {
@@ -48,13 +49,11 @@ export async function qfGetStudentReqLabs(nim: string) {
 }
 
 export interface IQFPostStudentReqLabs {
-  labID: string;
+  labID: number;
   studentNIM: string;
 }
-export async function qfPostStudentReqLabs(
-  nim: string,
-  body: IQFPostStudentReqLabs
-) {
+export async function qfPostStudentReqLabs(body: IQFPostStudentReqLabs) {
+  const nim = getLoggedInUserNim();
   const studentReqLabs = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/reqlabs`),
     {
@@ -65,8 +64,10 @@ export async function qfPostStudentReqLabs(
       },
     }
   );
+  const resp = await studentReqLabs.json();
+  console.log(resp);
 
-  return await studentReqLabs.json();
+  return resp;
 }
 
 export interface IQFPutStudentReqLabs {
@@ -91,7 +92,8 @@ export async function qfPutStudentReqLabs(
   return await studentReqLabs.json();
 }
 
-export async function qfDeleteStudentReqLabs(nim: string, reqlabId: string) {
+export async function qfDeleteStudentReqLabs(reqlabId: string) {
+  const nim = getLoggedInUserNim()
   const studentReqLabs = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/reqlabs/${reqlabId}`),
     {

@@ -17,111 +17,150 @@ import {
   IFELabFreeFormValues,
 } from "./FELabFreeInterfaces";
 import FELabFreeMain from "./FELabFreeMain";
+import { useMutation, useQuery } from "react-query";
+import { QF_LAB_FREE_KEY } from "src/query-functions/const.query-function";
+import { qfGetLaboratories } from "src/query-functions/laboratory.query-function";
+import {
+  IQFPostStudentReqLabs,
+  qfDeleteStudentReqLabs,
+  qfGetStudentReqLabs,
+  qfPostStudentReqLabs,
+} from "src/query-functions/student.query-function";
+import { getLoggedInUserNim } from "src/utils/functions/cookies.function";
 
 interface IFELabFreeProps {}
 
 const lastApplicationDone = 3;
 
-const labValue: Array<laboratoyObject> = [
-  {
-    id: 0,
-    labLabel: "Fisika",
-    labValue: "Fisika",
-    show: true,
-  },
-  {
-    id: 1,
-    labLabel: "Bio Farmaka",
-    labValue: "Bio Farmaka",
-    show: true,
-  },
-  {
-    id: 2,
-    labLabel: "Matematika",
-    labValue: "Matematika",
-    show: true,
-  },
-];
-
 const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
   const dummyLab = new Map<string | number, IFELabFreeCardComp>([
-    [
-      0,
-      {
-        title: "Permohonan #1",
-        index: 0,
-        lab: "Fisika",
-        status: "process",
-        tanggalPermohonan: new Date()
-          .toLocaleDateString("id", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          })
-          .replaceAll(".", ":"),
-        handleDeleteLab: handleDeleteLabFreeApplication,
-        handleUpdateLab: handleEditLabFreeApplication,
-      },
-    ],
-    [
-      1,
-      {
-        title: "Permohonan #2",
-        index: 1,
-        lab: "Bio Farmaka",
-        status: "rejected",
-        tanggalPermohonan: new Date()
-          .toLocaleDateString("id", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          })
-          .replaceAll(".", ":"),
-        handleDeleteLab: handleDeleteLabFreeApplication,
-        handleUpdateLab: handleEditLabFreeApplication,
-      },
-    ],
-    [
-      2,
-      {
-        title: "Permohonan #3",
-        index: 2,
-        lab: "Matematika",
-        status: "accepted",
-        tanggalPermohonan: new Date()
-          .toLocaleDateString("id", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          })
-          .replaceAll(".", ":"),
-        handleDeleteLab: handleDeleteLabFreeApplication,
-        handleUpdateLab: handleEditLabFreeApplication,
-      },
-    ],
+    // [
+    //   0,
+    //   {
+    //     title: "Permohonan #1",
+    //     index: 0,
+    //     lab: "Fisika",
+    //     status: "process",
+    //     tanggalPermohonan: new Date()
+    //       .toLocaleDateString("id", {
+    //         day: "2-digit",
+    //         month: "long",
+    //         year: "numeric",
+    //       })
+    //       .replaceAll(".", ":"),
+    //     handleDeleteLab: handleDeleteLabFreeApplication,
+    //     handleUpdateLab: handleEditLabFreeApplication,
+    //   },
+    // ],
+    // [
+    //   1,
+    //   {
+    //     title: "Permohonan #2",
+    //     index: 1,
+    //     lab: "Bio Farmaka",
+    //     status: "rejected",
+    //     tanggalPermohonan: new Date()
+    //       .toLocaleDateString("id", {
+    //         day: "2-digit",
+    //         month: "long",
+    //         year: "numeric",
+    //       })
+    //       .replaceAll(".", ":"),
+    //     handleDeleteLab: handleDeleteLabFreeApplication,
+    //     handleUpdateLab: handleEditLabFreeApplication,
+    //   },
+    // ],
+    // [
+    //   2,
+    //   {
+    //     title: "Permohonan #3",
+    //     index: 2,
+    //     lab: "Matematika",
+    //     status: "accepted",
+    //     tanggalPermohonan: new Date()
+    //       .toLocaleDateString("id", {
+    //         day: "2-digit",
+    //         month: "long",
+    //         year: "numeric",
+    //       })
+    //       .replaceAll(".", ":"),
+    //     handleDeleteLab: handleDeleteLabFreeApplication,
+    //     handleUpdateLab: handleEditLabFreeApplication,
+    //   },
+    // ],
   ]);
 
-  const { data } = useLaboratoryData();
+  const { data, isLoading: isFetchingData } = useLaboratoryData();
+  const { mutate, isLoading: isPostingLab } = useMutation(QF_LAB_FREE_KEY, qfPostStudentReqLabs, {
+    onSuccess: handleSuccessLabMutation,
+  });
+  const { mutate: deleteLab, isLoading: isDeletingLab } = useMutation(
+    QF_LAB_FREE_KEY,
+    qfDeleteStudentReqLabs,
+    {
+      onSuccess: handleSuccessLabMutation,
+    }
+  );
+  const {
+    data: labFreeData,
+    refetch,
+    isFetched,
+  } = useQuery(QF_LAB_FREE_KEY, qfGetStudentReqLabs);
 
-  console.log(data?.data);
+  const labsFree = labFreeData?.data?.map((lf: any, idx: number) => {
+    const labComp: IFELabFreeCardComp = {
+      index: idx,
+      title: `Permohonan #${idx + 1}`,
+      lab: lf.ref_laboratorium.labNama,
+      labId: lf.ref_laboratorium.labId,
+      status: lf.ref_permohonan,
+      tanggalPermohonan: new Date()
+        .toLocaleDateString("id", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+        .replaceAll(".", ":"),
+      handleDeleteLab: handleDeleteLabFreeApplication,
+      handleUpdateLab: handleEditLabFreeApplication,
+    };
+
+    return [idx, labComp];
+  });
+  const [map, actions] = useMap(labsFree);
+
+  useEffect(() => {
+    if (isFetched) {
+      refetch();
+      actions.setAll(labsFree);
+    }
+  }, [isFetched, labFreeData?.data?.length]);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isDataExist, setIsDataExist] = useState(true);
   const [applicationDone, setapplicationDone] = useState(lastApplicationDone);
-  const [map, actions] = useMap(dummyLab);
   const { array: possibleLabValue } = useArray(data?.data || []); // <-- Wrong way?
 
   function handleAddApplicationClick() {
     setIsOpen(true);
   }
 
-  function handleDeleteLabFreeApplication(index: number, lab: string) {
-    for (let i = 0; i < possibleLabValue.length; i++) {
-      if (possibleLabValue[i].labValue == lab) {
-        possibleLabValue[i].show = true;
-      }
-    }
+  async function handleSuccessLabMutation() {
+    await refetch();
 
-    actions.remove(index);
+    setIsOpen(false);
+  }
+
+  function handleDeleteLabFreeApplication(index: number, lab: string) {
+    // for (let i = 0; i < possibleLabValue.length; i++) {
+    //   if (possibleLabValue[i].labValue == lab) {
+    //     possibleLabValue[i].show = true;
+    //   }
+    // }
+
+    // actions.remove(index);
+
+    deleteLab(lab);
   }
 
   function handleEditLabFreeApplication(
@@ -136,6 +175,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
       title: title,
       index: index,
       lab: newLab,
+      labId: newLab,
       status: status,
       tanggalPermohonan: tanggalPermohonan,
       handleDeleteLab: handleDeleteLabFreeApplication,
@@ -162,34 +202,12 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
       return applicationDone + 1;
     });
 
-    const now = Date.now();
-
-    const newLabFreeCard: IFELabFreeCardComp = {
-      title: `Permohonan #${applicationDone + 1}`,
-      index: now,
-      lab: values.laboratory,
-      status: "process",
-      tanggalPermohonan: new Date()
-        .toLocaleDateString("id", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        })
-        .replaceAll(".", ":"),
-      handleDeleteLab: handleDeleteLabFreeApplication,
-      handleUpdateLab: handleEditLabFreeApplication,
+    const postBody: IQFPostStudentReqLabs = {
+      labID: parseInt(values.laboratory),
+      studentNIM: getLoggedInUserNim(),
     };
 
-    actions.set(now, newLabFreeCard);
-
-    for (let i = 0; i < possibleLabValue.length; i++) {
-      if (possibleLabValue[i].labValue == values.laboratory) {
-        possibleLabValue[i].show = false;
-        break;
-      }
-    }
-
-    setIsOpen(false);
+    mutate(postBody);
   }
 
   useEffect(() => {
@@ -205,42 +223,47 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
       label: "Buat Permohonan Baru",
       type: "modal",
       onClick: handleAddApplicationClick,
-      disabled: ((): boolean => {
-        let possibleValueLeft: boolean = true;
+      disabled: false,
+      // disabled: ((): boolean => {
+      //   let possibleValueLeft: boolean = true;
 
-        for (let i = 0; i < possibleLabValue.length; i++) {
-          if (possibleLabValue[i].show === true) {
-            possibleValueLeft = false;
-            break;
-          }
-        }
+      //   for (let i = 0; i < possibleLabValue.length; i++) {
+      //     if (possibleLabValue[i].show === true) {
+      //       possibleValueLeft = false;
+      //       break;
+      //     }
+      //   }
 
-        return possibleValueLeft;
-      })(),
+      //   return possibleValueLeft;
+      // })(),
     },
   ];
 
-  if (map.size === possibleLabValue.length) {
-    buttons[0].disabled = true;
-  }
+  // if (map.size === possibleLabValue.length) {
+  //   buttons[0].disabled = true;
+  // }
 
-  useEffect(() => {
-    let prevLabValue: string[] = [];
+  // useEffect(() => {
+  //   let prevLabValue: string[] = [];
 
-    map.forEach((value, key) => {
-      prevLabValue.push(value.lab);
-    });
+  //   map.forEach((value, key) => {
+  //     prevLabValue.push(value.lab);
+  //   });
 
-    for (let i = 0; i < possibleLabValue.length; i++) {
-      if (prevLabValue.includes(possibleLabValue[i].labValue)) {
-        possibleLabValue[i].show = false;
-      }
-    }
+  //   for (let i = 0; i < possibleLabValue.length; i++) {
+  //     if (prevLabValue.includes(possibleLabValue[i].labValue)) {
+  //       possibleLabValue[i].show = false;
+  //     }
+  //   }
 
-    if (prevLabValue.length === possibleLabValue.length) {
-      buttons[0].disabled = true;
-    }
-  }, []);
+  //   if (prevLabValue.length === possibleLabValue.length) {
+  //     buttons[0].disabled = true;
+  //   }
+  // }, []);
+
+  const selectedLabIds = labFreeData?.data?.map((lf: any) => {
+    return lf?.ref_laboratorium?.labId + "";
+  });
 
   return (
     <FEMainlayout>
@@ -250,7 +273,13 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
         title="Pilih Laboratorium"
         setOpened={setIsOpen}
         onSubmit={onSubmit(handleSubmit) as any}
-        children={<FELabFreeForm form={form} data={possibleLabValue} />}
+        children={
+          <FELabFreeForm
+            selectedLabIds={selectedLabIds}
+            form={form}
+            data={possibleLabValue}
+          />
+        }
       />
 
       <Stack spacing={"xl"}>

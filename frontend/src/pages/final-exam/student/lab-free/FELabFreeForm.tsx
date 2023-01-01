@@ -16,11 +16,15 @@ export interface laboratoyObject {
 interface IFELabFreeFormProps {
   form: Omit<UseFormReturnType<IFELabFreeFormValues>, "onSubmit">;
   data: any;
+  selectedLabIds: string[];
 }
 
 const SIZE = "md";
 
-const FELabFreeForm: React.FC<IFELabFreeFormProps> = ({ form }) => {
+const FELabFreeForm: React.FC<IFELabFreeFormProps> = ({
+  form,
+  selectedLabIds,
+}) => {
   const { getInputProps, errors } = form;
 
   return (
@@ -28,6 +32,7 @@ const FELabFreeForm: React.FC<IFELabFreeFormProps> = ({ form }) => {
       <LaboratoryInput
         required
         size={SIZE}
+        shouldDisabled={selectedLabIds}
         {...getInputProps("laboratory")}
         error={errors["laboratory" as keyof IFELabFreeFormValues]}
         label="Laboratorium"
