@@ -16,6 +16,19 @@ interface IBody {
 }
 
 export class Thesis {
+  static async getApprovedThesisByLab(labID: number) {
+    const approvedThesis = await prismaDB.tugas_akhir.findMany({
+      where: {
+        AND: [
+          { statusPermohonan: "Diterima" },
+          // { OR: [{ taLabId: labID }, { taLabId2: labID }] },
+        ],
+      },
+    });
+
+    return approvedThesis;
+  }
+
   static async getApprovedThesisDetail(id: number) {
     const approvedThesis = await prismaDB.tugas_akhir.findMany({
       where: {
