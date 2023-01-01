@@ -9,11 +9,34 @@ interface IHeadMajorApproval {
 }
 
 export class ThesisHeadMajorDisposition {
+  static async deleteDispositionOfApprovedThesis(thesisID: number) {
+    try {
+      const thesisDisposition = await prismaDB.disposisi_kaprodi.delete({
+        where: { tugas_akhirTaId: thesisID },
+      });
+
+      return thesisDisposition;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
   static async getDispositionByThesisID(thesisID: number) {
     const thesisDisposition = await prismaDB.disposisi_kaprodi.findUnique({
       where: { tugas_akhirTaId: thesisID },
       include: {
-        tugas_akhir: true,
+        tugas_akhir: {
+          include: {
+            ref_laboratorium: true,
+            ref_laboratorium2: true,
+          },
+        },
       },
     });
 

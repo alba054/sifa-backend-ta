@@ -24,14 +24,18 @@ export class Thesis {
       include: {
         pengusul: true,
         mahasiswa: true,
+        ref_laboratorium: true,
+        ref_laboratorium2: true,
+        pembimbing: true,
       },
     });
 
-    try {
-      return approvedThesis[0];
-    } catch (error) {
-      return [];
-    }
+    return approvedThesis[0];
+
+    // try {
+    // } catch (error) {
+    //   return null;
+    // }
   }
 
   static async updateThesisStatus(proposalGroupID: string, body: IBody) {

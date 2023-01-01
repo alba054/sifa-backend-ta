@@ -26,6 +26,32 @@ interface IHeadMajorApproval {
 }
 
 export class HeadMajorHandler {
+  static async deleteDispositionOfApprovedThesis(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { thesisID } = req.params;
+
+    try {
+      const thesisDisposition =
+        await ThesisHeadMajorDispositionService.deleteDispositionOfApprovedThesis(
+          Number(thesisID)
+        );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully remove disposition"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getDispositionOfApprovedThesis(
     req: Request,
     res: Response,
@@ -96,6 +122,10 @@ export class HeadMajorHandler {
     const approvedThesis = await ThesisService.getApprovedThesisDetail(
       Number(id)
     );
+
+    if (typeof approvedThesis === "undefined") {
+      return next(new NotFoundError("approved thesis is not found"));
+    }
 
     return res
       .status(200)
