@@ -67,17 +67,16 @@ export class AuthorizationMiddleware {
           }
         }
 
-        if (tokenPayload.status !== 1) {
+        if (tokenPayload.status !== constants.USER_ACTIVE_STATUS) {
           return next(new UnathorizedError("You are not an active user"));
         }
-        console.log(tokenPayload.groupAccess);
-        console.log(roles);
 
         if (!roles.includes(tokenPayload.groupAccess)) {
           return next(new UnathorizedError("you cannot access this resource"));
         }
 
         res.locals.user = tokenPayload;
+        console.log(res.locals.user);
 
         next();
       } catch (error: any) {

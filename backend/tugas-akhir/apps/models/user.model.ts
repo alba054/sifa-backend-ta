@@ -156,6 +156,9 @@ export class User {
           name: newUser.name,
           status: newUser.status,
           aksesgroup: newUser.groupAccess,
+          labID: newUser.labID,
+          prodiID: newUser.vocationID,
+          departementID: newUser.departmentID,
         },
       });
 

@@ -2,13 +2,14 @@ import express from "express";
 import { UserHandler } from "../handlers/user.handler";
 import { AuthenticationMiddleware } from "../middlewares/auth/authentication.middleware";
 import { AuthorizationMiddleware } from "../middlewares/auth/authorization.middleware";
+import { constants } from "../utils/utils";
 
 const userRouter = express.Router();
 
 // * superuser create a new user
 userRouter.post(
   "/",
-  AuthorizationMiddleware.authorize([1]),
+  AuthorizationMiddleware.authorize([constants.SUPERUSER_GROUP_ACCESS]),
   UserHandler.addNewUserHandler
 );
 
@@ -22,7 +23,7 @@ userRouter.post(
 // * get all students by superuser
 userRouter.get(
   "/students",
-  AuthorizationMiddleware.authorize([1]),
+  AuthorizationMiddleware.authorize([constants.SUPERUSER_GROUP_ACCESS]),
   UserHandler.getUserStudents
 );
 

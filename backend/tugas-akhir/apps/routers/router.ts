@@ -8,6 +8,7 @@ import departmentRouter from "./departement.route";
 import vocationRouter from "./vocation.route";
 import laboratoryRouter from "./laboratory.route";
 import headMajorRouter from "./headMajor.route";
+import headLabRouter from "./headLab.route";
 
 const router = express.Router();
 
@@ -20,5 +21,6 @@ router.use("/departments", departmentRouter);
 router.use("/vocations", vocationRouter);
 router.use("/laboratories", laboratoryRouter);
 router.use("/head-majors", headMajorRouter);
+router.use("/head-labs", headLabRouter);
 
 export default router;

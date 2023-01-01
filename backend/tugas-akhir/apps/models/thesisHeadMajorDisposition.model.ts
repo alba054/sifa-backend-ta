@@ -9,6 +9,16 @@ interface IHeadMajorApproval {
 }
 
 export class ThesisHeadMajorDisposition {
+  static async getDispositions() {
+    const thesisDisposition = await prismaDB.disposisi_kaprodi.findMany({
+      include: {
+        tugas_akhir: true,
+      },
+    });
+
+    return thesisDisposition;
+  }
+
   static async deleteDispositionOfApprovedThesis(thesisID: number) {
     try {
       const thesisDisposition = await prismaDB.disposisi_kaprodi.delete({
