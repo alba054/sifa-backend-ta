@@ -8,6 +8,15 @@ interface IHeadMajorApproval {
 }
 
 export class ThesisHeadMajorDispositionService {
+  static async deleteDispositionOfApprovedThesis(thesisID: number) {
+    const thesisDisposition =
+      await ThesisHeadMajorDisposition.deleteDispositionOfApprovedThesis(
+        thesisID
+      );
+
+    return thesisDisposition;
+  }
+
   static async getDispositionOfApprovedThesis(thesisID: number) {
     const thesisDisposition =
       await ThesisHeadMajorDisposition.getDispositionByThesisID(thesisID);

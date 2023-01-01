@@ -30,7 +30,8 @@ headMajorRouter
   );
 
 // * get approved thesis detail
-// * create approval or approved thesis by headmajor
+// * create approval of approved thesis by headmajor
+// * delete disposition
 headMajorRouter
   .route("/thesis/approved/:id")
   .get(
@@ -47,6 +48,10 @@ headMajorRouter
   .get(
     AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
     HeadMajorHandler.getDispositionOfApprovedThesis
+  )
+  .delete(
+    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    HeadMajorHandler.deleteDispositionOfApprovedThesis
   );
 
 export default headMajorRouter;
