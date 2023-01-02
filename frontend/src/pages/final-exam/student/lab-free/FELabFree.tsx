@@ -10,6 +10,7 @@ import { useLaboratoryData } from "src/contexts/laboratory-data.context";
 import useArray from "src/hooks/fe-hooks/useArray";
 import useMap from "src/hooks/fe-hooks/useMap";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
+import { FEStatus } from "src/utils/const/type";
 import { IFELabFreeCardComp } from "./FELabFreeCardComp";
 import FELabFreeForm, { laboratoyObject } from "./FELabFreeForm";
 import {
@@ -168,7 +169,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
     title: string,
     oldLab: string,
     newLab: string,
-    status: "process" | "rejected" | "accepted",
+    status: FEStatus,
     tanggalPermohonan: string
   ) {
     const editLabFreeCard: IFELabFreeCardComp = {
@@ -202,15 +203,28 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
       return applicationDone + 1;
     });
 
-    const postBody: IQFPostStudentReqLabs = {
-      labID: parseInt(values.laboratory),
-      studentNIM: getLoggedInUserNim(),
+    const now = Date.now();
+
+    const newLabFreeCard: IFELabFreeCardComp = {
+      title: `Permohonan #${applicationDone + 1}`,
+      index: now,
+      lab: values.laboratory,
+      status: "Belum_Diproses",
+      
+      tanggalPermohonan: new Date()
+        .toLocaleDateString("id", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+        .replaceAll(".", ":"),
+      handleDeleteLab: handleDeleteLabFreeApplication,
+      handleUpdateLab: handleEditLabFreeApplication,
     };
 
     mutate(postBody);
   }
 
-  useEffect(() => {
     if (map.size == 0) {
       setIsDataExist(false);
     } else {

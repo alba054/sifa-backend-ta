@@ -1,4 +1,5 @@
 import { API_URL } from "src/utils/const/api";
+import { FEStatus } from "src/utils/const/type";
 import { getLoggedInUserNim } from "src/utils/functions/cookies.function";
 import {
   getTokenAuthorizationHeader,
@@ -93,7 +94,8 @@ export async function qfPutStudentReqLabs(
 }
 
 export async function qfDeleteStudentReqLabs(reqlabId: string) {
-  const nim = getLoggedInUserNim()
+  const nim = getLoggedInUserNim();
+
   const studentReqLabs = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/reqlabs/${reqlabId}`),
     {
@@ -107,9 +109,23 @@ export async function qfDeleteStudentReqLabs(reqlabId: string) {
   return await studentReqLabs.json();
 }
 
-export async function qfGetStudentThesis(nim: string) {
+export interface IQFGetThesisParams {
+  excludeProposalStatus?: FEStatus;
+  proposalStatus?: FEStatus;
+}
+export async function qfGetStudentThesis(params?: IQFGetThesisParams) {
+  const nim = getLoggedInUserNim();
+  const queryParamsArray = Object.keys(params || {}).map((key) => {
+    const val = (params as any)[key];
+    return `${key}=${val}`;
+  });
+
+  const queryParams = !!queryParamsArray.length
+    ? `?${queryParamsArray.join("&")}`
+    : "";
+
   const studentThesis = await fetch(
-    getFormattedUrlEndpoint(`${endpoint}/${nim}/thesis`),
+    getFormattedUrlEndpoint(`${endpoint}/${nim}/thesis${queryParams}`),
     {
       method: "GET",
       headers: {
@@ -179,7 +195,10 @@ export async function qfPutStudentThesis(
   return await studentThesis.json();
 }
 
-export async function qfDeleteStudentThesis(nim: string, thesisID: number) {
+export async function qfDeleteStudentThesis(thesisID: string) {
+  const nim = getLoggedInUserNim();
+  console.log("URL:", `${endpoint}/${nim}/thesis/${thesisID}`);
+
   const studentThesis = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/thesis/${thesisID}`),
     {
@@ -190,5 +209,8 @@ export async function qfDeleteStudentThesis(nim: string, thesisID: number) {
     }
   );
 
-  return await studentThesis.json();
+  const resp = await studentThesis.json();
+  console.log(resp);
+
+  return resp;
 }

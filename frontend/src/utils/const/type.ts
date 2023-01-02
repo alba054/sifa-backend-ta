@@ -1,1 +1,1 @@
-export type FEStatus = "process" | "accepted" | "rejected"
+export type FEStatus = "Belum_Diproses" | "Diterima" | "Ditolak";
