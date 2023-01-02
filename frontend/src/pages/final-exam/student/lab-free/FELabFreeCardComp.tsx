@@ -37,7 +37,7 @@ export interface IFELabFreeCardComp {
     title: string,
     oldLab: string,
     lab: string,
-    status: "process" | "rejected" | "accepted",
+    status: FEStatus,
     tanggalPermohonan: string
   ) => void;
   possibleLabValue?: Map<string | number, string | number>;
@@ -142,7 +142,7 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
             </Text>
           </Stack>
           <Group className="justify-between mt-1 h-12">
-            {status == "accepted" ? (
+            {status == "Diterima" ? (
               <Button
                 variant="light"
                 leftIcon={
@@ -158,15 +158,15 @@ const FELabFreeCardComp: React.FC<IFELabFreeCardComp> = ({
               </Button>
             ) : (
               <Group spacing={"lg"} className="self-end">
-                {status == "process" ? (
+                {status == "Belum_Diproses" ? (
                   <Button
                     variant="light"
                     onClick={handleEditProposalClick}
-                    disabled={status !== "process"}
+                    disabled={status !== "Belum_Diproses"}
                     className={"p-0 m-0 bg-white hover:bg-white"}
                   >
                     <FEPenOutline
-                      color={status == "process" ? "#3B82F6" : "#D1D5DB"}
+                      color={status == "Belum_Diproses" ? "#3B82F6" : "#D1D5DB"}
                       className="bg-white"
                       size={23}
                     />

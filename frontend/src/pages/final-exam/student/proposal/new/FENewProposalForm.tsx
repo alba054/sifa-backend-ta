@@ -1,10 +1,12 @@
-import { Alert, Button, Divider, Stack, Text } from "@mantine/core";
+import { Alert, Button, Divider, Group, Stack, Text } from "@mantine/core";
 import { PDF_MIME_TYPE } from "@mantine/dropzone";
 import { useForm, yupResolver } from "@mantine/form";
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { InformationOutline } from "src/assets/Icons/Fluent";
 import DocumentInput from "src/components/DocumentInput";
+import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { POST_THESIS } from "src/query-functions/const.query-function";
 import {
   IQFPostStudentThesis,
@@ -24,13 +26,13 @@ const FENewProposalForm: React.FC<IFENewProposalFormProps> = ({}) => {
   const form = useForm<IFENewProposalFormValues>({
     validate: yupResolver(feNewProposalFormSchema),
   });
+  const navigate = useNavigate();
+  const [isShowPopup, setIsShowPopup] = useState(false);
 
-  const { getInputProps, values, errors, onSubmit } = form;
-  const { mutate, isLoading } = useMutation(
-    POST_THESIS,
-    qfPostStudentThesis,
-    {}
-  );
+  const { getInputProps, errors } = form;
+  const { mutate, isLoading } = useMutation(POST_THESIS, qfPostStudentThesis, {
+    onSuccess: () => setIsShowPopup(true),
+  });
   async function handleSubmit(values: IFENewProposalFormValues) {
     const firstOffer = values.firstOffer;
     const secondOffer = values.secondOffer;
@@ -50,13 +52,21 @@ const FENewProposalForm: React.FC<IFENewProposalFormProps> = ({}) => {
       khs: khsBase64,
       krs: krsBase64,
     };
-    console.log(postNewProposal);
     mutate(postNewProposal);
   }
-  // console.log(values);
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
+      <FEAlertModal
+        opened={isShowPopup}
+        setOpened={setIsShowPopup}
+        title={"Success Menambahkan Proposal Tugas Akhir"}
+        description={
+          "Success menambahkan proposal tugas akhir, silahkan navigasi ke tugas akhir untuk melihat data"
+        }
+        yesButtonLabel="Oke"
+        onSubmit={() => navigate("/tugas-akhir/mahasiswa/tugas-akhir")}
+      ></FEAlertModal>
       <Stack>
         <FEProposalApplicationForm
           {...getInputProps("firstOffer")}

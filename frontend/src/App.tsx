@@ -76,6 +76,7 @@ import { mantineTheme } from "./themes/mantine.theme";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import DataProvider from "./contexts/data.context";
+import Settings from "./pages/admin/Setting";
 
 const queryClient = new QueryClient({});
 
@@ -158,18 +159,18 @@ function App() {
                   <Route path="data-mahasiswa">
                     <Route index element={<StudentData />} />
                   </Route>
-                </Route>
-                <Route path="laporan">
-                  <Route path="status-pendataan">
-                    <Route index element={<DataStatus />} />
-                  </Route>
-                  <Route path="cpl-matakuliah">
-                    <Route index element={<CourseCPL />} />
-                    <Route path=":matakuliah" element={<CourseCPLDetail />} />
-                  </Route>
-                  <Route path="cpl-mahasiswa">
-                    <Route index element={<StudentCPL />} />
-                    {/* <Route path=":matakuliah" element={<CourseCPLDetail />} /> */}
+                  <Route path="laporan">
+                    <Route path="status-pendataan">
+                      <Route index element={<DataStatus />} />
+                    </Route>
+                    <Route path="cpl-matakuliah">
+                      <Route index element={<CourseCPL />} />
+                      <Route path=":matakuliah" element={<CourseCPLDetail />} />
+                    </Route>
+                    <Route path="cpl-mahasiswa">
+                      <Route index element={<StudentCPL />} />
+                      {/* <Route path=":matakuliah" element={<CourseCPLDetail />} /> */}
+                    </Route>
                   </Route>
                   <Route path="tugas-akhir">
                     <Route index element={<FEHomepage />} />
@@ -252,9 +253,7 @@ function App() {
                         <Route path="izin-ujian-sidang">
                           <Route
                             index
-                            element={
-                              <FESubsectionChairmanTrialPermitApproval />
-                            }
+                            element={<FESubsectionChairmanApproval />}
                           />
                           <Route path="surat-permohonan">
                             <Route
@@ -365,30 +364,30 @@ function App() {
                       }
                     />
                   </Route>
-                </Route>
-                <Route path="dekan">
-                  <Route index element={<FEHomepage />} />
-                  <Route path="persetujuan">
-                    <Route index element={<FEDeanApproval />} />
-                    <Route path="sk-pembimbing-dan-penguji">
+                  <Route path="dekan">
+                    <Route index element={<FEHomepage />} />
+                    <Route path="persetujuan">
+                      <Route index element={<FEDeanApproval />} />
+                      <Route path="sk-pembimbing-dan-penguji">
+                        <Route
+                          index
+                          element={<FEDeanMentorAndExaminersApproval />}
+                        />
+
+                        <Route
+                          path="riwayat"
+                          element={<FEDeanMentorAndExaminersApprovalHistory />}
+                        />
+                      </Route>
                       <Route
-                        index
-                        element={<FEDeanMentorAndExaminersApproval />}
-                      />
-                      
-                      <Route
-                        path="riwayat"
-                        element={<FEDeanMentorAndExaminersApprovalHistory />}
+                        path="sk-pembimbing-dan-penguji/:nim"
+                        element={<FEDeanMentorAndExaminersApprovalMore />}
                       />
                     </Route>
-                    <Route
-                      path="sk-pembimbing-dan-penguji/:nim"
-                      element={<FEDeanMentorAndExaminersApprovalMore />}
-                    />
+                    <Route path="bantuan" element={<Help />} />
+                    <Route path="profil" element={<Profile />} />
+                    <Route path="*" element={<NotFound />} />
                   </Route>
-                  <Route path="bantuan" element={<Help />} />
-                  <Route path="profil" element={<Profile />} />
-                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>
             </FERoleProvider>

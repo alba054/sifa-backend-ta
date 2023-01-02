@@ -7,6 +7,7 @@ import {
 } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FERoundedChip from "src/components/fe-components/FERoundedChip";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFEProposalHistoryCard {
   index: number;
@@ -14,16 +15,13 @@ export interface IFEProposalHistoryCard {
   role: "Mahasiswa" | string;
   title: string;
   laboratory: string;
-  status: "Dalam Proses" | "Diterima" | "Ditolak";
+  status: FEStatus;
   refusalReason: string;
   onDelete: (e: number) => void;
 }
 
-const statusMap = new Map<
-  "Dalam Proses" | "Diterima" | "Ditolak",
-  "green" | "blue" | "red"
->([
-  ["Dalam Proses", "green"],
+const statusMap = new Map<FEStatus, "green" | "blue" | "red">([
+  ["Belum_Diproses", "green"],
   ["Diterima", "blue"],
   ["Ditolak", "red"],
 ]);

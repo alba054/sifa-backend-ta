@@ -6,6 +6,7 @@ import {
   PersonFilled,
   ProgressClockOutlined,
 } from "src/assets/Icons/Fluent";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFERoundedChip {
   label: string;
@@ -94,10 +95,10 @@ export const statusChip: any = {
   ),
 };
 
-export const statusChipNoIcon: any = {
-  process: <FERoundedChip label="Dalam Proses" type="green" />,
-  rejected: <FERoundedChip label="Ditolak" type="red" />,
-  accepted: <FERoundedChip label="Diterima" type="blue" />,
+export const statusChipNoIcon: { [x in FEStatus]: any } = {
+  Belum_Diproses: <FERoundedChip label="Dalam Proses" type="green" />,
+  Ditolak: <FERoundedChip label="Ditolak" type="red" />,
+  Diterima: <FERoundedChip label="Diterima" type="blue" />,
 };
 
 export const approvalChip: any = {
@@ -146,7 +147,11 @@ export const approvalChipNoIcon: any = {
 
 export const approvalChip2: any = {
   waiting: (
-    <Group className={"bg-[#94A3B8]/[0.15] text-[#94A3B8] py-[3px] px-3 gap-0 rounded-full max-w-max box-content"}>
+    <Group
+      className={
+        "bg-[#94A3B8]/[0.15] text-[#94A3B8] py-[3px] px-3 gap-0 rounded-full max-w-max box-content"
+      }
+    >
       {
         <ProgressClockOutlined
           size={14}

@@ -1,7 +1,12 @@
 import { Group, Stack, Text, useMantineTheme } from "@mantine/core";
 import React from "react";
-import { FEBookmarkSingleSearchOutline, PersonFilled } from "src/assets/Icons/Fluent";
-import FERoundedChip, {statusChipNoIcon} from "src/components/fe-components/FERoundedChip";
+import {
+  FEBookmarkSingleSearchOutline,
+  PersonFilled,
+} from "src/assets/Icons/Fluent";
+import FERoundedChip, {
+  statusChipNoIcon,
+} from "src/components/fe-components/FERoundedChip";
 import { FEStatus } from "src/utils/const/type";
 
 export interface IFEProposalCard {
@@ -14,13 +19,10 @@ export interface IFEProposalCard {
   status: FEStatus;
 }
 
-const statusMap = new Map<
-  FEStatus,
-  "green" | "blue" | "red"
->([
-  ["process", "green"],
-  ["accepted", "blue"],
-  ["rejected", "red"],
+const statusMap = new Map<FEStatus, "green" | "blue" | "red">([
+  ["Belum_Diproses", "green"],
+  ["Diterima", "blue"],
+  ["Ditolak", "red"],
 ]);
 
 const FEProposalCard: React.FC<IFEProposalCard> = ({
