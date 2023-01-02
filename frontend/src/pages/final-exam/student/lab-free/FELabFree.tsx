@@ -23,6 +23,7 @@ import { QF_LAB_FREE_KEY } from "src/query-functions/const.query-function";
 import { qfGetLaboratories } from "src/query-functions/laboratory.query-function";
 import {
   IQFPostStudentReqLabs,
+  IQFPostStudentThesis,
   qfDeleteStudentReqLabs,
   qfGetStudentReqLabs,
   qfPostStudentReqLabs,
@@ -34,67 +35,14 @@ interface IFELabFreeProps {}
 const lastApplicationDone = 3;
 
 const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
-  const dummyLab = new Map<string | number, IFELabFreeCardComp>([
-    // [
-    //   0,
-    //   {
-    //     title: "Permohonan #1",
-    //     index: 0,
-    //     lab: "Fisika",
-    //     status: "process",
-    //     tanggalPermohonan: new Date()
-    //       .toLocaleDateString("id", {
-    //         day: "2-digit",
-    //         month: "long",
-    //         year: "numeric",
-    //       })
-    //       .replaceAll(".", ":"),
-    //     handleDeleteLab: handleDeleteLabFreeApplication,
-    //     handleUpdateLab: handleEditLabFreeApplication,
-    //   },
-    // ],
-    // [
-    //   1,
-    //   {
-    //     title: "Permohonan #2",
-    //     index: 1,
-    //     lab: "Bio Farmaka",
-    //     status: "rejected",
-    //     tanggalPermohonan: new Date()
-    //       .toLocaleDateString("id", {
-    //         day: "2-digit",
-    //         month: "long",
-    //         year: "numeric",
-    //       })
-    //       .replaceAll(".", ":"),
-    //     handleDeleteLab: handleDeleteLabFreeApplication,
-    //     handleUpdateLab: handleEditLabFreeApplication,
-    //   },
-    // ],
-    // [
-    //   2,
-    //   {
-    //     title: "Permohonan #3",
-    //     index: 2,
-    //     lab: "Matematika",
-    //     status: "accepted",
-    //     tanggalPermohonan: new Date()
-    //       .toLocaleDateString("id", {
-    //         day: "2-digit",
-    //         month: "long",
-    //         year: "numeric",
-    //       })
-    //       .replaceAll(".", ":"),
-    //     handleDeleteLab: handleDeleteLabFreeApplication,
-    //     handleUpdateLab: handleEditLabFreeApplication,
-    //   },
-    // ],
-  ]);
-
   const { data, isLoading: isFetchingData } = useLaboratoryData();
-  const { mutate, isLoading: isPostingLab } = useMutation(QF_LAB_FREE_KEY, qfPostStudentReqLabs, {
-    onSuccess: handleSuccessLabMutation,
-  });
+  const { mutate, isLoading: isPostingLab } = useMutation(
+    QF_LAB_FREE_KEY,
+    qfPostStudentReqLabs,
+    {
+      onSuccess: handleSuccessLabMutation,
+    }
+  );
   const { mutate: deleteLab, isLoading: isDeletingLab } = useMutation(
     QF_LAB_FREE_KEY,
     qfDeleteStudentReqLabs,
@@ -202,35 +150,12 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
     setapplicationDone(() => {
       return applicationDone + 1;
     });
-
-    const now = Date.now();
-
-    const newLabFreeCard: IFELabFreeCardComp = {
-      title: `Permohonan #${applicationDone + 1}`,
-      index: now,
-      lab: values.laboratory,
-      status: "Belum_Diproses",
-      
-      tanggalPermohonan: new Date()
-        .toLocaleDateString("id", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        })
-        .replaceAll(".", ":"),
-      handleDeleteLab: handleDeleteLabFreeApplication,
-      handleUpdateLab: handleEditLabFreeApplication,
+    const postBody: IQFPostStudentReqLabs = {
+      labID: values.laboratory,
+      studentNIM: getLoggedInUserNim(),
     };
-
     mutate(postBody);
   }
-
-    if (map.size == 0) {
-      setIsDataExist(false);
-    } else {
-      setIsDataExist(true);
-    }
-  }, [map]);
 
   const buttons: ILFPHeaderButton[] = [
     {

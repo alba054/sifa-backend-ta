@@ -30,7 +30,7 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
   const [isShowPopup, setIsShowPopup] = useState(false);
   const { data, refetch: refetchThesis } = useQuery(
     QF_DATA_KEYS.THESIS,
-    qfGetStudentThesis,
+    () => qfGetStudentThesis(),
     {}
   );
   const finalExamProposalArray = data?.data?.map((data: any, idx: number) => {
