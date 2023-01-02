@@ -258,29 +258,23 @@ function App() {
                         <Route path="izin-ujian-sidang">
                           <Route
                             index
-                            element={<FESubsectionChairmanApproval />}
-                          />
-                          <Route path="surat-permohonan">
-                            <Route
-                              index
-                              element={
-                                <FESubsectionChairmanTrialPermitApprovalApplication />
-                              }
-                            />
-                            <Route
-                              path="riwayat"
-                              element={
-                                <FESubsectionChairmanTrialPermitApprovalApplicationHistory />
-                              }
-                            />
-                          </Route>
-                          <Route
-                            path="surat-permohonan/:nim"
                             element={
-                              <FESubsectionChairmanTrialPermitApprovalApplicationDetails />
+                              <FESubsectionChairmanTrialPermitApprovalApplication />
+                            }
+                          />
+                          <Route
+                            path="riwayat"
+                            element={
+                              <FESubsectionChairmanTrialPermitApprovalApplicationHistory />
                             }
                           />
                         </Route>
+                        <Route
+                          path="izin-ujian-sidang/:nim"
+                          element={
+                            <FESubsectionChairmanTrialPermitApprovalApplicationDetails />
+                          }
+                        />
                       </Route>
                     </Route>
                     <Route path="admin-program-studi">
@@ -298,7 +292,9 @@ function App() {
                           <Route path="permohonan-judul-penelitian">
                             <Route
                               index
-                              element={<FEMentorAndExaminersApproval />}
+                              element={
+                                <FEStudyProgramAdminProposalApplication />
+                              }
                             />
                             <Route
                               path="riwayat"
@@ -341,32 +337,59 @@ function App() {
                         <Route
                           path="penyusunan-tim-penguji/:nim"
                           element={
-                            <FEStudyProgramAdminProposalSubmissionHistory />
+                            <FEStudyProgramAdminApprovalExaminersFramingDetermine />
                           }
                         />
                       </Route>
-                      <Route path="penyusunan-tim-penguji">
+                    </Route>
+                    <Route path="ktu">
+                      <Route index element={<FEHomepage />} />
+                      <Route path="persetujuan">
                         <Route
                           index
+                          element={<FEHeadAdministratorApproval />}
+                        />
+                        <Route path="sk-pembimbing-dan-penguji">
+                          <Route
+                            index
+                            element={
+                              <FEHeadAdministratorMentorAndExaminersApproval />
+                            }
+                          />
+                        </Route>
+                        <Route
+                          path="sk-pembimbing-dan-penguji/:nim"
                           element={
-                            <FEStudyProgramAdminApprovalExaminersFraming />
+                            <FEHeadAdministratorMentorAndExaminersApprovalMore />
                           }
                         />
-
                         <Route
-                          path="riwayat"
+                          path="sk-pembimbing-dan-penguji/riwayat"
                           element={
-                            <FEStudyProgramAdminApprovalExaminersFramingHistory />
+                            <FEHeadAdministratorMentorAndExaminersApprovalHistory />
+                          }
+                        />
+                        <Route path="sk-izin-ujian-sidang">
+                          <Route
+                            index
+                            element={
+                              <FEHeadAdministratorTrialPermitApprovalApplication />
+                            }
+                          />
+                          <Route
+                            path="riwayat"
+                            element={
+                              <FEHeadAdministratorTrialPermitApprovalHistory />
+                            }
+                          />
+                        </Route>
+                        <Route
+                          path="sk-izin-ujian-sidang/:nim"
+                          element={
+                            <FEHeadAdministratorTrialPermitApprovalApplicationDetails />
                           }
                         />
                       </Route>
-
-                      <Route
-                        path="penyusunan-tim-penguji/:nim"
-                        element={
-                          <FEStudyProgramAdminApprovalExaminersFramingDetermine />
-                        }
-                      />
                     </Route>
                     <Route path="dekan">
                       <Route index element={<FEHomepage />} />
