@@ -19,13 +19,13 @@ const FESubsectionChairmanTrialPermitApprovalApplicationUnprocessedDetails: Reac
   const theme = useMantineTheme();
 
   function handleRefuseApproval() {
-    setStatus("rejected")
+    setStatus("Ditolak")
     setIsOpenRefuseAlertModal(false);
   }
 
   function handleAcceptApproval() {
     setIsOpenAcceptAlertModal(false);
-    setStatus("accepted")
+    setStatus("Diterima")
   }
 
   return (

@@ -36,16 +36,16 @@ const FEDeanMentorAndExaminersApprovalMoreCard: React.FC<
     useState(false);
 
   function handleCancelApproval() {
-    setStatus("process");
+    setStatus("Belum_Diproses");
     setIsOpenAlertCancelApprovalModal(false);
   }
 
   function handleAcceptApproval() {
-    setStatus("accepted");
+    setStatus("Diterima");
   }
 
   const statusChip: any = {
-    process: (
+    Belum_Diproses: (
       <FERoundedChip
         label={passedTime}
         type="green"
@@ -58,7 +58,7 @@ const FEDeanMentorAndExaminersApprovalMoreCard: React.FC<
         }
       />
     ),
-    rejected: (
+    Ditolak: (
       <FERoundedChip
         label="Tidak Ditandatangani"
         type="red"
@@ -71,7 +71,7 @@ const FEDeanMentorAndExaminersApprovalMoreCard: React.FC<
         }
       />
     ),
-    accepted: (
+    Diterima: (
       <FERoundedChip
         label="Telah Ditandatangani"
         type="blue"
@@ -98,7 +98,7 @@ const FEDeanMentorAndExaminersApprovalMoreCard: React.FC<
             </Text>
           </Stack>
           <Group className="justify-between mt-2 h-10">
-            {initialStatus !== "process" ? (
+            {initialStatus !== "Belum_Diproses" ? (
               <FEDisabledTooltip
                 label="Anda telah mengkonfirmasi persetujuan / penolakan SK ini"
                 position="bottom-start"
@@ -113,11 +113,11 @@ const FEDeanMentorAndExaminersApprovalMoreCard: React.FC<
                   Batalkan Penandatanganan
                 </Button>
               </FEDisabledTooltip>
-            ) : status == "process" ? (
+            ) : status == "Belum_Diproses" ? (
               <Group className="gap-4">
                 <Button
                   className="text-white bg-primary-500 hover:bg-primary-700 font-bold px-8"
-                  onClick={() => setStatus("accepted")}
+                  onClick={() => setStatus("Diterima")}
                   variant="light"
                 >
                   Tanda Tangani

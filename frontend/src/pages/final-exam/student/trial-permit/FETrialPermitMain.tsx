@@ -4,10 +4,11 @@ import { DeleteOutline, EditOutline } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FEDocumentList from "src/components/fe-components/FEDocumentList";
 import FEProgressBar from "src/components/fe-components/FEProgressBar";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFETrialPermitMain {
   applicationDate: string,
-  status: "process"|"rejected"|"accepted",
+  status: FEStatus,
   currentProgress: number,
   editPermit: ((e:boolean)=>void)
   deletePermit: (()=>void)
@@ -49,7 +50,7 @@ const FETrialPermitMain: React.FC<IFETrialPermitMain> = ({applicationDate, statu
           variant="light"
           className="bg-[rgb(59,130,246)] py-[10px] h-full rounded-lg text-white hover:bg-[#3B82F6]"
           onClick={(()=>{editPermit(true)}) as any}
-          disabled={status!=='process'}
+          disabled={status!=='Belum_Diproses'}
         >
           <EditOutline size={16} color={"white"} className="mr-2" />
           Edit Permohonan
@@ -60,7 +61,7 @@ const FETrialPermitMain: React.FC<IFETrialPermitMain> = ({applicationDate, statu
           onClick={() => {
             setAlertOpened(true);
           }}
-          disabled={status==='accepted'}
+          disabled={status==='Diterima'}
         >
           <DeleteOutline size={18} color={"white"} className="mr-2" />
           Hapus Permohonan

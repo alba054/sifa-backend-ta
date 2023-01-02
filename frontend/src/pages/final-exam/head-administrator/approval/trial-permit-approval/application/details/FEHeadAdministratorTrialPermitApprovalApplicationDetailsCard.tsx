@@ -20,7 +20,7 @@ import FEMentorAndExaminaRefusalReasonForm, {
 } from "./FEHeadAdministratorTrialPermitApprovalApplicationDetailsForm";
 
 export interface IFEHeadAdministratorTrialPermitApprovalApplicationDetailsCard {
-  status: "process" | "rejected" | "accepted" | "waiting";
+  status: FEStatus;
   applicationDate: string;
   passedTime: string;
   setStatus: (e: FEStatus) => void;
@@ -59,13 +59,13 @@ const FEHeadAdministratorTrialPermitApprovalApplicationDetailsCard: React.FC<
   }
 
   function handleAcceptApproval() {
-    setStatus("accepted");
+    setStatus("Diterima");
     setIsOpenAlertModal(false);
     navigate(-1);
   }
 
   const statusChip: any = {
-    process: (
+    Belum_Diproses: (
       <FERoundedChip
         label={passedTime}
         type="green"
@@ -78,7 +78,7 @@ const FEHeadAdministratorTrialPermitApprovalApplicationDetailsCard: React.FC<
         }
       />
     ),
-    rejected: (
+    Ditolak: (
       <FERoundedChip
         label="Ditolak"
         type="red"
@@ -91,7 +91,7 @@ const FEHeadAdministratorTrialPermitApprovalApplicationDetailsCard: React.FC<
         }
       />
     ),
-    accepted: (
+    Diterima: (
       <FERoundedChip
         label="Diterima"
         type="blue"

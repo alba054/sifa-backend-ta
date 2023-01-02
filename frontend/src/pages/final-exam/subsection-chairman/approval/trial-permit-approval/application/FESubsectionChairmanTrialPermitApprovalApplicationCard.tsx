@@ -3,12 +3,13 @@ import React from "react";
 import { FESearchBookOutline } from "src/assets/Icons/Fluent";
 import FELinkMore from "src/components/fe-components/FELinkMore";
 import { approvalChip2 } from "src/components/fe-components/FERoundedChip";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFESubsectionChairmanTrialPermitApprovalApplicationCard {
   name: string;
   nim:string;
   index?: any;
-  status: "waiting" | "process" | "accepted" | "rejected";
+  status: FEStatus;
   applicationDate: string;
 }
 

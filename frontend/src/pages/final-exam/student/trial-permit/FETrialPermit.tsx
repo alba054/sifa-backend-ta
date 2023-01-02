@@ -13,7 +13,7 @@ interface IFETrialPermit {}
 
 const dummyTrialPermitData: IFETrialPermitMain = {
   applicationDate: "5 Maret 2022",
-  status: "process",
+  status: "Belum_Diproses",
   currentProgress: 1,
   editPermit: () => {},
   deletePermit: () => {},
@@ -21,7 +21,7 @@ const dummyTrialPermitData: IFETrialPermitMain = {
 
 const initialTrialPermitData: IFETrialPermitMain = {
   applicationDate: "",
-  status: "process",
+  status: "Belum_Diproses",
   currentProgress: 0,
   editPermit: () => {},
   deletePermit: () => {},

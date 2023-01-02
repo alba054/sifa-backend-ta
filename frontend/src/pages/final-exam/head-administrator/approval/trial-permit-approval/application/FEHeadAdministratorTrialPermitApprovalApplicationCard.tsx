@@ -4,6 +4,7 @@ import { FEBookmarkSingleSearchOutline } from "src/assets/Icons/Fluent";
 import FELinkMore from "src/components/fe-components/FELinkMore";
 import { approvalChip2 } from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFEHeadAdministratorTrialPermitApprovalApplicationCard {
   name: string;
@@ -11,11 +12,7 @@ export interface IFEHeadAdministratorTrialPermitApprovalApplicationCard {
   proposalTitle: string;
   laboratory: string;
   proposer?: string;
-  trialPermitCertificateStatus?:
-    | "process"
-    | "accepted"
-    | "rejected"
-    | "waiting";
+  trialPermitCertificateStatus?:FEStatus;
   onClick?: () => void;
 }
 
@@ -28,7 +25,7 @@ const FEHeadAdministratorTrialPermitApprovalApplicationCard: React.FC<
   laboratory,
   proposer,
   onClick,
-  trialPermitCertificateStatus = "waiting",
+  trialPermitCertificateStatus = "Menunggu",
 }) => {
   const theme = useMantineTheme();
 
@@ -52,7 +49,7 @@ const FEHeadAdministratorTrialPermitApprovalApplicationCard: React.FC<
               <Text className="text-secondary-text-500 text-lg font-semibold tracking-1">
                 SK Izin Ujian Sidang
               </Text>
-              {approvalChip2[trialPermitCertificateStatus || "process"]}
+              {approvalChip2[trialPermitCertificateStatus || "Belum_Diproses"]}
             </Group>
           </Stack>
         </Stack>

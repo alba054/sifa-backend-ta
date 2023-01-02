@@ -50,14 +50,14 @@ const dummyProposalData: any = {
     sideMentor: "Prof. Dr. Jack Sully.",
     proposedFirstExaminers: {
       name: "Prof. Dr. M.Natsir Djide, M.S.",
-      approvalStatus: "accepted",
+      approvalStatus: "Diterima",
     },
     proposedSecondExaminers: {
       name: "Drs. Kus Haryono, MS.",
-      approvalStatus: "accepted",
+      approvalStatus: "Diterima",
     },
   },
-  // process rejected accepted
+  // Belum_Diproses Ditolak Diterima
   // a-a , r-r, p-p, a-r, a-p, r-p
 
   N011181001: {
@@ -71,11 +71,11 @@ const dummyProposalData: any = {
     sideMentor: "Prof. Dr. Jack Sully.",
     proposedFirstExaminers: {
       name: "Prof. Dr. Jack Sully",
-      approvalStatus: "process",
+      approvalStatus: "Belum_Diproses",
     },
     proposedSecondExaminers: {
       name: "Drs. Kus Haryono, MS.",
-      approvalStatus: "rejected",
+      approvalStatus: "Ditolak",
     },
   },
   H071191044: {
@@ -126,8 +126,8 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
     ) {
       return false;
     } else if (
-      currentProposal.proposedFirstExaminers.approvalStatus === "accepted" &&
-      currentProposal.proposedSecondExaminers.approvalStatus === "accepted"
+      currentProposal.proposedFirstExaminers.approvalStatus === "Diterima" &&
+      currentProposal.proposedSecondExaminers.approvalStatus === "Diterima"
     ) {
       return true;
     } else {
@@ -191,8 +191,8 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
     }
     // Kalau dua2nya accept maka disable
     else if (
-      proposedFirstExaminersStatus === "accepted" &&
-      proposedSecondExaminerStatus === "accepted"
+      proposedFirstExaminersStatus === "Diterima" &&
+      proposedSecondExaminerStatus === "Diterima"
     ) {
       return true;
     } else {
@@ -212,18 +212,18 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
     if (
       values.proposedFirstExaminers != null &&
       (proposedFirstExaminersStatus == null ||
-        proposedFirstExaminersStatus === "rejected")
+        proposedFirstExaminersStatus === "Ditolak")
     ) {
-      setProposedFirstExaminersStatus("process");
+      setProposedFirstExaminersStatus("Belum_Diproses");
     }
 
     // Kalau penguji kedua disubmit
     if (
       values.proposedSecondExaminers != null &&
       (proposedSecondExaminerStatus == null ||
-        proposedSecondExaminerStatus === "rejected")
+        proposedSecondExaminerStatus === "Ditolak")
     ) {
-      setProposedSecondExaminerStatus("process");
+      setProposedSecondExaminerStatus("Belum_Diproses");
     }
 
     if (
@@ -376,7 +376,7 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
               disabled={
                 proposedFirstExaminersStatus == null
                   ? false
-                  : proposedFirstExaminersStatus !== "rejected"
+                  : proposedFirstExaminersStatus !== "Ditolak"
               }
               {...getInputProps("proposedFirstExaminers")}
               size={"md"}
@@ -430,7 +430,7 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
               disabled={
                 proposedSecondExaminerStatus == null
                   ? false
-                  : proposedSecondExaminerStatus !== "rejected"
+                  : proposedSecondExaminerStatus !== "Ditolak"
               }
               {...getInputProps("proposedSecondExaminers")}
               size={"md"}
@@ -444,8 +444,8 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
             } else if (
               values.proposedFirstExaminers == null ||
               values.proposedSecondExaminers == null ||
-              proposedFirstExaminersStatus === "rejected" ||
-              proposedSecondExaminerStatus === "rejected"
+              proposedFirstExaminersStatus === "Ditolak" ||
+              proposedSecondExaminerStatus === "Ditolak"
             ) {
               return "Silahkan pilih setidaknya satu penguji untuk mengajukan penyusunan tim penguji";
             } else {

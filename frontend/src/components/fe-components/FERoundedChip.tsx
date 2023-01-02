@@ -58,7 +58,7 @@ export const personChip: any = (label: string) => {
 };
 
 export const statusChip: any = {
-  process: (
+  Belum_Diproses: (
     <FERoundedChip
       label="Dalam Proses"
       type="green"
@@ -71,7 +71,7 @@ export const statusChip: any = {
       }
     />
   ),
-  rejected: (
+  Ditolak: (
     <FERoundedChip
       label="Ditolak"
       type="red"
@@ -84,7 +84,7 @@ export const statusChip: any = {
       }
     />
   ),
-  accepted: (
+  Diterima: (
     <FERoundedChip
       label="Diterima"
       type="blue"
@@ -99,10 +99,11 @@ export const statusChipNoIcon: { [x in FEStatus]: any } = {
   Belum_Diproses: <FERoundedChip label="Dalam Proses" type="green" />,
   Ditolak: <FERoundedChip label="Ditolak" type="red" />,
   Diterima: <FERoundedChip label="Diterima" type="blue" />,
+  Menunggu: <FERoundedChip label="Menunggu" type="green" />,
 };
 
 export const approvalChip: any = {
-  process: (
+  Belum_Diproses: (
     <FERoundedChip
       label="Menunggu Persetujuan"
       type="green"
@@ -115,7 +116,7 @@ export const approvalChip: any = {
       }
     />
   ),
-  rejected: (
+  Ditolak: (
     <FERoundedChip
       label="Ditolak"
       type="red"
@@ -128,7 +129,7 @@ export const approvalChip: any = {
       }
     />
   ),
-  accepted: (
+  Diterima: (
     <FERoundedChip
       label="Disetujui"
       type="blue"
@@ -140,13 +141,13 @@ export const approvalChip: any = {
 };
 
 export const approvalChipNoIcon: any = {
-  process: <FERoundedChip label="Menunggu Persetujuan" type="green" />,
-  rejected: <FERoundedChip label="Ditolak" type="red" />,
-  accepted: <FERoundedChip label="Disetujui" type="blue" />,
+  Belum_Diproses: <FERoundedChip label="Menunggu Persetujuan" type="green" />,
+  Ditolak: <FERoundedChip label="Ditolak" type="red" />,
+  Diterima: <FERoundedChip label="Disetujui" type="blue" />,
 };
 
 export const approvalChip2: any = {
-  waiting: (
+  Menunggu: (
     <Group
       className={
         "bg-[#94A3B8]/[0.15] text-[#94A3B8] py-[3px] px-3 gap-0 rounded-full max-w-max box-content"
@@ -162,7 +163,7 @@ export const approvalChip2: any = {
       <Text className={"text-[13px] pl-[6px]"}>{"Menunggu Persetujuan"}</Text>
     </Group>
   ),
-  process: (
+  Belum_Diproses: (
     <FERoundedChip
       label="Dalam Proses"
       type="green"
@@ -175,7 +176,7 @@ export const approvalChip2: any = {
       }
     />
   ),
-  rejected: (
+  Ditolak: (
     <FERoundedChip
       label="Ditolak"
       type="red"
@@ -188,7 +189,7 @@ export const approvalChip2: any = {
       }
     />
   ),
-  accepted: (
+  Diterima: (
     <FERoundedChip
       label="Disetujui"
       type="blue"

@@ -23,8 +23,8 @@ export interface IFESeminar {}
 const dummySeminarApprovalStatus: IFESeminarApprovalStatus = {
   mainMentor: "Rangga Meidianto Asri S.Si., M.Si., Apt.",
   sideMentor: "Yayu Mulsiani Evary, S.Si., Pharm.Sci., Apt.",
-  mainMentorApproval: "process",
-  sideMentorApproval: "process",
+  mainMentorApproval: "Belum_Diproses",
+  sideMentorApproval: "Belum_Diproses",
 };
 
 const dummySeminarTimeInformation: IFESeminarTimeInformation = {

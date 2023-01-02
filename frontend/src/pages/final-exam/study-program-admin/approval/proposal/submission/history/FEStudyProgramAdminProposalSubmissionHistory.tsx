@@ -41,7 +41,7 @@ const dummySubmissionList: Array<IFEStudyProgramAdminProposalSubmissionHistoryMa
       entryDate: "7 November 2022",
       proposalTitle:
         "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
-      status: "accepted",
+      status: "Diterima",
     },
 
     {
@@ -53,7 +53,7 @@ const dummySubmissionList: Array<IFEStudyProgramAdminProposalSubmissionHistoryMa
       entryDate: "7 November 2022",
       proposalTitle:
         "Pengujian Aktivitas Antioksidan dan Analisis Mikrobiologi terhadap Lama Waktu Penyimpanan Teh Daun Gaharu (Aquilaria Malaccensis Lamk.) dalam Kemasan Siap Minum",
-      status: "accepted",
+      status: "Diterima",
     },
   ];
 

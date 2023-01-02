@@ -28,25 +28,25 @@ const dummyApplicationData: {
     applicationDate: "24 November 2022",
     name: "Devi Selfira",
     nim: "N011181001",
-    status: "waiting",
+    status: "Menunggu",
   },
   H071191044: {
     applicationDate: "24 Desember 2022",
     name: "Yusuf Syam",
     nim: "H071191044",
-    status: "accepted",
+    status: "Diterima",
   },
   H071191040: {
     applicationDate: "14 November 2022",
     name: "Devon",
     nim: "H071191040",
-    status: "process",
+    status: "Belum_Diproses",
   },
   H071191055: {
     applicationDate: "15 November 2022",
     name: "Richard Enrico",
     nim: "H071191055",
-    status: "rejected",
+    status: "Ditolak",
   },
 };
 
@@ -68,7 +68,7 @@ const FESubsectionChairmanTrialPermitApprovalApplicationDetails: React.FC<
       <Title order={2} mb={"md"}>
         {applicationData.name} ({applicationData.nim})
       </Title>
-      {dataStatus == "waiting" ? (
+      {dataStatus == "Menunggu" ? (
         <FESubsectionChairmanTrialPermitApprovalApplicationUnprocessedDetails setStatus={setDataStatus} />
       ) : (
         <FESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails

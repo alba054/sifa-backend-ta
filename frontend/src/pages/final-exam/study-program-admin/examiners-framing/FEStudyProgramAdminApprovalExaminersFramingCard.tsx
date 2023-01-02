@@ -102,8 +102,8 @@ const FEStudyProgramAdminApprovalExaminersFramingCard: React.FC<
               </div>
               {proposedFirstExaminers != null &&
               proposedSecondExaminers != null &&
-              proposedFirstExaminers.approvalStatus === "accepted" &&
-              proposedSecondExaminers.approvalStatus === "accepted" ? (
+              proposedFirstExaminers.approvalStatus === "Diterima" &&
+              proposedSecondExaminers.approvalStatus === "Diterima" ? (
                 <Button
                   variant="light"
                   className="bg-primary-500 text-white hover:bg-primary-500 px-10"

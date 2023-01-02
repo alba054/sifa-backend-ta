@@ -7,9 +7,10 @@ import FEDisabledTooltip from "src/components/fe-components/FEDisabledTooltip";
 import FEDocumentListShowCase from "src/components/fe-components/FEDocumentListShowCase";
 import FEProgressBar from "src/components/fe-components/FEProgressBar";
 import { statusChipNoIcon } from "src/components/fe-components/FERoundedChip";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails {
-  status: string;
+  status: FEStatus;
 }
 
 const FESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails: React.FC<
@@ -20,8 +21,8 @@ const FESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails: React.
   const theme = useMantineTheme();
 
   useEffect(() => {
-    if (status == "waiting") {
-      status = "process";
+    if (status == "Menunggu") {
+      status = "Belum_Diproses";
     }
   }, []);
 
@@ -86,7 +87,7 @@ const FESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails: React.
       </Stack>
       <FEDisabledTooltip
         label="Jika permohonan ditolak anda bisa membuat kembali surat permohonan"
-        isDisabled={status == "rejected"}
+        isDisabled={status == "Ditolak"}
         position="top-start"
       >
         <Button
@@ -94,7 +95,7 @@ const FESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails: React.
           onClick={() => {
             setIsAlertOpen(true);
           }}
-          disabled={status != "rejected"}
+          disabled={status != "Ditolak"}
           variant="light"
         >
           Buat Kembali Surat Permohonan

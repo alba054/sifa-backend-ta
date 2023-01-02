@@ -6,12 +6,13 @@ import FERoundedChip, {
 } from "src/components/fe-components/FERoundedChip";
 import FETableHeader from "src/components/fe-components/table/FETableHeader1";
 import FETableRow2 from "src/components/fe-components/table/FETableRow2";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFESeminarApprovalStatus {
   mainMentor: string;
   sideMentor: string;
-  mainMentorApproval: "process" | "rejected" | "accepted";
-  sideMentorApproval: "process" | "rejected" | "accepted";
+  mainMentorApproval: FEStatus;
+  sideMentorApproval: FEStatus;
 }
 
 const FESeminarApprovalStatus: React.FC<IFESeminarApprovalStatus> = ({mainMentor, sideMentor, mainMentorApproval, sideMentorApproval}) => {

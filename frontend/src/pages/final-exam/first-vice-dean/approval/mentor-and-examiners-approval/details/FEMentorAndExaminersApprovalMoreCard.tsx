@@ -11,6 +11,7 @@ import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FERoundedChip from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
 import FEInputModal from "src/components/FEInputModal";
+import { FEStatus } from "src/utils/const/type";
 import FEMentorAndExaminaRefusalReasonForm, {
   fEMentorAndExaminaRefusalReasonFormSchema,
   IFEMentorAndExaminaRefusalReasonForm,
@@ -21,10 +22,10 @@ export interface IFEMentorAndExaminersApprovalMoreCard {
   SKType: "examiner" | "mentor";
   title: string;
   lab: string;
-  status: "process" | "rejected" | "accepted";
+  status: FEStatus;
   tanggalPermohonan: string;
   passedTime: string;
-  setStatus: ((e:"process" | "rejected" | "accepted")=>void)
+  setStatus: ((e:FEStatus)=>void)
 }
 
 const FEMentorAndExaminersApprovalMoreCard: React.FC<
@@ -40,22 +41,22 @@ const FEMentorAndExaminersApprovalMoreCard: React.FC<
     });
 
   function handleCancelApproval() {
-    setStatus("process");
+    setStatus("Belum_Diproses");
     setIsOpenAlertCancelApprovalModal(false);
   }
 
   function handleRefuseApproval(values: IFEMentorAndExaminaRefusalReasonForm) {
     console.log(values);
-    setStatus("rejected");
+    setStatus("Ditolak");
     setIsOpenInputModal(false);
   }
 
   function handleAcceptApproval() {
-    setStatus("accepted");
+    setStatus("Diterima");
   }
 
   const statusChip: any = {
-    process: (
+    Belum_Diproses: (
       <FERoundedChip
         label={passedTime}
         type="green"
@@ -68,7 +69,7 @@ const FEMentorAndExaminersApprovalMoreCard: React.FC<
         }
       />
     ),
-    rejected: (
+    Ditolak: (
       <FERoundedChip
         label="Ditolak"
         type="red"
@@ -81,7 +82,7 @@ const FEMentorAndExaminersApprovalMoreCard: React.FC<
         }
       />
     ),
-    accepted: (
+    Diterima: (
       <FERoundedChip
         label="Diterima"
         type="blue"
@@ -142,11 +143,11 @@ const FEMentorAndExaminersApprovalMoreCard: React.FC<
             </Text>
           </Stack>
           <Group className="justify-between mt-6 h-10">
-            {status == "process" ? (
+            {status == "Belum_Diproses" ? (
               <Group className="gap-4">
                 <Button
                   className="text-white bg-primary-500 hover:bg-primary-700 font-bold px-8"
-                  onClick={() => setStatus('accepted')}
+                  onClick={() => setStatus('Diterima')}
                   variant="light"
                 >
                   Setuju

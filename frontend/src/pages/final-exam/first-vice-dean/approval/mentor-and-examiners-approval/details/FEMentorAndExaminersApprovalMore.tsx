@@ -19,6 +19,7 @@ import FEMentorAndExaminersApprovalMoreCard, {
 import {
   useParams
 } from "react-router-dom";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFEMentorAndExaminersApprovalMore {}
 
@@ -38,19 +39,19 @@ const dummyApprovalCardData: Array<IFEMentorAndExaminersApprovalMoreCard> = [
     SKType: "mentor",
     title: "SK Pembimbing",
     lab: "Lab. Farmakologi Toksikologi",
-    status: "process",
+    status: "Belum_Diproses",
     tanggalPermohonan: "12 November 2022",
     passedTime: "4 menit yang lalu",
-    setStatus: (e: "process" | "rejected" | "accepted") => {},
+    setStatus: (e: FEStatus) => {},
   },
   {
     SKType: "examiner",
     title: "SK Penguji",
     lab: "Lab. Farmakologi Toksikologi",
-    status: "process",
+    status: "Belum_Diproses",
     tanggalPermohonan: "12 November 2022",
     passedTime: "4 menit yang lalu",
-    setStatus: (e: "process" | "rejected" | "accepted") => {},
+    setStatus: (e: FEStatus) => {},
   },
 ];
 
@@ -140,7 +141,7 @@ const FEMentorAndExaminersApprovalMore: React.FC<
               className="text-white bg-primary-500 hover:bg-primary-700 font-bold px-8"
               onClick={() => setIsOpenAlertModal(true)}
               variant="light"
-              disabled={mentorStatus=='process' || examinerStatus=='process'}
+              disabled={mentorStatus=='Belum_Diproses' || examinerStatus=='Belum_Diproses'}
             >
               Konfirmasi Persetujuan
             </Button>

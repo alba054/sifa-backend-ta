@@ -29,8 +29,8 @@ const FEApprovalDetailsCardWithStatus: React.FC<
   proposer,
   onClick,
   chip= approvalChip,
-  examinersCertificateApprovalStatus = "process",
-  mentorCertificateApprovalStatus = "process",
+  examinersCertificateApprovalStatus = "Belum_Diproses",
+  mentorCertificateApprovalStatus = "Belum_Diproses",
 }) => {
   const theme = useMantineTheme();
 
@@ -59,13 +59,13 @@ const FEApprovalDetailsCardWithStatus: React.FC<
                   <Text className="text-secondary-text-500 text-lg font-semibold tracking-1">
                     SK Pembimbing
                   </Text>
-                  {chip[mentorCertificateApprovalStatus || "process"]}
+                  {chip[mentorCertificateApprovalStatus || "Belum_Diproses"]}
                 </Group>
                 <Group>
                   <Text className="text-secondary-text-500 text-lg font-semibold tracking-1">
                     SK Penguji
                   </Text>
-                  {chip[examinersCertificateApprovalStatus || "process"]}
+                  {chip[examinersCertificateApprovalStatus || "Belum_Diproses"]}
                 </Group>
               </Stack>
             </Stack>

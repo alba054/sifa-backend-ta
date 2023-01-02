@@ -7,12 +7,13 @@ import {
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FERoundedChip from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFEStudyProgramAdminProposalSubmissionHistoryMainCard {
   index?: number;
   name: string;
   nim: string;
-  status: "accepted" | "rejected" | string;
+  status: FEStatus | string;
   proposalTitle: string;
   laboratory: string;
   laboratoryChairman: string;
@@ -100,7 +101,7 @@ const FEStudyProgramAdminProposalSubmissionHistoryMainCard: React.FC<
               </Stack>
             </Stack>
           </Stack>
-          {/* {status === "accepted" ? (
+          {/* {status === "Diterima" ? (
             <Stack className="gap-0">
               <Text className="text-[18px] font-semibold text-primary-500 tracking-1 mb-1">
                 {acceptedProposal!.proposalTitle}

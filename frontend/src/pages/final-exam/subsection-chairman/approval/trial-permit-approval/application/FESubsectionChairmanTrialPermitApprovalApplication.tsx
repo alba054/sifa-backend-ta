@@ -36,25 +36,25 @@ const dummyTrialPermitApprovalApplicationData: Array<IFESubsectionChairmanTrialP
       applicationDate: "24 November 2022",
       name: "Devi Selfira",
       nim: "N011181001",
-      status: "waiting",
+      status: "Menunggu",
     },
     {
       applicationDate: "24 Desember 2022",
       name: "Yusuf Syam",
       nim: "H071191044",
-      status: "accepted",
+      status: "Diterima",
     },
     {
       applicationDate: "14 November 2022",
       name: "Devon",
       nim: "H071191040",
-      status: "process",
+      status: "Belum_Diproses",
     },
     {
       applicationDate: "15 November 2022",
       name: "Richard Enrico",
       nim: "H071191055",
-      status: "rejected",
+      status: "Ditolak",
     },
   ];
 

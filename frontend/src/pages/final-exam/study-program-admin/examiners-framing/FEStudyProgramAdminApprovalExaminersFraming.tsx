@@ -45,11 +45,11 @@ const dummyProposalList: Array<IFEStudyProgramAdminApprovalExaminersFramingCard>
       sideMentor: "Prof. Dr. Jack Sully.",
       proposedFirstExaminers: {
         name: "Prof. Dr. M.Natsir Djide, M.S.",
-        approvalStatus: "accepted",
+        approvalStatus: "Diterima",
       },
       proposedSecondExaminers: {
         name: "Drs. Kus Haryono, MS.",
-        approvalStatus: "accepted",
+        approvalStatus: "Diterima",
       },
     },
     {
@@ -63,11 +63,11 @@ const dummyProposalList: Array<IFEStudyProgramAdminApprovalExaminersFramingCard>
       sideMentor: "Prof. Dr. Jack Sully.",
       proposedFirstExaminers: {
         name: "Prof. Dr. Jack Sully",
-        approvalStatus: "process",
+        approvalStatus: "Belum_Diproses",
       },
       proposedSecondExaminers: {
         name: "Drs. Kus Haryono, MS.",
-        approvalStatus: "rejected",
+        approvalStatus: "Ditolak",
       },
     },
     {

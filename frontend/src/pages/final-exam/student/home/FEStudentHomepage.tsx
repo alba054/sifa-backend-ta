@@ -20,35 +20,35 @@ const dummyStudentProposalApplicationsData: IFEStudentHomepageProposalApplicatio
     proposalComp: {
       currentProgress: 1,
       date: "20 November 2022",
-      status: "process",
+      status: "Belum_Diproses",
     },
-    // seminarComp: {
-    //   currentProgress: 3,
-    //   date: "20 November 2022",
-    //   status: "rejected",
-    // },
-    // trialPermitComp: {
-    //   currentProgress: 6,
-    //   date: "20 Desember 2022",
-    //   status: "accepted",
-    // },
-  };
+    seminarComp: {
+      currentProgress: 3,
+      date: "20 November 2022",
+      status: "Ditolak",
+    },
+    trialPermitComp: {
+      currentProgress: 6,
+      date: "20 Desember 2022",
+      status: "Diterima",
+    },
+  };  
 
 const dummyStudentLabFreeDataArray: Array<IFEStudentHomepageLabFreeCard> = [
   {
     title: "Permohonan #1",
     lab: "Fisika",
-    status: "process",
+    status: "Belum_Diproses",
   },
   {
     title: "Permohonan #2",
     lab: "Bio Farmaka",
-    status: "rejected",
+    status: "Ditolak",
   },
   {
     title: "Permohonan #3",
     lab: "Matematika",
-    status: "accepted",
+    status: "Diterima",
   },
 ];
 

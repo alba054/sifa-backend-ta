@@ -41,14 +41,14 @@ const dummyTrialPermitApprovalApplicationData: Array<IFEHeadAdministratorTrialPe
       proposalTitle:
         "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
       laboratory: "Kimia Farmasi",
-      trialPermitCertificateStatus: "accepted",
+      trialPermitCertificateStatus: "Diterima",
     },
     {
       name: "Muh. Yusuf Syam",
       nim: "H071191044",
       proposalTitle: "Cara Membuat Robot yang Bagus",
       laboratory: "DOP",
-      trialPermitCertificateStatus: "rejected",
+      trialPermitCertificateStatus: "Ditolak",
     },
   ];
 

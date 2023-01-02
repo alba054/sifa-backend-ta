@@ -35,7 +35,7 @@ const dummyProposalApplicationHistoryData: Array<IFEStudyProgramAdminProposalApp
     {
       name: "Devi Selfira",
       nim: "N011181001",
-      status: "accepted",
+      status: "Diterima",
       acceptedProposal: {
         proposalTitle:
           "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
@@ -46,7 +46,7 @@ const dummyProposalApplicationHistoryData: Array<IFEStudyProgramAdminProposalApp
     {
       name: "Muh. Yusuf Syam",
       nim: "H071191044",
-      status: "rejected",
+      status: "Ditolak",
       refusedProposal: [
         {
           proposalTitle:

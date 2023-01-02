@@ -40,7 +40,7 @@ const dummyProposalData: {
       "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
     laboratory: "Kimia Farmasi",
     sk: {
-      status: "process",
+      status: "Belum_Diproses",
       applicationDate: "12 November 2022",
       passedTime: "4 menit yang lalu",
       setStatus: (e: FEStatus) => {},
@@ -52,7 +52,7 @@ const dummyProposalData: {
     proposalTitle: "Penerapan Machine Learning untuk Lab",
     laboratory: "Farmasi",
     sk: {
-      status: "process",
+      status: "Belum_Diproses",
       applicationDate: "12 Desember 2022",
       passedTime: "40 menit yang lalu",
       setStatus: (e: FEStatus) => {},

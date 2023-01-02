@@ -20,7 +20,7 @@ import FEMentorAndExaminaRefusalReasonForm, {
 
 export interface IFEHeadAdministratorMentorAndExaminersApprovalMoreCard {
   SKType: "examiner" | "mentor";
-  status: "process" | "rejected" | "accepted";
+  status: FEStatus;
   applicationDate: string;
   passedTime: string;
   setStatus: ((e:FEStatus)=>void),
@@ -40,22 +40,22 @@ const FEHeadAdministratorMentorAndExaminersApprovalMoreCard: React.FC<
     });
 
   function handleCancelApproval() {
-    setStatus("process");
+    setStatus("Belum_Diproses");
     setIsOpenAlertCancelApprovalModal(false);
   }
 
   function handleRefuseApproval(values: IFEHeadAdministratorMentorAndExaminaRefusalReasonForm) {
     console.log(values);
-    setStatus("rejected");
+    setStatus("Ditolak");
     setIsOpenInputModal(false);
   }
 
   function handleAcceptApproval() {
-    setStatus("accepted");
+    setStatus("Diterima");
   }
 
   const statusChip: any = {
-    process: (
+    Belum_Diproses: (
       <FERoundedChip
         label={passedTime}
         type="green"
@@ -68,7 +68,7 @@ const FEHeadAdministratorMentorAndExaminersApprovalMoreCard: React.FC<
         }
       />
     ),
-    rejected: (
+    Ditolak: (
       <FERoundedChip
         label="Ditolak"
         type="red"
@@ -81,7 +81,7 @@ const FEHeadAdministratorMentorAndExaminersApprovalMoreCard: React.FC<
         }
       />
     ),
-    accepted: (
+    Diterima: (
       <FERoundedChip
         label="Diterima"
         type="blue"
@@ -126,11 +126,11 @@ const FEHeadAdministratorMentorAndExaminersApprovalMoreCard: React.FC<
             </Text>
           </Stack>
           <Group className="justify-between mt-2 h-10">
-            {status == "process" ? (
+            {status == "Belum_Diproses" ? (
               <Group className="gap-4">
                 <Button
                   className="text-white bg-primary-500 hover:bg-primary-700 font-bold px-8"
-                  onClick={() => setStatus('accepted')}
+                  onClick={() => setStatus('Diterima')}
                   variant="light"
                 >
                   Setuju

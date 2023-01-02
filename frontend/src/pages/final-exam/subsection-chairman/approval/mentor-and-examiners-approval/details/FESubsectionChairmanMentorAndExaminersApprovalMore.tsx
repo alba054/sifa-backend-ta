@@ -54,14 +54,14 @@ const dummyProposalData: {
     sk: [
       {
         SKType: "mentor",
-        status: "accepted",
+        status: "Diterima",
         applicationDate: "12 November 2022",
         passedTime: "4 menit yang lalu",
         setStatus: (e: FEStatus) => {},
       },
       {
         SKType: "examiner",
-        status: "process",
+        status: "Belum_Diproses",
         applicationDate: "12 November 2022",
         passedTime: "4 menit yang lalu",
         setStatus: (e: FEStatus) => {},
@@ -76,14 +76,14 @@ const dummyProposalData: {
     sk: [
       {
         SKType: "mentor",
-        status: "process",
+        status: "Belum_Diproses",
         applicationDate: "12 Desember 2022",
         passedTime: "40 menit yang lalu",
         setStatus: (e: FEStatus) => {},
       },
       {
         SKType: "examiner",
-        status: "process",
+        status: "Belum_Diproses",
         applicationDate: "12 November 2022",
         passedTime: "4 menit yang lalu",
         setStatus: (e: FEStatus) => {},

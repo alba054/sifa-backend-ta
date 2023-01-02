@@ -38,11 +38,11 @@ const dummyProposalHistoryList: Array<IFEStudyProgramAdminApprovalExaminersFrami
       sideMentor: "Prof. Dr. Jack Sully.",
       proposedFirstExaminers: {
         name: "Prof. Dr. M.Natsir Djide, M.S.",
-        approvalStatus: "accepted",
+        approvalStatus: "Diterima",
       },
       proposedSecondExaminers: {
         name: "Drs. Kus Haryono, MS.",
-        approvalStatus: "accepted",
+        approvalStatus: "Diterima",
       },
     },
     {
@@ -56,11 +56,11 @@ const dummyProposalHistoryList: Array<IFEStudyProgramAdminApprovalExaminersFrami
       sideMentor: "Prof. Dr. Jack Sully.",
       proposedFirstExaminers: {
         name: "Prof. Dr. Jack Sully",
-        approvalStatus: "accepted",
+        approvalStatus: "Diterima",
       },
       proposedSecondExaminers: {
         name: "Drs. Kus Haryono, MS.",
-        approvalStatus: "accepted",
+        approvalStatus: "Diterima",
       },
     },
     {
@@ -73,11 +73,11 @@ const dummyProposalHistoryList: Array<IFEStudyProgramAdminApprovalExaminersFrami
       sideMentor: "Prof. Dr. Jack Sully.",
       proposedFirstExaminers: {
         name: "Prof. Dr. Jack Sully",
-        approvalStatus: "accepted",
+        approvalStatus: "Diterima",
       },
       proposedSecondExaminers: {
         name: "Drs. Kus Haryono, MS.",
-        approvalStatus: "accepted",
+        approvalStatus: "Diterima",
       },
     },
   ];

@@ -40,14 +40,14 @@ const dummyProposalHistoryList: Array<IFEHeadAdministratorMentorAndExaminersAppr
       sk: [
         {
           SKType: "mentor",
-          status: "accepted",
+          status: "Diterima",
           applicationDate: "12 November 2022",
           passedTime: "4 menit yang lalu",
           setStatus: (e: FEStatus) => {},
         },
         {
           SKType: "examiner",
-          status: "rejected",
+          status: "Ditolak",
           applicationDate: "12 November 2022",
           passedTime: "4 menit yang lalu",
           setStatus: (e: FEStatus) => {},
@@ -63,7 +63,7 @@ const dummyProposalHistoryList: Array<IFEHeadAdministratorMentorAndExaminersAppr
       sk: [
         {
           SKType: "mentor",
-          status: "rejected",
+          status: "Ditolak",
           applicationDate: "12 Desember 2022",
           passedTime: "40 menit yang lalu",
           setStatus: (e: FEStatus) => {},
@@ -71,7 +71,7 @@ const dummyProposalHistoryList: Array<IFEHeadAdministratorMentorAndExaminersAppr
         },
         {
           SKType: "examiner",
-          status: "rejected",
+          status: "Ditolak",
           applicationDate: "12 November 2022",
           passedTime: "4 menit yang lalu",
           setStatus: (e: FEStatus) => {},

@@ -73,7 +73,7 @@ const FEHeadAdministratorMentorAndExaminersApprovalHistoryCard: React.FC<
                           </Text>
                           {approvalChip[currSK.status]}
                         </Group>
-                        {currSK.status === "rejected" ? (
+                        {currSK.status === "Ditolak" ? (
                           <Text className="text-secondary-text-500 font-semibold tracking-4 text-justify">
                             Alasan Penolakan:{" "}
                             <Text className="inline text-error-500">

@@ -63,7 +63,7 @@ const FEHeadAdministratorTrialPermitApprovalHistoryCard: React.FC<
                     </Text>
                     {approvalChip[sk.status]}
                   </Group>
-                  {sk.status === "rejected" ? (
+                  {sk.status === "Ditolak" ? (
                     <Text className="text-secondary-text-500 font-semibold tracking-4 text-justify">
                       Alasan Penolakan:{" "}
                       <Text className="inline text-error-500">

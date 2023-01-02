@@ -40,15 +40,15 @@ const dummyApprovalList: Array<IFEApprovalDetailsCardWithStatus> = [
     proposalTitle:
       "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
     laboratory: "Kimia Farmasi",
-    mentorCertificateApprovalStatus: "accepted",
-    examinersCertificateApprovalStatus: "process"
+    mentorCertificateApprovalStatus: "Diterima",
+    examinersCertificateApprovalStatus: "Belum_Diproses"
   },
   {
     name: "Muh. Yusuf Syam",
     nim: "H071191044",
     proposalTitle: "Cara Membuat Robot yang Bagus",
     laboratory: "DOP",
-    examinersCertificateApprovalStatus: "rejected"
+    examinersCertificateApprovalStatus: "Ditolak"
   },
 ];
 

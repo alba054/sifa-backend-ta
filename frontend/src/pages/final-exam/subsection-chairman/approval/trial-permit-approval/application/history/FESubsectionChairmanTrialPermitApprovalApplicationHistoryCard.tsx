@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import { FESearchBookOutline, FETrashOutline } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { approvalChip2 } from "src/components/fe-components/FERoundedChip";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFESubsectionChairmanTrialPermitApprovalApplicationHistoryCard {
   name: string;
   nim: string;
   index?: any;
-  status: "waiting" | "process" | "accepted" | "rejected";
+  status: FEStatus;
   applicationDate: string;
 
   onDelete?: (e: number) => void;

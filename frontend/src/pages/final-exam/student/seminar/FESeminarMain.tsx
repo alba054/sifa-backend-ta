@@ -5,6 +5,7 @@ import FEDocumentList from "src/components/fe-components/FEDocumentList";
 import FEInformationNotification from "src/components/fe-components/FEInformationNotification";
 import FEProgressBar from "src/components/fe-components/FEProgressBar";
 import FETableHeader1 from "src/components/fe-components/table/FETableHeader1";
+import { FEStatus } from "src/utils/const/type";
 import FESeminarApprovalStatus from "./FESeminarApprovalStatus";
 import FESeminarEvaluation from "./FESeminarEvaluation";
 import FESeminarMainCard from "./FESeminarMainCard";
@@ -30,8 +31,8 @@ export interface IFESeminarData {
 export interface IFESeminarApprovalStatus {
   mainMentor: string;
   sideMentor: string;
-  mainMentorApproval: "process" | "rejected" | "accepted";
-  sideMentorApproval: "process" | "rejected" | "accepted";
+  mainMentorApproval: FEStatus;
+  sideMentorApproval: FEStatus;
 }
 
 export interface IFESeminarTimeInformation {

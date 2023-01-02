@@ -80,7 +80,7 @@ const FEStudyProgramAdminProposalApplicationModal: React.FC<
         onSubmit={()=>{
           setIsAcceptModalOpened(()=>{return false});
           setOpened(false)
-          onSubmit(index, values, "accepted") as any;
+          onSubmit(index, values, "Diterima") as any;
         }}
         yesButtonLabel="Setujui"
       />
@@ -93,7 +93,7 @@ const FEStudyProgramAdminProposalApplicationModal: React.FC<
         onSubmit={()=>{
           setIsRefuseModalOpened(()=>{return false});
           setOpened(false)
-          onSubmit(index, values, "rejected") as any;
+          onSubmit(index, values, "Ditolak") as any;
         }}
         yesButtonLabel="Tolak"
       />
