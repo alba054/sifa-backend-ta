@@ -20,7 +20,7 @@ const FEHeadAdministratorApproval: React.FC<IFEHeadAdministratorApproval> = ({})
         />
         <FEApprovalCard
           label="SK Izin Ujian Sidang"
-          description="Validasi berkas dan Surat Permohonan"
+          description="Permohonan izin ujian sidang"
           to={FEROUTES.HEAD_ADMINISTRATOR_APPROVAL_TRIAL_PERMIT}
         />
       </Group>
