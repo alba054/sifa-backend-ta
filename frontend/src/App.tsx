@@ -26,10 +26,6 @@ import FEDeanMentorAndExaminersApprovalMore from "./pages/final-exam/dean/approv
 import FEDeanMentorAndExaminersApproval from "./pages/final-exam/dean/approval/mentor-and-examiners-approval/FEDeanMentorAndExaminersApproval";
 import FEDeanMentorAndExaminersApprovalHistory from "./pages/final-exam/dean/approval/mentor-and-examiners-approval/history/FEDeanMentorAndExaminersApprovalHistory";
 import FEHomepage from "./pages/final-exam/FEHomepage";
-import FEApproval from "./pages/final-exam/first-vice-dean/approval/FEApproval";
-import FEMentorAndExaminersApprovalMore from "./pages/final-exam/first-vice-dean/approval/mentor-and-examiners-approval/details/FEMentorAndExaminersApprovalMore";
-import FEMentorAndExaminersApproval from "./pages/final-exam/first-vice-dean/approval/mentor-and-examiners-approval/FEMentorAndExaminersApproval";
-import FETrialPermitApproval from "./pages/final-exam/first-vice-dean/approval/trial-permit-approval/FETrialPermitApproval";
 import FEHeadAdministratorApproval from "./pages/final-exam/head-administrator/approval/FEHeadAdministratorApproval";
 import FEHeadAdministratorMentorAndExaminersApprovalMore from "./pages/final-exam/head-administrator/approval/mentor-and-examiners-approval/details/FEHeadAdministratorMentorAndExaminersApprovalMore";
 import FEHeadAdministratorMentorAndExaminersApproval from "./pages/final-exam/head-administrator/approval/mentor-and-examiners-approval/FEHeadAdministratorMentorAndExaminersApproval";
@@ -63,6 +59,10 @@ import FESubsectionChairmanMentorAndExaminersApprovalHistory from "./pages/final
 import FESubsectionChairmanTrialPermitApprovalApplicationDetails from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/details/FESubsectionChairmanTrialPermitApprovalApplicationDetails";
 import FESubsectionChairmanTrialPermitApprovalApplication from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/FESubsectionChairmanTrialPermitApprovalApplication";
 import FESubsectionChairmanTrialPermitApprovalApplicationHistory from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/history/FESubsectionChairmanTrialPermitApprovalApplicationHistory";
+import FEViceDeanApproval from "./pages/final-exam/first-vice-dean/approval/FEViceDeanApproval";
+import FEViceDeanTrialPermitApprovalMore from "./pages/final-exam/first-vice-dean/approval/trial-permit-approval/details/FEViceDeanTrialPermitApprovalMore";
+import FEViceDeanTrialPermitApproval from "./pages/final-exam/first-vice-dean/approval/trial-permit-approval/FEViceDeanTrialPermitApproval";
+import FEViceDeanTrialPermitApprovalHistory from "./pages/final-exam/first-vice-dean/approval/trial-permit-approval/history/FEViceDeanTrialPermitApprovalHistory";
 import Login from "./pages/global/Login/Login";
 import NotFound from "./pages/global/NotFound";
 import ResetPassword from "./pages/global/ResetPassword/ResetPassword";
@@ -208,24 +208,22 @@ function App() {
                     <Route path="wakil-dekan-1">
                       <Route index element={<FEHomepage />} />
                       <Route path="persetujuan">
-                        <Route index element={<FEApproval />} />
-                        <Route path="sk-pembimbing-dan-penguji">
+                        <Route index element={<FEViceDeanApproval />} />
+
+                        <Route path="ujian-sidang">
                           <Route
                             index
-                            element={<FEMentorAndExaminersApproval />}
+                            element={<FEViceDeanTrialPermitApproval />}
                           />
                           <Route
-                            path="nim/:nim"
-                            element={<FEMentorAndExaminersApprovalMore />}
+                            path="riwayat"
+                            element={<FEViceDeanTrialPermitApprovalHistory />}
                           />
                         </Route>
-                        <Route path="ujian-sidang">
-                          <Route index element={<FETrialPermitApproval />} />
-                          <Route
-                            path="nim/:nim"
-                            element={<FEMentorAndExaminersApprovalMore />}
-                          />
-                        </Route>
+                        <Route
+                          path="ujian-sidang/:nim"
+                          element={<FEViceDeanTrialPermitApprovalMore />}
+                        />
                       </Route>
                     </Route>
                     <Route path="kasubag">
