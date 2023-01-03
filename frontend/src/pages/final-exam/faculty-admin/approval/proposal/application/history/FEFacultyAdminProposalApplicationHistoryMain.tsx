@@ -1,11 +1,9 @@
 import { Stack } from "@mantine/core";
 import React from "react";
-import FEFacultyAdminProposalApplicationHistoryMainCard, {
-  IFEFacultyAdminProposalApplicationHistoryMainCard
-} from "./FEFacultyAdminProposalApplicationHistoryMainCard";
+import FEFacultyAdminProposalApplicationHistoryCard, { IFEFacultyAdminProposalApplicationHistoryCard } from "./FEFacultyAdminProposalApplicationHistoryCard";
 
 export interface IFEFacultyAdminProposalApplicationHistoryMain {
-  proposalApplicationHistoryData: Array<IFEFacultyAdminProposalApplicationHistoryMainCard>,
+  proposalApplicationHistoryData: Array<IFEFacultyAdminProposalApplicationHistoryCard>,
   handleDelete?: ((e:number)=>void)
 }
 
@@ -17,11 +15,11 @@ const FEFacultyAdminProposalApplicationHistoryMain: React.FC<
     <Stack className="gap-6">
       {proposalApplicationHistoryData.map(
         (
-          proposalHistory: IFEFacultyAdminProposalApplicationHistoryMainCard,
+          proposalHistory: IFEFacultyAdminProposalApplicationHistoryCard,
           index: number
         ) => {
           return (
-            <FEFacultyAdminProposalApplicationHistoryMainCard
+            <FEFacultyAdminProposalApplicationHistoryCard
               key={index}
               index= {index}
               handleDelete={handleDelete}

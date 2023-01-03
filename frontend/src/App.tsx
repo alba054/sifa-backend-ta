@@ -26,6 +26,10 @@ import FEDeanMentorAndExaminersApprovalMore from "./pages/final-exam/dean/approv
 import FEDeanMentorAndExaminersApproval from "./pages/final-exam/dean/approval/mentor-and-examiners-approval/FEDeanMentorAndExaminersApproval";
 import FEDeanMentorAndExaminersApprovalHistory from "./pages/final-exam/dean/approval/mentor-and-examiners-approval/history/FEDeanMentorAndExaminersApprovalHistory";
 import FEHomepage from "./pages/final-exam/FEHomepage";
+import FEViceDeanApproval from "./pages/final-exam/first-vice-dean/approval/FEViceDeanApproval";
+import FEViceDeanTrialPermitApprovalMore from "./pages/final-exam/first-vice-dean/approval/trial-permit-approval/details/FEViceDeanTrialPermitApprovalMore";
+import FEViceDeanTrialPermitApproval from "./pages/final-exam/first-vice-dean/approval/trial-permit-approval/FEViceDeanTrialPermitApproval";
+import FEViceDeanTrialPermitApprovalHistory from "./pages/final-exam/first-vice-dean/approval/trial-permit-approval/history/FEViceDeanTrialPermitApprovalHistory";
 import FEHeadAdministratorApproval from "./pages/final-exam/head-administrator/approval/FEHeadAdministratorApproval";
 import FEHeadAdministratorMentorAndExaminersApprovalMore from "./pages/final-exam/head-administrator/approval/mentor-and-examiners-approval/details/FEHeadAdministratorMentorAndExaminersApprovalMore";
 import FEHeadAdministratorMentorAndExaminersApproval from "./pages/final-exam/head-administrator/approval/mentor-and-examiners-approval/FEHeadAdministratorMentorAndExaminersApproval";
@@ -59,10 +63,6 @@ import FESubsectionChairmanMentorAndExaminersApprovalHistory from "./pages/final
 import FESubsectionChairmanTrialPermitApprovalApplicationDetails from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/details/FESubsectionChairmanTrialPermitApprovalApplicationDetails";
 import FESubsectionChairmanTrialPermitApprovalApplication from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/FESubsectionChairmanTrialPermitApprovalApplication";
 import FESubsectionChairmanTrialPermitApprovalApplicationHistory from "./pages/final-exam/subsection-chairman/approval/trial-permit-approval/application/history/FESubsectionChairmanTrialPermitApprovalApplicationHistory";
-import FEViceDeanApproval from "./pages/final-exam/first-vice-dean/approval/FEViceDeanApproval";
-import FEViceDeanTrialPermitApprovalMore from "./pages/final-exam/first-vice-dean/approval/trial-permit-approval/details/FEViceDeanTrialPermitApprovalMore";
-import FEViceDeanTrialPermitApproval from "./pages/final-exam/first-vice-dean/approval/trial-permit-approval/FEViceDeanTrialPermitApproval";
-import FEViceDeanTrialPermitApprovalHistory from "./pages/final-exam/first-vice-dean/approval/trial-permit-approval/history/FEViceDeanTrialPermitApprovalHistory";
 import Login from "./pages/global/Login/Login";
 import NotFound from "./pages/global/NotFound";
 import ResetPassword from "./pages/global/ResetPassword/ResetPassword";
@@ -77,13 +77,11 @@ import { mantineTheme } from "./themes/mantine.theme";
 import { QueryClient, QueryClientProvider } from "react-query";
 import DataProvider from "./contexts/data.context";
 import Settings from "./pages/admin/Setting";
-import FEFacultyAdminProposalApplication from "./pages/final-exam/faculty-admin/approval/proposal/application/FEFacultyAdminProposalApplication";
 import FEFacultyAdminApproval from "./pages/final-exam/faculty-admin/approval/FEFacultyAdminApproval";
-import FEFacultyAdminProposal from "./pages/final-exam/faculty-admin/approval/proposal/FEFacultyAdminProposal";
-import FEFacultyAdminProposalApplicationHistoryMain from "./pages/final-exam/faculty-admin/approval/proposal/application/history/FEFacultyAdminProposalApplicationHistoryMain";
+import FEFacultyAdminProposalApplicationDetails from "./pages/final-exam/faculty-admin/approval/proposal/application/details/FEFacultyAdminProposalApplicationDetails";
+import FEFacultyAdminProposalApplication from "./pages/final-exam/faculty-admin/approval/proposal/application/FEFacultyAdminProposalApplication";
 import FEFacultyAdminProposalApplicationHistory from "./pages/final-exam/faculty-admin/approval/proposal/application/history/FEFacultyAdminProposalApplicationHistory";
-import FEFacultyAdminProposalApplicationCard from "./pages/final-exam/faculty-admin/approval/proposal/application/FEFacultyAdminProposalApplicationCard";
-import FEFacultyAdminProposalApplicationModal from "./pages/final-exam/faculty-admin/approval/proposal/application/FEFacultyAdminProposalApplicationModal";
+import FEFacultyAdminProposal from "./pages/final-exam/faculty-admin/approval/proposal/FEFacultyAdminProposal";
 
 const queryClient = new QueryClient({});
 
@@ -426,10 +424,11 @@ function App() {
                         <Route path="sk-pembimbing-dan-penguji">
                           <Route index element={<FEFacultyAdminProposal />} />
 
-                          <Route
-                            path="permohonan-judul"
-                            element={<FEFacultyAdminProposalApplication />}
-                          >
+                          <Route path="permohonan-judul">
+                            <Route
+                              index
+                              element={<FEFacultyAdminProposalApplication />}
+                            />
                             <Route
                               path="riwayat"
                               element={
@@ -437,10 +436,12 @@ function App() {
                               }
                             />
                           </Route>
-                          {/* <Route
+                          <Route
                             path="permohonan-judul/:nim"
-                            element={<FEFacultyAdminProposalApplication />}
-                          /> */}
+                            element={
+                              <FEFacultyAdminProposalApplicationDetails />
+                            }
+                          />
                           <Route
                             path="pembuatan"
                             element={<FEFacultyAdminProposalApplication />}

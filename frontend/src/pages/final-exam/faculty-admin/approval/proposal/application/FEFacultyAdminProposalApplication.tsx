@@ -4,15 +4,15 @@ import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton
+  ILFPHeaderButton,
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import {
-  IFEApprovalDetailsCard
-} from "../../../../../../components/fe-components/FEApprovalDetailsCard";
-import FEFacultyAdminProposalApplicationCard from "./FEFacultyAdminProposalApplicationCard";
+import { IFEApprovalDetailsCard } from "../../../../../../components/fe-components/FEApprovalDetailsCard";
+import FEFacultyAdminProposalApplicationCard, {
+  IFEFacultyAdminProposalApplicationCard,
+} from "./FEFacultyAdminProposalApplicationCard";
 
 export interface IFEFacultyAdminProposalApplication {}
 
@@ -20,7 +20,7 @@ const buttons: ILFPHeaderButton[] = [
   {
     label: "Riwayat Persetujuan",
     type: "href",
-    href: FEROUTES.FACULTY_ADMIN_APPROVAL,
+    href: FEROUTES.FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_APPLICATION_HISTORY,
     icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />,
     disabled: false,
   },
@@ -33,45 +33,26 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   },
   {
     title: "SK Pembimbing dan Penguji",
-    href: FEROUTES.FACULTY_ADMIN_APPROVAL,
+    href: FEROUTES.FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS,
   },
 ];
 
-const dummyApprovalList: Array<IFEApprovalDetailsCard> = [
+const dummyApprovalList: Array<IFEFacultyAdminProposalApplicationCard> = [
   {
     name: "Devi Selfira",
     nim: "N011181001",
-    proposalArray: [
-      {
-        proposalTitle:
-          "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
-        laboratory: "Kimia Farmasi",
-        proposer: "Mahasiswa",
-      },
-    ],
+    proposalTitle:
+      "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
+    laboratory: "Kimia Farmasi",
+    proposer: "Dosen",
+    proposerName: "Ricar Enrico ST"
   },
   {
     name: "Muh. Yusuf Syam",
     nim: "H071191044",
-    proposalArray: [
-      {
-        proposalTitle: "Cara Membuat Robot yang Bagus",
-        laboratory: "DOP",
-        proposer: "Mahasiswa"
-      },
-      {
-        proposalTitle: "Penerapan Machine Learning untuk Lab",
-        laboratory: "Farmasi",
-        proposer: "Dosen",
-        proposerName: "Rangga Meidianto Asri S.Si., M.Si., Apt."
-      },
-      {
-        proposalTitle: "Cara Membuat Robot yang Bagus",
-        laboratory: "DOP",
-        proposer: "Dosen",
-        proposerName: "Rangga Meidianto Asri S.Si., M.Si., Apt."
-      },
-    ],
+    proposalTitle: "Cara Membuat Robot yang Bagus",
+    laboratory: "DOP",
+    proposer: "Mahasiswa",
   },
 ];
 
@@ -84,8 +65,13 @@ const FEFacultyAdminProposalApplication: React.FC<
     approvalList.length > 0 ? true : false
   );
 
-  function handleSubmit(index: number, acceptedProposal: any, approvalResult: string, refusalReason: null | string) {
-    console.log(index, acceptedProposal, approvalResult, refusalReason)
+  function handleSubmit(
+    index: number,
+    acceptedProposal: any,
+    approvalResult: string,
+    refusalReason: null | string
+  ) {
+    console.log(index, acceptedProposal, approvalResult, refusalReason);
     remove(index);
   }
 
@@ -108,18 +94,18 @@ const FEFacultyAdminProposalApplication: React.FC<
       />
       {isDataExist ? (
         <Stack mt={"md"} className="gap-6">
-          {approvalList.map((approval: IFEApprovalDetailsCard, e: number) => {
-            return (
-              <FEFacultyAdminProposalApplicationCard
-                key={e}
-                index={e}
-                name={approval.name}
-                nim={approval.nim}
-                onSubmit={handleSubmit}
-                proposalArray={approval.proposalArray}
-              />
-            );
-          })}
+          {approvalList.map(
+            (approval: IFEFacultyAdminProposalApplicationCard, e: number) => {
+              return (
+                <FEFacultyAdminProposalApplicationCard
+                  key={e}
+                  index={e}
+                  {...approval}
+                  to={approval.nim}
+                />
+              );
+            }
+          )}
         </Stack>
       ) : (
         <LFPEmptyDataComponent

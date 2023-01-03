@@ -11,51 +11,46 @@ import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import FEFacultyAdminProposalApplicationHistoryMain from "./FEFacultyAdminProposalApplicationHistoryMain";
-import { IFEFacultyAdminProposalApplicationHistoryMainCard } from "./FEFacultyAdminProposalApplicationHistoryMainCard";
+import { IFEFacultyAdminProposalApplicationHistoryCard } from "./FEFacultyAdminProposalApplicationHistoryCard";
 
 export interface IFEFacultyAdminProposalApplicationHistory {}
+
 
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
     title: "Persetujuan",
-    href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL,
+    href: FEROUTES.FACULTY_ADMIN_APPROVAL,
   },
   {
-    title: "Tugas Akhir",
-    href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL,
+    title: "SK Pembimbing dan Penguji",
+    href: FEROUTES.FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS,
   },
   {
-    title: "Permohonan Tugas Akhir",
-    href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_APPLICATION,
-  },
+    title: "Persetujuan Permohonan Judul",
+    href: FEROUTES.FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_APPLICATION
+  }
 ];
 
-const dummyProposalApplicationHistoryData: Array<IFEFacultyAdminProposalApplicationHistoryMainCard> =
+const dummyProposalApplicationHistoryData: Array<IFEFacultyAdminProposalApplicationHistoryCard> =
   [
     {
       name: "Devi Selfira",
       nim: "N011181001",
       status: "Diterima",
-      acceptedProposal: {
-        proposalTitle:
-          "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
-        laboratory: "Kimia Farmasi",
-        proposer: "Dosen",
-        proposerName: "Rangga Meidianto Asri S.Si., M.Si., Apt.",
-      },
+      proposalTitle:
+        "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
+      laboratory: "Kimia Farmasi",
+      proposer: "Dosen",
+      proposerName: "Ricar Enrico ST"
+
     },
     {
       name: "Muh. Yusuf Syam",
       nim: "H071191044",
       status: "Ditolak",
-      refusedProposal: [
-        {
-          proposalTitle:
-            "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
-          laboratory: "Kimia Farmasi",
-          proposer: "Mahasiswa",
-        },
-      ],
+      proposalTitle: "Cara Membuat Robot yang Bagus",
+      laboratory: "DOP",
+      proposer: "Mahasiswa",
     },
   ];
 
@@ -110,7 +105,7 @@ const FEFacultyAdminProposalApplicationHistory: React.FC<
       />
 
       <LFPHeaderComponent
-        title="Riwayat Permohonan Tugas Akhir"
+        title="Riwayat Permohonan Tugas Akhiru"
         buttons={buttons}
         disabledButtonTooltipLabel={"Riwayat kosong"}
       />
