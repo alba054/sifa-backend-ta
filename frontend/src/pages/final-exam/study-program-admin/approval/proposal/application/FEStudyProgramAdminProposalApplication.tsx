@@ -32,7 +32,7 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
     href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL,
   },
   {
-    title: "Judul Penelitian",
+    title: "Tugas Akhir",
     href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL,
   },
 ];
@@ -46,7 +46,7 @@ const dummyApprovalList: Array<IFEApprovalDetailsCard> = [
         proposalTitle:
           "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
         laboratory: "Kimia Farmasi",
-        proposer: "Mahasiswa (Devi Selfira)"
+        proposer: "Mahasiswa",
       },
     ],
   },
@@ -57,17 +57,19 @@ const dummyApprovalList: Array<IFEApprovalDetailsCard> = [
       {
         proposalTitle: "Cara Membuat Robot yang Bagus",
         laboratory: "DOP",
-        // proposer: "Mahasiswa (Muh. Yusuf Syam)"
+        proposer: "Mahasiswa"
       },
       {
         proposalTitle: "Penerapan Machine Learning untuk Lab",
         laboratory: "Farmasi",
-        proposer: "Dosen (Rangga Meidianto Asri S.Si., M.Si., Apt.)"
+        proposer: "Dosen",
+        proposerName: "Rangga Meidianto Asri S.Si., M.Si., Apt."
       },
       {
         proposalTitle: "Cara Membuat Robot yang Bagus",
         laboratory: "DOP",
-        proposer: "Dosen (Rangga Meidianto Asri S.Si., M.Si., Apt.)"
+        proposer: "Dosen",
+        proposerName: "Rangga Meidianto Asri S.Si., M.Si., Apt."
       },
     ],
   },
@@ -82,8 +84,8 @@ const FEStudyProgramAdminProposalApplication: React.FC<
     approvalList.length > 0 ? true : false
   );
 
-  function handleSubmit(index: number, acceptedProposal: any, approvalResult: string) {
-    // console.log(index, acceptedProposal, approvalResult)
+  function handleSubmit(index: number, acceptedProposal: any, approvalResult: string, refusalReason: null | string) {
+    console.log(index, acceptedProposal, approvalResult, refusalReason)
     remove(index);
   }
 
@@ -98,10 +100,10 @@ const FEStudyProgramAdminProposalApplication: React.FC<
   return (
     <FEMainlayout
       breadCrumbs={breadCrumbs}
-      breadCrumbsCurrentPage="Permohonan Judul Penelitian"
+      breadCrumbsCurrentPage="Permohonan Tugas Akhir"
     >
       <LFPHeaderComponent
-        title="Permohonan Judul Penelitian"
+        title="Permohonan Tugas Akhir"
         buttons={buttons}
       />
       {isDataExist ? (

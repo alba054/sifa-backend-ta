@@ -1,28 +1,33 @@
 import { Stack, Text, useMantineTheme } from "@mantine/core";
 import React, { useEffect } from "react";
-import { FEBookmarkSingleSearchOutline } from "src/assets/Icons/Fluent";
+import {
+  FEBookmarkSingleSearchOutline,
+  FEPersonFilled,
+} from "src/assets/Icons/Fluent";
 import FELinkMore from "src/components/fe-components/FELinkMore";
 import FECard from "src/components/FECard";
 import { FEROUTES } from "src/routes/final-exam.route";
+import FERoundedChip from "./FERoundedChip";
 
 export interface IFEApprovalDetailsCard {
   name: string;
   nim: string;
   proposalArray: Array<IProposal>;
-  onClick?: (()=>void)
+  onClick?: () => void;
 }
 
 export interface IProposal {
   proposalTitle: string;
   laboratory: string;
-  proposer?: string;
+  proposer?: "Dosen" | "Mahasiswa";
+  proposerName?: string;
 }
 
 const FEApprovalDetailsCard: React.FC<IFEApprovalDetailsCard> = ({
   name,
   nim,
   proposalArray,
-  onClick
+  onClick,
 }) => {
   const theme = useMantineTheme();
 
@@ -44,6 +49,29 @@ const FEApprovalDetailsCard: React.FC<IFEApprovalDetailsCard> = ({
               <Text className="text-secondary-text-500 text-lg tracking-1 font-semibold">
                 Lab. {proposalArray[0].laboratory}
               </Text>
+              {proposalArray[0].proposer == null ? null : (
+                <Stack className="gap-1">
+                  <Text className="text-primary-text-500 font-bold text-lg">
+                    Asal Usulan
+                  </Text>
+                  <Text>
+                    <FERoundedChip
+                      label={
+                        proposalArray[0].proposer === "Dosen"
+                          ? `Dosen (${proposalArray[0].proposerName})`
+                          : `Mahasiswa (${name})`
+                      }
+                      type="blue"
+                      leftIcon={
+                        <FEPersonFilled
+                          size={14}
+                          color={theme.colors["primary"][5]}
+                        />
+                      }
+                    />
+                  </Text>
+                </Stack>
+              )}
             </Stack>
             <Stack className="gap-0">
               <Text className="font-bold text-xl text-primary-text-500">
@@ -57,6 +85,29 @@ const FEApprovalDetailsCard: React.FC<IFEApprovalDetailsCard> = ({
                   <Text className="text-secondary-text-500 text-lg tracking-1 font-semibold">
                     Lab. {proposalArray[1].laboratory}
                   </Text>
+                  {proposalArray[1].proposer == null ? null : (
+                    <Stack className="gap-1">
+                      <Text className="text-primary-text-500 font-bold text-lg">
+                        Asal Usulan
+                      </Text>
+                      <Text>
+                        <FERoundedChip
+                          label={
+                            proposalArray[1].proposer === "Dosen"
+                              ? `Dosen (${proposalArray[1].proposerName})`
+                              : `Mahasiswa (${name})`
+                          }
+                          type="blue"
+                          leftIcon={
+                            <FEPersonFilled
+                              size={14}
+                              color={theme.colors["primary"][5]}
+                            />
+                          }
+                        />
+                      </Text>
+                    </Stack>
+                  )}
                 </>
               ) : (
                 <Text className="text-secondary-text-500 text-lg tracking-1 font-semibold">

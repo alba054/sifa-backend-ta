@@ -18,19 +18,19 @@ const FEStudyProgramAdminProposal: React.FC<
   IFEStudyProgramAdminProposal
 > = ({}) => {
   return (
-    <FEMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Judul Penelitian">
+    <FEMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Tugas Akhir">
       <Title order={2} className="text-primary-text-500" mb={"md"}>
-        Judul Penelitian
+        Tugas Akhir
       </Title>
       <Group spacing={"xl"} grow>
         <FEApprovalCard
-          label="Permohonan Judul Penelitian"
-          description="Permohonan judul penelitian mahasiswa"
+          label="Permohonan Tugas Akhir"
+          description="Permohonan judul tugas akhir mahasiswa"
           to={FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_APPLICATION}
         />
         <FEApprovalCard
-          label="Pengajuan Judul Penelitian"
-          description="Disposisi dokumen"
+          label="Pengajuan Tugas Akhir"
+          description="Pengajuan ke kepala laboratorium"
           to={FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_SUBMISSION}
         />
       </Group>

@@ -112,7 +112,7 @@ const FEStudyProgramAdminProposalApplicationHistoryMainCard: React.FC<
         <Group className="justify-between">
           {statusChip[status]}
           <Group>
-            <Button
+            {/* <Button
               variant="light"
               // onClick={handleEditProposalClick}
               // disabled={status !== "Belum_Diproses"}
@@ -123,7 +123,7 @@ const FEStudyProgramAdminProposalApplicationHistoryMainCard: React.FC<
                 className="bg-white"
                 size={23}
               />
-            </Button>
+            </Button> */}
             <Button
               variant="light"
               onClick={()=>{setIsAlertOpened(true)}}

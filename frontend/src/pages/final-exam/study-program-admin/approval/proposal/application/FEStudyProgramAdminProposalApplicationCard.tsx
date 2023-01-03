@@ -12,8 +12,9 @@ export interface IFEStudyProgramAdminProposalApplicationCard {
   proposalArray: Array<IProposal>;
   onSubmit: (
     index: number,
-    acceptedProposal: IFEProposalApplicationModalForm,
-    approvalResult: string
+    acceptedProposal: number | string,
+    approvalResult: string,
+    refusalReason: null | string
   ) => void;
 }
 

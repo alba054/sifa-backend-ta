@@ -1,7 +1,10 @@
 import {
   Button,
   Group,
-  Modal, Stack, Text, useMantineTheme
+  Modal,
+  Stack,
+  Text,
+  useMantineTheme,
 } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import React, { useEffect, useState } from "react";
@@ -10,12 +13,18 @@ import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { IProposal } from "src/components/fe-components/FEApprovalDetailsCard";
 import FEDocumentList from "src/components/fe-components/FEDocumentList";
 import FEInformationNotification from "src/components/fe-components/FEInformationNotification";
+import FEInputModalForm from "src/components/fe-components/FEInputModalForm";
+import FERefusalReasonForm, {
+  feRefusalReasonFormSchema,
+  IFERefusalReasonForm,
+  IFERefusalReasonFormSchema,
+} from "src/components/fe-components/FERefusalReasonForm";
 import FERoundedChip from "src/components/fe-components/FERoundedChip";
 import FESmallInformationNotification from "src/components/fe-components/FESmallInformationNotification";
 import { RadioGroup } from "src/components/FormInput";
 import {
   feProposalApplicationModalForm,
-  IFEProposalApplicationModalForm
+  IFEProposalApplicationModalForm,
 } from "./FEStudyProgramAdminProposalApplicationModalFormInterfaces";
 
 export interface IFEStudyProgramAdminProposalApplicationModal {
@@ -26,8 +35,9 @@ export interface IFEStudyProgramAdminProposalApplicationModal {
   nim: string;
   onSubmit: (
     index: number,
-    acceptedProposal: IFEProposalApplicationModalForm,
-    approvalResult: string
+    acceptedProposal: number | string,
+    approvalResult: string,
+    refusalReason: null | string
   ) => void;
   proposalArray: Array<IProposal>;
 }
@@ -40,17 +50,42 @@ const FEStudyProgramAdminProposalApplicationModal: React.FC<
   const [isRefuseModalOpened, setIsRefuseModalOpened] = useState(false);
   const [isAcceptModalOpened, setIsAcceptModalOpened] = useState(false);
 
+  // Ada 2 form, form pertama yg radio form kedua untuk modal alasan penolakan
   const { ...form } = useForm<IFEProposalApplicationModalForm>({
     validate: yupResolver(feProposalApplicationModalForm),
   });
 
+  const { onSubmit: onSubmit2, ...form2 } = useForm<IFERefusalReasonFormSchema>(
+    {
+      validate: yupResolver(feRefusalReasonFormSchema),
+    }
+  );
+
   const { getInputProps, errors, setValues, values } = form;
+  const { setValues: setValues2, values: values2 } = form2;
 
   useEffect(() => {
     setValues({
       acceptedProposalIndex: "0",
     });
   }, []);
+
+  function handleRefuseApproval(values2: any) {
+    // console.log(values2);
+    setIsRefuseModalOpened(() => {
+      return false;
+    });
+    setValues2({
+      refusalReason: "",
+    });
+    setOpened(false);
+    onSubmit(
+      index,
+      values.acceptedProposalIndex,
+      "Ditolak",
+      values2.refusalReason
+    ) as any;
+  }
 
   return (
     <Modal
@@ -77,15 +112,29 @@ const FEStudyProgramAdminProposalApplicationModal: React.FC<
         setOpened={setIsAcceptModalOpened}
         title={"Setujui Permohonan Judul?"}
         description="Pastikan pilihan anda sudah BENAR"
-        onSubmit={()=>{
-          setIsAcceptModalOpened(()=>{return false});
-          setOpened(false)
-          onSubmit(index, values, "Diterima") as any;
+        onSubmit={() => {
+          setIsAcceptModalOpened(() => {
+            return false;
+          });
+          setOpened(false);
+          onSubmit(
+            index,
+            values.acceptedProposalIndex,
+            "Diterima",
+            null
+          ) as any;
         }}
         yesButtonLabel="Setujui"
       />
 
-      <FEAlertModal
+      <FEInputModalForm
+        opened={isRefuseModalOpened}
+        setOpened={setIsRefuseModalOpened}
+        onSubmitHandler={onSubmit2(handleRefuseApproval as any) as any}
+        children={<FERefusalReasonForm form={form2} />}
+      />
+
+      {/* <FEAlertModal
         opened={isRefuseModalOpened}
         setOpened={setIsRefuseModalOpened}
         title={"Tolak Permohonan Judul?"}
@@ -93,10 +142,10 @@ const FEStudyProgramAdminProposalApplicationModal: React.FC<
         onSubmit={()=>{
           setIsRefuseModalOpened(()=>{return false});
           setOpened(false)
-          onSubmit(index, values, "Ditolak") as any;
+          onSubmit(index, values, "Ditolak", "Ditolak") as any;
         }}
         yesButtonLabel="Tolak"
-      />
+      /> */}
 
       <div className="py-2">
         <Stack className="px-1">
@@ -131,7 +180,11 @@ const FEStudyProgramAdminProposalApplicationModal: React.FC<
               </Text>
               <Text>
                 <FERoundedChip
-                    label={proposalArray[0].proposer || `Mahasiswa (${name})`}
+                  label={
+                    proposalArray[0].proposer === "Dosen"
+                      ? `Dosen (${proposalArray[0].proposerName})`
+                      : `Mahasiswa (${name})`
+                  }
                   type="blue"
                   leftIcon={
                     <FEPersonFilled
@@ -224,7 +277,9 @@ const FEStudyProgramAdminProposalApplicationModal: React.FC<
           variant="light"
           className="text-white bg-primary-500 hover:bg-primary-700 font-bold"
           onClick={() => {
-            setIsAcceptModalOpened(()=>{return true})
+            setIsAcceptModalOpened(() => {
+              return true;
+            });
           }}
         >
           Setujui Usulan
@@ -232,7 +287,9 @@ const FEStudyProgramAdminProposalApplicationModal: React.FC<
         <Button
           variant="light"
           onClick={() => {
-            setIsRefuseModalOpened(()=>{return true})
+            setIsRefuseModalOpened(() => {
+              return true;
+            });
           }}
           className="text-white bg-error-500 hover:bg-error-500 font-bold"
         >
