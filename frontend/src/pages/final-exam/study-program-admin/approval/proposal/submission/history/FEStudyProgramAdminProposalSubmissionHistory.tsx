@@ -21,11 +21,11 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
     href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL,
   },
   {
-    title: "Judul Penelitian",
+    title: "Tugas Akhir",
     href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL,
   },
   {
-    title: "Pengajuan Judul Penelitian",
+    title: "Pengajuan Tugas Akhir",
     href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_SUBMISSION,
   },
 ];
@@ -109,7 +109,7 @@ const FEStudyProgramAdminProposalSubmissionHistory: React.FC<
       />
 
       <LFPHeaderComponent
-        title="Riwayat Pengajuan Judul Penelitian"
+        title="Riwayat Pengajuan Tugas Akhir"
         buttons={buttons}
         disabledButtonTooltipLabel={"Riwayat kosong"}
       />

@@ -1,10 +1,15 @@
 import {
   Button,
-  Divider, Group, Modal,
-  Stack, Text, useMantineTheme
+  Divider,
+  Group,
+  Modal,
+  Stack,
+  Text,
+  useMantineTheme,
 } from "@mantine/core";
 import React, { useState } from "react";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
+import FEDocumentListCard from "src/components/fe-components/FEDocumentListCard";
 
 export interface IFEStudyProgramAdminProposalSubmissionCardModal {
   index: number;
@@ -16,8 +21,8 @@ export interface IFEStudyProgramAdminProposalSubmissionCardModal {
   proposalTitle: string;
   laboratory: string;
   proposer: string;
-  entryDate: string,
-  completionDate: string
+  entryDate: string;
+  completionDate: string;
 }
 
 const FEStudyProgramAdminProposalSubmissionCardModal: React.FC<
@@ -33,7 +38,7 @@ const FEStudyProgramAdminProposalSubmissionCardModal: React.FC<
   laboratory,
   proposer,
   entryDate,
-  completionDate
+  completionDate,
 }) => {
   const theme = useMantineTheme();
 
@@ -44,7 +49,7 @@ const FEStudyProgramAdminProposalSubmissionCardModal: React.FC<
       opened={opened}
       onClose={() => setOpened(false)}
       centered
-      title={`${name} (${nim})`}
+      title={`Pengajuan Tugas Akhir ke Kepala Laboratorium`}
       padding={30}
       styles={{
         modal: {
@@ -74,6 +79,17 @@ const FEStudyProgramAdminProposalSubmissionCardModal: React.FC<
 
       <div className="py-2">
         <Stack className="gap-4">
+          <Text className="text-primary-text-500">
+          Ajukan <Text className="text-primary-500 inline font-semibold">TUGAS AKHIR</Text> ke kepala laboratorium dengan detail sebagai berikut.
+          </Text>
+          <Stack className="gap-0">
+            <Text className="font-bold text-[18px] text-primary-text-500">
+              Nama dan Nim
+            </Text>
+            <Text className="text-primary-text-500 font-semibold text-lg tracking-1">
+              {`${name} (${nim})`}
+            </Text>
+          </Stack>
           <Stack className="gap-0">
             <Text className="font-bold text-[18px] text-primary-text-500">
               Judul
@@ -119,11 +135,17 @@ const FEStudyProgramAdminProposalSubmissionCardModal: React.FC<
               {completionDate}
             </Text>
           </Stack>
+
+          <Stack className="gap-0">
+            <Text className="font-bold text-lg text-primary-text-500">
+              Dokumen Disposisi
+            </Text>
+            <FEDocumentListCard description="Dokumen Disposisi" />
+          </Stack>
         </Stack>
       </div>
       <Group position="right" mt={"md"} className="pt-4">
-        
-      <Button
+        <Button
           variant="light"
           color={"primary"}
           onClick={() => setOpened(false)}
@@ -131,15 +153,15 @@ const FEStudyProgramAdminProposalSubmissionCardModal: React.FC<
         >
           Batal
         </Button>
-            <Button
-              variant="light"
-              className="bg-primary-500 text-white hover:bg-primary-500 "
-              onClick={()=>{
-                setIsAcceptModalOpened(true)
-              }}
-            >
-              Buat Permohonan
-            </Button>
+        <Button
+          variant="light"
+          className="bg-primary-500 text-white hover:bg-primary-500 "
+          onClick={() => {
+            setIsAcceptModalOpened(true);
+          }}
+        >
+          Buat Permohonan
+        </Button>
       </Group>
     </Modal>
   );

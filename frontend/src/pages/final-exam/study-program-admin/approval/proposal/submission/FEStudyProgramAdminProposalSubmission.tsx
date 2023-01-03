@@ -32,7 +32,7 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
     href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL,
   },
   {
-    title: "Judul Penelitian",
+    title: "Tugas Akhir",
     href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL,
   },
 ];
@@ -83,10 +83,10 @@ const FEStudyProgramAdminProposalSubmission: React.FC<
   return (
     <FEMainlayout
       breadCrumbs={breadCrumbs}
-      breadCrumbsCurrentPage="Pengajuan Judul Penelitian"
+      breadCrumbsCurrentPage="Pengajuan Tugas Akhir"
     >
       <LFPHeaderComponent
-        title="Pengajuan Judul Penelitian"
+        title="Pengajuan Tugas Akhir"
         buttons={buttons}
       />
       {isDataExist ? (

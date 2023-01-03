@@ -21,11 +21,11 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
     href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL,
   },
   {
-    title: "Judul Penelitian",
+    title: "Tugas Akhir",
     href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL,
   },
   {
-    title: "Permohonan Judul Penelitian",
+    title: "Permohonan Tugas Akhir",
     href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_APPLICATION,
   },
 ];
@@ -40,7 +40,8 @@ const dummyProposalApplicationHistoryData: Array<IFEStudyProgramAdminProposalApp
         proposalTitle:
           "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
         laboratory: "Kimia Farmasi",
-        proposer: "Dosen (Rangga Meidianto Asri S.Si., M.Si., Apt.)",
+        proposer: "Dosen",
+        proposerName: "Rangga Meidianto Asri S.Si., M.Si., Apt.",
       },
     },
     {
@@ -52,7 +53,7 @@ const dummyProposalApplicationHistoryData: Array<IFEStudyProgramAdminProposalApp
           proposalTitle:
             "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
           laboratory: "Kimia Farmasi",
-          proposer: "Dosen (Rangga Meidianto Asri S.Si., M.Si., Apt.)",
+          proposer: "Mahasiswa",
         },
       ],
     },
@@ -109,7 +110,7 @@ const FEStudyProgramAdminProposalApplicationHistory: React.FC<
       />
 
       <LFPHeaderComponent
-        title="Riwayat Permohonan Judul Penelitian"
+        title="Riwayat Permohonan Tugas Akhir"
         buttons={buttons}
         disabledButtonTooltipLabel={"Riwayat kosong"}
       />
