@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import FEApprovalDetailsCard, {
   IProposal
 } from "src/components/fe-components/FEApprovalDetailsCard";
-import FEStudyProgramAdminProposalApplicationModal from "./FEStudyProgramAdminProposalApplicationModal";
-import { IFEProposalApplicationModalForm } from "./FEStudyProgramAdminProposalApplicationModalFormInterfaces";
+import FEFacultyAdminProposalApplicationModal from "./FEFacultyAdminProposalApplicationModal";
+import { IFEProposalApplicationModalForm } from "./FEFacultyAdminProposalApplicationModalFormInterfaces";
 
-export interface IFEStudyProgramAdminProposalApplicationCard {
+export interface IFEFacultyAdminProposalApplicationCard {
   index: number;
   name: string;
   nim: string;
@@ -18,14 +18,14 @@ export interface IFEStudyProgramAdminProposalApplicationCard {
   ) => void;
 }
 
-const FEStudyProgramAdminProposalApplicationCard: React.FC<
-  IFEStudyProgramAdminProposalApplicationCard
+const FEFacultyAdminProposalApplicationCard: React.FC<
+  IFEFacultyAdminProposalApplicationCard
 > = ({ index, name, nim, proposalArray, onSubmit }) => {
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   return (
     <>
-      <FEStudyProgramAdminProposalApplicationModal
+      <FEFacultyAdminProposalApplicationModal
         index={index}
         opened={isModalOpened}
         setOpened={setIsModalOpened}
@@ -46,4 +46,4 @@ const FEStudyProgramAdminProposalApplicationCard: React.FC<
     </>
   );
 };
-export default FEStudyProgramAdminProposalApplicationCard;
+export default FEFacultyAdminProposalApplicationCard;

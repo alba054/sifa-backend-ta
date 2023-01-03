@@ -77,6 +77,13 @@ import { mantineTheme } from "./themes/mantine.theme";
 import { QueryClient, QueryClientProvider } from "react-query";
 import DataProvider from "./contexts/data.context";
 import Settings from "./pages/admin/Setting";
+import FEFacultyAdminProposalApplication from "./pages/final-exam/faculty-admin/approval/proposal/application/FEFacultyAdminProposalApplication";
+import FEFacultyAdminApproval from "./pages/final-exam/faculty-admin/approval/FEFacultyAdminApproval";
+import FEFacultyAdminProposal from "./pages/final-exam/faculty-admin/approval/proposal/FEFacultyAdminProposal";
+import FEFacultyAdminProposalApplicationHistoryMain from "./pages/final-exam/faculty-admin/approval/proposal/application/history/FEFacultyAdminProposalApplicationHistoryMain";
+import FEFacultyAdminProposalApplicationHistory from "./pages/final-exam/faculty-admin/approval/proposal/application/history/FEFacultyAdminProposalApplicationHistory";
+import FEFacultyAdminProposalApplicationCard from "./pages/final-exam/faculty-admin/approval/proposal/application/FEFacultyAdminProposalApplicationCard";
+import FEFacultyAdminProposalApplicationModal from "./pages/final-exam/faculty-admin/approval/proposal/application/FEFacultyAdminProposalApplicationModal";
 
 const queryClient = new QueryClient({});
 
@@ -410,6 +417,37 @@ function App() {
                           path="sk-pembimbing-dan-penguji/:nim"
                           element={<FEDeanMentorAndExaminersApprovalMore />}
                         />
+                      </Route>
+                    </Route>
+                    <Route path="admin-fakultas">
+                      <Route index element={<FEHomepage />} />
+                      <Route path="persetujuan">
+                        <Route index element={<FEFacultyAdminApproval />} />
+                        <Route path="sk-pembimbing-dan-penguji">
+                          <Route index element={<FEFacultyAdminProposal />} />
+
+                          <Route
+                            path="permohonan-judul"
+                            element={<FEFacultyAdminProposalApplication />}
+                          >
+                            <Route
+                              path="riwayat"
+                              element={
+                                <FEFacultyAdminProposalApplicationHistory />
+                              }
+                            />
+                          </Route>
+                          {/* <Route
+                            path="permohonan-judul/:nim"
+                            element={<FEFacultyAdminProposalApplication />}
+                          /> */}
+                          <Route
+                            path="pembuatan"
+                            element={<FEFacultyAdminProposalApplication />}
+                          >
+                            {" "}
+                          </Route>
+                        </Route>
                       </Route>
                     </Route>
                   </Route>

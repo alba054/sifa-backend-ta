@@ -13,7 +13,7 @@ import { statusChip } from "src/components/fe-components/FERoundedChip";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { FEStatus } from "src/utils/const/type";
 
-export interface IFEStudyProgramAdminProposalApplicationHistoryMainCard {
+export interface IFEFacultyAdminProposalApplicationHistoryMainCard {
   index?: number;
   name: string;
   nim: string;
@@ -23,8 +23,8 @@ export interface IFEStudyProgramAdminProposalApplicationHistoryMainCard {
   handleDelete?: ((e:number)=>void)
 }
 
-const FEStudyProgramAdminProposalApplicationHistoryMainCard: React.FC<
-  IFEStudyProgramAdminProposalApplicationHistoryMainCard
+const FEFacultyAdminProposalApplicationHistoryMainCard: React.FC<
+  IFEFacultyAdminProposalApplicationHistoryMainCard
 > = ({ index, name, nim, status, acceptedProposal={}, refusedProposal = [], handleDelete}) => {
   const theme = useMantineTheme();
 
@@ -142,4 +142,4 @@ const FEStudyProgramAdminProposalApplicationHistoryMainCard: React.FC<
     </FECard>
   );
 };
-export default FEStudyProgramAdminProposalApplicationHistoryMainCard;
+export default FEFacultyAdminProposalApplicationHistoryMainCard;

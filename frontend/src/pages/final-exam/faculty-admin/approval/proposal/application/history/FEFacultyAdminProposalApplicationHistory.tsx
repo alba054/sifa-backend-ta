@@ -10,10 +10,10 @@ import LFPHeaderComponent, {
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import FEStudyProgramAdminProposalApplicationHistoryMain from "./FEStudyProgramAdminProposalApplicationHistoryMain";
-import { IFEStudyProgramAdminProposalApplicationHistoryMainCard } from "./FEStudyProgramAdminProposalApplicationHistoryMainCard";
+import FEFacultyAdminProposalApplicationHistoryMain from "./FEFacultyAdminProposalApplicationHistoryMain";
+import { IFEFacultyAdminProposalApplicationHistoryMainCard } from "./FEFacultyAdminProposalApplicationHistoryMainCard";
 
-export interface IFEStudyProgramAdminProposalApplicationHistory {}
+export interface IFEFacultyAdminProposalApplicationHistory {}
 
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
@@ -30,7 +30,7 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   },
 ];
 
-const dummyProposalApplicationHistoryData: Array<IFEStudyProgramAdminProposalApplicationHistoryMainCard> =
+const dummyProposalApplicationHistoryData: Array<IFEFacultyAdminProposalApplicationHistoryMainCard> =
   [
     {
       name: "Devi Selfira",
@@ -59,8 +59,8 @@ const dummyProposalApplicationHistoryData: Array<IFEStudyProgramAdminProposalApp
     },
   ];
 
-const FEStudyProgramAdminProposalApplicationHistory: React.FC<
-  IFEStudyProgramAdminProposalApplicationHistory
+const FEFacultyAdminProposalApplicationHistory: React.FC<
+  IFEFacultyAdminProposalApplicationHistory
 > = ({}) => {
   const {
     array: proposalApplicationHistoryData,
@@ -115,7 +115,7 @@ const FEStudyProgramAdminProposalApplicationHistory: React.FC<
         disabledButtonTooltipLabel={"Riwayat kosong"}
       />
       {isHistoryExist ? (
-        <FEStudyProgramAdminProposalApplicationHistoryMain
+        <FEFacultyAdminProposalApplicationHistoryMain
           proposalApplicationHistoryData={proposalApplicationHistoryData}
           handleDelete={handleDelete}
         />
@@ -134,4 +134,4 @@ const FEStudyProgramAdminProposalApplicationHistory: React.FC<
     </FEMainlayout>
   );
 };
-export default FEStudyProgramAdminProposalApplicationHistory;
+export default FEFacultyAdminProposalApplicationHistory;

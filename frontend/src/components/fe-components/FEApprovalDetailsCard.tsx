@@ -50,7 +50,7 @@ const FEApprovalDetailsCard: React.FC<IFEApprovalDetailsCard> = ({
                 Lab. {proposalArray[0].laboratory}
               </Text>
               {proposalArray[0].proposer == null ? null : (
-                <Group className="gap-1">
+                <Group className="">
                   <Text className="text-primary-text-500 font-bold text-lg">
                     Asal Usulan
                   </Text>
@@ -86,7 +86,7 @@ const FEApprovalDetailsCard: React.FC<IFEApprovalDetailsCard> = ({
                     Lab. {proposalArray[1].laboratory}
                   </Text>
                   {proposalArray[1].proposer == null ? null : (
-                    <Stack className="gap-1">
+                    <Group className="">
                       <Text className="text-primary-text-500 font-bold text-lg">
                         Asal Usulan
                       </Text>
@@ -106,7 +106,7 @@ const FEApprovalDetailsCard: React.FC<IFEApprovalDetailsCard> = ({
                           }
                         />
                       </Text>
-                    </Stack>
+                    </Group>
                   )}
                 </>
               ) : (

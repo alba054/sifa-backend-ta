@@ -51,7 +51,9 @@ const FEStudyProgramAdminProposalApplicationHistoryMainCard: React.FC<
               </Text>
               {status === "Diterima" ? (
                 <FERoundedChip
-                  label={acceptedProposal!.proposer || `Mahasiswa (${name})`}
+                  label={acceptedProposal.proposer === "Dosen"
+                  ? `Dosen (${acceptedProposal.proposerName})`
+                  : `Mahasiswa (${name})`}
                   type="blue"
                   leftIcon={
                     <FEPersonFilled

@@ -8,6 +8,7 @@ import FEMainNavbar, {
   INavbarMenuItem,
 } from "src/components/fe-components/navbars/FEMainNavbar.component";
 import { deanMenus } from "./final-exam-const.tsx/dean.const";
+import { facultyAdminMenus } from "./final-exam-const.tsx/faculty-admin.const";
 import { firstViceDeanMenus } from "./final-exam-const.tsx/first-vice-dean.const";
 import { headAdministratorMenus } from "./final-exam-const.tsx/head-administrator";
 import { studentMenus } from "./final-exam-const.tsx/student-role.const";
@@ -27,12 +28,14 @@ const switchMenus: { [role: string | number]: INavbarMenuItem[] } = {
   3: subsectionChairmanMenus,
   4: headAdministratorMenus,
   5: deanMenus,
+  6: facultyAdminMenus,
   student: studentMenus,
   "first-vice-dean": firstViceDeanMenus,
   "study-program-admin": studyProgramAdminMenus,
   "subsection-chairman": subsectionChairmanMenus,
   "head-administrator": headAdministratorMenus,
   dean: deanMenus,
+  "faculty-admin": facultyAdminMenus,
 };
 
 const FEMainlayout: React.FC<IMainLayoutProps> = ({

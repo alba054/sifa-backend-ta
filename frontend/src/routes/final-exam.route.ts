@@ -53,5 +53,13 @@ export const FEROUTES = {
   DEAN_APPROVAL_MENTOR_AND_EXAMINERS: "/tugas-akhir/dekan/persetujuan/sk-pembimbing-dan-penguji",
   DEAN_APPROVAL_MENTOR_AND_EXAMINERS_DETAILS: "/tugas-akhir/dekan/persetujuan/sk-pembimbing-dan-penguji/nim",
   DEAN_APPROVAL_MENTOR_AND_EXAMINERS_HISTORY: "/tugas-akhir/dekan/persetujuan/sk-pembimbing-dan-penguji/riwayat",
+  // ====================================================================================================
+  FACULTY_ADMIN_HOMEPAGE: "/tugas-akhir/admin-fakultas",
+  FACULTY_ADMIN_APPROVAL: "/tugas-akhir/admin-fakultas/persetujuan",
+  FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS: "/tugas-akhir/admin-fakultas/persetujuan/sk-pembimbing-dan-penguji",
+  FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_APPLICATION: "/tugas-akhir/admin-fakultas/persetujuan/sk-pembimbing-dan-penguji/permohonan-judul/nim",
+  FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_APPLICATION_HISTORY: "/tugas-akhir/admin-fakultas/persetujuan/sk-pembimbing-dan-penguji/permohonan-judul/riwayat",
+  FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_MAKING: "/tugas-akhir/admin-fakultas/persetujuan/sk-pembimbing-dan-penguji/pembuatan/nim",
+  FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_MAKING_HISTORY: "/tugas-akhir/admin-fakultas/persetujuan/sk-pembimbing-dan-penguji/pembuatan/riwayat",
   
 };

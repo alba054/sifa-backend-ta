@@ -1,27 +1,27 @@
 import { Stack } from "@mantine/core";
 import React from "react";
-import FEStudyProgramAdminProposalApplicationHistoryMainCard, {
-  IFEStudyProgramAdminProposalApplicationHistoryMainCard
-} from "./FEStudyProgramAdminProposalApplicationHistoryMainCard";
+import FEFacultyAdminProposalApplicationHistoryMainCard, {
+  IFEFacultyAdminProposalApplicationHistoryMainCard
+} from "./FEFacultyAdminProposalApplicationHistoryMainCard";
 
-export interface IFEStudyProgramAdminProposalApplicationHistoryMain {
-  proposalApplicationHistoryData: Array<IFEStudyProgramAdminProposalApplicationHistoryMainCard>,
+export interface IFEFacultyAdminProposalApplicationHistoryMain {
+  proposalApplicationHistoryData: Array<IFEFacultyAdminProposalApplicationHistoryMainCard>,
   handleDelete?: ((e:number)=>void)
 }
 
-const FEStudyProgramAdminProposalApplicationHistoryMain: React.FC<
-  IFEStudyProgramAdminProposalApplicationHistoryMain
+const FEFacultyAdminProposalApplicationHistoryMain: React.FC<
+  IFEFacultyAdminProposalApplicationHistoryMain
 > = ({proposalApplicationHistoryData, handleDelete}) => {
 
   return (
     <Stack className="gap-6">
       {proposalApplicationHistoryData.map(
         (
-          proposalHistory: IFEStudyProgramAdminProposalApplicationHistoryMainCard,
+          proposalHistory: IFEFacultyAdminProposalApplicationHistoryMainCard,
           index: number
         ) => {
           return (
-            <FEStudyProgramAdminProposalApplicationHistoryMainCard
+            <FEFacultyAdminProposalApplicationHistoryMainCard
               key={index}
               index= {index}
               handleDelete={handleDelete}
@@ -33,4 +33,4 @@ const FEStudyProgramAdminProposalApplicationHistoryMain: React.FC<
     </Stack>
   );
 };
-export default FEStudyProgramAdminProposalApplicationHistoryMain;
+export default FEFacultyAdminProposalApplicationHistoryMain;

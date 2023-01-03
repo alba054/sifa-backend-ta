@@ -12,15 +12,15 @@ import { FEROUTES } from "src/routes/final-exam.route";
 import {
   IFEApprovalDetailsCard
 } from "../../../../../../components/fe-components/FEApprovalDetailsCard";
-import FEStudyProgramAdminProposalApplicationCard from "./FEStudyProgramAdminProposalApplicationCard";
+import FEFacultyAdminProposalApplicationCard from "./FEFacultyAdminProposalApplicationCard";
 
-export interface IFEStudyProgramAdminProposalApplication {}
+export interface IFEFacultyAdminProposalApplication {}
 
 const buttons: ILFPHeaderButton[] = [
   {
     label: "Riwayat Persetujuan",
     type: "href",
-    href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_APPLICATION_HISTORY,
+    href: FEROUTES.FACULTY_ADMIN_APPROVAL,
     icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />,
     disabled: false,
   },
@@ -29,11 +29,11 @@ const buttons: ILFPHeaderButton[] = [
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
     title: "Persetujuan",
-    href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL,
+    href: FEROUTES.FACULTY_ADMIN_APPROVAL,
   },
   {
-    title: "Tugas Akhir",
-    href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL,
+    title: "SK Pembimbing dan Penguji",
+    href: FEROUTES.FACULTY_ADMIN_APPROVAL,
   },
 ];
 
@@ -75,8 +75,8 @@ const dummyApprovalList: Array<IFEApprovalDetailsCard> = [
   },
 ];
 
-const FEStudyProgramAdminProposalApplication: React.FC<
-  IFEStudyProgramAdminProposalApplication
+const FEFacultyAdminProposalApplication: React.FC<
+  IFEFacultyAdminProposalApplication
 > = ({}) => {
   const { array: approvalList, remove } = useArray(dummyApprovalList);
 
@@ -100,17 +100,17 @@ const FEStudyProgramAdminProposalApplication: React.FC<
   return (
     <FEMainlayout
       breadCrumbs={breadCrumbs}
-      breadCrumbsCurrentPage="Permohonan Tugas Akhir"
+      breadCrumbsCurrentPage="Persetujuan Permohonan Judul"
     >
       <LFPHeaderComponent
-        title="Permohonan Tugas Akhir"
+        title="Persetujuan Permohonan Judul"
         buttons={buttons}
       />
       {isDataExist ? (
         <Stack mt={"md"} className="gap-6">
           {approvalList.map((approval: IFEApprovalDetailsCard, e: number) => {
             return (
-              <FEStudyProgramAdminProposalApplicationCard
+              <FEFacultyAdminProposalApplicationCard
                 key={e}
                 index={e}
                 name={approval.name}
@@ -130,4 +130,4 @@ const FEStudyProgramAdminProposalApplication: React.FC<
     </FEMainlayout>
   );
 };
-export default FEStudyProgramAdminProposalApplication;
+export default FEFacultyAdminProposalApplication;

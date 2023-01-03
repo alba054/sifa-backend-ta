@@ -25,9 +25,9 @@ import { RadioGroup } from "src/components/FormInput";
 import {
   feProposalApplicationModalForm,
   IFEProposalApplicationModalForm,
-} from "./FEStudyProgramAdminProposalApplicationModalFormInterfaces";
+} from "./FEFacultyAdminProposalApplicationModalFormInterfaces";
 
-export interface IFEStudyProgramAdminProposalApplicationModal {
+export interface IFEFacultyAdminProposalApplicationModal {
   index: number;
   opened: boolean;
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
@@ -42,8 +42,8 @@ export interface IFEStudyProgramAdminProposalApplicationModal {
   proposalArray: Array<IProposal>;
 }
 
-const FEStudyProgramAdminProposalApplicationModal: React.FC<
-  IFEStudyProgramAdminProposalApplicationModal
+const FEFacultyAdminProposalApplicationModal: React.FC<
+  IFEFacultyAdminProposalApplicationModal
 > = ({ index, opened, setOpened, name, nim, onSubmit, proposalArray }) => {
   const theme = useMantineTheme();
 
@@ -299,4 +299,4 @@ const FEStudyProgramAdminProposalApplicationModal: React.FC<
     </Modal>
   );
 };
-export default FEStudyProgramAdminProposalApplicationModal;
+export default FEFacultyAdminProposalApplicationModal;

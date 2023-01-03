@@ -5,36 +5,37 @@ import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 
-export interface IFEStudyProgramAdminProposal {}
+export interface IFEFacultyAdminProposal {}
 
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
     title: "Persetujuan",
-    href: FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL,
+    href: FEROUTES.FACULTY_ADMIN_APPROVAL,
   },
 ];
 
-const FEStudyProgramAdminProposal: React.FC<
-  IFEStudyProgramAdminProposal
-> = ({}) => {
+const FEFacultyAdminProposal: React.FC<IFEFacultyAdminProposal> = ({}) => {
   return (
-    <FEMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Tugas Akhir">
+    <FEMainlayout
+      breadCrumbs={breadCrumbs}
+      breadCrumbsCurrentPage="SK Pembimbing dan Penguji"
+    >
       <Title order={2} className="text-primary-text-500" mb={"md"}>
-        Tugas Akhir
+        SK Pembimbing dan Penguji
       </Title>
       <Group spacing={"xl"} grow>
         <FEApprovalCard
-          label="Permohonan Tugas Akhir"
-          description="Permohonan judul tugas akhir mahasiswa"
-          to={FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_APPLICATION}
+          label="Persetujuan Permohonan Judul"
+          description="Verifikasi dan validasi berkas"
+          to={FEROUTES.FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_APPLICATION}
         />
         <FEApprovalCard
-          label="Pengajuan Tugas Akhir"
-          description="Pengajuan ke kepala laboratorium"
-          to={FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL_SUBMISSION}
+          label="Pembuatan SK"
+          description="Pembuatan SK Pembimbing dan Penguji"
+          to={FEROUTES.FACULTY_ADMIN_APPROVAL}
         />
       </Group>
     </FEMainlayout>
   );
 };
-export default FEStudyProgramAdminProposal;
+export default FEFacultyAdminProposal;
