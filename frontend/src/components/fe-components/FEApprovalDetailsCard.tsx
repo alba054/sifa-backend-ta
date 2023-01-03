@@ -1,4 +1,4 @@
-import { Stack, Text, useMantineTheme } from "@mantine/core";
+import { Group, Stack, Text, useMantineTheme } from "@mantine/core";
 import React, { useEffect } from "react";
 import {
   FEBookmarkSingleSearchOutline,
@@ -50,7 +50,7 @@ const FEApprovalDetailsCard: React.FC<IFEApprovalDetailsCard> = ({
                 Lab. {proposalArray[0].laboratory}
               </Text>
               {proposalArray[0].proposer == null ? null : (
-                <Stack className="gap-1">
+                <Group className="gap-1">
                   <Text className="text-primary-text-500 font-bold text-lg">
                     Asal Usulan
                   </Text>
@@ -70,7 +70,7 @@ const FEApprovalDetailsCard: React.FC<IFEApprovalDetailsCard> = ({
                       }
                     />
                   </Text>
-                </Stack>
+                </Group>
               )}
             </Stack>
             <Stack className="gap-0">
