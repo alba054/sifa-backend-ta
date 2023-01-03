@@ -11,7 +11,7 @@ const FEHeadAdministratorApproval: React.FC<IFEHeadAdministratorApproval> = ({})
     <FEMainlayout>
       <Title order={2} className="text-primary-text-500" mb={"md"}>
         Persetujuan
-      </Title>
+      </Title> 
       <Group spacing={"xl"} grow>
         <FEApprovalCard
           label="SK Pembimbing dan Penguji"
