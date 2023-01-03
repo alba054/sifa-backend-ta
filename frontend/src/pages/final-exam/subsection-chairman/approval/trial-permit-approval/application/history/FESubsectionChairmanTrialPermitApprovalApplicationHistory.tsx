@@ -35,19 +35,65 @@ const dummyTrialPermitApprovalApplicationHistoryData: Array<IFESubsectionChairma
       applicationDate: "24 November 2022",
       name: "Devi Selfira",
       nim: "N011181001",
-      status: "Ditolak",
+      status: "Menunggu",
+      proposalTitle:
+        "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
+      mentors: {
+        mainMentor: "a",
+        sideMentor: "b",
+      },
+      examiners: {
+        firstExaminer: "b",
+        secondExaminer: "d",
+      },
     },
     {
       applicationDate: "24 Desember 2022",
       name: "Yusuf Syam",
       nim: "H071191044",
       status: "Diterima",
+      proposalTitle:
+        "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
+      mentors: {
+        mainMentor: "a",
+        sideMentor: "b",
+      },
+      examiners: {
+        firstExaminer: "b",
+        secondExaminer: "d",
+      },
     },
     {
       applicationDate: "14 November 2022",
       name: "Devon",
       nim: "H071191040",
       status: "Belum_Diproses",
+      proposalTitle:
+        "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
+      mentors: {
+        mainMentor: "a",
+        sideMentor: "b",
+      },
+      examiners: {
+        firstExaminer: "b",
+        secondExaminer: "d",
+      },
+    },
+    {
+      applicationDate: "15 November 2022",
+      name: "Richard Enrico",
+      nim: "H071191055",
+      status: "Ditolak",
+      proposalTitle:
+        "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
+      mentors: {
+        mainMentor: "a",
+        sideMentor: "b",
+      },
+      examiners: {
+        firstExaminer: "b",
+        secondExaminer: "d",
+      },
     },
   ];
 

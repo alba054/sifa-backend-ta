@@ -61,7 +61,8 @@ const FESubsectionChairmanTrialPermitApprovalApplicationUnprocessedDetails: Reac
             "Pelaporan PD-Dikti",
             "Bukti Klirins SPP/UKT",
             "Ijazah Terakhir",
-            "Transkip Nilai",
+            "Pas Foto (2:3)",
+            "Transkip Nilai (Sistem SIM/Manual)",
             "Pelaporan Nilai Mata Kuliah",
             "Daftar Nilai Fisik Mata Kuliah",
           ]}

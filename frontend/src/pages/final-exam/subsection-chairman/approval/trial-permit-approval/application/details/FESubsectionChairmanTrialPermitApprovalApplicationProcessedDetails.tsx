@@ -41,7 +41,7 @@ const FESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails: React.
         yesButtonLabel={"Buat"}
         onSubmit={handleAcceptApproval}
       />
-      <FEProgressBar
+      {/* <FEProgressBar
         progressStages={[
           "Validasi berkas dan generate surat permohonan",
           "Verifikasi dokumen oleh KTU",
@@ -50,7 +50,7 @@ const FESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails: React.
         currentProgress={1}
         proposalDate={"20 November 2022"}
         progressChip={statusChipNoIcon[status]}
-      />
+      /> */}
       <Stack className="relative pl-16 pr-8 py-8 border border-secondary-500 rounded-xl ">
         <FEFileMultipleOutline
           size={22}
@@ -65,7 +65,8 @@ const FESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails: React.
             "Pelaporan PD-Dikti",
             "Bukti Klirins SPP/UKT",
             "Ijazah Terakhir",
-            "Transkip Nilai",
+            "Pas Foto (2:3)",
+            "Transkip Nilai (Sistem SIM/Manual)",
             "Pelaporan Nilai Mata Kuliah",
             "Daftar Nilai Fisik Mata Kuliah",
           ]}
