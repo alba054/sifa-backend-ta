@@ -32,7 +32,7 @@ const FEFacultyAdminProposal: React.FC<IFEFacultyAdminProposal> = ({}) => {
         <FEApprovalCard
           label="Pembuatan SK"
           description="Pembuatan SK Pembimbing dan Penguji"
-          to={FEROUTES.FACULTY_ADMIN_APPROVAL}
+          to={FEROUTES.FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_MAKING}
         />
       </Group>
     </FEMainlayout>
