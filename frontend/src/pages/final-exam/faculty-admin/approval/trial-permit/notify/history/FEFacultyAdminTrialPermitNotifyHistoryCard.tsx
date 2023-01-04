@@ -36,8 +36,8 @@ const FEFacultyAdminTrialPermitNotifyHistoryCard: React.FC<
   return (
     <Group className="flex py-6 px-7 border border-[#DFDFDF] relative justify-between rounded-xl gap-x-10 drop-[0_1px_4px_rgba(0,0,0,0.12)] shadow-md bg-white">
       <FEAlertModal
-        title="Hapus Riwayat Persetujuan?"
-        description={`Data riwayat persetujuan SK pembimbing dan penguji ${name} yang telah dihapus tidak dapat dikembalikan.`}
+        title="Hapus Riwayat Surat Permohonan?"
+        description={`Data riwayat surat permohonan ${name} yang telah dihapus tidak dapat dikembalikan.`}
         opened={isAlertOpened}
         setOpened={setIsAlertOpened}
         onSubmit={() => {
