@@ -1,16 +1,18 @@
-import { Stack } from '@mantine/core';
-import React, { useEffect, useState } from 'react';
-import { FEClockRepeatOutline } from 'src/assets/Icons/Fluent';
-import { IFEBreadCrumbsItem } from 'src/components/fe-components/FEBreadCrumbs';
-import LFPEmptyDataComponent from 'src/components/fe-components/LFPEmptyData.component';
-import LFPHeaderComponent, { ILFPHeaderButton } from 'src/components/fe-components/LFPHeader.component';
-import useArray from 'src/hooks/fe-hooks/useArray';
-import FEMainlayout from 'src/layouts/final-exam/FEMainLayout';
-import { FEROUTES } from 'src/routes/final-exam.route';
-import FEFacultyAdminProposalMakingCard, { IFEFacultyAdminProposalMakingCard } from './FEFacultyAdminProposalMakingCard';
+import { Stack } from "@mantine/core";
+import React, { useEffect, useState } from "react";
+import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
+import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
+import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
+import LFPHeaderComponent, {
+  ILFPHeaderButton,
+} from "src/components/fe-components/LFPHeader.component";
+import useArray from "src/hooks/fe-hooks/useArray";
+import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
+import { FEROUTES } from "src/routes/final-exam.route";
+import FEFacultyAdminProposalMakingCard, {
+  IFEFacultyAdminProposalMakingCard,
+} from "./FEFacultyAdminProposalMakingCard";
 export interface IFEFacultyAdminProposalMaking {}
-
-
 
 const buttons: ILFPHeaderButton[] = [
   {
@@ -33,8 +35,6 @@ const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   },
 ];
 
-
-
 const dummyApprovalList: Array<IFEFacultyAdminProposalMakingCard> = [
   {
     name: "Devi Selfira",
@@ -42,32 +42,48 @@ const dummyApprovalList: Array<IFEFacultyAdminProposalMakingCard> = [
     proposalTitle:
       "Efektivitas Ekstrak Daun Insulin (Tithonia diversifolia) terhadap Kadar Blood Urea Nitrogen (BUN) pada Tikus Model Diabetes Melitus",
     laboratory: "Kimia Farmasi",
-    mentors:{
+    mentors: {
       mainMentor: "Rangga Asri S.Si., M.Si., Apt.",
-      sideMentor: "Ricar"
+      sideMentor: "Ricar",
     },
-    examiners:{
+    examiners: {
       firstExaminer: "Indo Lalo S.Si., M.Si., Apt.",
-      secondExaminer: "KASKJDAJKSDA"
-    }
+      secondExaminer: "KASKJDAJKSDA",
+    },
+    skMentors: {
+      status: "Menunggu",
+    },
+    skExaminers: {
+      status: "Menunggu",
+    },
   },
   {
     name: "Muh. Yusuf Syam",
     nim: "H071191044",
     proposalTitle: "Cara Membuat Robot yang Bagus",
     laboratory: "DOP",
-    mentors:{
+    mentors: {
       mainMentor: "Rangga Asri S.Si., M.Si., Apt.",
-      sideMentor: "Ricar"
+      sideMentor: "Ricar",
     },
-    examiners:{
+    examiners: {
       firstExaminer: "Indo Lalo S.Si., M.Si., Apt.",
-      secondExaminer: "KASKJDAJKSDA"
-    }
+      secondExaminer: "KASKJDAJKSDA",
+    },
+    skMentors: {
+      status: "Ditolak",
+      refusalReason: "Berkas Tidak Valid",
+      repellentRole: "Kasubag",
+    },
+    skExaminers: {
+      status: "Diterima",
+    },
   },
 ];
 
-const FEFacultyAdminProposalMaking: React.FC<IFEFacultyAdminProposalMaking> = ({ }) => {
+const FEFacultyAdminProposalMaking: React.FC<
+  IFEFacultyAdminProposalMaking
+> = ({}) => {
   const { array: approvalList, remove } = useArray(dummyApprovalList);
 
   const [isDataExist, setIsDataExist] = useState(
@@ -82,16 +98,12 @@ const FEFacultyAdminProposalMaking: React.FC<IFEFacultyAdminProposalMaking> = ({
     }
   }, [approvalList]);
 
-
   return (
     <FEMainlayout
       breadCrumbs={breadCrumbs}
       breadCrumbsCurrentPage="Pembuatan SK"
     >
-      <LFPHeaderComponent
-        title="Pembuatan SK"
-        buttons={buttons}
-      />
+      <LFPHeaderComponent title="Pembuatan SK" buttons={buttons} />
       {isDataExist ? (
         <Stack mt={"md"} className="gap-6">
           {approvalList.map(
@@ -113,6 +125,6 @@ const FEFacultyAdminProposalMaking: React.FC<IFEFacultyAdminProposalMaking> = ({
         />
       )}
     </FEMainlayout>
-  )
-}
+  );
+};
 export default FEFacultyAdminProposalMaking;

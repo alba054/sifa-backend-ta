@@ -83,6 +83,7 @@ import FEFacultyAdminProposalApplication from "./pages/final-exam/faculty-admin/
 import FEFacultyAdminProposalApplicationHistory from "./pages/final-exam/faculty-admin/approval/proposal/application/history/FEFacultyAdminProposalApplicationHistory";
 import FEFacultyAdminProposal from "./pages/final-exam/faculty-admin/approval/proposal/FEFacultyAdminProposal";
 import FEFacultyAdminProposalMaking from "./pages/final-exam/faculty-admin/approval/proposal/making/FEFacultyAdminProposalMaking";
+import FEFacultyAdminProposalMakingNew from "./pages/final-exam/faculty-admin/approval/proposal/making/new/FEFacultyAdminProposalMakingNew";
 
 const queryClient = new QueryClient({});
 
@@ -443,14 +444,17 @@ function App() {
                               <FEFacultyAdminProposalApplicationDetails />
                             }
                           />
-                          <Route
-                            path="pembuatan"
-                          >
-                          <Route
-                            index
-                            element={<FEFacultyAdminProposalMaking />}
-                          />
+                          <Route path="pembuatan">
+                            <Route
+                              index
+                              element={<FEFacultyAdminProposalMaking />}
+                            />
                           </Route>
+
+                          <Route
+                            path="pembuatan/:nim"
+                            element={<FEFacultyAdminProposalMakingNew />}
+                          />
                         </Route>
                       </Route>
                     </Route>
