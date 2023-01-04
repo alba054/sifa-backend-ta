@@ -90,6 +90,8 @@ import FEFacultyAdminTrialPermit from "./pages/final-exam/faculty-admin/approval
 import FEFacultyAdminTrialPermitVerify from "./pages/final-exam/faculty-admin/approval/trial-permit/verify/FEFacultyAdminTrialPermitVerify";
 import FEFacultyAdminTrialPermitVerifyDetails from "./pages/final-exam/faculty-admin/approval/trial-permit/verify/details/FEFacultyAdminTrialPermitVerifyDetails";
 import FEFacultyAdminTrialPermitVerifyHistory from "./pages/final-exam/faculty-admin/approval/trial-permit/verify/history/FEFacultyAdminTrialPermitVerifyHistory";
+import FEFacultyAdminTrialPermitNotify from "./pages/final-exam/faculty-admin/approval/trial-permit/notify/FEFacultyAdminTrialPermitNotify";
+import FEFacultyAdminTrialPermitNotifyHistory from "./pages/final-exam/faculty-admin/approval/trial-permit/notify/history/FEFacultyAdminTrialPermitNotifyHistory";
 
 const queryClient = new QueryClient({});
 
@@ -495,6 +497,19 @@ function App() {
                             path="verifikasi-berkas/:nim"
                             element={<FEFacultyAdminTrialPermitVerifyDetails />}
                           />
+
+                          <Route path="notifikasi">
+                            <Route
+                              index
+                              element={<FEFacultyAdminTrialPermitNotify />}
+                            />
+                            <Route
+                              path="riwayat"
+                              element={
+                                <FEFacultyAdminTrialPermitNotifyHistory />
+                              }
+                            />
+                          </Route>
                         </Route>
                       </Route>
                     </Route>

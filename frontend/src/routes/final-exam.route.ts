@@ -65,4 +65,7 @@ export const FEROUTES = {
   FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_VERIFICATION: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/verifikasi-berkas",
   FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_VERIFICATION_HISTORY: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/verifikasi-berkas/riwayat",
   FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_VERIFICATION_DETAILS: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/verifikasi-berkas/nim",
+  FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_NOTIFICATION: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/notifikasi",
+  FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_NOTIFICATION_HISTORY: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/notifikasi/riwayat",
+
 };

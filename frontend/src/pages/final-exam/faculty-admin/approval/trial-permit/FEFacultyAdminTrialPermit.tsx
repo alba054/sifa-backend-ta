@@ -33,8 +33,8 @@ const FEFacultyAdminTrialPermit: React.FC<
         />
         <FEApprovalCard
           label="Notifikasi Surat Permohonan"
-          description="Berkas persyaratan izin ujian sidang"
-          to={FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_EXAMINERS_TEAM}
+          description="Notifikasi ke mahasiswa"
+          to={FEROUTES.FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_NOTIFICATION}
         />
       </Group>
     </FEMainlayout>
