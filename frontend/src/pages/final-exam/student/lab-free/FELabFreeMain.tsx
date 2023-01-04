@@ -20,29 +20,39 @@ export interface IFELabFreeMain {
   possibleLab: any;
 }
 
-const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap, possibleLab }) => {
-  const { array, set: setArray, push, filter, update, remove, clear } = useArray([])
-  
-  useUpdateEffect(()=>{
-    clear()
+const FELabFreeMain: React.FC<IFELabFreeMain> = ({
+  labFreeCardMap,
+  possibleLab,
+}) => {
+  const {
+    array,
+    set: setArray,
+    push,
+    filter,
+    update,
+    remove,
+    clear,
+  } = useArray([]);
+
+  useUpdateEffect(() => {
+    clear();
     for (let values of labFreeCardMap.values()) {
-      push(values)
+      push(values);
     }
-  }, [labFreeCardMap])
+  }, [labFreeCardMap]);
   return (
     <Stack mt={10} spacing="md">
-      <FEInformationNotification 
+      <FEInformationNotification
         description={
           <Text>
-          Setelah mengajukan permohonan, tunggu hingga Kepala Laboratorium yang
-          bersangkutan mengecek permohonan Anda.
-          <Text className="font-extrabold inline">Jika diterima</Text>, silahkan
-          download surat hasil permohonan.{" "}
-          <Text className="font-extrabold inline">Jika ditolak</Text>, silahkan
-          lakukan pengajuan ulang jika berkenan.
+            Setelah mengajukan permohonan, tunggu hingga Kepala Laboratorium
+            yang bersangkutan mengecek permohonan Anda.
+            <Text className="font-extrabold inline">Jika diterima</Text>,
+            silahkan download surat hasil permohonan.{" "}
+            <Text className="font-extrabold inline">Jika ditolak</Text>,
+            silahkan lakukan pengajuan ulang jika berkenan.
           </Text>
         }
-      
       />
       {/* <Group className="bg-[rgb(239,246,255)] rounded-xl p-5 items-start">
         <MediaQuery smallerThan={"lg"} styles={{ display: "none" }}>
@@ -84,11 +94,16 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap, possibleLab }
         }}
         inherit
       >
-      <Grid className="mt-0" gutter={"xl"}>
-
-          {array.map((LabFreeCard:any, e: number) => {
+        <Grid className="mt-0" gutter={"xl"}>
+          {array.map((LabFreeCard: any, e: number) => {
             return (
-              <Grid.Col span={6} xs={12} sm={12} md={6}>
+              <Grid.Col
+                key={LabFreeCard.labId + "lf-id"}
+                span={6}
+                xs={12}
+                sm={12}
+                md={6}
+              >
                 <FELabFreeCardComp
                   key={e}
                   labId={LabFreeCard.labId}
@@ -97,14 +112,14 @@ const FELabFreeMain: React.FC<IFELabFreeMain> = ({ labFreeCardMap, possibleLab }
                   lab={LabFreeCard.lab}
                   status={LabFreeCard.status}
                   tanggalPermohonan={LabFreeCard.tanggalPermohonan}
-                  handleUpdateLab= {LabFreeCard.handleUpdateLab}
+                  handleUpdateLab={LabFreeCard.handleUpdateLab}
                   handleDeleteLab={LabFreeCard.handleDeleteLab}
                   possibleLabValue={possibleLab}
                 />
               </Grid.Col>
             );
           })}
-      </Grid>
+        </Grid>
       </MantineProvider>
     </Stack>
   );

@@ -83,6 +83,7 @@ import FEFacultyAdminProposalApplication from "./pages/final-exam/faculty-admin/
 import FEFacultyAdminProposalApplicationHistory from "./pages/final-exam/faculty-admin/approval/proposal/application/history/FEFacultyAdminProposalApplicationHistory";
 import FEFacultyAdminProposal from "./pages/final-exam/faculty-admin/approval/proposal/FEFacultyAdminProposal";
 import FEFacultyAdminProposalMaking from "./pages/final-exam/faculty-admin/approval/proposal/making/FEFacultyAdminProposalMaking";
+import FETableUseExample from "./pages/final-exam/student/proposal/FETableUseExample";
 
 const queryClient = new QueryClient({});
 
@@ -104,6 +105,13 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="login" element={<Login />} />
                   <Route path="reset-password" element={<ResetPassword />} />
+
+                  <Route path="development">
+                    <Route
+                      path="contoh-table"
+                      element={<FETableUseExample />}
+                    />
+                  </Route>
                   <Route path="nilai">
                     <Route index element={<Mark />} />
                     <Route path="penilaian" element={<Assessment />} />
@@ -180,7 +188,6 @@ function App() {
                   </Route>
                   <Route path="bantuan" element={<Help />} />
                   <Route path="profil" element={<Profile />} />
-                  <Route path="*" element={<NotFound />} />
                   <Route path="tugas-akhir">
                     <Route index element={<FEHomepage />} />
                     <Route path="mahasiswa">
@@ -443,18 +450,17 @@ function App() {
                               <FEFacultyAdminProposalApplicationDetails />
                             }
                           />
-                          <Route
-                            path="pembuatan"
-                          >
-                          <Route
-                            index
-                            element={<FEFacultyAdminProposalMaking />}
-                          />
+                          <Route path="pembuatan">
+                            <Route
+                              index
+                              element={<FEFacultyAdminProposalMaking />}
+                            />
                           </Route>
                         </Route>
                       </Route>
                     </Route>
                   </Route>
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>
             </FERoleProvider>
