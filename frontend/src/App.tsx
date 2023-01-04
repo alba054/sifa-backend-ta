@@ -84,6 +84,7 @@ import FEFacultyAdminProposalApplicationHistory from "./pages/final-exam/faculty
 import FEFacultyAdminProposal from "./pages/final-exam/faculty-admin/approval/proposal/FEFacultyAdminProposal";
 import FEFacultyAdminProposalMaking from "./pages/final-exam/faculty-admin/approval/proposal/making/FEFacultyAdminProposalMaking";
 import FEFacultyAdminProposalMakingNew from "./pages/final-exam/faculty-admin/approval/proposal/making/new/FEFacultyAdminProposalMakingNew";
+import FEFacultyAdminProposalMakingHistory from "./pages/final-exam/faculty-admin/approval/proposal/making/history/FEFacultyAdminProposalMakingHistory";
 
 const queryClient = new QueryClient({});
 
@@ -448,6 +449,10 @@ function App() {
                             <Route
                               index
                               element={<FEFacultyAdminProposalMaking />}
+                            />
+                            <Route
+                              path="riwayat"
+                              element={<FEFacultyAdminProposalMakingHistory />}
                             />
                           </Route>
 

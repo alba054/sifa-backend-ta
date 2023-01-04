@@ -75,7 +75,7 @@ const dummyProposalMaking: {
       secondExaminer: "KASKJDAJKSDA",
     },
     skMentors:{
-      status:"Ditolak",
+      status:"Diterima",
       refusalReason: "Berkas Tidak Valid",
       repellentRole: "Kasubag",
     },
@@ -112,9 +112,9 @@ const FEFacultyAdminProposalMakingNew: React.FC<
     setSkExaminersStatus("Belum_Diproses");
   }
 
-  console.log(
-    skExaminersStatus === "Diterima" && skMentorStatus === "Diterima"
-  );
+  function endHandler(){
+    navigate(-1)
+  }
 
   return (
     <FEMainlayout
@@ -334,6 +334,7 @@ const FEFacultyAdminProposalMakingNew: React.FC<
           <Button
             variant="light"
             className="bg-primary-500  text-white w-full hover:bg-primary-500"
+            onClick={endHandler}
             disabled={
               !(
                 skExaminersStatus === "Diterima" &&

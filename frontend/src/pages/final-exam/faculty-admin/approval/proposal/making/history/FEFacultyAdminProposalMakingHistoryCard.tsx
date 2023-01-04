@@ -1,10 +1,12 @@
 import { Button, Group, Stack, Text, useMantineTheme } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FEBookmarkSingleSearchOutline,
   FEPersonFilled,
+  FETrashOutline,
 } from "src/assets/Icons/Fluent";
+import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FELinkMore from "src/components/fe-components/FELinkMore";
 import FERoundedChip, {
   approvalChip2,
@@ -13,7 +15,7 @@ import FECard from "src/components/FECard";
 import { IGFEExaminers, IGFEMentors } from "src/utils/const/interfaces";
 import { FEStatus } from "src/utils/const/type";
 
-export interface IFEFacultyAdminProposalMakingCard {
+export interface IFEFacultyAdminProposalMakingHistoryCard {
   index?: number;
   name: string;
   nim: string;
@@ -32,8 +34,8 @@ export interface IFEProposalMakingSK {
   repellentRole?: string; // Di sini sebenarnya bisa dibuatkan interface role nya
 }
 
-const FEFacultyAdminProposalMakingCard: React.FC<
-  IFEFacultyAdminProposalMakingCard
+const FEFacultyAdminProposalMakingHistoryCard: React.FC<
+  IFEFacultyAdminProposalMakingHistoryCard
 > = ({
   index,
   name,
@@ -46,11 +48,20 @@ const FEFacultyAdminProposalMakingCard: React.FC<
   skMentors,
   onDelete,
 }) => {
-  const theme = useMantineTheme();
-  const navigate = useNavigate();
+  const [isAlertOpened, setIsAlertOpened] = useState(false);
   console.log(skMentors.status);
   return (
     <FECard bg="bg-primary-500" leftBorderRadius="xl">
+      <FEAlertModal
+        title="Hapus Riwayat Pembuatan SK?"
+        description={`Data riwayat pembuatan SK ${name} yang telah dihapus tidak dapat dikembalikan.`}
+        opened={isAlertOpened}
+        setOpened={setIsAlertOpened}
+        onSubmit={() => {
+          onDelete!(index!);
+          setIsAlertOpened(false);
+        }}
+      />
       <Stack className="bg-white px-8 py-6 justify-between relative border rounded-r-xl border-secondary-500">
         <Stack className="gap-2 mb-4 z-10">
           <Text className="text-2xl font-bold text-primary-text-500 mb-2">
@@ -117,21 +128,15 @@ const FEFacultyAdminProposalMakingCard: React.FC<
             </Stack>
           </Stack>
         </Stack>
-        <Group className="justify-between -mt-4">
-          <FELinkMore caption="Selengkapnya" to={nim} />
-          {skExaminers.status === "Diterima" &&
-          skMentors.status === "Diterima" ? (
-            <Button
-              variant="light"
-              className="bg-primary-500 text-white hover:bg-primary-500 z-10 px-10"
-              onClick={() => {
-                onDelete!(index!);
-              }}
-            >
-              Selesai
-            </Button>
-          ) : null}
-        </Group>
+        <Button
+          variant="light"
+          onClick={() => {
+            setIsAlertOpened(true);
+          }}
+          className="p-0 m-0 bg-white hover:bg-white z-10 absolute right-6 bottom-6"
+        >
+          <FETrashOutline color="#FF2C56" className="bg-white" size={23} />
+        </Button>
         <FEBookmarkSingleSearchOutline
           size={120}
           color={"#F1F1F3"}
@@ -141,4 +146,4 @@ const FEFacultyAdminProposalMakingCard: React.FC<
     </FECard>
   );
 };
-export default FEFacultyAdminProposalMakingCard;
+export default FEFacultyAdminProposalMakingHistoryCard;
