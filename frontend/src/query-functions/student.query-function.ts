@@ -106,7 +106,9 @@ export async function qfDeleteStudentReqLabs(reqlabId: string) {
     }
   );
 
-  return await studentReqLabs.json();
+  const resp = await studentReqLabs.json();
+
+  return resp;
 }
 
 export interface IQFGetThesisParams {
