@@ -61,5 +61,8 @@ export const FEROUTES = {
   FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_APPLICATION_HISTORY: "/tugas-akhir/admin-fakultas/persetujuan/sk-pembimbing-dan-penguji/permohonan-judul/riwayat",
   FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_MAKING: "/tugas-akhir/admin-fakultas/persetujuan/sk-pembimbing-dan-penguji/pembuatan",
   FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_MAKING_HISTORY: "/tugas-akhir/admin-fakultas/persetujuan/sk-pembimbing-dan-penguji/pembuatan/riwayat",
-  
+  FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang",
+  FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_VERIFICATION: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/verifikasi-berkas",
+  FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_VERIFICATION_HISTORY: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/verifikasi-berkas/riwayat",
+  FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_VERIFICATION_DETAILS: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/verifikasi-berkas/nim",
 };

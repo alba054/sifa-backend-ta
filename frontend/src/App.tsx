@@ -86,6 +86,10 @@ import FEFacultyAdminProposalMaking from "./pages/final-exam/faculty-admin/appro
 import FEFacultyAdminProposalMakingNew from "./pages/final-exam/faculty-admin/approval/proposal/making/new/FEFacultyAdminProposalMakingNew";
 import FEFacultyAdminProposalMakingHistory from "./pages/final-exam/faculty-admin/approval/proposal/making/history/FEFacultyAdminProposalMakingHistory";
 import FETableUseExample from "./pages/final-exam/student/proposal/FETableUseExample";
+import FEFacultyAdminTrialPermit from "./pages/final-exam/faculty-admin/approval/trial-permit/FEFacultyAdminTrialPermit";
+import FEFacultyAdminTrialPermitVerify from "./pages/final-exam/faculty-admin/approval/trial-permit/verify/FEFacultyAdminTrialPermitVerify";
+import FEFacultyAdminTrialPermitVerifyDetails from "./pages/final-exam/faculty-admin/approval/trial-permit/verify/details/FEFacultyAdminTrialPermitVerifyDetails";
+import FEFacultyAdminTrialPermitVerifyHistory from "./pages/final-exam/faculty-admin/approval/trial-permit/verify/history/FEFacultyAdminTrialPermitVerifyHistory";
 
 const queryClient = new QueryClient({});
 
@@ -466,6 +470,30 @@ function App() {
                           <Route
                             path="pembuatan/:nim"
                             element={<FEFacultyAdminProposalMakingNew />}
+                          />
+                        </Route>
+                        <Route path="izin-ujian-sidang">
+                          <Route
+                            index
+                            element={<FEFacultyAdminTrialPermit />}
+                          />
+
+                          <Route path="verifikasi-berkas">
+                            <Route
+                              index
+                              element={<FEFacultyAdminTrialPermitVerify />}
+                            />
+                            <Route
+                              path="riwayat"
+                              element={
+                                <FEFacultyAdminTrialPermitVerifyHistory />
+                              }
+                            />
+                          </Route>
+
+                          <Route
+                            path="verifikasi-berkas/:nim"
+                            element={<FEFacultyAdminTrialPermitVerifyDetails />}
                           />
                         </Route>
                       </Route>

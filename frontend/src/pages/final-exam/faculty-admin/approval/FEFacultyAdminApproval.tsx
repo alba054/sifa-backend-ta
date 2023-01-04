@@ -21,7 +21,7 @@ const FEFacultyAdminApproval: React.FC<IFEFacultyAdminApproval> = ({}) => {
         <FEApprovalCard
           label="Permohonan Izin Ujian Sidang"
           description="Validasi berkas dan Surat Permohonan"
-          to={FEROUTES.STUDY_PROGRAM_ADMIN_APPROVAL_EXAMINERS_TEAM}
+          to={FEROUTES.FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT}
         />
       </Group>
     </FEMainlayout>
