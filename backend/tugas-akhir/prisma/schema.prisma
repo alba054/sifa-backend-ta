@@ -128,6 +128,7 @@ model pembimbing {
   pmbUrutan                 Int?
   pmbDsnId                  Int
   ref_posisipmb             StatusPosisiPembimbing      @default(Utama)
+  statusTerima              StatusPermohonan            @default(Belum_Diproses)
   // pmbPosisi                 Int?
   // ref_posisipmb             ref_posisipmb?              @relation(fields: [pmbPosisi], references: [posisipmbId], onDelete: Cascade, map: "Pembimbing_ibfk_2")
   tugas_akhir               tugas_akhir                 @relation(fields: [pmbTaId], references: [taId], onDelete: Cascade, map: "Pembimbing_ibfk_3")
