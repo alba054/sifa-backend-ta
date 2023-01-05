@@ -1,4 +1,5 @@
 import { NextFunction, Response, Request } from "express";
+import { json } from "stream/consumers";
 import { HeadLabService } from "../services/headLab.service";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
@@ -10,6 +11,108 @@ interface ISupervisorBodyPost {
 }
 
 export class HeadLabHandler {
+  static async getSupervisorDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { supervisorID } = req.params;
+
+    const supervisor = await HeadLabService.getSupervisorDetail(
+      Number(supervisorID)
+    );
+
+    if (supervisor === null) {
+      return next(new NotFoundError("supervisor is not found"));
+    }
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get supervisor detail",
+          supervisor
+        )
+      );
+  }
+
+  static async getSupervisorsOfThesis(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { thesisID } = req.params;
+
+    const supervisors = await HeadLabService.getSupervisorOfThesis(
+      Number(thesisID)
+    );
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get thesis's supervisors history",
+          supervisors
+        )
+      );
+  }
+
+  static async removeSupervisor(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { supervisorID } = req.params;
+
+    try {
+      await HeadLabService.removeSupervisor(Number(supervisorID));
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully remove supervisor"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async editSupervisor(req: Request, res: Response, next: NextFunction) {
+    const { supervisorID } = req.params;
+
+    const body = req.body as ISupervisorBodyPost;
+
+    try {
+      if (
+        typeof body.lecturerID === "undefined" ||
+        typeof body.position === "undefined"
+      ) {
+        throw new BadRequestError("provide lecturerID and position");
+      }
+
+      const assignedSupervisor = await HeadLabService.editSupervisor(
+        Number(supervisorID),
+        body
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully edit supervisor"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async assignSupervisor(
     req: Request,
     res: Response,
