@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { HeadLabService } from "../services/headLab.service";
 import { BadRequestError } from "../utils/error/badrequestError";
+import { NotFoundError } from "../utils/error/notFoundError";
 
 interface ISupervisorBodyPost {
   lecturerID: number;
@@ -20,7 +21,11 @@ export class HeadLabMiddleware {
       Number(supervisorID)
     );
 
-    if (supervisor?.statusTerima !== "Belum_Diproses") {
+    if (supervisor === null) {
+      return next(new NotFoundError("supevisor's not found"));
+    }
+
+    if (supervisor.statusTerima !== "Belum_Diproses") {
       return next(
         new BadRequestError("cannot edit accepted/rejected supervisor")
       );
