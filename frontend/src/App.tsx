@@ -92,6 +92,7 @@ import FEFacultyAdminTrialPermitVerifyDetails from "./pages/final-exam/faculty-a
 import FEFacultyAdminTrialPermitVerifyHistory from "./pages/final-exam/faculty-admin/approval/trial-permit/verify/history/FEFacultyAdminTrialPermitVerifyHistory";
 import FEFacultyAdminTrialPermitNotify from "./pages/final-exam/faculty-admin/approval/trial-permit/notify/FEFacultyAdminTrialPermitNotify";
 import FEFacultyAdminTrialPermitNotifyHistory from "./pages/final-exam/faculty-admin/approval/trial-permit/notify/history/FEFacultyAdminTrialPermitNotifyHistory";
+import FELecturerMentorProposal from "./pages/final-exam/lecturer/mentor-proposal/FELecturerMentorProposal";
 
 const queryClient = new QueryClient({});
 
@@ -511,6 +512,12 @@ function App() {
                             />
                           </Route>
                         </Route>
+                      </Route>
+                    </Route>
+                    <Route path="dosen">
+                      <Route index element={<FEHomepage />} />
+                      <Route path="usulan-pembimbing">
+                        <Route index element={<FELecturerMentorProposal />} />
                       </Route>
                     </Route>
                   </Route>

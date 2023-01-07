@@ -14,22 +14,18 @@ export interface IFERefusalReasonForm {
   form: any;
 }
 
-const FERefusalReasonForm: React.FC<
-  IFERefusalReasonForm
-> = ({ form }) => {
+const FERefusalReasonForm: React.FC<IFERefusalReasonForm> = ({ form }) => {
   const { getInputProps, errors, setValues } = form;
   return (
     <Stack className="gap-0 -mt-2">
       <Text className="text-secondary-text-500 text-lg tracking-1">
-      Masukan alasan anda melakukan  penolakan
+        Masukan alasan anda melakukan penolakan
       </Text>
       <TextArea
         autosize
         minRows={10}
         {...getInputProps("refusalReason")}
-        error={
-          errors["refusalReason" as keyof IFERefusalReasonForm]
-        }
+        error={errors["refusalReason" as keyof IFERefusalReasonForm]}
         placeholder="Alasan Penolakan ..."
       />
     </Stack>

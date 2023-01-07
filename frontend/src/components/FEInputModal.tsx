@@ -15,6 +15,7 @@ interface IFEInputModalProps {
   children: React.ReactNode;
   noButtonLabel?: string;
   yesButtonLabel?: string;
+  maxWidth?: number;
 }
 
 const FEInputModal = ({
@@ -25,6 +26,7 @@ const FEInputModal = ({
   children,
   noButtonLabel = "Batal",
   yesButtonLabel = "Buat Permohonan",
+  maxWidth = 800,
 }: IFEInputModalProps) => {
   const theme = useMantineTheme();
 
@@ -37,15 +39,15 @@ const FEInputModal = ({
       padding={30}
       styles={{
         modal: {
-          maxWidth: "800px",
+          maxWidth: `${maxWidth}px`,
           width: "100%",
-          borderRadius: "12px"
+          borderRadius: "12px",
         },
         title: {
           fontSize: 24,
           color: theme.colors["primary-text"][5],
-          fontWeight: 700
-        }
+          fontWeight: 700,
+        },
       }}
     >
       <div className="py-2">{children}</div>

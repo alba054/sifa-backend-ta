@@ -7,7 +7,6 @@ import FETableComponent, {
   IFETableHeadingProps,
   IFETableRowColumnProps,
 } from "src/components/fe-components/fe-table/FETable";
-import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 
 interface IFEStudentCounselingProps {}
@@ -69,7 +68,7 @@ function getDataFromBackend() {
 }
 
 const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
-  const {array:dataFromBackend, remove, clear} = useArray(getDataFromBackend());
+  const dataFromBackend = getDataFromBackend();
   const [activePage, setActivePage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -77,14 +76,6 @@ const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
     setTimeout(() => setIsLoading(false), 1000);
   }, []);
   // const [activeSort, setActiveSort] = useState<IActiveSort | null>(null);
-
-  useEffect(()=>{
-    for (let i = 0; i < dataFromBackend.length; i++) {
-      dataFromBackend[i].id= i
-    }
-
-    console.log(dataFromBackend)
-  }, [dataFromBackend])
 
   const tableHeadings: IFETableHeadingProps[] = [
     { label: "No", sortable: false, textAlign: "center", cellKey: "no" },
@@ -122,7 +113,7 @@ const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
 
   // Semua key di table row ini itu ada di cellKey yang di table heading
   const tableRows = dataFromBackend.map(
-    (data : any, idx : number) =>
+    (data, idx) =>
       ({
         no: {
           label: idx + 1,
@@ -186,7 +177,6 @@ const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
         console.log("Hapus ", row.no);
-        remove(row.no.label-1)
       },
     },
   ];
