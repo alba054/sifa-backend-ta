@@ -92,8 +92,11 @@ import FEFacultyAdminTrialPermitVerifyDetails from "./pages/final-exam/faculty-a
 import FEFacultyAdminTrialPermitVerifyHistory from "./pages/final-exam/faculty-admin/approval/trial-permit/verify/history/FEFacultyAdminTrialPermitVerifyHistory";
 import FEFacultyAdminTrialPermitNotify from "./pages/final-exam/faculty-admin/approval/trial-permit/notify/FEFacultyAdminTrialPermitNotify";
 import FEFacultyAdminTrialPermitNotifyHistory from "./pages/final-exam/faculty-admin/approval/trial-permit/notify/history/FEFacultyAdminTrialPermitNotifyHistory";
-import FELecturerMentorProposal from "./pages/final-exam/lecturer/mentor-proposal/FELecturerMentorProposal";
-import FELecturerMentorProposalHistory from "./pages/final-exam/lecturer/mentor-proposal/history/FELecturerMentorProposalHistory";
+import FELecturerMentorProposal from "./pages/final-exam/lecturer/mentor-examiner-proposal/mentor-proposal/FELecturerMentorProposal";
+import FELecturerMentorProposalHistory from "./pages/final-exam/lecturer/mentor-examiner-proposal/mentor-proposal/history/FELecturerMentorProposalHistory";
+import FELecturerExaminerProposal from "./pages/final-exam/lecturer/mentor-examiner-proposal/examiner-proposal/FELecturerExaminerProposal";
+import FELecturerExaminerProposalHistory from "./pages/final-exam/lecturer/mentor-examiner-proposal/examiner-proposal/history/FELecturerExaminerProposalHistory";
+import FELecturerProposal from "./pages/final-exam/lecturer/mentor-examiner-proposal/FELecturerProposal";
 
 const queryClient = new QueryClient({});
 
@@ -517,9 +520,22 @@ function App() {
                     </Route>
                     <Route path="dosen">
                       <Route index element={<FEHomepage />} />
-                      <Route path="usulan-pembimbing">
-                        <Route index element={<FELecturerMentorProposal />} />
-                        <Route path="riwayat" element={<FELecturerMentorProposalHistory />} />
+                      <Route path="usulan">
+                        <Route index element={<FELecturerProposal />} />
+                        <Route path="pembimbing">
+                          <Route index element={<FELecturerMentorProposal />} />
+                          <Route
+                            path="riwayat"
+                            element={<FELecturerMentorProposalHistory />}
+                          />
+                        </Route>
+                        <Route path="penguji">
+                          <Route index element={<FELecturerExaminerProposal />} />
+                          <Route
+                            path="riwayat"
+                            element={<FELecturerExaminerProposalHistory />}
+                          />
+                        </Route>
                       </Route>
                     </Route>
                   </Route>

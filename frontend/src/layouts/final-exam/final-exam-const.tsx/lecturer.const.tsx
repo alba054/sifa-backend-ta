@@ -14,8 +14,8 @@ export const lecturerMenus: INavbarMenuItem[] = [
   },
   {
     icon: FEGuidance,
-    label: "Usulan Pembimbing",
-    href: FEROUTES.LECTURER_HOMEPAGE_MENTOR_PROPOSAL,
+    label: "Usulan",
+    href: FEROUTES.LECTURER_HOMEPAGE_PROPOSAL,
   },
   {
     icon: FECheckSquareOutlineForNavbar,

@@ -7,7 +7,7 @@ import FERefusalReasonForm, {
 } from "src/components/fe-components/FERefusalReasonForm";
 import FEInputModal from "src/components/FEInputModal";
 
-export interface IFELecturerMentorProposalRefuseModal {
+export interface IFELecturerExaminerProposalRefuseModal {
   opened: boolean;
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
   onSubmit?: () => void;
@@ -18,12 +18,13 @@ export interface IFELecturerMentorProposalRefuseModal {
   proposer: string;
   proposerName?: string;
   laboratory: string;
-  mentorPosition: string;
+  mainMentor: string;
+  sideMentor: string;
   form: any
 }
 
-const FELecturerMentorProposalRefuseModal: React.FC<
-  IFELecturerMentorProposalRefuseModal
+const FELecturerExaminerProposalRefuseModal: React.FC<
+  IFELecturerExaminerProposalRefuseModal
 > = ({
   opened,
   setOpened,
@@ -34,7 +35,8 @@ const FELecturerMentorProposalRefuseModal: React.FC<
   proposalTitle,
   proposer,
   proposerName,
-  mentorPosition,
+  mainMentor,
+  sideMentor,
   index,
   form
 }) => {
@@ -43,7 +45,7 @@ const FELecturerMentorProposalRefuseModal: React.FC<
     <FEInputModal
       opened={opened}
       setOpened={setOpened}
-      title={"Konfirmasi Penolakan Usulan Pembimbing"}
+      title={"Konfirmasi Penolakan Usulan Penguji"}
       yesButtonLabel={"Tolak Usulan"}
       onSubmit={onSubmit}
       maxWidth={800}
@@ -52,7 +54,7 @@ const FELecturerMentorProposalRefuseModal: React.FC<
         <Text className="text-primary-text-500">
           Terima usulan sebagai{" "}
           <Text className="text-error-500 font-bold inline">
-            PEMBIMBING {mentorPosition.toUpperCase()}
+            PENGUJI
           </Text>{" "}
           untuk Tugas Akhir dengan detail sebagai berikut?
         </Text>
@@ -80,9 +82,18 @@ const FELecturerMentorProposalRefuseModal: React.FC<
             {laboratory}
           </Text>
         </Stack>
-        <FERefusalReasonForm form={form} />
+        <Stack className="gap-0">
+          <Text className="text-secondary-text-500">Dosen Pembimbing</Text>
+          <Text className="text-primary-text-500 text-lg tracking-1 font-semibold">
+            {mainMentor} (Utama)
+          </Text>
+          <Text className="text-primary-text-500 text-lg tracking-1 font-semibold">
+            {sideMentor} (Pendamping)
+          </Text>
+        </Stack>
+        <FERefusalReasonForm form={form} textSize="md" label="Alasan Penolakan" />
       </Stack>
     </FEInputModal>
   );
 };
-export default FELecturerMentorProposalRefuseModal;
+export default FELecturerExaminerProposalRefuseModal;

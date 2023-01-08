@@ -12,14 +12,24 @@ export const feRefusalReasonFormSchema = yup.object({
 
 export interface IFERefusalReasonForm {
   form: any;
+  textSize?: "lg" | "md";
+  label?: string;
 }
 
-const FERefusalReasonForm: React.FC<IFERefusalReasonForm> = ({ form }) => {
+const FERefusalReasonForm: React.FC<IFERefusalReasonForm> = ({
+  form,
+  textSize = "sm",
+  label = "Masukan alasan anda melakukan penolakan ",
+}) => {
   const { getInputProps, errors, setValues } = form;
   return (
     <Stack className="gap-0 -mt-2">
-      <Text className="text-secondary-text-500 text-lg tracking-1">
-        Masukan alasan anda melakukan penolakan
+      <Text
+        className={`text-secondary-text-500 tracking-1 ${
+          textSize == "md" ? "text-md" : "text-lg"
+        }`}
+      >
+        {label}
       </Text>
       <TextArea
         autosize

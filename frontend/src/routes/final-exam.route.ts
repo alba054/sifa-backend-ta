@@ -69,6 +69,8 @@ export const FEROUTES = {
   FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_NOTIFICATION_HISTORY: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/notifikasi/riwayat",
   // ====================================================================================================
   LECTURER_HOMEPAGE: "/tugas-akhir/dosen",
-  LECTURER_HOMEPAGE_MENTOR_PROPOSAL: "/tugas-akhir/dosen/usulan-pembimbing",
+  LECTURER_HOMEPAGE_PROPOSAL: "/tugas-akhir/dosen/usulan",
+  LECTURER_HOMEPAGE_MENTOR_PROPOSAL: "/tugas-akhir/dosen/usulan/pembimbing",
+  LECTURER_HOMEPAGE_EXAMINER_PROPOSAL: "/tugas-akhir/dosen/usulan/penguji",
   LECTURER_HOMEPAGE_APPROVAL: "/tugas-akhir/dosen/persetujuan",
 };
