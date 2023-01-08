@@ -18,7 +18,7 @@ interface IFETableComponentProps {
   tableTitle: string;
   tableHeadings: IFETableHeadingProps[];
   tableRows: IFETableRowColumnProps[];
-  dataAmt: number;
+  noDataMsg: string;
   dataPerPageAmt: number;
   isLoading: boolean;
   actions?: IFETableAction[];
@@ -71,9 +71,9 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
   tableHeadings,
   tableRows,
   actions,
+  noDataMsg,
   isLoading,
   onSearch,
-  dataAmt,
   dataPerPageAmt,
   activePage,
   onPageChange,
@@ -83,10 +83,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
     textAlign: th.textAlign,
   }));
 
-  console.log(dataAmt);
-  console.log(dataPerPageAmt);
-  const pageAmt = Math.round(dataAmt / dataPerPageAmt + 0.4);
-  console.log(pageAmt);
+  const pageAmt = Math.round(tableRows.length / dataPerPageAmt + 0.4);
 
   function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
     onSearch && onSearch(e.target.value);
@@ -110,6 +107,8 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
       />
     </>
   );
+
+  const isEmpty = !tableRows.length;
 
   return (
     <div className={`h-fit`}>
@@ -180,57 +179,69 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                 </tr>
               </thead>
               <tbody>
-                {tableRows
-                  .slice(
-                    (activePage - 1) * dataPerPageAmt,
-                    (activePage - 1) * dataPerPageAmt + dataPerPageAmt
-                  )
-                  .map((row: IFETableRowColumnProps, idx: number) => {
-                    return (
-                      <tr key={idx + "row-"}>
-                        {headKeys.map((th) => {
-                          const col = row[th.key];
-                          return (
-                            <td
-                              key={row[th.key].label + "td-key"}
-                              className={`text-primary-text-500  text-${th.textAlign}`}
-                            >
-                              {col.element || col.label}
+                {isEmpty ? (
+                  <tr className={`h-40`}>
+                    <td colSpan={tableHeadings.length + 1}>
+                      <Text weight={"bold"} size="lg" align="center">
+                        {noDataMsg}
+                      </Text>
+                    </td>
+                  </tr>
+                ) : (
+                  tableRows
+                    .slice(
+                      (activePage - 1) * dataPerPageAmt,
+                      (activePage - 1) * dataPerPageAmt + dataPerPageAmt
+                    )
+                    .map((row: IFETableRowColumnProps, idx: number) => {
+                      return (
+                        <tr key={idx + "row-"}>
+                          {headKeys.map((th) => {
+                            const col = row[th.key];
+                            return (
+                              <td
+                                key={row[th.key].label + "td-key"}
+                                className={`text-primary-text-500  text-${th.textAlign}`}
+                              >
+                                {col.element || col.label}
+                              </td>
+                            );
+                          })}
+                          {!!actions?.length && (
+                            <td className="text-center">
+                              <Stack align={"center"} spacing={5}>
+                                {actions.map((action) => {
+                                  return (
+                                    <Button
+                                      key={action.label + "row-action"}
+                                      onClick={() => action.onClick(row)}
+                                      size="xs"
+                                      className={`${
+                                        aciontBtnClsNames[
+                                          action.backgroundColor
+                                        ]
+                                      }`}
+                                      styles={{
+                                        root: {
+                                          padding: 10,
+                                          width: "70%",
+                                        },
+                                      }}
+                                    >
+                                      <Group align={"center"} spacing={0}>
+                                        {action.icon}
+                                        {action.label}
+                                      </Group>
+                                    </Button>
+                                  );
+                                })}
+                              </Stack>
                             </td>
-                          );
-                        })}
-                        {!!actions?.length && (
-                          <td className="text-center">
-                            <Stack align={"center"} spacing={5}>
-                              {actions.map((action) => {
-                                return (
-                                  <Button
-                                    key={action.label + "row-action"}
-                                    onClick={() => action.onClick(row)}
-                                    size="xs"
-                                    className={`${
-                                      aciontBtnClsNames[action.backgroundColor]
-                                    }`}
-                                    styles={{
-                                      root: {
-                                        padding: 10,
-                                        width: "70%",
-                                      },
-                                    }}
-                                  >
-                                    <Group align={"center"} spacing={0}>
-                                      {action.icon}
-                                      {action.label}
-                                    </Group>
-                                  </Button>
-                                );
-                              })}
-                            </Stack>
-                          </td>
-                        )}
-                      </tr>
-                    );
-                  })}
+                          )}
+                        </tr>
+                      );
+                    })
+                )}
               </tbody>
             </>
           )}
