@@ -9,6 +9,18 @@ interface ISupervisorBodyPost {
 }
 
 export class HeadLabMiddleware {
+  // static async checkDuplicatePosition(
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction
+  // ) {
+  //   let supervisors = await HeadLabService.getSupervisorOfThesis(
+  //     Number(thesisID)
+  //   );
+
+  //   supervisors = supervisors.filter((s) => s.ref_posisipmb === body.position);
+  // }
+
   static async checkEligibilityToEdit(
     req: Request,
     res: Response,

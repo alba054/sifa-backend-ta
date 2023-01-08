@@ -8,6 +8,10 @@ import {
 } from "../utils/interfaces/labFree.interface";
 
 export class LabFree {
+  static async getFreeLabRequestsByID(reqlabsID: number) {
+    return await prismaDB.bebas_lab.findUnique({ where: { blId: reqlabsID } });
+  }
+
   static async editByID(nim: string, reqlabsID: number, body: ILabFreeUpdate) {
     try {
       await prismaDB.bebas_lab.updateMany({
