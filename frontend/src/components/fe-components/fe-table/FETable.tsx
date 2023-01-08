@@ -18,7 +18,6 @@ interface IFETableComponentProps {
   tableTitle: string;
   tableHeadings: IFETableHeadingProps[];
   tableRows: IFETableRowColumnProps[];
-  dataAmt: number;
   noDataMsg: string;
   dataPerPageAmt: number;
   isLoading: boolean;
@@ -75,7 +74,6 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
   noDataMsg,
   isLoading,
   onSearch,
-  dataAmt,
   dataPerPageAmt,
   activePage,
   onPageChange,
@@ -85,10 +83,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
     textAlign: th.textAlign,
   }));
 
-  console.log(dataAmt);
-  console.log(dataPerPageAmt);
-  const pageAmt = Math.round(dataAmt / dataPerPageAmt + 0.4);
-  console.log(pageAmt);
+  const pageAmt = Math.round(tableRows.length / dataPerPageAmt + 0.4);
 
   function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
     onSearch && onSearch(e.target.value);
