@@ -299,7 +299,7 @@ const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
       </Stack>
       <FETableComponent
         isLoading={isLoading}
-        dataAmt={dataFromBackend.length}
+        // dataAmt={dataFromBackend.length}
         dataPerPageAmt={5}
         onSearch={(value) => {
           console.log("Searching for: ", value);
@@ -310,6 +310,7 @@ const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
         tableTitle="Daftar Bimbingan"
         tableRows={tableRows}
         tableHeadings={tableHeadings}
+        noDataMsg={'Data tidak ditemukan'}
       />
     </FEMainlayout>
   );

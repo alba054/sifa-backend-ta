@@ -322,7 +322,7 @@ const FELecturerMentorProposalHistory: React.FC<
       </Stack>
       <FETableComponent
         isLoading={isLoading}
-        dataAmt={dataFromBackend.length}
+        // dataAmt={dataFromBackend.length}
         dataPerPageAmt={5}
         onSearch={(value) => {
           console.log("Searching for: ", value);
@@ -333,6 +333,7 @@ const FELecturerMentorProposalHistory: React.FC<
         tableTitle="Riwayat Usulan Bimbingan"
         tableRows={tableRows}
         tableHeadings={tableHeadings}
+        noDataMsg={'Riwayat Kosong'}
       />
     </FEMainlayout>
   );
