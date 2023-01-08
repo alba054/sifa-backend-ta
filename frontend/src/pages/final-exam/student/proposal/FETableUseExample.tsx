@@ -199,6 +199,7 @@ const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
 
       <FETableComponent
         isLoading={isLoading}
+        noDataMsg="Tidak ada data"
         dataAmt={dataFromBackend.length}
         dataPerPageAmt={3}
         onSearch={(value) => {
@@ -208,7 +209,8 @@ const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
         activePage={activePage}
         actions={actions}
         tableTitle="Daftar Bimbingan"
-        tableRows={tableRows}
+        tableRows={[]}
+        // tableRows={tableRows}
         tableHeadings={tableHeadings}
       />
     </FEMainlayout>
