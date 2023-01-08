@@ -36,6 +36,14 @@ headLabRouter
     HeadLabHandler.getSupervisorsOfThesis
   );
 
+// * view supervisors history
+headLabRouter
+  .route("/supervisors")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.viewAssignedSupervisorsHistory
+  );
+
 // * edit supervisor
 // * get supervisor detail
 // * remove supervisor

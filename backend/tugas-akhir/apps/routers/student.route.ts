@@ -43,6 +43,10 @@ studentRouter
 // * update reqlabs
 studentRouter
   .route("/:nim/reqlabs/:reqlabsID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.getReqLabDetail
+  )
   .delete(
     AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
     StudentHandler.deleteRequestLab

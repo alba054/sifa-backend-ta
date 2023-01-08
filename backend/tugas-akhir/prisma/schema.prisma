@@ -129,6 +129,9 @@ model pembimbing {
   pmbDsnId                  Int
   ref_posisipmb             StatusPosisiPembimbing      @default(Utama)
   statusTerima              StatusPermohonan            @default(Belum_Diproses)
+  catatan                   String?
+  asal_usulan_labID         Int?
+  asal_usulan               ref_laboratorium?           @relation(fields: [asal_usulan_labID], references: [labId])
   // pmbPosisi                 Int?
   // ref_posisipmb             ref_posisipmb?              @relation(fields: [pmbPosisi], references: [posisipmbId], onDelete: Cascade, map: "Pembimbing_ibfk_2")
   tugas_akhir               tugas_akhir                 @relation(fields: [pmbTaId], references: [taId], onDelete: Cascade, map: "Pembimbing_ibfk_3")
@@ -174,6 +177,8 @@ model penguji {
   ujiTaId        Int
   ujiUrutan      Int
   ujiDsnId       Int
+  catatan        String?
+  statusTerima   StatusPermohonan @default(Belum_Diproses)
   tugas_akhir    tugas_akhir      @relation(fields: [ujiTaId], references: [taId], onDelete: NoAction, map: "penguji_ibfk_1")
   dosen          dosen            @relation(fields: [ujiDsnId], references: [dsnId], onDelete: NoAction, map: "penguji_ibfk_4")
   revisi_penguji revisi_penguji[]
@@ -300,6 +305,7 @@ model ref_laboratorium {
   PRtugas_akhir    tugas_akhir[]      @relation("primary")
   SEtugas_akhir    tugas_akhir[]      @relation("secondary")
   user             user[]
+  pembimbing       pembimbing[]
 
   @@index([labKepalaNip], map: "Index 2")
   @@index([labPrdId], map: "labPrdId")

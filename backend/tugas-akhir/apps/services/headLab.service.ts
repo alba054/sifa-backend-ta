@@ -10,6 +10,10 @@ interface ISupervisorBodyPost {
 }
 
 export class HeadLabService {
+  static async viewSupervisorsHistory(status: any) {
+    return await Supervisor.getAllSupervisors(status);
+  }
+
   static async removeSupervisor(supervisorID: number) {
     const supervisor = await Supervisor.getSupervisorByID(supervisorID);
 
@@ -31,7 +35,7 @@ export class HeadLabService {
 
     return supervisors;
   }
-  static async editSupervisor(supervisorID: number, body: ISupervisorBodyPost) {
+  static async editSupervisor(supervisorID: number, lecturerID: number) {
     const supervisor = await Supervisor.getSupervisorByID(supervisorID);
 
     if (supervisor === null) {
@@ -40,7 +44,7 @@ export class HeadLabService {
 
     const assignedSupervisor = await Supervisor.editSupervisor(
       supervisorID,
-      body
+      lecturerID
     );
 
     return assignedSupervisor;
@@ -80,6 +84,7 @@ export class HeadLabService {
     body: ISupervisorBodyPost
   ) {
     const assignedSupervisor = await Supervisor.createSupervisor(
+      labID,
       thesisID,
       body
     );
