@@ -48,8 +48,9 @@ function getDataFromBackend() {
       proposer: "Mahasiswa",
       laboratory: "Kimia Farmasi, Biofarmaka",
       proposerName: "Sadno",
-      examinerPosition: "Utama",
       status: "Diterima",
+      mainMentor: "Dr. Hendra, S.Si., M.Kom",
+      sideMentor: "A. Muh. Amil Siddik, S.Si.,M.Si",
     },
     {
       id: 1,
@@ -60,8 +61,9 @@ function getDataFromBackend() {
       proposer: "Dosen",
       laboratory: "Kimia Farmasi, Biofarmaka",
       proposerName: "Sadno",
-      examinerPosition: "Pendamping",
-      status: "Diterima",
+      status: "Ditolak",
+      mainMentor: "Dr. Hendra, S.Si., M.Kom",
+      sideMentor: "A. Muh. Amil Siddik, S.Si.,M.Si",
     },
     {
       id: 2,
@@ -72,8 +74,9 @@ function getDataFromBackend() {
       proposer: "Dosen",
       laboratory: "Kimia Farmasi, Biofarmaka",
       proposerName: "Sadno",
-      examinerPosition: "Utama",
-      status: "Ditolak",
+      status: "Diterima",
+      mainMentor: "Dr. Hendra, S.Si., M.Kom",
+      sideMentor: "A. Muh. Amil Siddik, S.Si.,M.Si",
     },
     {
       id: 3,
@@ -84,8 +87,9 @@ function getDataFromBackend() {
       proposer: "Dosen",
       laboratory: "Kimia Farmasi, Biofarmaka",
       proposerName: "Sadno",
-      examinerPosition: "Utama",
       status: "Diterima",
+      mainMentor: "Dr. Hendra, S.Si., M.Kom",
+      sideMentor: "A. Muh. Amil Siddik, S.Si.,M.Si",
     },
     {
       id: 4,
@@ -96,8 +100,9 @@ function getDataFromBackend() {
       proposer: "Dosen",
       laboratory: "Kimia Farmasi, Biofarmaka",
       proposerName: "Sadno",
-      examinerPosition: "Pendamping",
       status: "Ditolak",
+      mainMentor: "Dr. Hendra, S.Si., M.Kom2",
+      sideMentor: "A. Muh. Amil Siddik, S.Si.,M.Si2",
     },
     {
       id: 5,
@@ -108,8 +113,9 @@ function getDataFromBackend() {
       proposer: "Mahasiswa",
       laboratory: "Kimia Farmasi, Biofarmaka",
       proposerName: "Sadno",
-      examinerPosition: "Utama",
       status: "Diterima",
+      mainMentor: "Dr. Hendra, S.Si., M.Kom",
+      sideMentor: "A. Muh. Amil Siddik, S.Si.,M.Si",
     },
   ];
 }
@@ -146,18 +152,18 @@ const FELecturerExaminerProposalHistory: React.FC<
   }, [dataFromBackend]);
 
   const tableHeadings: IFETableHeadingProps[] = [
-    { label: "No", sortable: false, textAlign: "center", cellKey: "no" },
+    { label: "No", sortable: false, textAlign: "center", cellKey: "no", width: "80px"  },
     {
       label: "Mahasiswa",
       sortable: true,
       textAlign: "left",
       cellKey: "studentName",
     },
-    {
-      label: "Judul Tugas Akhir",
+    {label: "Judul Tugas Akhir",
       sortable: true,
       textAlign: "left",
       cellKey: "title",
+      width: "300px"
     },
     {
       label: "Asal Usulan",
@@ -166,10 +172,11 @@ const FELecturerExaminerProposalHistory: React.FC<
       cellKey: "proposer",
     },
     {
-      label: "Posisi Penguji",
+      label: "Dosen Pembimbing",
       sortable: true,
       textAlign: "left",
-      cellKey: "examinerPosition",
+      cellKey: "mentor",
+      width: "250px"
     },
     {
       label: "Status",
@@ -215,18 +222,24 @@ const FELecturerExaminerProposalHistory: React.FC<
           //   </Stack>
           // ),
         },
-        examinerPosition: {
-          label: data.examinerPosition,
-          // element: (
-          //   <Stack spacing={4}>
-          //     <Text className={`font-bold`}>Pertama</Text>
-          //     <Text className={`text-primary-text-50`}>{data.tester1}</Text>
-          //     <Text className={`font-bold`} mt={4}>
-          //       Kedua
-          //     </Text>
-          //     <Text className={`text-primary-text-50`}>{data.tester2}</Text>
-          //   </Stack>
-          // ),
+        mentor: {
+          label: data.mainMentor,
+          element: (
+            <Stack className="gap-2">
+              <Stack className="gap-0">
+                <Text className="text-primary-text-500">Utama</Text>
+                  <Text className="text-secondary-text-500">
+                    {data.mainMentor}
+                  </Text>
+              </Stack>
+              <Stack className="gap-0">
+                <Text className="text-primary-text-500">Pendamping</Text>
+                  <Text className="text-secondary-text-500">
+                    {data.sideMentor}
+                  </Text>
+              </Stack>
+            </Stack>
+          ),
         },
         status: {
           label: data.status,

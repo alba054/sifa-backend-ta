@@ -158,7 +158,9 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                           noWrap
                           position={head.textAlign}
                         >
-                          {head.label}
+                          <Text className="text-primary-text-500 text-md font-semibold">
+                            {head.label}
+                          </Text>
                         </Group>
                       </th>
                     );
@@ -211,7 +213,11 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                                 key={row[th.key].label + "td-key"}
                                 className={`text-primary-text-500  text-${th.textAlign}`}
                               >
-                                {col.element || col.label}
+                                {col.element != null ? (
+                                  <Text className="text-md">{col.element}</Text>
+                                ) : (
+                                  <Text className="text-md">{col.label}</Text>
+                                )}
                               </td>
                             );
                           })}

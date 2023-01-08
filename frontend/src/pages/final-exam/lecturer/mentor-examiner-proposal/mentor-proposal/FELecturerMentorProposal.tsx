@@ -139,18 +139,18 @@ const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
   }, [dataFromBackend]);
 
   const tableHeadings: IFETableHeadingProps[] = [
-    { label: "No", sortable: false, textAlign: "center", cellKey: "no" },
+    { label: "No", sortable: false, textAlign: "center", cellKey: "no", width: "80px"  },
     {
       label: "Mahasiswa",
       sortable: true,
       textAlign: "left",
       cellKey: "studentName",
     },
-    {
-      label: "Judul Tugas Akhir",
+    {label: "Judul Tugas Akhir",
       sortable: true,
       textAlign: "left",
       cellKey: "title",
+      width: "300px"
     },
     {
       label: "Asal Usulan",
