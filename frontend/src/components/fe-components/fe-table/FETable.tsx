@@ -26,6 +26,7 @@ interface IFETableComponentProps {
   activePage: number;
   onPageChange?: (page: number) => void;
   actionOrientation?: "vertical" | "horizontal";
+  actionColumnWidth?: string;
 }
 
 export interface IFETableHeadingProps {
@@ -84,6 +85,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
   activePage,
   onPageChange,
   actionOrientation = "horizontal",
+  actionColumnWidth =  "fit-content"
 }) => {
   const headKeys = tableHeadings.map((th) => ({
     key: th.cellKey,
@@ -174,6 +176,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                         zIndex: 1,
                         background: "white",
                         cursor: "default",
+                        width: actionColumnWidth ||  "fit-content"
                       }}
                     >
                       <Group
@@ -182,7 +185,9 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                         noWrap
                         position={"center"}
                       >
-                        Actions
+                        <Text className="text-primary-text-500 text-md font-semibold">
+                          Aksi
+                        </Text>
                       </Group>
                     </th>
                   )}

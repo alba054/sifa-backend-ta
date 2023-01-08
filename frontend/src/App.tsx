@@ -97,6 +97,8 @@ import FELecturerMentorProposalHistory from "./pages/final-exam/lecturer/mentor-
 import FELecturerExaminerProposal from "./pages/final-exam/lecturer/mentor-examiner-proposal/examiner-proposal/FELecturerExaminerProposal";
 import FELecturerExaminerProposalHistory from "./pages/final-exam/lecturer/mentor-examiner-proposal/examiner-proposal/history/FELecturerExaminerProposalHistory";
 import FELecturerProposal from "./pages/final-exam/lecturer/mentor-examiner-proposal/FELecturerProposal";
+import FELecturerSeminarApproval from "./pages/final-exam/lecturer/seminar-approval/FELecturerSeminarApproval";
+import FELecturerSeminarTimeApproval from "./pages/final-exam/lecturer/seminar-approval/seminar-time/FELecturerSeminarTimeApproval";
 
 const queryClient = new QueryClient({});
 
@@ -530,10 +532,25 @@ function App() {
                           />
                         </Route>
                         <Route path="penguji">
-                          <Route index element={<FELecturerExaminerProposal />} />
+                          <Route
+                            index
+                            element={<FELecturerExaminerProposal />}
+                          />
                           <Route
                             path="riwayat"
                             element={<FELecturerExaminerProposalHistory />}
+                          />
+                        </Route>
+                      </Route>{" "}
+                      <Route path="persetujuan">
+                        <Route index element={<FELecturerSeminarApproval />} />
+                        <Route path="pembimbing">
+                          <Route index element={<FELecturerMentorProposal />} />
+                        </Route>
+                        <Route path="waktu-seminar">
+                          <Route
+                            index
+                            element={<FELecturerSeminarTimeApproval />}
                           />
                         </Route>
                       </Route>

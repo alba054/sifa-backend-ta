@@ -73,4 +73,6 @@ export const FEROUTES = {
   LECTURER_HOMEPAGE_MENTOR_PROPOSAL: "/tugas-akhir/dosen/usulan/pembimbing",
   LECTURER_HOMEPAGE_EXAMINER_PROPOSAL: "/tugas-akhir/dosen/usulan/penguji",
   LECTURER_HOMEPAGE_APPROVAL: "/tugas-akhir/dosen/persetujuan",
+  LECTURER_HOMEPAGE_APPROVAL_SEMINAR_TIME: "/tugas-akhir/dosen/persetujuan/waktu-seminar",
+  LECTURER_HOMEPAGE_APPROVAL_MENTOR: "/tugas-akhir/dosen/persetujuan/pembimbing",
 };
