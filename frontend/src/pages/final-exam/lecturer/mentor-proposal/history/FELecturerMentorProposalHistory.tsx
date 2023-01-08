@@ -1,34 +1,35 @@
-import { Stack, Text } from "@mantine/core";
+import { Stack, Text, useMantineTheme } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import React, { useEffect, useState } from "react";
-import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
+import {
+  FECircleBackOutline,
+  FEClockRepeatOutline,
+  FETrashOutline,
+} from "src/assets/Icons/Fluent";
 import FETableComponent, {
   IFETableAction,
   IFETableHeadingProps,
   IFETableRowColumnProps,
 } from "src/components/fe-components/fe-table/FETable";
+import FEAlertModal from "src/components/fe-components/FEAlertModal";
+import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import {
   feRefusalReasonFormSchema,
   IFERefusalReasonFormSchema,
 } from "src/components/fe-components/FERefusalReasonForm";
+import { statusChip } from "src/components/fe-components/FERoundedChip";
 import LFPHeaderComponent, {
   ILFPHeaderButton,
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import FELecturerMentorProposalAcceptModal from "./FELecturerMentorProposalAcceptModal";
-import FELecturerMentorProposalRefuseModal from "./FELecturerMentorProposalRefuseModal";
+export interface IFELecturerMentorProposalHistory {}
 
-export interface IFELecturerMentorProposal {}
-
-const buttons: ILFPHeaderButton[] = [
+const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
-    label: "Riwayat Usulan",
-    type: "href",
-    icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />,
-    disabled: false,
-    href: "riwayat",
+    title: "Usulan Pembimbing",
+    href: FEROUTES.LECTURER_HOMEPAGE_MENTOR_PROPOSAL,
   },
 ];
 
@@ -44,6 +45,7 @@ function getDataFromBackend() {
       laboratory: "Kimia Farmasi, Biofarmaka",
       proposerName: "Sadno",
       mentorPosition: "Utama",
+      status: "Diterima",
     },
     {
       id: 1,
@@ -55,6 +57,7 @@ function getDataFromBackend() {
       laboratory: "Kimia Farmasi, Biofarmaka",
       proposerName: "Sadno",
       mentorPosition: "Pendamping",
+      status: "Diterima",
     },
     {
       id: 2,
@@ -66,6 +69,7 @@ function getDataFromBackend() {
       laboratory: "Kimia Farmasi, Biofarmaka",
       proposerName: "Sadno",
       mentorPosition: "Utama",
+      status: "Ditolak",
     },
     {
       id: 3,
@@ -77,6 +81,7 @@ function getDataFromBackend() {
       laboratory: "Kimia Farmasi, Biofarmaka",
       proposerName: "Sadno",
       mentorPosition: "Utama",
+      status: "Diterima",
     },
     {
       id: 4,
@@ -88,6 +93,7 @@ function getDataFromBackend() {
       laboratory: "Kimia Farmasi, Biofarmaka",
       proposerName: "Sadno",
       mentorPosition: "Pendamping",
+      status: "Ditolak",
     },
     {
       id: 5,
@@ -99,11 +105,14 @@ function getDataFromBackend() {
       laboratory: "Kimia Farmasi, Biofarmaka",
       proposerName: "Sadno",
       mentorPosition: "Utama",
+      status: "Diterima",
     },
   ];
 }
 
-const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
+const FELecturerMentorProposalHistory: React.FC<
+  IFELecturerMentorProposalHistory
+> = ({}) => {
   const {
     array: dataFromBackend,
     remove,
@@ -111,23 +120,26 @@ const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
   } = useArray(getDataFromBackend());
   const [activePage, setActivePage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [isAcceptModalOpened, setisAcceptModalOpened] = useState(false);
-  const [isRefuseModalOpened, setisRefuseModalOpened] = useState(false);
+  const [isRestoreModalOpened, setisRestoreModalOpened] = useState(false);
+  const [isDeleteModalOpened, setisDeleteModalOpened] = useState(false);
+  const [isClearHistoryOpened, setIsClearHistoryOpened] = useState(false)
+  const [isHistoryExist, setIsHistoryExist] = useState(
+    dataFromBackend.length > 0 ? true : false
+  );
   const [selectedRow, setSelectedRow] = useState(0);
-
-  const { onSubmit: onSubmitForm, ...form } =
-    useForm<IFERefusalReasonFormSchema>({
-      validate: yupResolver(feRefusalReasonFormSchema),
-    });
-
-  const { getInputProps, errors, setValues, values } = form;
+  const theme = useMantineTheme();
 
   useEffect(() => {
     for (let i = 0; i < dataFromBackend.length; i++) {
       dataFromBackend[i].id = i;
     }
-
-    console.log(dataFromBackend);
+    
+    if (dataFromBackend.length > 0) {
+      setIsHistoryExist(true);
+    } else {
+      setIsHistoryExist(false);
+    }
+    
   }, [dataFromBackend]);
 
   const tableHeadings: IFETableHeadingProps[] = [
@@ -156,6 +168,12 @@ const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
       textAlign: "left",
       cellKey: "mentorPosition",
     },
+    {
+      label: "Status",
+      sortable: false,
+      textAlign: "left",
+      cellKey: "status",
+    },
   ];
 
   const tableRows = dataFromBackend.map(
@@ -176,7 +194,9 @@ const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
             <Stack className="gap-0">
               <Text className="text-primary-text-500">{data.proposer}</Text>
               {data.proposer === "Dosen" ? (
-                <Text className="text-secondary-text-500">{data.proposerName}</Text>
+                <Text className="text-secondary-text-500">
+                  {data.proposerName}
+                </Text>
               ) : null}
             </Stack>
           ),
@@ -205,88 +225,96 @@ const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
           //   </Stack>
           // ),
         },
+        status: {
+          label: data.status,
+          element: <>
+          {statusChip[`${data.status}`]}
+          </>,
+        },
       } as IFETableRowColumnProps)
   );
 
   function acceptProposalHandler(row: any) {
-    setisAcceptModalOpened(false);
-    // remove(row);
+    setisRestoreModalOpened(false);
+    remove(row);
   }
 
   function refuseProposalHandler() {
-    setisRefuseModalOpened(false);
-    setValues({ refusalReason: "" });
-    // remove(row);
-    console.log(values.refusalReason);
+    setisDeleteModalOpened(false);
+    remove(selectedRow);
+  }
+
+  function clearHistoryHandler(){
+    setIsClearHistoryOpened(false)
+    clear()
   }
 
   const actions: IFETableAction[] = [
     {
-      label: "Terima",
+      label: "",
       backgroundColor: "primaryGradient",
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
         setSelectedRow(row.no.label - 1);
-        setisRefuseModalOpened(true);
+        setisRestoreModalOpened(true);
       },
+      icon: FECircleBackOutline({ size: 19, color: theme.colors.primary[5] }),
     },
     {
-      label: "Tolak",
+      label: "",
       backgroundColor: "errorGradient",
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
         setSelectedRow(row.no.label - 1);
-        setisRefuseModalOpened(true);
+        setisDeleteModalOpened(true);
       },
+      icon: FETrashOutline({ size: 20, color: theme.colors.error[5] }),
     },
   ];
-  return (
-    // id: 0,
-    //   name: "John Brown",
-    //   nim: "H071191044",
-    //   proposalTitle:
-    //     "MEDIA PEMBELAJARAN ANIMASI SIBI (SISTEM ISYARAT BAHASA INDONESIA) TENTANG PENGENALAN HURUF DAN ANGKA UNTUK ANAK DISABILITAS TUNARUNGU",
-    //   proposer: "Mahasiswa",
-    //   laboratory: "Kimia Farmasi, Biofarmaka",
-    //   proposerName: "Sadno",
-    //   mentorPosition: "Utama",
+  
+  const buttons: ILFPHeaderButton[] = [
+    {
+      label: "Kosongkan Riwayat",
+      type: "modal",
+      disabled: !isHistoryExist,
+      onClick: () => setIsClearHistoryOpened(true),
+      icon: <FETrashOutline className="mr-1" size={16}  />,
+    },
+  ];
 
-    <FEMainlayout>
+  return (
+
+    <FEMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Riwayat">
+      <FEAlertModal
+        title="Kosongkan Riwayat Permohonan?"
+        description="Dengan mengklik tombol “Kosongkan”, semua data riwayat akan terhapus. Data yang telah dihapus tidak dapat dikembalikan"
+        opened={isClearHistoryOpened}
+        setOpened={setIsClearHistoryOpened}
+        yesButtonLabel={"Kosongkan"}
+        onSubmit={clearHistoryHandler}
+      />
       {dataFromBackend.length > 0 ? (
         <>
-          {/* {console.log('a', selectedRow)}
-          {console.log('asd ',dataFromBackend)} */}
-          <FELecturerMentorProposalAcceptModal
-            opened={isAcceptModalOpened}
-            setOpened={setisAcceptModalOpened}
+          <FEAlertModal
+            title="Kembalikan Usulan?"
+            description="Pastikan untuk kembali memproses usulan ini setelah dikembalikan!"
+            opened={isRestoreModalOpened}
+            setOpened={setisRestoreModalOpened}
+            yesButtonLabel={"Kembalikan"}
             onSubmit={acceptProposalHandler}
-            name={dataFromBackend[selectedRow].name}
-            nim={dataFromBackend[selectedRow].nim}
-            laboratory={dataFromBackend[selectedRow].laboratory}
-            proposer={dataFromBackend[selectedRow].proposer}
-            proposalTitle={dataFromBackend[selectedRow].proposalTitle}
-            proposerName={dataFromBackend[selectedRow].proposerName}
-            mentorPosition={dataFromBackend[selectedRow].mentorPosition}
-            index={selectedRow}
           />
-          <FELecturerMentorProposalRefuseModal
-            opened={isRefuseModalOpened}
-            setOpened={setisRefuseModalOpened}
-            onSubmit={onSubmitForm(refuseProposalHandler)}
-            name={dataFromBackend[selectedRow].name}
-            nim={dataFromBackend[selectedRow].nim}
-            laboratory={dataFromBackend[selectedRow].laboratory}
-            proposer={dataFromBackend[selectedRow].proposer}
-            proposalTitle={dataFromBackend[selectedRow].proposalTitle}
-            proposerName={dataFromBackend[selectedRow].proposerName}
-            mentorPosition={dataFromBackend[selectedRow].mentorPosition}
-            index={selectedRow}
-            form={form}
+          <FEAlertModal
+            title="Hapus Usulan?"
+            description="Usulan yang telah dihapus tidak dapat dikembalikan!"
+            opened={isDeleteModalOpened}
+            setOpened={setisDeleteModalOpened}
+            yesButtonLabel={"Hapus"}
+            onSubmit={refuseProposalHandler}
           />
         </>
       ) : null}
       <Stack className="gap-0">
-        <LFPHeaderComponent title="Usulan Pembimbing" buttons={buttons} />
+        <LFPHeaderComponent title="Usulan Pembimbing" buttons={buttons} disabledButtonTooltipLabel={'Riwayat Kosong'} />
         <Text className="text-secondary-text-500">
           Daftar usulan sebagai pembimbing tugas akhir
         </Text>
@@ -301,11 +329,11 @@ const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
         onPageChange={setActivePage}
         activePage={activePage}
         actions={actions}
-        tableTitle="Daftar Bimbingan"
+        tableTitle="Riwayat Usulan Bimbingan"
         tableRows={tableRows}
         tableHeadings={tableHeadings}
       />
     </FEMainlayout>
   );
 };
-export default FELecturerMentorProposal;
+export default FELecturerMentorProposalHistory;

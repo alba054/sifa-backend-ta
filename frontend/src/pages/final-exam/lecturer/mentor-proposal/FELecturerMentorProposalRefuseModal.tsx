@@ -10,7 +10,7 @@ import FEInputModal from "src/components/FEInputModal";
 export interface IFELecturerMentorProposalRefuseModal {
   opened: boolean;
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  onSubmit?: (row: any) => void;
+  onSubmit?: () => void;
   index: number;
   name: string;
   nim: number;
@@ -45,10 +45,7 @@ const FELecturerMentorProposalRefuseModal: React.FC<
       setOpened={setOpened}
       title={"Konfirmasi Penolakan Usulan Pembimbing"}
       yesButtonLabel={"Tolak Usulan"}
-      onSubmit={() => {
-        onSubmit!(index);
-        // setValues({ refusalReason: "" });
-      }}
+      onSubmit={onSubmit}
       maxWidth={800}
     >
       <Stack>
