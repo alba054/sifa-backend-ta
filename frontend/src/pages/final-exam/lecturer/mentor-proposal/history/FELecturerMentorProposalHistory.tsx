@@ -122,7 +122,7 @@ const FELecturerMentorProposalHistory: React.FC<
   const [isLoading, setIsLoading] = useState(false);
   const [isRestoreModalOpened, setisRestoreModalOpened] = useState(false);
   const [isDeleteModalOpened, setisDeleteModalOpened] = useState(false);
-  const [isClearHistoryOpened, setIsClearHistoryOpened] = useState(false)
+  const [isClearHistoryOpened, setIsClearHistoryOpened] = useState(false);
   const [isHistoryExist, setIsHistoryExist] = useState(
     dataFromBackend.length > 0 ? true : false
   );
@@ -133,13 +133,12 @@ const FELecturerMentorProposalHistory: React.FC<
     for (let i = 0; i < dataFromBackend.length; i++) {
       dataFromBackend[i].id = i;
     }
-    
+
     if (dataFromBackend.length > 0) {
       setIsHistoryExist(true);
     } else {
       setIsHistoryExist(false);
     }
-    
   }, [dataFromBackend]);
 
   const tableHeadings: IFETableHeadingProps[] = [
@@ -227,9 +226,7 @@ const FELecturerMentorProposalHistory: React.FC<
         },
         status: {
           label: data.status,
-          element: <>
-          {statusChip[`${data.status}`]}
-          </>,
+          element: <>{statusChip[`${data.status}`]}</>,
         },
       } as IFETableRowColumnProps)
   );
@@ -244,9 +241,9 @@ const FELecturerMentorProposalHistory: React.FC<
     remove(selectedRow);
   }
 
-  function clearHistoryHandler(){
-    setIsClearHistoryOpened(false)
-    clear()
+  function clearHistoryHandler() {
+    setIsClearHistoryOpened(false);
+    clear();
   }
 
   const actions: IFETableAction[] = [
@@ -271,19 +268,18 @@ const FELecturerMentorProposalHistory: React.FC<
       icon: FETrashOutline({ size: 20, color: theme.colors.error[5] }),
     },
   ];
-  
+
   const buttons: ILFPHeaderButton[] = [
     {
       label: "Kosongkan Riwayat",
       type: "modal",
       disabled: !isHistoryExist,
       onClick: () => setIsClearHistoryOpened(true),
-      icon: <FETrashOutline className="mr-1" size={16}  />,
+      icon: <FETrashOutline className="mr-1" size={16} />,
     },
   ];
 
   return (
-
     <FEMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Riwayat">
       <FEAlertModal
         title="Kosongkan Riwayat Permohonan?"
@@ -314,7 +310,12 @@ const FELecturerMentorProposalHistory: React.FC<
         </>
       ) : null}
       <Stack className="gap-0">
-        <LFPHeaderComponent title="Usulan Pembimbing" buttons={buttons} disabledButtonTooltipLabel={'Riwayat Kosong'} />
+        <LFPHeaderComponent
+          title="Usulan Pembimbing"
+          buttons={buttons}
+          disabledButtonTooltipLabel={"Riwayat Kosong"}
+          chipLabel={`${dataFromBackend.length} Usulan`}
+        />
         <Text className="text-secondary-text-500">
           Daftar usulan sebagai pembimbing tugas akhir
         </Text>

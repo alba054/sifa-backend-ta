@@ -176,7 +176,9 @@ const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
             <Stack className="gap-0">
               <Text className="text-primary-text-500">{data.proposer}</Text>
               {data.proposer === "Dosen" ? (
-                <Text className="text-secondary-text-500">{data.proposerName}</Text>
+                <Text className="text-secondary-text-500">
+                  {data.proposerName}
+                </Text>
               ) : null}
             </Stack>
           ),
@@ -286,7 +288,11 @@ const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
         </>
       ) : null}
       <Stack className="gap-0">
-        <LFPHeaderComponent title="Usulan Pembimbing" buttons={buttons} />
+        <LFPHeaderComponent
+          title="Usulan Pembimbing"
+          buttons={buttons}
+          chipLabel={`${dataFromBackend.length} Usulan`}
+        />
         <Text className="text-secondary-text-500">
           Daftar usulan sebagai pembimbing tugas akhir
         </Text>

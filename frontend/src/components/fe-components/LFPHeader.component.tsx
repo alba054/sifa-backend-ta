@@ -3,6 +3,7 @@ import { Group, Button, Title, Tooltip, useMantineTheme } from "@mantine/core";
 import React from "react";
 import { Link } from "react-router-dom";
 import { AddFilled } from "src/assets/Icons/Fluent";
+import FERoundedChip from "./FERoundedChip";
 
 export interface ILFPHeaderButton {
   label: string;
@@ -20,18 +21,27 @@ interface ILFGHeaderComponentProps {
   title: string;
   buttons: Array<ILFPHeaderButton>;
   disabledButtonTooltipLabel?: string;
+  chipLabel?: string;
 }
 
 const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
   title,
   buttons,
   disabledButtonTooltipLabel = "Hapus permohonan yang lama untuk membuat permohonan yang baru",
+  chipLabel,
 }) => {
   const addIcon = <AddFilled className={`mr-1 mb-[1px]`} size={14} />;
   const theme = useMantineTheme();
   return (
     <Group position="apart">
-      <Title order={2}>{title}</Title>
+      <Group>
+        <Title order={2}>{title}</Title>
+        {chipLabel != null ? (
+          <div className="relative -bottom-0.5">
+            {<FERoundedChip label={chipLabel} type="gray" />}
+          </div>
+        ) : null}
+      </Group>
       <Group>
         {buttons.map((button, e: number) => {
           return (
@@ -52,7 +62,7 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
                   padding: "8px 16px",
                   // textAlign: "justify",
                   letterSpacing: "0.015em",
-                  maxWidth: "280px"
+                  maxWidth: "280px",
                 },
                 arrow: {
                   border: `1px solid ${theme.colors["secondary"][5]}`,
