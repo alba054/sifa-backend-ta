@@ -31,6 +31,66 @@ lecturerRouter.get(
   LecturerHandler.getLecturersProfile
 );
 
+// * view all offer becoming supervisor/co-supervisor
+lecturerRouter
+  .route("/:nim/supervisors")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getOffersBecomingSupervisor
+  );
+
+// * get offer detail
+// * delete offer
+// * accept/reject offer
+lecturerRouter
+  .route("/:nim/supervisors/:supervisorID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getOfferDetail
+  )
+  .delete(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.deleteSupervisor
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.accceptOrRejectOffer
+  );
+
+// * view all offer becoming examiner
+lecturerRouter
+  .route("/:nim/examiners")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getOffersBecomingExaminers
+  );
+
+// * get examiner offer detail
+// * delete examiner offer
+// * accept/reject examiner offer
+lecturerRouter
+  .route("/:nim/examiners/:examinerID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getExaminerOfferDetail
+  )
+  .delete(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.deleteExaminer
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.accceptOrRejectExaminerOffer
+  );
+
+// // * restore status to InProcess
+// lecturerRouter
+//   .route("/:nim/supervisors/:supervisorID/restore")
+//   .put(
+//     AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+//     LecturerHandler.restoreStatus
+//   );
+
 // lecturerRouter
 //   .route("/:nim")
 //   .get(

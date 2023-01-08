@@ -1,5 +1,4 @@
 import { NextFunction, Response, Request } from "express";
-import { json } from "stream/consumers";
 import { HeadLabService } from "../services/headLab.service";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
@@ -11,6 +10,26 @@ interface ISupervisorBodyPost {
 }
 
 export class HeadLabHandler {
+  static async viewAssignedSupervisorsHistory(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { status } = req.query;
+
+    const supervisors = await HeadLabService.viewSupervisorsHistory(status);
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully view supervisors history",
+          supervisors
+        )
+      );
+  }
+
   static async getSupervisorDetail(
     req: Request,
     res: Response,
@@ -85,19 +104,16 @@ export class HeadLabHandler {
   static async editSupervisor(req: Request, res: Response, next: NextFunction) {
     const { supervisorID } = req.params;
 
-    const body = req.body as ISupervisorBodyPost;
+    const { lecturerID } = req.body as ISupervisorBodyPost;
 
     try {
-      if (
-        typeof body.lecturerID === "undefined" ||
-        typeof body.position === "undefined"
-      ) {
+      if (typeof lecturerID === "undefined") {
         throw new BadRequestError("provide lecturerID and position");
       }
 
       const assignedSupervisor = await HeadLabService.editSupervisor(
         Number(supervisorID),
-        body
+        lecturerID
       );
 
       return res
@@ -132,7 +148,7 @@ export class HeadLabHandler {
 
       const assignedThesis = await HeadLabService.assignSupervisor(
         Number(thesisID),
-        labID,
+        Number(labID),
         body
       );
 

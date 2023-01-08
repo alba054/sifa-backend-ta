@@ -19,6 +19,29 @@ import { decodeBase64 } from "../utils/decoder";
 dotenv.config();
 
 export class StudentHandler {
+  static async getReqLabDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, reqlabsID } = req.params;
+
+    const reqlab = await LabFreeService.getFreeLabRequestsByreqlabsID(
+      nim,
+      Number(reqlabsID)
+    );
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get reqlab detail",
+          reqlab
+        )
+      );
+  }
+
   static async updateProposedThesis(
     req: Request,
     res: Response,

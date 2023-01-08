@@ -1,10 +1,21 @@
 import { LabFree } from "../models/labFree.model";
+import { NotFoundError } from "../utils/error/notFoundError";
 import {
   ILabFree,
   ILabFreeUpdate,
 } from "../utils/interfaces/labFree.interface";
 
 export class LabFreeService {
+  static async getFreeLabRequestsByreqlabsID(nim: string, reqlabsID: number) {
+    const reqlab = await LabFree.getFreeLabRequestsByID(reqlabsID);
+
+    if (reqlab === null || reqlab?.blMhsNim !== nim) {
+      throw new NotFoundError("request lab is not found");
+    }
+
+    return reqlab;
+  }
+
   static async editFreeLabByID(
     nim: string,
     reqlabsID: number,

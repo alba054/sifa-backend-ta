@@ -6,6 +6,7 @@ import { ThesisService } from "../services/thesis.service";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { ThesisHeadMajorDispositionService } from "../services/thesisHeadMajorDisposition.service";
 import { NotFoundError } from "../utils/error/notFoundError";
+import { HeadMajorService } from "../services/headMajor.service";
 
 dotenv.config();
 
@@ -25,7 +26,66 @@ interface IHeadMajorApproval {
   departmentName: string;
 }
 
+interface IAssignedExaminer {
+  position: number;
+  lecturerID: number;
+}
+
 export class HeadMajorHandler {
+  static async getExaminersHistory(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { status } = req.query;
+
+    const examiners = await HeadMajorService.viewExaminersHistory(status);
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully view examiners history",
+          examiners
+        )
+      );
+  }
+
+  static async assignExaminers(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { thesisID } = req.params;
+    try {
+      const body = req.body as IAssignedExaminer;
+
+      if (
+        typeof body.position === "undefined" ||
+        typeof body.lecturerID === "undefined"
+      ) {
+        throw new BadRequestError("provide lecturerID and position");
+      }
+
+      const assignedExaminers = await HeadMajorService.assignExaminer(
+        Number(thesisID),
+        body
+      );
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully assign new examiner"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async deleteDispositionOfApprovedThesis(
     req: Request,
     res: Response,
