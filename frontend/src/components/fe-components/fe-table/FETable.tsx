@@ -31,6 +31,7 @@ export interface IFETableHeadingProps {
   label: string;
   sortable: boolean;
   cellKey: TableRowCellKey;
+  width?: string;
   textAlign: "left" | "right" | "center";
 }
 
@@ -82,7 +83,10 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
     textAlign: th.textAlign,
   }));
 
-  const pageAmt = Math.round(dataAmt / dataPerPageAmt);
+  console.log(dataAmt);
+  console.log(dataPerPageAmt);
+  const pageAmt = Math.round(dataAmt / dataPerPageAmt + 0.4);
+  console.log(pageAmt);
 
   function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
     onSearch && onSearch(e.target.value);
@@ -136,6 +140,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                           top: 0,
                           zIndex: 1,
                           background: "white",
+                          width: head.width,
                           cursor: head.sortable ? "pointer" : "default",
                         }}
                         key={index}
@@ -188,7 +193,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                           return (
                             <td
                               key={row[th.key].label + "td-key"}
-                              className={`text-primary-text-500 text-${th.textAlign}`}
+                              className={`text-primary-text-500  text-${th.textAlign}`}
                             >
                               {col.element || col.label}
                             </td>
