@@ -33,7 +33,8 @@ function getDataFromBackend() {
       lecturer2: "Bambang",
       tester1: "Amil",
       tester2: "Eliyah",
-      title: "Rancange bangun b2b",
+      title:
+        "Rancange bangun b2bakakscasdkcasdk Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv",
     },
     {
       id: 3,
@@ -43,7 +44,8 @@ function getDataFromBackend() {
       lecturer2: "Sadno",
       tester1: "Amil",
       tester2: "Eliyah",
-      title: "Rancange bangun b2b",
+      title:
+        "Rancange bangun b2bakakscasdkcasdk Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv",
     },
     {
       id: 4,
@@ -55,16 +57,16 @@ function getDataFromBackend() {
       tester2: "Eliyah",
       title: "Rancange bangun b2b",
     },
-    {
-      id: 5,
-      name: "Sony",
-      email: "sony@example.com",
-      lecturer1: "Hendra",
-      lecturer2: "Sadno",
-      tester1: "Amil",
-      tester2: "Eliyah",
-      title: "Rancange bangun b2b",
-    },
+    // {
+    //   id: 5,
+    //   name: "Sony",
+    //   email: "sony@example.com",
+    //   lecturer1: "Hendra",
+    //   lecturer2: "Sadno",
+    //   tester1: "Amil",
+    //   tester2: "Eliyah",
+    //   title: "Rancange bangun b2b",
+    // },
   ];
 }
 
@@ -87,16 +89,24 @@ const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
   }, [dataFromBackend])
 
   const tableHeadings: IFETableHeadingProps[] = [
-    { label: "No", sortable: false, textAlign: "center", cellKey: "no" },
+    {
+      label: "No",
+      width: "70px",
+      sortable: false,
+      textAlign: "center",
+      cellKey: "no",
+    },
     {
       label: "Mahasiswa",
       sortable: true,
+      width: "150px",
       textAlign: "left",
       cellKey: "studentName",
     },
     {
       label: "Judul Tugas Akhir",
       sortable: true,
+      width: "650px",
       textAlign: "left",
       cellKey: "title",
     },
@@ -200,7 +210,7 @@ const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
       <FETableComponent
         isLoading={isLoading}
         dataAmt={dataFromBackend.length}
-        dataPerPageAmt={2}
+        dataPerPageAmt={3}
         onSearch={(value) => {
           console.log("Searching for: ", value);
         }}

@@ -8,6 +8,15 @@
     }
 } */
 
+table {
+  table-layout: fixed;
+}
+
+td {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
 * {
   --var-bg-primary: #5f5af7;
 }
