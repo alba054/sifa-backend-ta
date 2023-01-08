@@ -253,23 +253,27 @@ const FELecturerMentorProposalHistory: React.FC<
   const actions: IFETableAction[] = [
     {
       label: "",
-      backgroundColor: "primaryGradient",
+      backgroundColor: "white",
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
         setSelectedRow(row.no.label - 1);
         setisRestoreModalOpened(true);
       },
       icon: FECircleBackOutline({ size: 19, color: theme.colors.primary[5] }),
+      padding: 10,
+      width: "fit-content"
     },
     {
       label: "",
-      backgroundColor: "errorGradient",
+      backgroundColor: "white",
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
         setSelectedRow(row.no.label - 1);
         setisDeleteModalOpened(true);
       },
       icon: FETrashOutline({ size: 20, color: theme.colors.error[5] }),
+      padding: 10,
+      width: "fit-content"
     },
   ];
 

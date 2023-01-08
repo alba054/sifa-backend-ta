@@ -25,6 +25,7 @@ interface IFETableComponentProps {
   onSearch?: (value: string) => void;
   activePage: number;
   onPageChange?: (page: number) => void;
+  actionOrientation?: "vertical" | "horizontal";
 }
 
 export interface IFETableHeadingProps {
@@ -50,13 +51,16 @@ export interface IActiveSort {
 export type IActionButtonBgColor =
   | "primary"
   | "primaryGradient"
-  | "errorGradient";
+  | "errorGradient"
+  | "white";
 
 export interface IFETableAction {
   label: string;
   icon?: JSX.Element;
   backgroundColor: IActionButtonBgColor;
   onClick: (row: any) => void;
+  padding?: string | number;
+  width?: string | number;
 }
 
 // Add action color here
@@ -64,6 +68,8 @@ const aciontBtnClsNames: { [x in IActionButtonBgColor]: string } = {
   primary: "",
   primaryGradient: "!bg-primary !bg-opacity-20 !text-primary-900",
   errorGradient: "!bg-error-900 !bg-opacity-20 text-error-900",
+
+  white: "!bg-white",
 };
 
 const FETableComponent: React.FC<IFETableComponentProps> = ({
@@ -77,6 +83,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
   dataPerPageAmt,
   activePage,
   onPageChange,
+  actionOrientation = "horizontal",
 }) => {
   const headKeys = tableHeadings.map((th) => ({
     key: th.cellKey,
@@ -210,7 +217,14 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                           })}
                           {!!actions?.length && (
                             <td className="text-center">
-                              <Stack align={"center"} spacing={5}>
+                              <div
+                                className={`flex justify-center gap-1 ${
+                                  actionOrientation === "vertical"
+                                    ? "flex-col"
+                                    : "flex-row"
+                                }`}
+                              >
+                                {/* <Stack align={"center"} spacing={5}> */}
                                 {actions.map((action) => {
                                   return (
                                     <Button
@@ -224,8 +238,8 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                                       }`}
                                       styles={{
                                         root: {
-                                          padding: 10,
-                                          width: "70%",
+                                          padding: action.padding || 10,
+                                          width: action.width || "70%",
                                         },
                                       }}
                                     >
@@ -236,7 +250,8 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                                     </Button>
                                   );
                                 })}
-                              </Stack>
+                                {/* </Stack> */}
+                              </div>
                             </td>
                           )}
                         </tr>
