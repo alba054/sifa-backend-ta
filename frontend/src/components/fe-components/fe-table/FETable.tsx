@@ -96,13 +96,14 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
   const paginationComp = (
     <>
       <Text color={"secondary-text"} size={16}>
-        Halaman {activePage} dari {pageAmt}
+        Halaman {activePage >= pageAmt ? pageAmt : activePage} dari {pageAmt}
       </Text>
       <Pagination
         onChange={handlePageChange}
         color={"primary"}
-        page={activePage}
+        page={activePage >= pageAmt ? pageAmt : activePage}
         total={pageAmt}
+        disabled={pageAmt == 0}
         withEdges
       />
     </>
