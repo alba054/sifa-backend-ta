@@ -19,9 +19,9 @@ import LFPHeaderComponent, {
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import FELecturerSeminarTimeApprovalModal from "./FELecturerSeminarTimeApprovalModal";
+import FELecturerSeminarMentorApprovalModal from "./FELecturerSeminarMentorApprovalModal";
 
-export interface IFELecturerSeminarTimeApproval {}
+export interface IFELecturerSeminarMentorApproval {}
 
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
@@ -167,8 +167,8 @@ function getDataFromBackend() {
   ];
 }
 
-const FELecturerSeminarTimeApproval: React.FC<
-  IFELecturerSeminarTimeApproval
+const FELecturerSeminarMentorApproval: React.FC<
+  IFELecturerSeminarMentorApproval
 > = ({}) => {
   const {
     array: dataFromBackend,
@@ -189,14 +189,14 @@ const FELecturerSeminarTimeApproval: React.FC<
   const { getInputProps, errors, setValues, values } = form;
 
   function onProgressDataCount() {
-    let count= 0
+    let count = 0;
     for (let i = 0; i < dataFromBackend.length; i++) {
       if (dataFromBackend[i].approvalStatus == "Belum_Diproses") {
-        count+= 1
+        count += 1;
       }
     }
 
-    return count
+    return count;
   }
 
   useEffect(() => {
@@ -303,12 +303,15 @@ const FELecturerSeminarTimeApproval: React.FC<
     //   proposerName: "Sadno",
     //   mentorPosition: "Utama",
 
-    <FEMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Persetujuan Waktu Seminar">
+    <FEMainlayout
+      breadCrumbs={breadCrumbs}
+      breadCrumbsCurrentPage="Persetujuan Pembimbing"
+    >
       {dataFromBackend.length > 0 ? (
         <>
           {/* {console.log('a', selectedRow)}
           {console.log('asd ',dataFromBackend)} */}
-          {/* <FELecturerSeminarTimeApprovalAcceptModal
+          {/* <FELecturerSeminarMentorApprovalAcceptModal
             opened={isAcceptModalOpened}
             setOpened={setisAcceptModalOpened}
             onSubmit={acceptProposalHandler}
@@ -321,7 +324,7 @@ const FELecturerSeminarTimeApproval: React.FC<
             mentorPosition={dataFromBackend[selectedRow].mentorPosition}
             index={selectedRow}
           />*/}
-          <FELecturerSeminarTimeApprovalModal
+          <FELecturerSeminarMentorApprovalModal
             opened={isConfirmModalOpened}
             setOpened={setisConfirmModalOpened}
             onSubmit={confirmHandler}
@@ -358,11 +361,11 @@ const FELecturerSeminarTimeApproval: React.FC<
       ) : null}
       <Stack className="gap-0">
         <LFPHeaderComponent
-          title="Persetujuan Waktu Seminar"
+          title="Persetujuan Pembimbing"
           chipLabel={`${dataFromBackend.length} Seminar`}
         />
         <Text className="text-secondary-text-500">
-          Daftar persetujuan waktu pelaksanaan seminar
+          Daftar seminar yang memerlukan persetujuan pembimbing
         </Text>
       </Stack>
       <FETableComponent
@@ -385,4 +388,4 @@ const FELecturerSeminarTimeApproval: React.FC<
     </FEMainlayout>
   );
 };
-export default FELecturerSeminarTimeApproval;
+export default FELecturerSeminarMentorApproval;

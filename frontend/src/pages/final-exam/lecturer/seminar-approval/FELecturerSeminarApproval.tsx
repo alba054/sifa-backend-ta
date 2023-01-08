@@ -21,7 +21,7 @@ const FELecturerSeminarApproval: React.FC<
           to={FEROUTES.LECTURER_HOMEPAGE_APPROVAL_MENTOR}
         />
         <FEApprovalCard
-          label="Persetujuan Penguji"
+          label="Persetujuan Waktu Seminar"
           description="Daftar Persetujuan Waktu Pelaksanaan Seminar"
           to={FEROUTES.LECTURER_HOMEPAGE_APPROVAL_SEMINAR_TIME}
         />

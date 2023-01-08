@@ -99,6 +99,7 @@ import FELecturerExaminerProposalHistory from "./pages/final-exam/lecturer/mento
 import FELecturerProposal from "./pages/final-exam/lecturer/mentor-examiner-proposal/FELecturerProposal";
 import FELecturerSeminarApproval from "./pages/final-exam/lecturer/seminar-approval/FELecturerSeminarApproval";
 import FELecturerSeminarTimeApproval from "./pages/final-exam/lecturer/seminar-approval/seminar-time/FELecturerSeminarTimeApproval";
+import FELecturerSeminarMentorApproval from "./pages/final-exam/lecturer/seminar-approval/mentor-approval/FELecturerSeminarMentorApproval";
 
 const queryClient = new QueryClient({});
 
@@ -545,7 +546,7 @@ function App() {
                       <Route path="persetujuan">
                         <Route index element={<FELecturerSeminarApproval />} />
                         <Route path="pembimbing">
-                          <Route index element={<FELecturerMentorProposal />} />
+                          <Route index element={<FELecturerSeminarMentorApproval />} />
                         </Route>
                         <Route path="waktu-seminar">
                           <Route

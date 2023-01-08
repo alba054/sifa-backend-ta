@@ -19,7 +19,7 @@ export interface ILFPHeaderButton {
 
 interface ILFGHeaderComponentProps {
   title: string;
-  buttons: Array<ILFPHeaderButton>;
+  buttons?: Array<ILFPHeaderButton>;
   disabledButtonTooltipLabel?: string;
   chipLabel?: string;
 }
@@ -43,7 +43,7 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
         ) : null}
       </Group>
       <Group>
-        {buttons.map((button, e: number) => {
+        {buttons?.map((button, e: number) => {
           return (
             <Tooltip
               key={`tooltip-${e}`}

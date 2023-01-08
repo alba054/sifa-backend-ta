@@ -27,6 +27,7 @@ interface IFETableComponentProps {
   onPageChange?: (page: number) => void;
   actionOrientation?: "vertical" | "horizontal";
   actionColumnWidth?: string;
+  onProgressData?: number;
 }
 
 export interface IFETableHeadingProps {
@@ -85,7 +86,8 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
   activePage,
   onPageChange,
   actionOrientation = "horizontal",
-  actionColumnWidth =  "fit-content"
+  actionColumnWidth = "fit-content",
+  onProgressData = 0,
 }) => {
   const headKeys = tableHeadings.map((th) => ({
     key: th.cellKey,
@@ -122,10 +124,17 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
 
   return (
     <div className={`h-fit`}>
-      <div className="bg-gradient-to-r mt-10 from-primary-500 to-error-500 w-full h-4 rounded-t-full"></div>
+      <div className="bg-gradient-to-r mt-4 from-primary-500 to-error-500 w-full h-4 rounded-t-full"></div>
       <div className="grow basis-0 block overflow-x-auto whitespace-nowrap border-2 border-t-0 rounded-b-md border-[#dfdfdf] overflow-y-auto">
         <Group p={"lg"} position="apart">
-          {!!tableTitle && <Title order={3}>{tableTitle}</Title>}
+          <Group className="gap-2">
+            {!!tableTitle && <Title order={3}>{tableTitle}</Title>}
+            {onProgressData > 0 ? (
+              <div className="w-5 h-5 text-center rounded-full bg-error-500 text-white text-sm relative -top-1">
+                {onProgressData}
+              </div>
+            ) : null}
+          </Group>
           <TextInput
             icon={<SearchFilled color="#dfdfdf" />}
             onChange={handleSearchChange}
@@ -176,7 +185,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                         zIndex: 1,
                         background: "white",
                         cursor: "default",
-                        width: actionColumnWidth ||  "fit-content"
+                        width: actionColumnWidth || "fit-content",
                       }}
                     >
                       <Group
