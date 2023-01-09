@@ -86,6 +86,8 @@ import FEFacultyAdminProposalMaking from "./pages/final-exam/faculty-admin/appro
 import FEFacultyAdminProposalMakingNew from "./pages/final-exam/faculty-admin/approval/proposal/making/new/FEFacultyAdminProposalMakingNew";
 import FEFacultyAdminProposalMakingHistory from "./pages/final-exam/faculty-admin/approval/proposal/making/history/FEFacultyAdminProposalMakingHistory";
 import FETableUseExample from "./pages/final-exam/student/proposal/FETableUseExample";
+import "moment/locale/id";
+import moment from "moment";
 import FEFacultyAdminTrialPermit from "./pages/final-exam/faculty-admin/approval/trial-permit/FEFacultyAdminTrialPermit";
 import FEFacultyAdminTrialPermitVerify from "./pages/final-exam/faculty-admin/approval/trial-permit/verify/FEFacultyAdminTrialPermitVerify";
 import FEFacultyAdminTrialPermitVerifyDetails from "./pages/final-exam/faculty-admin/approval/trial-permit/verify/details/FEFacultyAdminTrialPermitVerifyDetails";
@@ -104,6 +106,8 @@ import FELecturerSeminar from "./pages/final-exam/lecturer/seminar/FELecturerSem
 import FELecturerSeminarDetails from "./pages/final-exam/lecturer/seminar/details/FELecturerSeminarDetails";
 import FELecturerSeminarDetailsHistoryCard from "./pages/final-exam/lecturer/seminar/details/history/FELecturerSeminarDetailsHistoryCard";
 import FELecturerSeminarDetailsHistory from "./pages/final-exam/lecturer/seminar/details/history/FELecturerSeminarDetailsHistory";
+
+moment.locale("id");
 
 const queryClient = new QueryClient({});
 
