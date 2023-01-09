@@ -25,6 +25,9 @@ interface IFETableComponentProps {
   onSearch?: (value: string) => void;
   activePage: number;
   onPageChange?: (page: number) => void;
+  actionOrientation?: "vertical" | "horizontal";
+  actionColumnWidth?: string;
+  onProgressData?: number;
 }
 
 export interface IFETableHeadingProps {
@@ -50,13 +53,16 @@ export interface IActiveSort {
 export type IActionButtonBgColor =
   | "primary"
   | "primaryGradient"
-  | "errorGradient";
+  | "errorGradient"
+  | "white";
 
 export interface IFETableAction {
   label: string;
   icon?: JSX.Element;
   backgroundColor: IActionButtonBgColor;
   onClick: (row: any) => void;
+  padding?: string | number;
+  width?: string | number;
 }
 
 // Add action color here
@@ -64,6 +70,8 @@ const aciontBtnClsNames: { [x in IActionButtonBgColor]: string } = {
   primary: "",
   primaryGradient: "!bg-primary !bg-opacity-20 !text-primary-900",
   errorGradient: "!bg-error-900 !bg-opacity-20 text-error-900",
+
+  white: "!bg-white",
 };
 
 const FETableComponent: React.FC<IFETableComponentProps> = ({
@@ -77,6 +85,9 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
   dataPerPageAmt,
   activePage,
   onPageChange,
+  actionOrientation = "horizontal",
+  actionColumnWidth = "fit-content",
+  onProgressData = 0,
 }) => {
   const headKeys = tableHeadings.map((th) => ({
     key: th.cellKey,
@@ -113,10 +124,17 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
 
   return (
     <div className={`h-fit`}>
-      <div className="bg-gradient-to-r mt-10 from-primary-500 to-error-500 w-full h-4 rounded-t-full"></div>
+      <div className="bg-gradient-to-r mt-4 from-primary-500 to-error-500 w-full h-4 rounded-t-full"></div>
       <div className="grow basis-0 block overflow-x-auto whitespace-nowrap border-2 border-t-0 rounded-b-md border-[#dfdfdf] overflow-y-auto">
         <Group p={"lg"} position="apart">
-          {!!tableTitle && <Title order={3}>{tableTitle}</Title>}
+          <Group className="gap-2">
+            {!!tableTitle && <Title order={3}>{tableTitle}</Title>}
+            {onProgressData > 0 ? (
+              <div className="w-5 h-5 text-center rounded-full bg-error-500 text-white text-sm relative -top-1">
+                {onProgressData}
+              </div>
+            ) : null}
+          </Group>
           <TextInput
             icon={<SearchFilled color="#dfdfdf" />}
             onChange={handleSearchChange}
@@ -151,7 +169,9 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                           noWrap
                           position={head.textAlign}
                         >
-                          {head.label}
+                          <Text className="text-primary-text-500 text-md font-semibold">
+                            {head.label}
+                          </Text>
                         </Group>
                       </th>
                     );
@@ -165,6 +185,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                         zIndex: 1,
                         background: "white",
                         cursor: "default",
+                        width: actionColumnWidth || "fit-content",
                       }}
                     >
                       <Group
@@ -173,7 +194,9 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                         noWrap
                         position={"center"}
                       >
-                        Actions
+                        <Text className="text-primary-text-500 text-md font-semibold">
+                          Aksi
+                        </Text>
                       </Group>
                     </th>
                   )}
@@ -204,13 +227,24 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                                 key={row[th.key].label + "td-key"}
                                 className={`text-primary-text-500  text-${th.textAlign}`}
                               >
-                                {col.element || col.label}
+                                {col.element != null ? (
+                                  <Text className="text-md">{col.element}</Text>
+                                ) : (
+                                  <Text className="text-md">{col.label}</Text>
+                                )}
                               </td>
                             );
                           })}
                           {!!actions?.length && (
                             <td className="text-center">
-                              <Stack align={"center"} spacing={5}>
+                              <div
+                                className={`flex justify-center gap-1 ${
+                                  actionOrientation === "vertical"
+                                    ? "flex-col"
+                                    : "flex-row"
+                                }`}
+                              >
+                                {/* <Stack align={"center"} spacing={5}> */}
                                 {actions.map((action) => {
                                   return (
                                     <Button
@@ -224,8 +258,8 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                                       }`}
                                       styles={{
                                         root: {
-                                          padding: 10,
-                                          width: "70%",
+                                          padding: action.padding || 10,
+                                          width: action.width || "70%",
                                         },
                                       }}
                                     >
@@ -236,7 +270,8 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                                     </Button>
                                   );
                                 })}
-                              </Stack>
+                                {/* </Stack> */}
+                              </div>
                             </td>
                           )}
                         </tr>

@@ -1,6 +1,7 @@
 import express from "express";
 import { HeadMajorHandler } from "../handlers/headMajor.handler";
 import { AuthorizationMiddleware } from "../middlewares/auth/authorization.middleware";
+import { HeadMajorMiddleware } from "../middlewares/headMajor.middleware";
 import { constants } from "../utils/utils";
 
 const headMajorRouter = express.Router();
@@ -15,7 +16,7 @@ headMajorRouter
 
 // * get approved thesis
 headMajorRouter
-  .route("/thesis/history")
+  .route("/thesis/approved")
   .get(
     AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
     HeadMajorHandler.getApprovedThesisHistory
@@ -43,6 +44,24 @@ headMajorRouter
     HeadMajorHandler.createApprovalOfApprovedThesis
   );
 
+// * assign lecturer as examiner
+headMajorRouter
+  .route("/thesis/approved/:thesisID/examiners")
+  .post(
+    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    HeadMajorMiddleware.checkEligibilityToAssignExaminer,
+    HeadMajorHandler.assignExaminers
+  );
+
+headMajorRouter
+  .route("/examiners")
+  .get(
+    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    HeadMajorHandler.getExaminersHistory
+  );
+
+// * get disposition of approved thesis
+// * delete disposition
 headMajorRouter
   .route("/dispositions/:thesisID")
   .get(

@@ -105,7 +105,7 @@ const FEFacultyAdminProposalApplicationHistory: React.FC<
       />
 
       <LFPHeaderComponent
-        title="Riwayat Permohonan Tugas Akhiru"
+        title="Riwayat Permohonan Tugas Akhir"
         buttons={buttons}
         disabledButtonTooltipLabel={"Riwayat kosong"}
       />

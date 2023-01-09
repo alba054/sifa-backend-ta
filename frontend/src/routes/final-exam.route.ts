@@ -61,5 +61,20 @@ export const FEROUTES = {
   FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_APPLICATION_HISTORY: "/tugas-akhir/admin-fakultas/persetujuan/sk-pembimbing-dan-penguji/permohonan-judul/riwayat",
   FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_MAKING: "/tugas-akhir/admin-fakultas/persetujuan/sk-pembimbing-dan-penguji/pembuatan",
   FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS_MAKING_HISTORY: "/tugas-akhir/admin-fakultas/persetujuan/sk-pembimbing-dan-penguji/pembuatan/riwayat",
-  
+  FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang",
+  FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_VERIFICATION: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/verifikasi-berkas",
+  FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_VERIFICATION_HISTORY: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/verifikasi-berkas/riwayat",
+  FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_VERIFICATION_DETAILS: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/verifikasi-berkas/nim",
+  FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_NOTIFICATION: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/notifikasi",
+  FACULTY_ADMIN_APPROVAL_TRIAL_PERMIT_NOTIFICATION_HISTORY: "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/notifikasi/riwayat",
+  // ====================================================================================================
+  LECTURER_HOMEPAGE: "/tugas-akhir/dosen",
+  LECTURER_HOMEPAGE_PROPOSAL: "/tugas-akhir/dosen/usulan",
+  LECTURER_HOMEPAGE_MENTOR_PROPOSAL: "/tugas-akhir/dosen/usulan/pembimbing",
+  LECTURER_HOMEPAGE_EXAMINER_PROPOSAL: "/tugas-akhir/dosen/usulan/penguji",
+  LECTURER_HOMEPAGE_APPROVAL: "/tugas-akhir/dosen/persetujuan",
+  LECTURER_HOMEPAGE_APPROVAL_SEMINAR_TIME: "/tugas-akhir/dosen/persetujuan/waktu-seminar",
+  LECTURER_HOMEPAGE_APPROVAL_MENTOR: "/tugas-akhir/dosen/persetujuan/pembimbing",
+  LECTURER_HOMEPAGE_SEMINAR: "/tugas-akhir/dosen/seminar",
+  // ====================================================================================================
 };

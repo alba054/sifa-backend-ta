@@ -83,9 +83,29 @@ import FEFacultyAdminProposalApplication from "./pages/final-exam/faculty-admin/
 import FEFacultyAdminProposalApplicationHistory from "./pages/final-exam/faculty-admin/approval/proposal/application/history/FEFacultyAdminProposalApplicationHistory";
 import FEFacultyAdminProposal from "./pages/final-exam/faculty-admin/approval/proposal/FEFacultyAdminProposal";
 import FEFacultyAdminProposalMaking from "./pages/final-exam/faculty-admin/approval/proposal/making/FEFacultyAdminProposalMaking";
+import FEFacultyAdminProposalMakingNew from "./pages/final-exam/faculty-admin/approval/proposal/making/new/FEFacultyAdminProposalMakingNew";
+import FEFacultyAdminProposalMakingHistory from "./pages/final-exam/faculty-admin/approval/proposal/making/history/FEFacultyAdminProposalMakingHistory";
 import FETableUseExample from "./pages/final-exam/student/proposal/FETableUseExample";
 import "moment/locale/id";
 import moment from "moment";
+import FEFacultyAdminTrialPermit from "./pages/final-exam/faculty-admin/approval/trial-permit/FEFacultyAdminTrialPermit";
+import FEFacultyAdminTrialPermitVerify from "./pages/final-exam/faculty-admin/approval/trial-permit/verify/FEFacultyAdminTrialPermitVerify";
+import FEFacultyAdminTrialPermitVerifyDetails from "./pages/final-exam/faculty-admin/approval/trial-permit/verify/details/FEFacultyAdminTrialPermitVerifyDetails";
+import FEFacultyAdminTrialPermitVerifyHistory from "./pages/final-exam/faculty-admin/approval/trial-permit/verify/history/FEFacultyAdminTrialPermitVerifyHistory";
+import FEFacultyAdminTrialPermitNotify from "./pages/final-exam/faculty-admin/approval/trial-permit/notify/FEFacultyAdminTrialPermitNotify";
+import FEFacultyAdminTrialPermitNotifyHistory from "./pages/final-exam/faculty-admin/approval/trial-permit/notify/history/FEFacultyAdminTrialPermitNotifyHistory";
+import FELecturerMentorProposal from "./pages/final-exam/lecturer/mentor-examiner-proposal/mentor-proposal/FELecturerMentorProposal";
+import FELecturerMentorProposalHistory from "./pages/final-exam/lecturer/mentor-examiner-proposal/mentor-proposal/history/FELecturerMentorProposalHistory";
+import FELecturerExaminerProposal from "./pages/final-exam/lecturer/mentor-examiner-proposal/examiner-proposal/FELecturerExaminerProposal";
+import FELecturerExaminerProposalHistory from "./pages/final-exam/lecturer/mentor-examiner-proposal/examiner-proposal/history/FELecturerExaminerProposalHistory";
+import FELecturerProposal from "./pages/final-exam/lecturer/mentor-examiner-proposal/FELecturerProposal";
+import FELecturerSeminarApproval from "./pages/final-exam/lecturer/seminar-approval/FELecturerSeminarApproval";
+import FELecturerSeminarTimeApproval from "./pages/final-exam/lecturer/seminar-approval/seminar-time/FELecturerSeminarTimeApproval";
+import FELecturerSeminarMentorApproval from "./pages/final-exam/lecturer/seminar-approval/mentor-approval/FELecturerSeminarMentorApproval";
+import FELecturerSeminar from "./pages/final-exam/lecturer/seminar/FELecturerSeminar";
+import FELecturerSeminarDetails from "./pages/final-exam/lecturer/seminar/details/FELecturerSeminarDetails";
+import FELecturerSeminarDetailsHistoryCard from "./pages/final-exam/lecturer/seminar/details/history/FELecturerSeminarDetailsHistoryCard";
+import FELecturerSeminarDetailsHistory from "./pages/final-exam/lecturer/seminar/details/history/FELecturerSeminarDetailsHistory";
 
 moment.locale("id");
 
@@ -459,8 +479,100 @@ function App() {
                               index
                               element={<FEFacultyAdminProposalMaking />}
                             />
+                            <Route
+                              path="riwayat"
+                              element={<FEFacultyAdminProposalMakingHistory />}
+                            />
+                          </Route>
+
+                          <Route
+                            path="pembuatan/:nim"
+                            element={<FEFacultyAdminProposalMakingNew />}
+                          />
+                        </Route>
+                        <Route path="izin-ujian-sidang">
+                          <Route
+                            index
+                            element={<FEFacultyAdminTrialPermit />}
+                          />
+
+                          <Route path="verifikasi-berkas">
+                            <Route
+                              index
+                              element={<FEFacultyAdminTrialPermitVerify />}
+                            />
+                            <Route
+                              path="riwayat"
+                              element={
+                                <FEFacultyAdminTrialPermitVerifyHistory />
+                              }
+                            />
+                          </Route>
+
+                          <Route
+                            path="verifikasi-berkas/:nim"
+                            element={<FEFacultyAdminTrialPermitVerifyDetails />}
+                          />
+
+                          <Route path="notifikasi">
+                            <Route
+                              index
+                              element={<FEFacultyAdminTrialPermitNotify />}
+                            />
+                            <Route
+                              path="riwayat"
+                              element={
+                                <FEFacultyAdminTrialPermitNotifyHistory />
+                              }
+                            />
                           </Route>
                         </Route>
+                      </Route>
+                    </Route>
+                    <Route path="dosen">
+                      <Route index element={<FEHomepage />} />
+                      <Route path="usulan">
+                        <Route index element={<FELecturerProposal />} />
+                        <Route path="pembimbing">
+                          <Route index element={<FELecturerMentorProposal />} />
+                          <Route
+                            path="riwayat"
+                            element={<FELecturerMentorProposalHistory />}
+                          />
+                        </Route>
+                        <Route path="penguji">
+                          <Route
+                            index
+                            element={<FELecturerExaminerProposal />}
+                          />
+                          <Route
+                            path="riwayat"
+                            element={<FELecturerExaminerProposalHistory />}
+                          />
+                        </Route>
+                      </Route>{" "}
+                      <Route path="persetujuan">
+                        <Route index element={<FELecturerSeminarApproval />} />
+                        <Route path="pembimbing">
+                          <Route
+                            index
+                            element={<FELecturerSeminarMentorApproval />}
+                          />
+                        </Route>
+                        <Route path="waktu-seminar">
+                          <Route
+                            index
+                            element={<FELecturerSeminarTimeApproval />}
+                          />
+                        </Route>
+                      </Route>
+                      <Route path="seminar">
+                        <Route index element={<FELecturerSeminar />} />
+                      </Route>
+                      
+                      <Route path="seminar/:nim">
+                        <Route index element={<FELecturerSeminarDetails />} />
+                        <Route path="riwayat" element={<FELecturerSeminarDetailsHistory />} />
                       </Route>
                     </Route>
                   </Route>

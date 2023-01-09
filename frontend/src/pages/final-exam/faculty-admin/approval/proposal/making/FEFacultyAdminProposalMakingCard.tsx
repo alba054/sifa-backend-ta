@@ -6,9 +6,12 @@ import {
   FEPersonFilled,
 } from "src/assets/Icons/Fluent";
 import FELinkMore from "src/components/fe-components/FELinkMore";
-import FERoundedChip, { approvalChip2 } from "src/components/fe-components/FERoundedChip";
+import FERoundedChip, {
+  approvalChip2,
+} from "src/components/fe-components/FERoundedChip";
 import FECard from "src/components/FECard";
 import { IGFEExaminers, IGFEMentors } from "src/utils/const/interfaces";
+import { FEStatus } from "src/utils/const/type";
 
 export interface IFEFacultyAdminProposalMakingCard {
   index?: number;
@@ -17,14 +20,35 @@ export interface IFEFacultyAdminProposalMakingCard {
   proposalTitle: string;
   laboratory: string;
   mentors: IGFEMentors;
+  skMentors: IFEProposalMakingSK;
   examiners: IGFEExaminers;
+  skExaminers: IFEProposalMakingSK;
+  onDelete?: (e: number) => void;
+}
+
+export interface IFEProposalMakingSK {
+  status?: FEStatus;
+  refusalReason?: string;
+  repellentRole?: string; // Di sini sebenarnya bisa dibuatkan interface role nya
 }
 
 const FEFacultyAdminProposalMakingCard: React.FC<
   IFEFacultyAdminProposalMakingCard
-> = ({ index, name, nim, laboratory, proposalTitle, mentors, examiners }) => {
+> = ({
+  index,
+  name,
+  nim,
+  laboratory,
+  proposalTitle,
+  mentors,
+  examiners,
+  skExaminers,
+  skMentors,
+  onDelete,
+}) => {
   const theme = useMantineTheme();
   const navigate = useNavigate();
+  console.log(skMentors.status);
   return (
     <FECard bg="bg-primary-500" leftBorderRadius="xl">
       <Stack className="bg-white px-8 py-6 justify-between relative border rounded-r-xl border-secondary-500">
@@ -48,7 +72,7 @@ const FEFacultyAdminProposalMakingCard: React.FC<
                 <Text className="font-bold text-xl text-primary-text-500">
                   Pembimbing
                 </Text>
-                {approvalChip2["Diterima"]}
+                {approvalChip2[skMentors.status || "Menunggu"]}
               </Group>
               <Stack className="gap-0">
                 <Text className="font-semibold text-lg text-primary-text-500">
@@ -72,7 +96,7 @@ const FEFacultyAdminProposalMakingCard: React.FC<
                 <Text className="font-bold text-xl text-primary-text-500">
                   Penguji
                 </Text>
-                {approvalChip2["Menunggu"]}
+                {approvalChip2[skExaminers.status || "Menunggu"]}
               </Group>
               <Stack className="gap-0">
                 <Text className="font-semibold text-lg text-primary-text-500">
@@ -93,15 +117,21 @@ const FEFacultyAdminProposalMakingCard: React.FC<
             </Stack>
           </Stack>
         </Stack>
-        <Button
-          variant="light"
-          className="bg-primary-500 text-white hover:bg-primary-500 absolute bottom-6 right-6 z-10 px-10"
-          onClick={() => {
-            navigate(`${nim}`);
-          }}
-        >
-          Buat
-        </Button>
+        <Group className="justify-between -mt-4">
+          <FELinkMore caption="Selengkapnya" to={nim} />
+          {skExaminers.status === "Diterima" &&
+          skMentors.status === "Diterima" ? (
+            <Button
+              variant="light"
+              className="bg-primary-500 text-white hover:bg-primary-500 z-10 px-10"
+              onClick={() => {
+                onDelete!(index!);
+              }}
+            >
+              Selesai
+            </Button>
+          ) : null}
+        </Group>
         <FEBookmarkSingleSearchOutline
           size={120}
           color={"#F1F1F3"}

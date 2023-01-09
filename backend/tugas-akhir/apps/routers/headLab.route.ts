@@ -1,6 +1,7 @@
 import express from "express";
 import { HeadLabHandler } from "../handlers/headLab.handler";
 import { AuthorizationMiddleware } from "../middlewares/auth/authorization.middleware";
+import { HeadLabMiddleware } from "../middlewares/headLab.middleware";
 import { constants } from "../utils/utils";
 
 const headLabRouter = express.Router();
@@ -14,16 +15,52 @@ headLabRouter
   );
 
 // * view thesis detail
-// * assign lecturer as supervisor
 headLabRouter
   .route("/thesis/:thesisID")
   .get(
     AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
     HeadLabHandler.getDetailThesis
-  )
+  );
+
+// * assign lecturer as supervisor
+// * get all thesis's supervisors history
+headLabRouter
+  .route("/thesis/:thesisID/supervisors/")
   .post(
     AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabMiddleware.checkEligibilityToCreate,
     HeadLabHandler.assignSupervisor
+  )
+  .get(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.getSupervisorsOfThesis
+  );
+
+// * view supervisors history
+headLabRouter
+  .route("/supervisors")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.viewAssignedSupervisorsHistory
+  );
+
+// * edit supervisor
+// * get supervisor detail
+// * remove supervisor
+headLabRouter
+  .route("/supervisors/:supervisorID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.getSupervisorDetail
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabMiddleware.checkEligibilityToEdit,
+    HeadLabHandler.editSupervisor
+  )
+  .delete(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.removeSupervisor
   );
 
 // * view thesis dispositions

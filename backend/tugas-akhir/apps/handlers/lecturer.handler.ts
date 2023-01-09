@@ -5,13 +5,212 @@ import { BadRequestError } from "../utils/error/badrequestError";
 import { ILecturer } from "../utils/interfaces/lecturer.interface";
 import { LecturerService } from "../services/lecturer.service";
 import { constants, createResponse } from "../utils/utils";
-import { NotFoundError } from "@prisma/client/runtime";
-import { UserService } from "../services/user.service";
 import { UserAsLecturer } from "../services/user/UserAsLecturer.facade";
+import { NotFoundError } from "../utils/error/notFoundError";
 
 dotenv.config();
 
 export class LecturerHandler {
+  static async accceptOrRejectExaminerOffer(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, examinerID } = req.params;
+    const { isAccepted } = req.body;
+
+    try {
+      if (typeof isAccepted === "undefined") {
+        throw new BadRequestError("provide isAccepted");
+      }
+
+      const examinerOffer = LecturerService.acceptOrRejectExaminerOffer(
+        nim,
+        Number(examinerID),
+        Boolean(isAccepted)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully accept/reject offer"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async deleteExaminer(req: Request, res: Response, next: NextFunction) {
+    const { nim, examinerID } = req.params;
+
+    const examinerOffer = await LecturerService.deleteExaminer(
+      nim,
+      Number(examinerID)
+    );
+
+    if (examinerOffer === null) {
+      return next(new NotFoundError("examiner's not found"));
+    }
+
+    return res
+      .status(200)
+      .json(
+        createResponse(constants.SUCCESS_MESSAGE, "succesfully delete offer")
+      );
+  }
+
+  static async getExaminerOfferDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, examinerID } = req.params;
+
+    const examinerOffer = await LecturerService.getExaminerOfferDetail(
+      nim,
+      Number(examinerID)
+    );
+
+    if (examinerOffer === null) {
+      return next(new NotFoundError("supervisor's not found"));
+    }
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get offers detail",
+          examinerOffer
+        )
+      );
+  }
+
+  static async getOffersBecomingExaminers(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim } = req.params;
+    const { acceptanceStatus } = req.query;
+
+    const examinerOffers = await LecturerService.getOffersBecomingExaminer(
+      nim,
+      acceptanceStatus
+    );
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get offers becoming examiner",
+          examinerOffers
+        )
+      );
+  }
+
+  static async accceptOrRejectOffer(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, supervisorID } = req.params;
+    const { isAccepted } = req.body;
+
+    try {
+      const supervisorOffer = LecturerService.acceptOrRejectOffer(
+        nim,
+        Number(supervisorID),
+        Boolean(isAccepted)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully accept/reject offer"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async deleteSupervisor(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, supervisorID } = req.params;
+
+    const supervisorOffer = await LecturerService.deleteSupervisor(
+      nim,
+      Number(supervisorID)
+    );
+
+    if (supervisorOffer === null) {
+      return next(new NotFoundError("supervisor's not found"));
+    }
+
+    return res
+      .status(200)
+      .json(
+        createResponse(constants.SUCCESS_MESSAGE, "succesfully delete offer")
+      );
+  }
+
+  static async getOfferDetail(req: Request, res: Response, next: NextFunction) {
+    const { nim, supervisorID } = req.params;
+
+    const supervisorOffer = await LecturerService.getOfferDetail(
+      nim,
+      Number(supervisorID)
+    );
+
+    if (supervisorOffer === null) {
+      return next(new NotFoundError("supervisor's not found"));
+    }
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get offers detail",
+          supervisorOffer
+        )
+      );
+  }
+
+  static async getOffersBecomingSupervisor(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim } = req.params;
+    const { acceptanceStatus } = req.query;
+
+    const supervisorOffers = await LecturerService.getOffersBecomingSupervisor(
+      nim,
+      acceptanceStatus
+    );
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get offers becoming supervisor/co-supervisor",
+          supervisorOffers
+        )
+      );
+  }
+
   static async getLecturersProfile(
     req: Request,
     res: Response,

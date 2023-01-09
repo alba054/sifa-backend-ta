@@ -11,7 +11,7 @@ import { FEStatus } from "src/utils/const/type";
 export interface IFERoundedChip {
   label: string;
   leftIcon?: JSX.Element;
-  type?: "green" | "blue" | "red";
+  type?: "green" | "blue" | "red" | "gray";
 }
 
 const FERoundedChip: React.FC<IFERoundedChip> = ({
@@ -25,7 +25,9 @@ const FERoundedChip: React.FC<IFERoundedChip> = ({
     groupClassName += "bg-[#1E9E63]/[0.15] text-[#1E9E63]";
   } else if (type == "blue") {
     groupClassName += "bg-[#5F5AF7]/[0.15] text-[#5F5AF7]";
-  } else {
+  } else if (type == "gray"){
+    groupClassName+= "bg-[#E5E7EB] text-[#334155]";
+  }else {
     groupClassName += "bg-[#FF2C56]/[0.15] text-[#FF2C56]";
   }
 

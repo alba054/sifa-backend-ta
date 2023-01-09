@@ -12,10 +12,11 @@ export interface IFEDocumentList {
   documentList: Array<string>;
   status?: "Lengkap" | "Belum Lengkap";
   info?: string;
-  px?: string,
-  py?: string,
-  titleSize?: string,
-  dropShadow?: boolean
+  px?: string;
+  py?: string;
+  titleSize?: string;
+  dropShadow?: boolean;
+  withBorder?: boolean;
 }
 
 const FEDocumentList: React.FC<IFEDocumentList> = ({
@@ -23,17 +24,28 @@ const FEDocumentList: React.FC<IFEDocumentList> = ({
   documentList,
   status,
   info,
-  px='px-8',
-  py='py-8',
-  titleSize='text-[22px]',
-  dropShadow
+  px = "px-8",
+  py = "py-8",
+  titleSize = "text-[22px]",
+  dropShadow,
+  withBorder = true,
 }) => {
   const theme = useMantineTheme();
 
   return (
-    <Stack className={`${px || 'px-8'} ${py || 'py-8'} border-[1px] border-secondary-500 box-border rounded-xl gap-6 ${dropShadow? 'drop-shadow-1 shadow-md' : ''}`}>
+    <Stack
+      className={`${px || "px-8"} ${py || "py-8"} ${
+        withBorder ? "border" : ""
+      } border-secondary-500 box-border rounded-xl gap-6 ${
+        dropShadow ? "drop-shadow-1 shadow-md" : ""
+      }`}
+    >
       <Group>
-        <Text className={`${titleSize || 'text-[22px]'} font-bold text-primary-text-500`}>
+        <Text
+          className={`${
+            titleSize || "text-[22px]"
+          } font-bold text-primary-text-500`}
+        >
           {title}
         </Text>
         {status == "Belum Lengkap" ? (
@@ -50,8 +62,10 @@ const FEDocumentList: React.FC<IFEDocumentList> = ({
         ) : null}
       </Group>
       <Group className="gap-6">
-        {documentList.map((documentDescription:any, e:number) => {
-          return <FEDocumentListCard key={e} description={documentDescription} />;
+        {documentList.map((documentDescription: any, e: number) => {
+          return (
+            <FEDocumentListCard key={e} description={documentDescription} />
+          );
         })}
       </Group>
       {info && <FESmallInformationNotification info={info} />}

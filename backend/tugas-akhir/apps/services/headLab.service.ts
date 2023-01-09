@@ -10,7 +10,48 @@ interface ISupervisorBodyPost {
 }
 
 export class HeadLabService {
-  static async assignSupervisor(
+  static async viewSupervisorsHistory(status: any) {
+    return await Supervisor.getAllSupervisors(status);
+  }
+
+  static async removeSupervisor(supervisorID: number) {
+    const supervisor = await Supervisor.getSupervisorByID(supervisorID);
+
+    if (supervisor === null) {
+      throw new NotFoundError("supervisor is not found");
+    }
+
+    await Supervisor.removeSupervisorByID(supervisorID);
+  }
+
+  static async getSupervisorDetail(supervisorID: number) {
+    const supervisor = await Supervisor.getSupervisorByID(supervisorID);
+
+    return supervisor;
+  }
+
+  static async getSupervisorOfThesis(thesisID: number) {
+    const supervisors = await Supervisor.getSupervisorsByThesisID(thesisID);
+
+    return supervisors;
+  }
+  static async editSupervisor(supervisorID: number, lecturerID: number) {
+    const supervisor = await Supervisor.getSupervisorByID(supervisorID);
+
+    if (supervisor === null) {
+      throw new NotFoundError("supervisor is not found");
+    }
+
+    const assignedSupervisor = await Supervisor.editSupervisor(
+      supervisorID,
+      lecturerID
+    );
+
+    return assignedSupervisor;
+  }
+
+  // todo: checking inprocess and rejected acceptance status in order to be able to create new supervisor
+  static async eligibleToAssignNewSupervisor(
     thesisID: number,
     labID: number,
     body: ISupervisorBodyPost
@@ -35,8 +76,15 @@ export class HeadLabService {
           " has been assigned please edit it instead"
       );
     }
+  }
 
+  static async assignSupervisor(
+    thesisID: number,
+    labID: number,
+    body: ISupervisorBodyPost
+  ) {
     const assignedSupervisor = await Supervisor.createSupervisor(
+      labID,
       thesisID,
       body
     );
