@@ -3,11 +3,34 @@ import { Group, RingProgress, Stack, Text } from "@mantine/core";
 interface IFEScoreCircleBarProps {
   score: string;
   title: string;
-  rubric: string | undefined;
+  rubric?: string | undefined;
 }
 
 function FEScoreCircleBar({ score, title, rubric }: IFEScoreCircleBarProps) {
   let color: string = "";
+  
+  let floatScore= parseFloat(score)
+  if(floatScore>=95 && floatScore<=100){
+    rubric= "A"
+  }else if(floatScore>=90){
+    rubric= "A-"
+  } else if(floatScore>=85){
+    rubric= "B+"
+  } else if(floatScore>=80){
+    rubric= "B"
+  } else if(floatScore>=75){
+    rubric= "B-"
+  } else if(floatScore>=70){
+    rubric= "C+"
+  } else if(floatScore>=65){
+    rubric= "C"
+  } else if(floatScore>=60){
+    rubric= "D"
+  } else if(floatScore>=0 && floatScore<60){
+    rubric= "E"
+  } else{
+    rubric= "-"
+  }
 
   if (rubric === "A") {
     color = "#1E9E63";
@@ -36,7 +59,7 @@ function FEScoreCircleBar({ score, title, rubric }: IFEScoreCircleBarProps) {
         size={125}
         sections={[
           {
-            value: parseFloat(score),
+            value: floatScore,
             color: color,
           },
         ]}
@@ -48,7 +71,7 @@ function FEScoreCircleBar({ score, title, rubric }: IFEScoreCircleBarProps) {
       />
       <Stack spacing={0}>
         <Text color="primary-text" weight={700} size={28}>
-          {score}
+          {floatScore}
         </Text>
         <Text color="secondary-text" weight={600} size={18}>
           {title}

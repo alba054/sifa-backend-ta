@@ -100,6 +100,10 @@ import FELecturerProposal from "./pages/final-exam/lecturer/mentor-examiner-prop
 import FELecturerSeminarApproval from "./pages/final-exam/lecturer/seminar-approval/FELecturerSeminarApproval";
 import FELecturerSeminarTimeApproval from "./pages/final-exam/lecturer/seminar-approval/seminar-time/FELecturerSeminarTimeApproval";
 import FELecturerSeminarMentorApproval from "./pages/final-exam/lecturer/seminar-approval/mentor-approval/FELecturerSeminarMentorApproval";
+import FELecturerSeminar from "./pages/final-exam/lecturer/seminar/FELecturerSeminar";
+import FELecturerSeminarDetails from "./pages/final-exam/lecturer/seminar/details/FELecturerSeminarDetails";
+import FELecturerSeminarDetailsHistoryCard from "./pages/final-exam/lecturer/seminar/details/history/FELecturerSeminarDetailsHistoryCard";
+import FELecturerSeminarDetailsHistory from "./pages/final-exam/lecturer/seminar/details/history/FELecturerSeminarDetailsHistory";
 
 const queryClient = new QueryClient({});
 
@@ -546,7 +550,10 @@ function App() {
                       <Route path="persetujuan">
                         <Route index element={<FELecturerSeminarApproval />} />
                         <Route path="pembimbing">
-                          <Route index element={<FELecturerSeminarMentorApproval />} />
+                          <Route
+                            index
+                            element={<FELecturerSeminarMentorApproval />}
+                          />
                         </Route>
                         <Route path="waktu-seminar">
                           <Route
@@ -554,6 +561,14 @@ function App() {
                             element={<FELecturerSeminarTimeApproval />}
                           />
                         </Route>
+                      </Route>
+                      <Route path="seminar">
+                        <Route index element={<FELecturerSeminar />} />
+                      </Route>
+                      
+                      <Route path="seminar/:nim">
+                        <Route index element={<FELecturerSeminarDetails />} />
+                        <Route path="riwayat" element={<FELecturerSeminarDetailsHistory />} />
                       </Route>
                     </Route>
                   </Route>

@@ -1,6 +1,7 @@
 import {
   FECheckSquareOutlineForNavbar,
   FEGuidance,
+  FESeminar,
   HomeOutline,
 } from "src/assets/Icons/Fluent";
 import { INavbarMenuItem } from "src/components/fe-components/navbars/FEMainNavbar.component";
@@ -21,5 +22,10 @@ export const lecturerMenus: INavbarMenuItem[] = [
     icon: FECheckSquareOutlineForNavbar,
     label: "Persetujuan",
     href: FEROUTES.LECTURER_HOMEPAGE_APPROVAL,
+  },
+  {
+    icon: FESeminar,
+    label: "Seminar",
+    href: FEROUTES.LECTURER_HOMEPAGE_SEMINAR,
   },
 ];
