@@ -42,7 +42,6 @@ const FELecturerSeminarDetailsHistoryCard: React.FC<
 > = ({ seminarData }) => {
   const theme = useMantineTheme();
   const [displayed, setDisplayed] = useState(true);
-  console.log(displayed);
 
   return (
     <Stack className="border rounded-xl border-secondary-500 pb-6 pt-8">

@@ -107,8 +107,8 @@ const dummySeminarDataCount: {
   [nim: string]: number;
 } = {
   H071191040: 0,
-  H071171308: 1,
-  H071191044: 2,
+  H071171308: 3,
+  H071191044: 3,
 };
 
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [

@@ -142,7 +142,7 @@ const FELecturerSeminarDetailsHistory: React.FC<
       href: FEROUTES.LECTURER_HOMEPAGE_SEMINAR,
     },
     {
-      title: `${seminarData[0].name} (${seminarData[1].nim})`,
+      title: `${seminarData[0].name} (${seminarData[0].nim})`,
       href: FEROUTES.LECTURER_HOMEPAGE_SEMINAR + "/" + nim,
     },
   ];
@@ -156,7 +156,7 @@ const FELecturerSeminarDetailsHistory: React.FC<
         <Stack className="gap-6">
           {seminarData.map((seminar: IFELecturerStudentSeminar, e: number) => {
             return (
-              <FELecturerSeminarDetailsHistoryCard seminarData={seminar} />
+              <FELecturerSeminarDetailsHistoryCard key={e} seminarData={seminar} />
             );
           })}
         </Stack>
