@@ -84,6 +84,10 @@ import FEFacultyAdminProposalApplicationHistory from "./pages/final-exam/faculty
 import FEFacultyAdminProposal from "./pages/final-exam/faculty-admin/approval/proposal/FEFacultyAdminProposal";
 import FEFacultyAdminProposalMaking from "./pages/final-exam/faculty-admin/approval/proposal/making/FEFacultyAdminProposalMaking";
 import FETableUseExample from "./pages/final-exam/student/proposal/FETableUseExample";
+import "moment/locale/id";
+import moment from "moment";
+
+moment.locale("id");
 
 const queryClient = new QueryClient({});
 
