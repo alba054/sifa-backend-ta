@@ -17,6 +17,8 @@ import {
   TextareaProps,
 } from "@mantine/core";
 
+import { DatePicker, DatePickerProps } from "@mantine/dates";
+
 import { useState } from "react";
 
 export const getDefaultStyle = (
@@ -105,6 +107,26 @@ export const SelectInput = ({ onFocus, onBlur, ...props }: SelectProps) => {
 
   return (
     <Select
+      size="lg"
+      styles={{ ...getDefaultStyle(isFocus, !!props.error) }}
+      onFocus={(e) => {
+        setIsFocus(true);
+        if (!!onFocus) onFocus(e);
+      }}
+      onBlur={(e) => {
+        setIsFocus(false);
+        if (!!onBlur) onBlur(e);
+      }}
+      {...props}
+    />
+  );
+};
+
+export const DatePickerInput = ({ onFocus, onBlur, ...props }: DatePickerProps) => {
+  const [isFocus, setIsFocus] = useState<boolean>(false);
+
+  return (
+    <DatePicker
       size="lg"
       styles={{ ...getDefaultStyle(isFocus, !!props.error) }}
       onFocus={(e) => {

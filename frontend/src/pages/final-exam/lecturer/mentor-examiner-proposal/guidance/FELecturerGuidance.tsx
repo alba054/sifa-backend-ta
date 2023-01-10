@@ -22,6 +22,7 @@ function getDataFromBackend() {
       lecturer2: "Sadno",
       tester1: "Amil",
       tester2: "Eliyah",
+      unreadNotification: 4,
       title: "Rancange bangun b2b",
     },
     {
@@ -32,6 +33,7 @@ function getDataFromBackend() {
       lecturer2: "Bambang",
       tester1: "Amil",
       tester2: "Eliyah",
+      unreadNotification: 4,
       title:
         "Rancange bangun b2bakakscasdkcasdk Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv",
     },
@@ -43,6 +45,7 @@ function getDataFromBackend() {
       lecturer2: "Sadno",
       tester1: "Amil",
       tester2: "Eliyah",
+      unreadNotification: 4,
       title:
         "Rancange bangun b2bakakscasdkcasdk Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv Rancange bangun b2bakakscasdkcasdkv",
     },
@@ -54,6 +57,7 @@ function getDataFromBackend() {
       lecturer2: "Sadno",
       tester1: "Amil",
       tester2: "Eliyah",
+      unreadNotification: 4,
       title: "Rancange bangun b2b",
     },
     {
@@ -64,6 +68,7 @@ function getDataFromBackend() {
       lecturer2: "Sadno",
       tester1: "Amil",
       tester2: "Eliyah",
+      unreadNotification: 4,
       title: "Rancange bangun b2b",
     },
   ];

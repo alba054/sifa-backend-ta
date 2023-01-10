@@ -66,6 +66,7 @@ export interface IFETableAction {
   onClick: (row: any) => void;
   padding?: string | number;
   width?: string | number;
+  display?: (row: any) => boolean;
 }
 
 // Add action color here
@@ -133,7 +134,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
           <Group className="gap-2">
             {!!tableTitle && <Title order={3}>{tableTitle}</Title>}
             {onProgressData > 0 ? (
-              <div className="w-[22px] h-[22px] py-[1px] text-center rounded-full bg-error-500 text-white text-sm relative -top-1">
+              <div className="w-[22px] h-[22px] pt-[2px] text-center rounded-full bg-error-500 text-white text-sm relative -top-1">
                 {onProgressData > 9 ? "9+" : onProgressData}
               </div>
             ) : null}
@@ -266,6 +267,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                                 {actions.map((action) => {
                                   return (
                                     <Button
+                                      hidden={action.display==null? false : action.display(row)}
                                       key={action.label + "row-action"}
                                       onClick={() => action.onClick(row)}
                                       size="xs"
@@ -273,7 +275,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                                         aciontBtnClsNames[
                                           action.backgroundColor
                                         ]
-                                      }`}
+                                      } py-2`}
                                       styles={{
                                         root: {
                                           padding: action.padding || 10,
