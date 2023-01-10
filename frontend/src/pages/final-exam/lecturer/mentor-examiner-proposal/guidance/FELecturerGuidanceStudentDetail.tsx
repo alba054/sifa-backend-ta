@@ -1,15 +1,11 @@
-import { DeleteFilled } from "@ant-design/icons";
-import { Button, Divider, Group, Stack, Text, Title } from "@mantine/core";
-import moment from "moment";
+import { Button, Group, Stack, Title } from "@mantine/core";
 import React from "react";
-import { Link } from "react-router-dom";
-import { DeletFilled } from "src/assets/Icons/Fluent";
 import FEGuidanceListItem, {
   IFEGuidanceHistory,
 } from "src/components/fe-components/FEGuidanceListItem";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 
-export interface IFEStudentGuidance {}
+interface IFELecturerGuidanceStudentDetailProps {}
 
 function getFilesHistory() {
   const now = new Date().getTime();
@@ -34,20 +30,30 @@ function getFilesHistory() {
   });
 }
 
-const FEStudentGuidance: React.FC<IFEStudentGuidance> = ({}) => {
-  const histories = getFilesHistory();
+function getBackendData() {
+  return {
+    title:
+      "RANCANG BANGUN SISTEM INFORMASI APLIKASI PERPUSTAKAAN UNIVERSITAS HASANUDDIN BERBASIS ANDROID",
+    histories: getFilesHistory(),
+  };
+}
+
+const FELecturerGuidanceStudentDetail: React.FC<
+  IFELecturerGuidanceStudentDetailProps
+> = ({}) => {
+  const backendData = getBackendData();
 
   return (
     <FEMainlayout>
       <Title order={2} mb={"md"}>
-        Bimbingan Tugas Akhir
+        {backendData.title}
       </Title>
 
       <Stack
         p={0}
         className="border overflow-hidden shadow rounded-md border-secondary-500"
       >
-        {histories.map((history) => {
+        {backendData.histories.map((history) => {
           return (
             <div key={history.id}>
               <FEGuidanceListItem history={history} />
@@ -62,7 +68,6 @@ const FEStudentGuidance: React.FC<IFEStudentGuidance> = ({}) => {
             </div>
           );
         })}
-
         <Group
           className={`!bg-secondary-200 border-t border-secondary-400`}
           p="md"
@@ -85,4 +90,4 @@ const FEStudentGuidance: React.FC<IFEStudentGuidance> = ({}) => {
     </FEMainlayout>
   );
 };
-export default FEStudentGuidance;
+export default FELecturerGuidanceStudentDetail;

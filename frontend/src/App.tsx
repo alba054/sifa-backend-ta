@@ -106,6 +106,8 @@ import FELecturerSeminar from "./pages/final-exam/lecturer/seminar/FELecturerSem
 import FELecturerSeminarDetails from "./pages/final-exam/lecturer/seminar/details/FELecturerSeminarDetails";
 import FELecturerSeminarDetailsHistoryCard from "./pages/final-exam/lecturer/seminar/details/history/FELecturerSeminarDetailsHistoryCard";
 import FELecturerSeminarDetailsHistory from "./pages/final-exam/lecturer/seminar/details/history/FELecturerSeminarDetailsHistory";
+import FELecturerGuidance from "./pages/final-exam/lecturer/mentor-examiner-proposal/guidance/FELecturerGuidance";
+import FELecturerGuidanceStudentDetail from "./pages/final-exam/lecturer/mentor-examiner-proposal/guidance/FELecturerGuidanceStudentDetail";
 
 moment.locale("id");
 
@@ -531,6 +533,14 @@ function App() {
                     </Route>
                     <Route path="dosen">
                       <Route index element={<FEHomepage />} />
+                      <Route
+                        path="bimbingan"
+                        element={<FELecturerGuidance />}
+                      />
+                      <Route
+                        path="bimbingan/:id"
+                        element={<FELecturerGuidanceStudentDetail />}
+                      />
                       <Route path="usulan">
                         <Route index element={<FELecturerProposal />} />
                         <Route path="pembimbing">
@@ -569,10 +579,12 @@ function App() {
                       <Route path="seminar">
                         <Route index element={<FELecturerSeminar />} />
                       </Route>
-                      
                       <Route path="seminar/:nim">
                         <Route index element={<FELecturerSeminarDetails />} />
-                        <Route path="riwayat" element={<FELecturerSeminarDetailsHistory />} />
+                        <Route
+                          path="riwayat"
+                          element={<FELecturerSeminarDetailsHistory />}
+                        />
                       </Route>
                     </Route>
                   </Route>

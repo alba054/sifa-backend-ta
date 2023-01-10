@@ -39,10 +39,13 @@ export interface IFETableHeadingProps {
 }
 
 export type IFETableRowColumnProps = {
-  [x in TableRowCellKey]: {
-    label: string | number;
-    element?: JSX.Element;
-  };
+  [x in TableRowCellKey]:
+    | {
+        label: string | number;
+        element?: JSX.Element;
+      }
+    | number
+    | string;
 };
 
 export interface IActiveSort {
@@ -222,13 +225,28 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                         <tr key={idx + "row-"}>
                           {headKeys.map((th) => {
                             const col = row[th.key];
+
+                            if (
+                              typeof col === "string" ||
+                              typeof col === "number"
+                            ) {
+                              return (
+                                <td
+                                  key={th.key}
+                                  className="border-b border-gray-200"
+                                >
+                                  <Text className="text-md">{col}</Text>
+                                </td>
+                              );
+                            }
+
                             return (
                               <td
-                                key={row[th.key].label + "td-key"}
+                                key={col.label + "td-key"}
                                 className={`text-primary-text-500  text-${th.textAlign}`}
                               >
                                 {col.element != null ? (
-                                  <Text className="text-md">{col.element}</Text>
+                                  col.element
                                 ) : (
                                   <Text className="text-md">{col.label}</Text>
                                 )}
@@ -238,7 +256,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                           {!!actions?.length && (
                             <td className="text-center">
                               <div
-                                className={`flex justify-center gap-1 ${
+                                className={`flex justify-center items-center gap-1 ${
                                   actionOrientation === "vertical"
                                     ? "flex-col"
                                     : "flex-row"

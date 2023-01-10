@@ -1,16 +1,15 @@
-import { Table, Group, Title, Button, Stack, Text } from "@mantine/core";
+import { Stack, Text, Title } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { DeleteOutline } from "src/assets/Icons/Fluent";
+import { useNavigate } from "react-router-dom";
 import FETableComponent, {
-  IActiveSort,
   IFETableAction,
   IFETableHeadingProps,
   IFETableRowColumnProps,
 } from "src/components/fe-components/fe-table/FETable";
-import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
+import { FEROUTES } from "src/routes/final-exam.route";
 
-interface IFEStudentCounselingProps {}
+interface IFELecturerGuidanceProps {}
 
 // Contoh data dari backend
 function getDataFromBackend() {
@@ -57,87 +56,74 @@ function getDataFromBackend() {
       tester2: "Eliyah",
       title: "Rancange bangun b2b",
     },
-    // {
-    //   id: 5,
-    //   name: "Sony",
-    //   email: "sony@example.com",
-    //   lecturer1: "Hendra",
-    //   lecturer2: "Sadno",
-    //   tester1: "Amil",
-    //   tester2: "Eliyah",
-    //   title: "Rancange bangun b2b",
-    // },
+    {
+      id: 5,
+      name: "Sony",
+      email: "sony@example.com",
+      lecturer1: "Hendra",
+      lecturer2: "Sadno",
+      tester1: "Amil",
+      tester2: "Eliyah",
+      title: "Rancange bangun b2b",
+    },
   ];
 }
 
-const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
-  const {
-    array: dataFromBackend,
-    remove,
-    clear,
-  } = useArray(getDataFromBackend());
+const tableHeadings: IFETableHeadingProps[] = [
+  {
+    label: "No",
+    width: "70px",
+    sortable: false,
+    textAlign: "center",
+    cellKey: "no",
+  },
+  {
+    label: "Mahasiswa",
+    sortable: true,
+    width: "150px",
+    textAlign: "left",
+    cellKey: "studentName",
+  },
+  {
+    label: "Judul Tugas Akhir",
+    sortable: true,
+    width: "650px",
+    textAlign: "left",
+    cellKey: "title",
+  },
+  {
+    label: "Dosen Pembimbing",
+    sortable: true,
+    textAlign: "left",
+    cellKey: "lecturer",
+  },
+  {
+    label: "Dosen Penguji",
+    sortable: true,
+    textAlign: "left",
+    cellKey: "tester",
+  },
+];
+
+const FELecturerGuidance: React.FC<IFELecturerGuidanceProps> = ({}) => {
+  const dataFromBackend = getDataFromBackend();
   const [activePage, setActivePage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 1000);
   }, []);
-  // const [activeSort, setActiveSort] = useState<IActiveSort | null>(null);
 
-  useEffect(() => {
-    for (let i = 0; i < dataFromBackend.length; i++) {
-      dataFromBackend[i].id = i;
-    }
-
-    console.log(dataFromBackend);
-  }, [dataFromBackend]);
-
-  const tableHeadings: IFETableHeadingProps[] = [
-    {
-      label: "No",
-      width: "70px",
-      sortable: false,
-      textAlign: "center",
-      cellKey: "no",
-    },
-    {
-      label: "Mahasiswa",
-      sortable: true,
-      width: "150px",
-      textAlign: "left",
-      cellKey: "studentName",
-    },
-    {
-      label: "Judul Tugas Akhir",
-      sortable: true,
-      width: "650px",
-      textAlign: "left",
-      cellKey: "title",
-    },
-    {
-      label: "Dosen Pembimbing",
-      sortable: true,
-      textAlign: "left",
-      cellKey: "lecturer",
-    },
-    {
-      label: "Dosen Penguji",
-      sortable: true,
-      textAlign: "left",
-      cellKey: "tester",
-    },
-  ];
-
-  function handleSearchChange() {}
-
-  useEffect(() => {
-    // Query data disini atau terserah mau apa
-  }, [activePage]);
+  function toGuidanceDetail(id: number) {
+    navigate(`${FEROUTES.LECTURER_HOMEPAGE_GUIDANCE}/${id}`);
+  }
 
   // Semua key di table row ini itu ada di cellKey yang di table heading
   const tableRows = dataFromBackend.map(
-    (data: any, idx: number) =>
+    (data, idx) =>
       ({
+        id: data.id,
         no: {
           label: idx + 1,
         },
@@ -179,11 +165,11 @@ const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
 
   const actions: IFETableAction[] = [
     {
-      label: "Riwayat",
+      label: "Bimbingan",
       backgroundColor: "primary",
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
-        console.log("Riwayat ", row.no);
+        toGuidanceDetail(row.id);
       },
     },
     {
@@ -192,15 +178,6 @@ const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
         console.log("Seminar ", row.no);
-      },
-    },
-    {
-      label: "Hapus",
-      backgroundColor: "errorGradient",
-      // Row disini itu row yang ada di table rows
-      onClick: (row: any) => {
-        console.log("Hapus ", row.no);
-        remove(row.no.label - 1);
       },
     },
   ];
@@ -212,22 +189,21 @@ const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
       </Title>
 
       <FETableComponent
+        noDataMsg="Tidak ada data mahasiswa"
         isLoading={isLoading}
-        noDataMsg="Tidak ada data"
-        // dataAmt={dataFromBackend.length}
-        dataPerPageAmt={3}
+        dataPerPageAmt={2}
         onSearch={(value) => {
           console.log("Searching for: ", value);
         }}
         onPageChange={setActivePage}
         activePage={activePage}
+        actionOrientation="vertical"
         actions={actions}
         tableTitle="Daftar Bimbingan"
-        tableRows={[]}
-        // tableRows={tableRows}
+        tableRows={tableRows}
         tableHeadings={tableHeadings}
       />
     </FEMainlayout>
   );
 };
-export default FETableUseExample;
+export default FELecturerGuidance;
