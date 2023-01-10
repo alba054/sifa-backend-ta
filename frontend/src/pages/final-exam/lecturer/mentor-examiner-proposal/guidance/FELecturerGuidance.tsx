@@ -87,7 +87,7 @@ const tableHeadings: IFETableHeadingProps[] = [
   {
     label: "Judul Tugas Akhir",
     sortable: true,
-    width: "650px",
+    width: "400px",
     textAlign: "left",
     cellKey: "title",
   },
@@ -137,26 +137,36 @@ const FELecturerGuidance: React.FC<IFELecturerGuidanceProps> = ({}) => {
           label: data.lecturer1,
           // Ini harus html element
           element: (
-            <Stack spacing={4}>
-              <Text className={`font-bold`}>Utama</Text>
-              <Text className={`text-primary-text-50`}>{data.lecturer1}</Text>
-              <Text className={`font-bold`} mt={4}>
-                Pendamping
-              </Text>
-              <Text className={`text-primary-text-50`}>{data.lecturer2}</Text>
+            <Stack className="text-md gap-2">
+              <Stack className="gap-0">
+                <Text className={`font-bold`}>Utama</Text>
+                <Text className={`text-primary-text-50`}>{data.lecturer1}</Text>
+              </Stack>
+
+              <Stack className="gap-0">
+                <Text className={`font-bold`} mt={4}>
+                  Pendamping
+                </Text>
+                <Text className={`text-primary-text-50`}>{data.lecturer2}</Text>
+              </Stack>
             </Stack>
           ),
         },
         tester: {
           label: data.tester1,
           element: (
-            <Stack spacing={4}>
-              <Text className={`font-bold`}>Pertama</Text>
-              <Text className={`text-primary-text-50`}>{data.tester1}</Text>
-              <Text className={`font-bold`} mt={4}>
-                Kedua
-              </Text>
-              <Text className={`text-primary-text-50`}>{data.tester2}</Text>
+            <Stack className="text-md gap-2">
+              <Stack className="gap-0">
+                <Text className={`font-bold`}>Pertama</Text>
+                <Text className={`text-primary-text-50`}>{data.tester1}</Text>
+              </Stack>
+
+              <Stack className="gap-0">
+                <Text className={`font-bold`} mt={4}>
+                  Kedua
+                </Text>
+                <Text className={`text-primary-text-50`}>{data.tester2}</Text>
+              </Stack>
             </Stack>
           ),
         },

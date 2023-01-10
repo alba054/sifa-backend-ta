@@ -133,8 +133,8 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
           <Group className="gap-2">
             {!!tableTitle && <Title order={3}>{tableTitle}</Title>}
             {onProgressData > 0 ? (
-              <div className="w-5 h-5 text-center rounded-full bg-error-500 text-white text-sm relative -top-1">
-                {onProgressData}
+              <div className="w-[22px] h-[22px] py-[1px] text-center rounded-full bg-error-500 text-white text-sm relative -top-1">
+                {onProgressData > 9 ? "9+" : onProgressData}
               </div>
             ) : null}
           </Group>

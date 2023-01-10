@@ -1,4 +1,5 @@
 import {
+  FEBookOutline,
   FECheckSquareOutlineForNavbar,
   FEGuidance,
   FESeminar,
@@ -27,5 +28,10 @@ export const lecturerMenus: INavbarMenuItem[] = [
     icon: FESeminar,
     label: "Seminar",
     href: FEROUTES.LECTURER_HOMEPAGE_SEMINAR,
+  },
+  {
+    icon: FEBookOutline,
+    label: "Bimbingan",
+    href: FEROUTES.LECTURER_HOMEPAGE_GUIDANCE,
   },
 ];
