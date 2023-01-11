@@ -5,6 +5,6 @@ export interface IFEStudyProgramAdminApprovalExaminersFramingDetermineFormInterf
 }
 
 export const feStudyProgramAdminApprovalExaminersFramingDetermineFormInterfaces = yup.object({
-  acceptedProposalIndex: yup.string(),
+  proposedFirstExaminers: yup.string(),
   proposedSecondExaminers: yup.string()
 });

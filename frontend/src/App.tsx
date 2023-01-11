@@ -109,6 +109,7 @@ import FELecturerSeminarDetailsHistory from "./pages/final-exam/lecturer/seminar
 import FELecturerGuidance from "./pages/final-exam/lecturer/mentor-examiner-proposal/guidance/FELecturerGuidance";
 import FELecturerGuidanceStudentDetail from "./pages/final-exam/lecturer/mentor-examiner-proposal/guidance/FELecturerGuidanceStudentDetail";
 import FELabHeadLabFree from "./pages/final-exam/lab-head/lab-free/FELabHeadLabFree";
+import FELabHeadFinalExam from "./pages/final-exam/lab-head/final-exam/FELabHeadFinalExam";
 
 moment.locale("id");
 
@@ -591,6 +592,8 @@ function App() {
                     <Route path="kepala-lab">
                       <Route index element={<FEHomepage />} />
                       <Route path="bebas-lab" element={<FELabHeadLabFree />} />
+                      <Route path="tugas-akhir" element={<FELabHeadFinalExam />} />
+
                     </Route>
                   </Route>
                   <Route path="*" element={<NotFound />} />

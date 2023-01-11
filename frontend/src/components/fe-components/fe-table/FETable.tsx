@@ -27,6 +27,7 @@ interface IFETableComponentProps {
   onPageChange?: (page: number) => void;
   actionOrientation?: "vertical" | "horizontal";
   actionColumnWidth?: string;
+  actionColumnRounded?: false;
   onProgressData?: number;
 }
 
@@ -62,11 +63,14 @@ export type IActionButtonBgColor =
 export interface IFETableAction {
   label: string;
   icon?: JSX.Element;
+  type?: "button" | "element";
   backgroundColor: IActionButtonBgColor;
   onClick: (row: any) => void;
   padding?: string | number;
   width?: string | number;
+  eachButtonRounded?: boolean;
   display?: (row: any) => boolean;
+  element?: (row:any) => JSX.Element;
 }
 
 // Add action color here
@@ -91,6 +95,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
   onPageChange,
   actionOrientation = "horizontal",
   actionColumnWidth = "fit-content",
+  actionColumnRounded = true,
   onProgressData = 0,
 }) => {
   const headKeys = tableHeadings.map((th) => ({
@@ -261,33 +266,47 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                                   actionOrientation === "vertical"
                                     ? "flex-col"
                                     : "flex-row"
-                                } overflow-hidden rounded-full`}
+                                } overflow-hidden ${actionColumnRounded == true ? "rounded-full" : "" } `}
                               >
                                 {/* <Stack align={"center"} spacing={5}> */}
                                 {actions.map((action) => {
                                   return (
-                                    <Button
-                                      hidden={action.display==null? false : action.display(row)}
-                                      key={action.label + "row-action"}
-                                      onClick={() => action.onClick(row)}
-                                      size="xs"
-                                      className={`${
-                                        aciontBtnClsNames[
-                                          action.backgroundColor
-                                        ]
-                                      } py-2 rounded-none`}
-                                      styles={{
-                                        root: {
-                                          padding: action.padding || 10,
-                                          width: action.width || "70%",
-                                        },
-                                      }}
-                                    >
-                                      <Group align={"center"} spacing={0}>
-                                        {action.icon}
-                                        {action.label}
-                                      </Group>
-                                    </Button>
+                                    <>
+                                      {action.type == "element" ? (
+                                        <>{action.element!(row)}</>
+                                      ) : (
+                                        <Button
+                                          hidden={
+                                            action.display == null
+                                              ? false
+                                              : action.display(row)
+                                          }
+                                          key={action.label + "row-action"}
+                                          onClick={() => action.onClick(row)}
+                                          size="xs"
+                                          className={`${
+                                            aciontBtnClsNames[
+                                              action.backgroundColor
+                                            ]
+                                          } py-2 ${
+                                            action.eachButtonRounded
+                                              ? "rounded-xl"
+                                              : "rounded-none"
+                                          }`}
+                                          styles={{
+                                            root: {
+                                              padding: action.padding || 10,
+                                              width: action.width || "70%",
+                                            },
+                                          }}
+                                        >
+                                          <Group align={"center"} spacing={0}>
+                                            {action.icon}
+                                            {action.label}
+                                          </Group>
+                                        </Button>
+                                      )}
+                                    </>
                                   );
                                 })}
                                 {/* </Stack> */}

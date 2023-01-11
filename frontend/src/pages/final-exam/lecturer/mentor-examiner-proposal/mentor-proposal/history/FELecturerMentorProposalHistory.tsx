@@ -194,7 +194,7 @@ const FELecturerMentorProposalHistory: React.FC<
         proposer: {
           label: data.proposer,
           element: (
-            <Stack className="gap-0">
+            <Stack className="gap-0 text-md">
               <Text className="text-primary-text-500">{data.proposer}</Text>
               {data.proposer === "Dosen" ? (
                 <Text className="text-secondary-text-500">
