@@ -261,7 +261,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                                   actionOrientation === "vertical"
                                     ? "flex-col"
                                     : "flex-row"
-                                }`}
+                                } overflow-hidden rounded-full`}
                               >
                                 {/* <Stack align={"center"} spacing={5}> */}
                                 {actions.map((action) => {
@@ -275,7 +275,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                                         aciontBtnClsNames[
                                           action.backgroundColor
                                         ]
-                                      } py-2`}
+                                      } py-2 rounded-none`}
                                       styles={{
                                         root: {
                                           padding: action.padding || 10,

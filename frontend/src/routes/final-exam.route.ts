@@ -120,4 +120,6 @@ export const FEROUTES = {
   // ====================================================================================================
   LAB_HEAD_HOMEPAGE: "/tugas-akhir/kepala-lab",
   LAB_HEAD_LABFREE: "/tugas-akhir/kepala-lab/bebas-lab",
+  LAB_HEAD_FINAL_EXAM: "/tugas-akhir/kepala-lab/tugas-akhir",
+  // LAB_HEAD_LABFREE: "/tugas-akhir/kepala-lab/bebas-lab",
 };

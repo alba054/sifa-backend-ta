@@ -1,4 +1,5 @@
 import {
+  DocumentRibbonIcon,
   FEBeakerGlass,
   FEBookOutline,
   FECheckSquareOutlineForNavbar,
@@ -21,9 +22,9 @@ export const labHeadMenus: INavbarMenuItem[] = [
     href: FEROUTES.LAB_HEAD_LABFREE,
   },
   {
-    icon: FEGuidance,
-    label: "Usulan",
-    href: FEROUTES.LECTURER_HOMEPAGE_PROPOSAL,
+    icon: DocumentRibbonIcon,
+    label: "Tugas Akhir",
+    href: FEROUTES.LAB_HEAD_FINAL_EXAM,
   },
   {
     icon: FECheckSquareOutlineForNavbar,

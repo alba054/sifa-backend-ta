@@ -8,6 +8,7 @@ import FETableComponent, {
   IFETableHeadingProps,
   IFETableRowColumnProps,
 } from "src/components/fe-components/fe-table/FETable";
+import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import FEInputModalForm from "src/components/fe-components/FEInputModalForm";
 import {
@@ -82,6 +83,7 @@ function getDataFromBackend() {
 }
 
 const dummyLabValue = "Biofarmaka";
+const dummyLetterNumberCount = 10;
 
 const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
   const {
@@ -90,13 +92,18 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
     clear,
   } = useArray(getDataFromBackend());
   const labValue = dummyLabValue;
+  const [letterNumberCount, setLetterNumberCount] = useState(
+    dummyLetterNumberCount
+  );
   const [activePage, setActivePage] = useState<number>(1);
   const [onProgressData, setOnProgressData] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isAddLabModalOpened, setisAddLabModalOpened] = useState(false);
   const [isConfirmLabModalOpened, setIsConfirmLabModalOpened] = useState(false);
-  const [acceptedLabDate, setAcceptedLabDate] = useState(new Date())
+  const [isRejectLabModalOpened, setIsRejectLabModalOpened] = useState(false);
+  const [acceptedLabDate, setAcceptedLabDate] = useState(new Date());
   const [selectedRow, setSelectedRow] = useState(0);
+  const [refresh, setRefresh] = useState(true)
 
   const buttons: ILFPHeaderButton[] = [
     {
@@ -124,17 +131,13 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
     setOnProgressData(0);
     for (let i = 0; i < dataFromBackend.length; i++) {
       dataFromBackend[i].id = i;
-      console.log(
-        "Ke Sini ",
-        dataFromBackend[i].approvalStatus == "Belum_Diproses"
-      );
-      if (dataFromBackend[i].approvalStatus == "Belum_Diproses") {
+      if (dataFromBackend[i].status == "Belum_Diproses") {
         setOnProgressData(onProgressData + 1);
-        console.log("BELUM DIPROSES!", i);
+        // console.log("BELUM DIPROSES!", i);
       }
     }
 
-    console.log(dataFromBackend);
+    // console.log(dataFromBackend);
   }, [dataFromBackend]);
 
   const tableHeadings: IFETableHeadingProps[] = [
@@ -173,35 +176,10 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
       label: "Status Persetujuan",
       sortable: true,
       textAlign: "left",
-      cellKey: "approvalStatus",
+      cellKey: "status",
       width: "150px",
     },
   ];
-
-  const tableRows = dataFromBackend.map(
-    (data: any, idx: number) =>
-      ({
-        no: {
-          label: idx + 1,
-        },
-        studentNim: {
-          label: data.nim,
-        },
-        studentName: {
-          label: data.name,
-        },
-        letterNumber: {
-          label: data.letterNumber || "-",
-        },
-        letterDate: {
-          label: data.letterDate || "-",
-        },
-        approvalStatus: {
-          label: data.approvalStatus,
-          element: <>{statusChip[`${data.status}`]}</>,
-        },
-      } as IFETableRowColumnProps)
-  );
 
   const actions: IFETableAction[] = [
     {
@@ -221,7 +199,7 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
         setSelectedRow(row.no.label - 1);
-        setIsConfirmLabModalOpened(true)
+        setIsConfirmLabModalOpened(true);
       },
       display: (row: any) => {
         return dataFromBackend[row.no.label - 1].status == "Diterima";
@@ -233,7 +211,7 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
         setSelectedRow(row.no.label - 1);
-        dataFromBackend[selectedRow].status = "Ditolak";
+        setIsRejectLabModalOpened(true);
       },
     },
   ];
@@ -244,18 +222,66 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
 
   const { getInputProps, errors, setValues, values } = form;
 
-  function addLabFreeHandler(){
-    console.log(values)
-    setisAddLabModalOpened(false)
-    setValues({student:""})
+  function addLabFreeHandler() {
+    console.log(values);
+    setisAddLabModalOpened(false);
+    setValues({ student: "" });
   }
 
-  function acceptLabHandler(){
-
+  function acceptLabHandler() {
     dataFromBackend[selectedRow].status = "Diterima";
-    setIsConfirmLabModalOpened(false)
-    setAcceptedLabDate(new Date())
+    dataFromBackend[selectedRow].letterDate = acceptedLabDate
+      .toLocaleDateString("id", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      })
+      .replaceAll("/", "-");
+    dataFromBackend[selectedRow].letterNumber = letterNumberCount;
+    setLetterNumberCount(letterNumberCount + 1);
+    setIsConfirmLabModalOpened(false);
+    setAcceptedLabDate(new Date());
+      
+    console.log(dataFromBackend[selectedRow])
+    setRefresh(!refresh)
   }
+
+  function rejectLabHandler() {
+    dataFromBackend[selectedRow].status = "Ditolak";
+    dataFromBackend[selectedRow].letterDate = "-";
+    dataFromBackend[selectedRow].letterNumber = "-";
+    setIsRejectLabModalOpened(false);
+    console.log(dataFromBackend[selectedRow])
+    setRefresh(!refresh)
+  }
+
+console.log('KE SINI TABEL!', dataFromBackend[selectedRow])
+
+const tableRows = dataFromBackend.map(
+    (data: any, idx: number) =>
+      ({
+        no: {
+          label: idx + 1,
+        },
+        studentNim: {
+          label: data.nim,
+        },
+        studentName: {
+          label: data.name,
+        },
+        letterNumber: {
+          label: data.letterNumber || "-",
+        },
+        letterDate: {
+          label: data.letterDate || "-",
+        },
+        status: {
+          label: data.status,
+          element: <>{statusChip[`${data.status}`]}</>,
+        },
+      } as IFETableRowColumnProps)
+  );
+  // console.log('THE NEWSET TABLEROWS', tableRows)
 
   return (
     <FEMainlayout>
@@ -306,9 +332,25 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
         yesButtonLabel="Terima"
         opened={isConfirmLabModalOpened}
         setOpened={setIsConfirmLabModalOpened}
+        onSubmit={acceptLabHandler}
         children={
-           <DatePickerInput locale="id" dropdownType="modal" value={acceptedLabDate} onChange={(d)=>{setAcceptedLabDate(d || new Date())}} />
+          <DatePickerInput
+            locale="id"
+            dropdownType="modal"
+            value={acceptedLabDate}
+            onChange={(d) => {
+              setAcceptedLabDate(d || new Date());
+            }}
+          />
         }
+      />
+      <FEAlertModal
+        title="Tolak Permohonan?"
+        description="Tolak permohonan bebas lab dari Mahasiswa tersebut?"
+        yesButtonLabel="Tolak"
+        opened={isRejectLabModalOpened}
+        setOpened={setIsRejectLabModalOpened}
+        onSubmit={rejectLabHandler}
       />
       <Stack className="gap-0">
         <LFPHeaderComponent
