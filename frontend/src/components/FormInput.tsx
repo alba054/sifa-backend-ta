@@ -17,7 +17,7 @@ import {
   TextareaProps,
 } from "@mantine/core";
 
-import { DatePicker, DatePickerProps } from "@mantine/dates";
+import { DatePicker, DatePickerProps, TimeInput, TimeInputProps, TimeRangeInput, TimeRangeInputProps } from "@mantine/dates";
 
 import { useState } from "react";
 
@@ -128,6 +128,47 @@ export const DatePickerInput = ({ onFocus, onBlur, ...props }: DatePickerProps) 
   return (
     <DatePicker
       size="lg"
+      locale="id"
+      styles={{ ...getDefaultStyle(isFocus, !!props.error) }}
+      onFocus={(e) => {
+        setIsFocus(true);
+        if (!!onFocus) onFocus(e);
+      }}
+      onBlur={(e) => {
+        setIsFocus(false);
+        if (!!onBlur) onBlur(e);
+      }}
+      {...props}
+    />
+  );
+};
+
+export const FETimeInput = ({ onFocus, onBlur, ...props }: TimeInputProps) => {
+  const [isFocus, setIsFocus] = useState<boolean>(false);
+
+  return (
+    <TimeInput
+      size="md"
+      styles={{ ...getDefaultStyle(isFocus, !!props.error) }}
+      onFocus={(e) => {
+        setIsFocus(true);
+        if (!!onFocus) onFocus(e);
+      }}
+      onBlur={(e) => {
+        setIsFocus(false);
+        if (!!onBlur) onBlur(e);
+      }}
+      {...props}
+    />
+  );
+};
+
+export const FETimeRangeInput = ({ onFocus, onBlur, ...props }: TimeRangeInputProps) => {
+  const [isFocus, setIsFocus] = useState<boolean>(false);
+
+  return (
+    <TimeRangeInput
+      size="md"
       styles={{ ...getDefaultStyle(isFocus, !!props.error) }}
       onFocus={(e) => {
         setIsFocus(true);

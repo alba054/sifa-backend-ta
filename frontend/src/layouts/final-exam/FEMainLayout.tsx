@@ -13,6 +13,7 @@ import { firstViceDeanMenus } from "./final-exam-const.tsx/first-vice-dean.const
 import { headAdministratorMenus } from "./final-exam-const.tsx/head-administrator";
 import { labHeadMenus } from "./final-exam-const.tsx/lab-head.const";
 import { lecturerMenus } from "./final-exam-const.tsx/lecturer.const";
+import { seminarCoordinatorMenus } from "./final-exam-const.tsx/seminar-coordinator.const";
 import { studentMenus } from "./final-exam-const.tsx/student-role.const";
 import { studyProgramAdminMenus } from "./final-exam-const.tsx/study-program-admin.const";
 import { subsectionChairmanMenus } from "./final-exam-const.tsx/subsection-chairman.const";
@@ -33,6 +34,7 @@ const switchMenus: { [role: string | number]: INavbarMenuItem[] } = {
   6: facultyAdminMenus,
   7: lecturerMenus,
   8: labHeadMenus,
+  9: seminarCoordinatorMenus,
   student: studentMenus,
   "first-vice-dean": firstViceDeanMenus,
   "study-program-admin": studyProgramAdminMenus,
@@ -41,7 +43,8 @@ const switchMenus: { [role: string | number]: INavbarMenuItem[] } = {
   dean: deanMenus,
   "faculty-admin": facultyAdminMenus,
   lecturer: lecturerMenus,
-  "lab-head": labHeadMenus
+  "lab-head": labHeadMenus,
+  "seminar-coordinator": seminarCoordinatorMenus,
 };
 
 const FEMainlayout: React.FC<IMainLayoutProps> = ({

@@ -122,4 +122,9 @@ export const FEROUTES = {
   LAB_HEAD_LABFREE: "/tugas-akhir/kepala-lab/bebas-lab",
   LAB_HEAD_FINAL_EXAM: "/tugas-akhir/kepala-lab/tugas-akhir",
   LAB_HEAD_REFERENCE: "/tugas-akhir/kepala-lab/referensi",
+  // ====================================================================================================
+  SEMINAR_COORDINATOR_HOMEPAGE: "/tugas-akhir/koordinator-seminar",
+  SEMINAR_COORDINATOR_SEMINAR: "/tugas-akhir/koordinator-seminar/seminar",
+  SEMINAR_COORDINATOR_SEMINAR_SCHEDULING: "/tugas-akhir/koordinator-seminar/seminar/jadwal",
+  SEMINAR_COORDINATOR_SEMINAR_EVALUATION  : "/tugas-akhir/koordinator-seminar/seminar/evaluasi",
 };

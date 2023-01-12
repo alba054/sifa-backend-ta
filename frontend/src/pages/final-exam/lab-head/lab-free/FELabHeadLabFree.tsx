@@ -335,7 +335,6 @@ const tableRows = dataFromBackend.map(
         onSubmit={acceptLabHandler}
         children={
           <DatePickerInput
-            locale="id"
             dropdownType="modal"
             value={acceptedLabDate}
             onChange={(d) => {
