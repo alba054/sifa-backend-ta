@@ -16,6 +16,7 @@ interface IFEInputModalProps {
   noButtonLabel?: string;
   yesButtonLabel?: string;
   maxWidth?: number;
+  onClose?: () => void;
 }
 
 const FEInputModal = ({
@@ -27,13 +28,17 @@ const FEInputModal = ({
   noButtonLabel = "Batal",
   yesButtonLabel = "Buat Permohonan",
   maxWidth = 800,
+  onClose=()=>{},
 }: IFEInputModalProps) => {
   const theme = useMantineTheme();
 
   return (
     <Modal
       opened={opened}
-      onClose={() => setOpened(false)}
+      onClose={() => {
+        setOpened(false);
+        onClose();
+      }}
       centered
       title={title}
       padding={30}

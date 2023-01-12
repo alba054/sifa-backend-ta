@@ -4,6 +4,7 @@ import {
   FEBookOutline,
   FECheckSquareOutlineForNavbar,
   FEGuidance,
+  FEReference,
   FESeminar,
   HomeOutline,
 } from "src/assets/Icons/Fluent";
@@ -27,18 +28,8 @@ export const labHeadMenus: INavbarMenuItem[] = [
     href: FEROUTES.LAB_HEAD_FINAL_EXAM,
   },
   {
-    icon: FECheckSquareOutlineForNavbar,
-    label: "Persetujuan",
-    href: FEROUTES.LECTURER_HOMEPAGE_APPROVAL,
-  },
-  {
-    icon: FESeminar,
-    label: "Seminar",
-    href: FEROUTES.LECTURER_HOMEPAGE_SEMINAR,
-  },
-  {
-    icon: FEBookOutline,
-    label: "Bimbingan",
-    href: FEROUTES.LECTURER_HOMEPAGE_GUIDANCE,
-  },
+    icon: FEReference,
+    label: "Referensi",
+    href: FEROUTES.LAB_HEAD_REFERENCE
+  }
 ];

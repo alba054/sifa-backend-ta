@@ -6,6 +6,7 @@ export interface IFEInputModalForm {
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
   title?: string;
   onSubmitHandler: () => void;
+  onClose?: () => void;
   children: React.ReactNode;
   noButtonLabel?: string;
   yesButtonLabel?: string;
@@ -19,6 +20,7 @@ const FEInputModalForm: React.FC<IFEInputModalForm> = ({
   onSubmitHandler,
   yesButtonLabel = "Lakukan Penolakan",
   children,
+  onClose
 }) => {
   return (
     <FEInputModal
@@ -29,6 +31,7 @@ const FEInputModalForm: React.FC<IFEInputModalForm> = ({
       yesButtonLabel={yesButtonLabel}
       onSubmit={onSubmitHandler as any}
       children={children}
+      onClose={onClose}
     />
   );
 };
