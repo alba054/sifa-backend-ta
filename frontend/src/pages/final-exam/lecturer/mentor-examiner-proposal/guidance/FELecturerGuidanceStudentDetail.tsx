@@ -1,11 +1,21 @@
 import { Button, Group, Stack, Title } from "@mantine/core";
 import React from "react";
+import { useParams } from "react-router-dom";
+import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import FEGuidanceListItem, {
   IFEGuidanceHistory,
 } from "src/components/fe-components/FEGuidanceListItem";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
+import { FEROUTES } from "src/routes/final-exam.route";
 
 interface IFELecturerGuidanceStudentDetailProps {}
+
+const breadCrumbs: Array<IFEBreadCrumbsItem> = [
+  {
+    title: "Bimbingan",
+    href: FEROUTES.LECTURER_HOMEPAGE_GUIDANCE,
+  },
+];
 
 function getFilesHistory() {
   const now = new Date().getTime();
@@ -43,8 +53,10 @@ const FELecturerGuidanceStudentDetail: React.FC<
 > = ({}) => {
   const backendData = getBackendData();
 
+  let { id } = useParams();
+
   return (
-    <FEMainlayout>
+    <FEMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage={`${id}`}>
       <Title order={2} mb={"md"}>
         {backendData.title}
       </Title>
