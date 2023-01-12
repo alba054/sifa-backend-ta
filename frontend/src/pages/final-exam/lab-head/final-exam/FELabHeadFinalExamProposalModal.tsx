@@ -1,7 +1,15 @@
-import { Divider, Group, Stack, Text, useMantineTheme } from "@mantine/core";
+import {
+  Divider,
+  Group,
+  List,
+  Stack,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import React, { useEffect, useState } from "react";
 import { approvalChip } from "src/components/fe-components/FERoundedChip";
+import FESmallInformationNotification from "src/components/fe-components/FESmallInformationNotification";
 import FEInputModal from "src/components/FEInputModal";
 import { SelectInput } from "src/components/FormInput";
 import { FEStatus } from "src/utils/const/type";
@@ -266,6 +274,26 @@ const FELabHeadFinalExamProposalModal: React.FC<
               />
             </Stack>
           </Group>
+          <FESmallInformationNotification
+            info={
+              <Stack className="gap-0" >
+                <Text className="text-lg">
+                  Informasi
+                </Text>
+                <List type="unordered" className="text-primary-500 text-md">
+                  <List.Item>
+                    1. Anda masih bisa mengganti pembimbing utama/pendamping selama
+                    mereka belum menyetujui usulan yang diberikan.
+                  </List.Item>
+                  <List.Item>
+                    2. Jika terdapat field pembimbing yang telah terisi,
+                    kemungkinan pembimbing tersebut telah diusulkan oleh kepala
+                    lab. lain.
+                  </List.Item>
+                </List>
+              </Stack>
+            }
+          />
         </Stack>
       </Stack>
     </FEInputModal>
