@@ -772,8 +772,9 @@ model tugas_akhir {
   taFile                                                 String?             @db.VarChar(255)
   taKRS                                                  String?
   taKHS                                                  String?
-  taKRSKHSStatus                                         Valid               @default(Invalid)
+  taKRSKHSStatus                                         StatusPermohonan    @default(Belum_Diproses)
   taCatatan                                              String?             @db.Text
+  taCatatanFA                                            String?
   taCatatanMhs                                           String?             @db.Text
   taStatusSk                                             Int?
   taDosenPengusul                                        Int?

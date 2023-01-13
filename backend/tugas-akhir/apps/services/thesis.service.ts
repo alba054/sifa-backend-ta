@@ -27,6 +27,30 @@ export class ThesisService {
     proposalGroupID: string,
     body: IBody
   ) {
+    const thesis = await this.getThesisByProposalGroupID(proposalGroupID);
+
+    if (thesis.length < 1) {
+      throw new NotFoundError("thesis is not found");
+    }
+
+    if (thesis[0].statusPermohonan !== "Belum_Diproses") {
+      throw new BadRequestError("thesis has been accepted/rejected");
+    }
+
+    if (
+      thesis[0].taId !== body.title1.id &&
+      thesis[0].taId !== body.title2.id
+    ) {
+      throw new BadRequestError("id is not suitable with proposal");
+    }
+
+    if (
+      thesis[1].taId !== body.title1.id &&
+      thesis[1].taId !== body.title2.id
+    ) {
+      throw new BadRequestError("id is not suitable with proposal");
+    }
+
     const approveThesis = await Thesis.updateThesisStatus(
       proposalGroupID,
       body
@@ -113,7 +137,20 @@ export class ThesisService {
   }
 
   static async deleteThesis(nim: string, proposalGroupID: string) {
-    const thesis = await this.getInProcessThesis(nim);
+    const thesis = await this.getThesisByProposalGroupID(proposalGroupID);
+
+    if (thesis.length < 1) {
+      throw new NotFoundError("thesis is not found");
+    }
+
+    if (thesis[0].statusPermohonan !== "Belum_Diproses") {
+      throw new BadRequestError("thesis has been accepted or rejected");
+    }
+
+    if (thesis[0].taMhsNim !== nim) {
+      throw new NotFoundError("thesis is not found");
+    }
+
     const KRSPath = thesis[0].taKRS;
     const KHSPath = thesis[0].taKHS;
 
@@ -122,7 +159,11 @@ export class ThesisService {
       deleteFile(KRSPath);
     }
 
-    return await Thesis.deleteThesis(nim, proposalGroupID);
+    return await Thesis.deleteThesis(proposalGroupID);
+  }
+
+  static async getThesisByProposalGroupID(proposalGroupID: string) {
+    return await Thesis.getThesisByProposalGroupID(proposalGroupID);
   }
 
   static async getAllProposedThesis(nim: string) {

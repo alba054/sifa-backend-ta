@@ -1,4 +1,5 @@
 import { Examiner } from "../models/examiner.model";
+import { Thesis } from "../models/thesis.model";
 
 interface IAssignedExaminer {
   position: number;
@@ -6,6 +7,14 @@ interface IAssignedExaminer {
 }
 
 export class HeadMajorService {
+  static async getThesisByID(thesisID: number) {
+    return await Thesis.getThesisByID(Number(thesisID));
+  }
+
+  static async getAllThesis(status: any) {
+    return await Thesis.getAllThesis(status);
+  }
+
   static async viewExaminersHistory(status: any) {
     return await Examiner.getAllExaminersAcceptedOrRejected(status);
   }

@@ -9,3 +9,5 @@ dbtugasakhir.sql
 data
 docs
 uploaded_file
+# swagger docs
+swagger-output.json
