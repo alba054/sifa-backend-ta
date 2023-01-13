@@ -1,24 +1,18 @@
 import { Stack, Text, useMantineTheme } from "@mantine/core";
-import { useForm, yupResolver } from "@mantine/form";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FEPenOutline, FETrashOutline } from "src/assets/Icons/Fluent";
 import FETableComponent, {
   IFETableAction,
   IFETableHeadingProps,
   IFETableRowColumnProps,
 } from "src/components/fe-components/fe-table/FETable";
-import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
-import FEInputModalForm from "src/components/fe-components/FEInputModalForm";
-import LFPHeaderComponent, {
-  ILFPHeaderButton,
-} from "src/components/fe-components/LFPHeader.component";
-import { SelectInput, TextInput } from "src/components/FormInput";
+import LFPHeaderComponent from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import { getFEDate } from "src/utils/functions/date.function";
+import FESeminarCoordinatorSeminarEvaluationHistory from "./FESeminarCoordinatorSeminarEvaluationHistory";
 
 export interface IFESeminarCoordinatorSeminarEvaluation {}
 
@@ -77,7 +71,7 @@ const FESeminarCoordinatorSeminarEvaluation: React.FC<
   const [activePage, setActivePage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedRow, setSelectedRow] = useState(0);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     for (let i = 0; i < dataFromBackend.length; i++) {
@@ -118,7 +112,7 @@ const FESeminarCoordinatorSeminarEvaluation: React.FC<
       sortable: true,
       textAlign: "left",
       cellKey: "seminarTime",
-      width: "300px"
+      width: "300px",
     },
   ];
 
@@ -138,7 +132,11 @@ const FESeminarCoordinatorSeminarEvaluation: React.FC<
           label: data.seminarType,
         },
         seminarTime: {
-          label: getFEDate(data.seminarDate, data.seminarStartTime, data.seminarEndTime)
+          label: getFEDate(
+            data.seminarDate,
+            data.seminarStartTime,
+            data.seminarEndTime
+          ),
         },
       } as IFETableRowColumnProps)
   );
@@ -150,7 +148,7 @@ const FESeminarCoordinatorSeminarEvaluation: React.FC<
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
         setSelectedRow(row.no.label - 1);
-        navigate(dataFromBackend[row.no.label - 1].nim)
+        navigate(dataFromBackend[row.no.label - 1].nim);
       },
       eachButtonRounded: true,
       padding: 20,
@@ -158,29 +156,35 @@ const FESeminarCoordinatorSeminarEvaluation: React.FC<
     },
   ];
   return (
-    <FEMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Penilaian Seminar">
+    <FEMainlayout
+      breadCrumbs={breadCrumbs}
+      breadCrumbsCurrentPage="Penilaian Seminar"
+    >
       <Stack className="gap-0">
         <LFPHeaderComponent title="Nilai Seminar" />
         <Text className="text-secondary-text-500">
           Daftar nilai seminar/ujian mahasiswa
         </Text>
       </Stack>
-      <FETableComponent
-        isLoading={isLoading}
-        // dataAmt={dataFromBackend.length}
-        dataPerPageAmt={5}
-        onSearch={(value) => {
-          console.log("Searching for: ", value);
-        }}
-        onPageChange={setActivePage}
-        activePage={activePage}
-        actions={actions}
-        tableTitle="Seminar yang belum dinilai"
-        tableRows={tableRows}
-        tableHeadings={tableHeadings}
-        noDataMsg={"Data tidak ditemukan"}
-        onProgressData={dataFromBackend.length}
-      />
+      <Stack className="-mt-4">
+        <FETableComponent
+          isLoading={isLoading}
+          // dataAmt={dataFromBackend.length}
+          dataPerPageAmt={5}
+          onSearch={(value) => {
+            console.log("Searching for: ", value);
+          }}
+          onPageChange={setActivePage}
+          activePage={activePage}
+          actions={actions}
+          tableTitle="Seminar yang belum dinilai"
+          tableRows={tableRows}
+          tableHeadings={tableHeadings}
+          noDataMsg={"Data tidak ditemukan"}
+          onProgressData={dataFromBackend.length}
+        />
+        <FESeminarCoordinatorSeminarEvaluationHistory />
+      </Stack>
     </FEMainlayout>
   );
 };
