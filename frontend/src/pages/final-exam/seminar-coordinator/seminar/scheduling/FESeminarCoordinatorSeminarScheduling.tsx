@@ -1,20 +1,17 @@
 import { Stack, Text } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FETrashOutline } from "src/assets/Icons/Fluent";
 import ManThinkingAnimation from "src/assets/Icons/ManThinkingAnimation";
-import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton,
+  ILFPHeaderButton
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
-import { FEStatus } from "src/utils/const/type";
 import FESeminarCoordinatorSeminarSchedulingCard, {
-  IFESeminarCoordinatorSeminarSchedulingCard,
+  IFESeminarCoordinatorSeminarSchedulingCard
 } from "./FESeminarCoordinatorSeminarSchedulingCard";
 import FESeminarCoordinatorSeminarSchedulingModal from "./FESeminarCoordinatorSeminarSchedulingModal";
 export interface IFESeminarCoordinatorSeminarScheduling {}
@@ -88,6 +85,13 @@ const dummySeminarData: Array<IFESeminarCoordinatorSeminarSchedulingCard> = [
   },
 ];
 
+const breadCrumbs: Array<IFEBreadCrumbsItem> = [
+  {
+    title: "Seminar",
+    href: FEROUTES.SEMINAR_COORDINATOR_SEMINAR
+  },
+];
+
 const FESeminarCoordinatorSeminarScheduling: React.FC<
   IFESeminarCoordinatorSeminarScheduling
 > = ({}) => {
@@ -129,7 +133,7 @@ const FESeminarCoordinatorSeminarScheduling: React.FC<
   }
 
   return (
-    <FEMainlayout>
+    <FEMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Jadwal Seminar">
       <FESeminarCoordinatorSeminarSchedulingModal
         opened={isAddScheduleModalOpened}
         setOpened={setIsAddScheduleModalOpened}

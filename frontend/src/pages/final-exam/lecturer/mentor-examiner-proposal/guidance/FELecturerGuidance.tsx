@@ -181,6 +181,7 @@ const FELecturerGuidance: React.FC<IFELecturerGuidanceProps> = ({}) => {
   const actions: IFETableAction[] = [
     {
       label: "Bimbingan",
+      eachButtonRounded: true,
       backgroundColor: "primary",
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
@@ -189,6 +190,7 @@ const FELecturerGuidance: React.FC<IFELecturerGuidanceProps> = ({}) => {
     },
     {
       label: "Seminar",
+      eachButtonRounded: true,
       backgroundColor: "primaryGradient",
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {

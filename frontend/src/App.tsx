@@ -113,6 +113,8 @@ import FELabHeadFinalExam from "./pages/final-exam/lab-head/final-exam/FELabHead
 import FELabHeadReference from "./pages/final-exam/lab-head/reference/FELabHeadReference";
 import FESeminarCoordinatorSeminar from "./pages/final-exam/seminar-coordinator/seminar/FESeminarCoordinatorSeminar";
 import FESeminarCoordinatorSeminarScheduling from "./pages/final-exam/seminar-coordinator/seminar/scheduling/FESeminarCoordinatorSeminarScheduling";
+import FESeminarCoordinatorSeminarEvaluation from "./pages/final-exam/seminar-coordinator/seminar/evaluation/FESeminarCoordinatorSeminarEvaluation";
+import FESeminarCoordinatorSeminarEvaluationUngraded from "./pages/final-exam/seminar-coordinator/seminar/evaluation/FESeminarCoordinatorSeminarEvaluationUngraded";
 
 moment.locale("id");
 
@@ -612,7 +614,8 @@ function App() {
                           element={<FESeminarCoordinatorSeminar />}
                         />
                         <Route path="jadwal" element={<FESeminarCoordinatorSeminarScheduling />} />
-                        <Route path="nilai" element={<FELabHeadReference />} />
+                        <Route path="evaluasi" element={<FESeminarCoordinatorSeminarEvaluation />} />
+                        <Route path="evaluasi/:nim" element={<FESeminarCoordinatorSeminarEvaluationUngraded />} />
                       </Route>
                     </Route>
                   </Route>

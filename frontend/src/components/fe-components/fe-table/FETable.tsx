@@ -290,7 +290,7 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                                             ]
                                           } py-2 ${
                                             action.eachButtonRounded
-                                              ? "rounded-xl"
+                                              ? "rounded-md"
                                               : "rounded-none"
                                           }`}
                                           styles={{
