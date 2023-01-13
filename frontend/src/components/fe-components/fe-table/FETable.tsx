@@ -10,8 +10,10 @@ import {
   Loader,
 } from "@mantine/core";
 import React from "react";
-import { SearchFilled } from "src/assets/Icons/Fluent";
+import { Link } from "react-router-dom";
+import { AddFilled, SearchFilled } from "src/assets/Icons/Fluent";
 import { TextInput } from "src/components/Input";
+import { ILFPHeaderButton } from "../LFPHeader.component";
 
 type TableRowCellKey = string;
 interface IFETableComponentProps {
@@ -29,6 +31,8 @@ interface IFETableComponentProps {
   actionColumnWidth?: string;
   actionColumnRounded?: false;
   onProgressData?: number;
+  tableHeaderAction?: Array<ILFPHeaderButton>;
+  withSearch?: boolean;
 }
 
 export interface IFETableHeadingProps {
@@ -70,7 +74,7 @@ export interface IFETableAction {
   width?: string | number;
   eachButtonRounded?: boolean;
   display?: (row: any) => boolean;
-  element?: (row:any) => JSX.Element;
+  element?: (row: any) => JSX.Element;
 }
 
 // Add action color here
@@ -97,6 +101,8 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
   actionColumnWidth = "fit-content",
   actionColumnRounded = true,
   onProgressData = 0,
+  tableHeaderAction,
+  withSearch = true,
 }) => {
   const headKeys = tableHeadings.map((th) => ({
     key: th.cellKey,
@@ -112,6 +118,8 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
   function handlePageChange(e: number) {
     onPageChange && onPageChange(e);
   }
+
+  const addIcon = <AddFilled className={`mr-1 mb-[1px]`} size={14} />;
 
   const paginationComp = (
     <>
@@ -144,10 +152,56 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
               </div>
             ) : null}
           </Group>
-          <TextInput
-            icon={<SearchFilled color="#dfdfdf" />}
-            onChange={handleSearchChange}
-          />
+          <Group>
+            {tableHeaderAction?.map((button, e: number) => {
+              return (
+                <div>
+                  {button.type == "modal" ? (
+                    <Button
+                      key={e}
+                      variant="outline"
+                      color="primary-text"
+                      className={`border-[1px] border-[#CACCCE] font-bold disabled`}
+                      disabled={button.disabled}
+                      onClick={button.onClick}
+                      leftIcon={button.icon ?? addIcon}
+                      styles={{
+                        leftIcon: {
+                          marginRight: "2px !important",
+                        },
+                      }}
+                    >
+                      {button.label}
+                    </Button>
+                  ) : (
+                    <Button
+                      key={e}
+                      variant="outline"
+                      color="primary-text"
+                      className="border-[1px] border-[#CACCCE] font-bold"
+                      disabled={button.disabled}
+                      component={Link}
+                      leftIcon={button.icon ?? addIcon}
+                      to={button.href ?? "#"}
+                      styles={{
+                        leftIcon: {
+                          marginRight: "2px !important",
+                        },
+                      }}
+                    >
+                      {button.label}
+                    </Button>
+                  )}
+                </div>
+              );
+            })}
+            {withSearch ? (
+              <TextInput
+                icon={<SearchFilled color="#dfdfdf" />}
+                onChange={handleSearchChange}
+              />
+            ) : null}
+          </Group>
         </Group>
         <Table className={`w-full`} verticalSpacing={"md"}>
           {isLoading ? (
@@ -266,7 +320,11 @@ const FETableComponent: React.FC<IFETableComponentProps> = ({
                                   actionOrientation === "vertical"
                                     ? "flex-col"
                                     : "flex-row"
-                                } overflow-hidden ${actionColumnRounded == true ? "rounded-full" : "" } `}
+                                } overflow-hidden ${
+                                  actionColumnRounded == true
+                                    ? "rounded-full"
+                                    : ""
+                                } `}
                               >
                                 {/* <Stack align={"center"} spacing={5}> */}
                                 {actions.map((action) => {

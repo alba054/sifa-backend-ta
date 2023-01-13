@@ -1,4 +1,4 @@
-import { FESeminarCoordinator, HomeOutline } from "src/assets/Icons/Fluent";
+import { FEReference, FESeminarCoordinator, HomeOutline } from "src/assets/Icons/Fluent";
 import { INavbarMenuItem } from "src/components/fe-components/navbars/FEMainNavbar.component";
 import { FEROUTES } from "src/routes/final-exam.route";
 
@@ -13,4 +13,9 @@ export const seminarCoordinatorMenus: INavbarMenuItem[] = [
     label: "Seminar",
     href: FEROUTES.SEMINAR_COORDINATOR_SEMINAR,
   },
+  {
+    icon: FEReference,
+    label: "Referensi",
+    href: FEROUTES.SEMINAR_COORDINATOR_REFERENCE
+  }
 ];

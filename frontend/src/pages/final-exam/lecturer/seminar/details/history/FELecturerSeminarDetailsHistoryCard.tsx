@@ -1,36 +1,25 @@
 import {
-  Button,
   Grid,
   Group,
   Stack,
   Text,
   Title,
-  useMantineTheme,
+  useMantineTheme
 } from "@mantine/core";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import {
   FEClockOutline,
   FEDocumentRewardOutline,
   FEDownArrowNoTailOutline,
   FEFileMultipleOutline,
   FELocationOutline,
-  FEMultiplePersonOutline,
-  FEPenFilled,
-  FEPenOutline,
-  FETogaOutline,
-  FEUpArrowNoTailOutline,
+  FEMultiplePersonOutline, FETogaOutline,
+  FEUpArrowNoTailOutline
 } from "src/assets/Icons/Fluent";
-import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import FEDocumentListShowCase from "src/components/fe-components/FEDocumentListShowCase";
 import FEScoreCircleBar from "src/components/fe-components/FEScoreCircleBar";
-import LFPHeaderComponent from "src/components/fe-components/LFPHeader.component";
 import FETableRow1 from "src/components/fe-components/table/FETableRow1";
 import FETableRow2 from "src/components/fe-components/table/FETableRow2";
-import FEInputModal from "src/components/FEInputModal";
-import { NumberInput, TextInput } from "src/components/FormInput";
-import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
-import { FEROUTES } from "src/routes/final-exam.route";
 import { IFELecturerStudentSeminar } from "../FELecturerSeminarDetails";
 
 export interface IFELecturerSeminarDetailsHistoryCard {

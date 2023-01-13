@@ -127,4 +127,5 @@ export const FEROUTES = {
   SEMINAR_COORDINATOR_SEMINAR: "/tugas-akhir/koordinator-seminar/seminar",
   SEMINAR_COORDINATOR_SEMINAR_SCHEDULING: "/tugas-akhir/koordinator-seminar/seminar/jadwal",
   SEMINAR_COORDINATOR_SEMINAR_EVALUATION  : "/tugas-akhir/koordinator-seminar/seminar/evaluasi",
+  SEMINAR_COORDINATOR_REFERENCE  : "/tugas-akhir/koordinator-seminar/referensi",
 };

@@ -115,6 +115,7 @@ import FESeminarCoordinatorSeminar from "./pages/final-exam/seminar-coordinator/
 import FESeminarCoordinatorSeminarScheduling from "./pages/final-exam/seminar-coordinator/seminar/scheduling/FESeminarCoordinatorSeminarScheduling";
 import FESeminarCoordinatorSeminarEvaluation from "./pages/final-exam/seminar-coordinator/seminar/evaluation/FESeminarCoordinatorSeminarEvaluation";
 import FESeminarCoordinatorSeminarEvaluationUngraded from "./pages/final-exam/seminar-coordinator/seminar/evaluation/FESeminarCoordinatorSeminarEvaluationUngraded";
+import FESeminarCoordinatorReference from "./pages/final-exam/seminar-coordinator/reference/FESeminarCoordinatorReference";
 
 moment.locale("id");
 
@@ -617,6 +618,7 @@ function App() {
                         <Route path="evaluasi" element={<FESeminarCoordinatorSeminarEvaluation />} />
                         <Route path="evaluasi/:nim" element={<FESeminarCoordinatorSeminarEvaluationUngraded />} />
                       </Route>
+                        <Route path="referensi" element={<FESeminarCoordinatorReference />} />      
                     </Route>
                   </Route>
                   <Route path="*" element={<NotFound />} />
