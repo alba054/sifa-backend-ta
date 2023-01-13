@@ -85,4 +85,18 @@ studentRouter
     StudentHandler.updateProposedThesis
   );
 
+// * view approved thesis detail
+// * reupload KRS and KHS of approved thesis
+studentRouter
+  .route("/:nim/thesis/approved/:thesisID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.getThesisDetail
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    upload.array("files"),
+    StudentHandler.reuploadKRSAndKHS
+  );
+
 export default studentRouter;

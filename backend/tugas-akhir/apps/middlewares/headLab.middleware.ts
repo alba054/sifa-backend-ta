@@ -54,6 +54,12 @@ export class HeadLabMiddleware {
     const { thesisID } = req.params;
     const body = req.body as ISupervisorBodyPost;
 
+    const thesis = await HeadLabService.getThesisDetail(Number(thesisID));
+
+    if (typeof thesis === "undefined") {
+      return next(new NotFoundError("thesis is not found"));
+    }
+
     let supervisors = await HeadLabService.getSupervisorOfThesis(
       Number(thesisID)
     );

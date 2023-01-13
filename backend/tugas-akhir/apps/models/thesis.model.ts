@@ -16,6 +16,89 @@ interface IBody {
 }
 
 export class Thesis {
+  static async updateKRSAndKHSPath(
+    KHSPath: string,
+    KRSPath: string,
+    thesisID: number
+  ) {
+    try {
+      return await prismaDB.tugas_akhir.update({
+        where: { taId: thesisID },
+        data: { taKRS: KRSPath, taKHS: KHSPath },
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
+  static async approveKRSAndKHSDocument(
+    thesisID: number,
+    isAccepted: boolean,
+    note: string | undefined
+  ) {
+    try {
+      return await prismaDB.tugas_akhir.update({
+        where: { taId: thesisID },
+        data: {
+          taKRSKHSStatus: isAccepted ? "Diterima" : "Ditolak",
+          taCatatanFA: note,
+        },
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
+  static async getThesisByID(thesisID: number) {
+    return await prismaDB.tugas_akhir.findUnique({ where: { taId: thesisID } });
+  }
+
+  static async getAllThesis(
+    status: "Belum_Diproses" | "Diterima" | "Ditolak" | undefined
+  ) {
+    if (typeof status === "undefined") {
+      return await prismaDB.tugas_akhir.findMany({
+        where: {},
+        include: {
+          penguji: { include: { dosen: true } },
+          pembimbing: { include: { dosen: true } },
+          pengusul: true,
+          ref_laboratorium: true,
+          ref_laboratorium2: true,
+        },
+      });
+    }
+
+    return await prismaDB.tugas_akhir.findMany({
+      where: { statusPermohonan: status },
+      include: {
+        penguji: { include: { dosen: true } },
+        pembimbing: { include: { dosen: true } },
+        pengusul: true,
+        ref_laboratorium: true,
+        ref_laboratorium2: true,
+      },
+    });
+  }
+
+  static async getThesisByProposalGroupID(proposalGroupID: string) {
+    return await prismaDB.tugas_akhir.findMany({
+      where: { proposalGroupID },
+    });
+  }
+
   static async getApprovedThesisByLab(labID: number) {
     const approvedThesis = await prismaDB.tugas_akhir.findMany({
       where: {
@@ -190,21 +273,11 @@ export class Thesis {
   }
 
   // * filter statusPermohonan here to ensure consistency on deleting
-  static async deleteThesis(nim: string, proposalGroupID: string) {
+  static async deleteThesis(proposalGroupID: string) {
     try {
       return await prismaDB.tugas_akhir.deleteMany({
         where: {
-          AND: [
-            {
-              proposalGroupID,
-            },
-            {
-              taMhsNim: nim,
-            },
-            {
-              statusPermohonan: "Belum_Diproses",
-            },
-          ],
+          proposalGroupID,
         },
       });
     } catch (error) {
@@ -234,7 +307,7 @@ export class Thesis {
 
   static async insertNewThesis(thesis: IThesis) {
     try {
-      const newThesis = await prismaDB.tugas_akhir.create({
+      return await prismaDB.tugas_akhir.create({
         data: {
           taJudul: thesis.title,
           taMhsNim: thesis.studentNIM,
@@ -249,8 +322,23 @@ export class Thesis {
           proposalGroupID: thesis.proposalGroupID,
         },
       });
+      // const newThesis = await prismaDB.tugas_akhir.create({
+      //   data: {
+      //     taJudul: thesis.title,
+      //     taMhsNim: thesis.studentNIM,
+      //     taFile: thesis.thesisFile,
+      //     taLabId: Number(thesis.labID) || undefined,
+      //     taLabId2: Number(thesis.labID2) || undefined,
+      //     taCatatan: thesis.note,
+      //     taCatatanMhs: thesis.studentNote,
+      //     taDosenPengusul: Number(thesis.lecturerPropose) || undefined,
+      //     taKHS: thesis.KHSPath,
+      //     taKRS: thesis.KRSPath,
+      //     proposalGroupID: thesis.proposalGroupID,
+      //   },
+      // });
 
-      return newThesis;
+      // return newThesis;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         throw new BadRequestError(error.message);

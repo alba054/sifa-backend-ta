@@ -21,11 +21,23 @@ export class LabFreeService {
     reqlabsID: number,
     body: ILabFreeUpdate
   ) {
-    await LabFree.editByID(nim, reqlabsID, body);
+    const labFree = await LabFree.getFreeLabRequestsByID(reqlabsID);
+
+    if (labFree === null || labFree.blMhsNim !== nim) {
+      throw new NotFoundError("lab free request is not found");
+    }
+
+    return await LabFree.editByID(reqlabsID, body);
   }
 
   static async deleteFreeLabByID(nim: string, reqlabsID: number) {
-    await LabFree.deleteByID(nim, reqlabsID);
+    const labFree = await LabFree.getFreeLabRequestsByID(reqlabsID);
+
+    if (labFree === null || labFree?.blMhsNim !== nim) {
+      throw new NotFoundError("lab free request is not found");
+    }
+
+    return await LabFree.deleteByID(reqlabsID);
   }
 
   static async getFreeLabRequestsByNIM(nim: string) {
