@@ -41,7 +41,7 @@ export interface IFELecturerStudentSeminar {
   seminarType: string;
   seminarTime: string;
   seminarOfflinePlace: string;
-  seminarOnlinePlace: string;
+  seminarNote: string;
   mainMentor: string;
   sideMentor: string;
   firstExaminer: string;
@@ -60,7 +60,7 @@ const dummySeminarData: {
       "RANCANG BANGUN SISTEM INFORMASI APLIKASI PERPUSTAKAAN UNIVERSITAS HASANUDDIN BERBASIS ANDROID",
     seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
     seminarOfflinePlace: "Ruang Diskusi Farmasi",
-    seminarOnlinePlace:
+    seminarNote:
       "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     seminarType: "Seminar Proposal",
     score: "95",
@@ -76,7 +76,7 @@ const dummySeminarData: {
       "ANALISA PERBANDINGAN KINERJA METODE CANNY DAN FUZZY LOGIC DALAM DETEKSI KEASLIAN MATA UANG RUPIAH KERTAS BERDASARKAN WATERMARK",
     seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
     seminarOfflinePlace: "Hiroshima, Jepang",
-    seminarOnlinePlace:
+    seminarNote:
       "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     seminarType: "Ujian Skripsi",
     score: "70",
@@ -92,7 +92,7 @@ const dummySeminarData: {
       "ANALISA PERBANDINGAN KINERJA METODE CANNY DAN FUZZY LOGIC DALAM DETEKSI KEASLIAN MATA UANG RUPIAH KERTAS BERDASARKAN WATERMARK",
     seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
     seminarOfflinePlace: "Hiroshima, Jepang",
-    seminarOnlinePlace:
+    seminarNote:
       "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     seminarType: "Ujian Skripsi",
     score: "85",
@@ -230,7 +230,7 @@ const FELecturerSeminarDetails: React.FC<IFELecturerSeminarDetails> = ({}) => {
                     {seminarData.seminarOfflinePlace}
                   </Text>
                   <Text className="text-secondary-text-500">
-                    {seminarData.seminarOnlinePlace}
+                    {seminarData.seminarNote}
                   </Text>
                 </Stack>
               </Group>

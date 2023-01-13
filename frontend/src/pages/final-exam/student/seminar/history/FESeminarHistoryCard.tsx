@@ -60,7 +60,7 @@ const FESeminarHistoryCard: React.FC<IFESeminarHistoryCard> = ({
                     {seminarTimeInformation.offlinePlace}
                   </Text>
                   <Text className="text-secondary-text-500">
-                    {seminarTimeInformation.onlinePlace}
+                    {seminarTimeInformation.seminarNote}
                   </Text>
                 </Stack>
               </Group>

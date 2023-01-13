@@ -6,14 +6,14 @@ export interface IFESeminarTimeInformation {
   date: string;
   time: string;
   offlinePlace: string;
-  onlinePlace: string;
+  seminarNote: string;
 }
 
 const FESeminarTimeInformation: React.FC<IFESeminarTimeInformation> = ({
   date,
   time,
   offlinePlace,
-  onlinePlace,
+  seminarNote,
 }) => {
   return (
     <FETableHeader title={"Informasi Waktu Seminar"}>
@@ -31,9 +31,7 @@ const FESeminarTimeInformation: React.FC<IFESeminarTimeInformation> = ({
       <FETableRow2
         subject="Tempat (Daring)"
         value={
-          <a href={onlinePlace} target="_blank">
-            {onlinePlace}
-          </a>
+          seminarNote
         }
         withBottomBorder={false}
       />

@@ -42,7 +42,6 @@ const FESeminarCoordinatorSeminarSchedulingModal: React.FC<
           setValues({
             notes: undefined,
             offlinePlace: undefined,
-            onlinePlace: undefined,
             seminarDate: undefined,
             seminarTimeEnd: undefined,
             seminarTimeStart: undefined,
@@ -60,7 +59,6 @@ const FESeminarCoordinatorSeminarSchedulingModal: React.FC<
           setValues({
             notes: undefined,
             offlinePlace: undefined,
-            onlinePlace: undefined,
             seminarDate: undefined,
             seminarTimeEnd: undefined,
             seminarTimeStart: undefined,
@@ -95,6 +93,16 @@ const FESeminarCoordinatorSeminarSchedulingModal: React.FC<
                 key: 0,
                 value: "Seminar Proposal",
                 label: "Seminar Proposal",
+              },
+              {
+                key: 1,
+                value: "Seminar Hasil",
+                label: "Seminar Hasil",
+              },
+              {
+                key: 2,
+                value: "Ujian Skripsi",
+                label: "Ujian Skripsi",
               },
             ]}
             {...getInputProps("seminarType")}
@@ -137,13 +145,6 @@ const FESeminarCoordinatorSeminarSchedulingModal: React.FC<
             placeholder="Masukkan Tempat (luring) Pelaksanaan Seminar"
             {...getInputProps("offlinePlace")}
             error={errors["offlinePlace" as keyof IFESeminarScheduleValues]}
-          />
-          <TextInput
-            label="Tempat (daring)"
-            size="md"
-            placeholder="Masukkan Tempat (daring) Pelaksanaan Seminar"
-            {...getInputProps("onlinePlace")}
-            error={errors["onlinePlace" as keyof IFESeminarScheduleValues]}
           />
         </Group>
         {/* <TextInput

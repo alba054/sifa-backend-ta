@@ -51,7 +51,7 @@ function getDataFromBackend() {
       secondExaminerStatus: "Diterima",
       seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
       seminarOfflinePlace: "Ruang Diskusi Farmasi",
-      seminarOnlinePlace:
+      seminarNote:
         "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     },
     {
@@ -73,7 +73,7 @@ function getDataFromBackend() {
       secondExaminerStatus: "Diterima",
       seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
       seminarOfflinePlace: "Ruang Diskusi Farmasi",
-      seminarOnlinePlace:
+      seminarNote:
         "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     },
     {
@@ -95,7 +95,7 @@ function getDataFromBackend() {
       secondExaminerStatus: "Diterima",
       seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
       seminarOfflinePlace: "Ruang Diskusi Farmasi",
-      seminarOnlinePlace:
+      seminarNote:
         "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     },
     {
@@ -117,7 +117,7 @@ function getDataFromBackend() {
       secondExaminerStatus: "Belum_Diproses",
       seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)2",
       seminarOfflinePlace: "Ruang Diskusi Farmasi2",
-      seminarOnlinePlace:
+      seminarNote:
         "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT01",
     },
     {
@@ -139,7 +139,7 @@ function getDataFromBackend() {
       secondExaminerStatus: "Diterima",
       seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
       seminarOfflinePlace: "Ruang Diskusi Farmasi",
-      seminarOnlinePlace:
+      seminarNote:
         "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     },
     {
@@ -161,7 +161,7 @@ function getDataFromBackend() {
       secondExaminerStatus: "Diterima",
       seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
       seminarOfflinePlace: "Ruang Diskusi Farmasi",
-      seminarOnlinePlace:
+      seminarNote:
         "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     },
   ];
@@ -351,7 +351,7 @@ const FELecturerSeminarMentorApproval: React.FC<
             seminarOfflinePlace={
               dataFromBackend[selectedRow].seminarOfflinePlace
             }
-            seminarOnlinePlace={dataFromBackend[selectedRow].seminarOnlinePlace}
+            seminarNote={dataFromBackend[selectedRow].seminarNote}
             seminarTime={dataFromBackend[selectedRow].seminarTime}
             setRefusalReason={(e: string) => {
               setValues({ refusalReason: e });

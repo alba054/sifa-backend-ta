@@ -7,7 +7,6 @@ export interface IFESeminarScheduleValues {
   seminarTimeStart: Date;
   seminarTimeEnd: Date;
   offlinePlace: string;
-  onlinePlace: string;
   notes: string;
 }
 
@@ -18,5 +17,4 @@ export const feSeminarScheduleSchema = yup.object({
   seminarTimeStart: yup.string().required("Tolong input waktu pelaksanaan (awal) seminar"),
   seminarTimeEnd: yup.string().required("Tolong input waktu pelaksanaan (akhir) seminar"),
   offlinePlace: yup.string().required("Tolong input tempat (luring) seminar"),
-  onlinePlace: yup.string().required("Tolong input tempat (daring) seminar"),
 });

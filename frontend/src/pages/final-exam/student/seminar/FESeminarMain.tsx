@@ -39,7 +39,7 @@ export interface IFESeminarTimeInformation {
   date: string;
   time: string;
   offlinePlace: string;
-  onlinePlace: string;
+  seminarNote: string;
 }
 
 const FESeminarMain: React.FC<IFESEminarMain> = ({
@@ -113,7 +113,7 @@ const FESeminarMain: React.FC<IFESEminarMain> = ({
       <FESeminarTimeInformation
         date={seminarData.seminarTimeInformation.date}
         offlinePlace={seminarData.seminarTimeInformation.offlinePlace}
-        onlinePlace={seminarData.seminarTimeInformation.onlinePlace}
+        seminarNote={seminarData.seminarTimeInformation.seminarNote}
         time={seminarData.seminarTimeInformation.time}
       />
       <FETableHeader1 title="Pasca-Seminar">

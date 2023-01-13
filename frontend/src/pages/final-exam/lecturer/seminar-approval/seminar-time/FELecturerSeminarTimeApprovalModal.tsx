@@ -31,7 +31,7 @@ export interface IFELecturerSeminarTimeApprovalModal {
   secondExaminerStatus: FEStatus;
   seminarTime: string;
   seminarOfflinePlace: string;
-  seminarOnlinePlace: string;
+  seminarNote: string;
   form: any;
   setRefusalReason: (e: string) => void;
 }
@@ -54,7 +54,7 @@ const FELecturerSeminarTimeApprovalModal: React.FC<
   secondExaminer,
   secondExaminerStatus,
   seminarOfflinePlace,
-  seminarOnlinePlace,
+  seminarNote,
   seminarTime,
   sideMentor,
   sideMentorStatus,
@@ -163,7 +163,7 @@ const FELecturerSeminarTimeApprovalModal: React.FC<
             {seminarOfflinePlace}
           </Text>
           <Text className="text-secondary-text-500 text-md tracking-1 font-semibold">
-            {seminarOnlinePlace}
+            {seminarNote}
           </Text>
         </Stack>
 

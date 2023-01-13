@@ -26,8 +26,6 @@ const dummySeminarData: Array<IFESeminarCoordinatorSeminarSchedulingCard> = [
     seminarStartTime: "22",
     seminarEndTime: "23",
     seminarOfflinePlace: "Ruang Diskusi Farmasi",
-    seminarOnlinePlace:
-      "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     seminarType: "Seminar Proposal",
     mainMentor: "Dr. Hendra, S.Si., M.Kom.",
     sideMentor: "A. Muh. Amil Siddik, S.Si.,M.Si",
@@ -48,8 +46,6 @@ const dummySeminarData: Array<IFESeminarCoordinatorSeminarSchedulingCard> = [
     seminarStartTime: "22",
     seminarEndTime: "23",
     seminarOfflinePlace: "Hiroshima, Jepang",
-    seminarOnlinePlace:
-      "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     seminarType: "Ujian Skripsi",
     mainMentor: "Dr. Hendra, S.Si., M.Kom.",
     sideMentor: "A. Muh. Amil Siddik, S.Si.,M.Si",
@@ -70,8 +66,6 @@ const dummySeminarData: Array<IFESeminarCoordinatorSeminarSchedulingCard> = [
     seminarStartTime: "22",
     seminarEndTime: "23",
     seminarOfflinePlace: "Hiroshima, Jepang",
-    seminarOnlinePlace:
-      "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     seminarType: "Ujian Skripsi",
     mainMentor: "Dr. Hendra, S.Si., M.Kom.",
     sideMentor: "A. Muh. Amil Siddik, S.Si.,M.Si",

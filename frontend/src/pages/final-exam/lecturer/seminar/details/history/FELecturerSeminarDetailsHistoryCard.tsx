@@ -87,7 +87,7 @@ const FELecturerSeminarDetailsHistoryCard: React.FC<
                       {seminarData.seminarOfflinePlace}
                     </Text>
                     <Text className="text-secondary-text-500">
-                      {seminarData.seminarOnlinePlace}
+                      {seminarData.seminarNote}
                     </Text>
                   </Stack>
                 </Group>

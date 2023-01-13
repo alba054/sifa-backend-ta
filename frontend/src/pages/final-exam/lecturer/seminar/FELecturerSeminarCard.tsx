@@ -11,7 +11,7 @@ export interface IFELecturerSeminarCard {
   seminarType: string;
   seminarTime: string;
   seminarOfflinePlace: string;
-  seminarOnlinePlace: string;
+  seminarNote: string;
 }
 
 const FELecturerSeminarCard: React.FC<IFELecturerSeminarCard> = ({
@@ -19,7 +19,7 @@ const FELecturerSeminarCard: React.FC<IFELecturerSeminarCard> = ({
   nim,
   proposalTitle,
   seminarOfflinePlace,
-  seminarOnlinePlace,
+  seminarNote,
   seminarTime,
   seminarType,
 }) => {
@@ -61,10 +61,7 @@ const FELecturerSeminarCard: React.FC<IFELecturerSeminarCard> = ({
               </Text>
             </Group>
             <Text className="text-primary-text-500 ml-[26px] truncate">
-              Link Zoom :
-              <a href={seminarOnlinePlace} target="_blank">
-                {seminarOnlinePlace}
-              </a>
+                {seminarNote}
             </Text>
           </Stack>
         </Stack>

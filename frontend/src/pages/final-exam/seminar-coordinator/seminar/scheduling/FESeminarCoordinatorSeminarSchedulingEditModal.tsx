@@ -28,7 +28,6 @@ export interface IFESeminarCoordinatorSeminarSchedulingEditModal {
   seminarTimeStartDefault: Date;
   seminarTimeEndDefault: Date;
   offlinePlaceDefault: string;
-  onlinePlaceDefault: string;
   notesDefault?: string;
 }
 
@@ -40,7 +39,6 @@ const FESeminarCoordinatorSeminarSchedulingEditModal: React.FC<
   onSubmit,
   notesDefault,
   offlinePlaceDefault,
-  onlinePlaceDefault,
   seminarDateDefault,
   seminarTimeEndDefault,
   seminarTimeStartDefault,
@@ -61,7 +59,6 @@ const FESeminarCoordinatorSeminarSchedulingEditModal: React.FC<
       student: studentDefault,
       notes: notesDefault,
       offlinePlace: offlinePlaceDefault,
-      onlinePlace: onlinePlaceDefault,
       seminarDate: seminarDateDefault,
       seminarTimeEnd: seminarTimeEndDefault,
       seminarTimeStart: seminarTimeStartDefault,
@@ -117,6 +114,7 @@ const FESeminarCoordinatorSeminarSchedulingEditModal: React.FC<
             {...getInputProps("student")}
             error={errors["student" as keyof IFESeminarScheduleValues]}
             defaultValue={studentDefault}
+            disabled
           />
           <SelectInput
             label="Jenis Seminar"
@@ -128,10 +126,21 @@ const FESeminarCoordinatorSeminarSchedulingEditModal: React.FC<
                 value: "Seminar Proposal",
                 label: "Seminar Proposal",
               },
+              {
+                key: 1,
+                value: "Seminar Hasil",
+                label: "Seminar Hasil",
+              },
+              {
+                key: 2,
+                value: "Ujian Skripsi",
+                label: "Ujian Skripsi",
+              },
             ]}
             {...getInputProps("seminarType")}
             error={errors["seminarType" as keyof IFESeminarScheduleValues]}
             defaultValue={seminarTypeDefault}
+            disabled
           />
         </Group>
         <Group grow>
@@ -175,14 +184,6 @@ const FESeminarCoordinatorSeminarSchedulingEditModal: React.FC<
             {...getInputProps("offlinePlace")}
             error={errors["offlinePlace" as keyof IFESeminarScheduleValues]}
             defaultValue={offlinePlaceDefault}
-          />
-          <TextInput
-            label="Tempat (daring)"
-            size="md"
-            placeholder="Masukkan Tempat (daring) Pelaksanaan Seminar"
-            {...getInputProps("onlinePlace")}
-            error={errors["onlinePlace" as keyof IFESeminarScheduleValues]}
-            defaultValue={onlinePlaceDefault}
           />
         </Group>
         {/* <TextInput

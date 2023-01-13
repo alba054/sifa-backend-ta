@@ -31,7 +31,7 @@ const dummySeminarTimeInformation: IFESeminarTimeInformation = {
   date: "Jumat, 31 Desember 2022",
   time: "22:00 - 23:59 WITA",
   offlinePlace: "Ruang Diskusi Farmasi",
-  onlinePlace:
+  seminarNote:
     "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09 Meeting ID: 968 7472 2331 Passcode: f4rmasi",
 };
 

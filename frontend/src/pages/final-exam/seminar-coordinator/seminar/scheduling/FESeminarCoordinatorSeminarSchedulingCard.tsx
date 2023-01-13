@@ -30,7 +30,6 @@ export interface IFESeminarCoordinatorSeminarSchedulingCard {
   seminarStartTime: string;
   seminarEndTime: string;
   seminarOfflinePlace: string;
-  seminarOnlinePlace: string;
   mainMentor: string;
   sideMentor: string;
   firstExaminers: string;
@@ -52,7 +51,6 @@ const FESeminarCoordinatorSeminarSchedulingCard: React.FC<
   nim,
   proposalTitle,
   seminarOfflinePlace,
-  seminarOnlinePlace,
   seminarTime,
   seminarEndTime,
   seminarStartTime,
@@ -129,9 +127,8 @@ const FESeminarCoordinatorSeminarSchedulingCard: React.FC<
         setOpened={setIsEditScheduleModalOpened}
         onSubmit={EditScheduleHandler}
         name={name}
-        studentDefault={`${name} - ${nim}`}
+        studentDefault={`${nim} - ${name}`}
         offlinePlaceDefault={seminarOfflinePlace}
-        onlinePlaceDefault={seminarOnlinePlace}
         seminarTypeDefault={seminarType}
         notesDefault={seminarNote}
         // seminarDateDefault={seminarTime}
@@ -204,10 +201,7 @@ const FESeminarCoordinatorSeminarSchedulingCard: React.FC<
               </Text>
             </Group>
             <Text className="text-primary-text-500 ml-[26px] truncate">
-              Link Zoom :
-              <a href={seminarOnlinePlace} target="_blank">
-                {seminarOnlinePlace}
-              </a>
+              {seminarNote}
             </Text>
           </Stack>
         </Stack>

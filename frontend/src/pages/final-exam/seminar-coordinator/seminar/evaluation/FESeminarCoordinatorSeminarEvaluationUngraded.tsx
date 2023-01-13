@@ -41,7 +41,7 @@ export interface IFELecturerStudentSeminar {
   seminarStartTime: Date;
   seminarEndTime: Date;
   seminarOfflinePlace: string;
-  seminarOnlinePlace: string;
+  seminarNote: string;
   scoreLetter?: any;
   mainMentor: IFELecturerSeminarEvaluation;
   sideMentor: IFELecturerSeminarEvaluation;
@@ -61,7 +61,7 @@ const dummySeminarData: {
     seminarStartTime: new Date(2023, 0, 13, 10, 0, 0),
     seminarEndTime: new Date(2023, 0, 13, 11, 30, 0),
     seminarOfflinePlace: "Ruang Diskusi Farmasi",
-    seminarOnlinePlace:
+    seminarNote:
       "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     seminarType: "Seminar Proposal",
     scoreLetter: "1",
@@ -89,7 +89,7 @@ const dummySeminarData: {
       "ANALISA PERBANDINGAN KINERJA METODE CANNY DAN FUZZY LOGIC DALAM DETEKSI KEASLIAN MATA UANG RUPIAH KERTAS BERDASARKAN WATERMARK",
 
     seminarOfflinePlace: "Hiroshima, Jepang",
-    seminarOnlinePlace:
+    seminarNote:
       "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     seminarType: "Ujian Skripsi",
 
@@ -121,7 +121,7 @@ const dummySeminarData: {
       "ANALISA PERBANDINGAN KINERJA METODE CANNY DAN FUZZY LOGIC DALAM DETEKSI KEASLIAN MATA UANG RUPIAH KERTAS BERDASARKAN WATERMARK",
 
     seminarOfflinePlace: "Hiroshima, Jepang",
-    seminarOnlinePlace:
+    seminarNote:
       "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
     seminarType: "Ujian Skripsi",
     mainMentor: {
@@ -405,7 +405,7 @@ const FESeminarCoordinatorSeminarEvaluationUngraded: React.FC<
                     {seminarData.seminarOfflinePlace}
                   </Text>
                   <Text className="text-secondary-text-500">
-                    {seminarData.seminarOnlinePlace}
+                    {seminarData.seminarNote}
                   </Text>
                 </Stack>
               </Group>
