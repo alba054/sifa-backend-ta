@@ -1,4 +1,5 @@
 import { Group, RingProgress, Stack, Text } from "@mantine/core";
+import { getFERubric } from "src/utils/functions/scoring.function";
 
 interface IFEScoreCircleBarProps {
   score: string;
@@ -6,31 +7,11 @@ interface IFEScoreCircleBarProps {
   rubric?: string | undefined;
 }
 
-function FEScoreCircleBar({ score, title, rubric }: IFEScoreCircleBarProps) {
+function FEScoreCircleBar({ score, title }: IFEScoreCircleBarProps) {
   let color: string = "";
   
   let floatScore= parseFloat(score)
-  if(floatScore>=95 && floatScore<=100){
-    rubric= "A"
-  }else if(floatScore>=90){
-    rubric= "A-"
-  } else if(floatScore>=85){
-    rubric= "B+"
-  } else if(floatScore>=80){
-    rubric= "B"
-  } else if(floatScore>=75){
-    rubric= "B-"
-  } else if(floatScore>=70){
-    rubric= "C+"
-  } else if(floatScore>=65){
-    rubric= "C"
-  } else if(floatScore>=60){
-    rubric= "D"
-  } else if(floatScore>=0 && floatScore<60){
-    rubric= "E"
-  } else{
-    rubric= "-"
-  }
+  const rubric = getFERubric(floatScore)
 
   if (rubric === "A") {
     color = "#1E9E63";
