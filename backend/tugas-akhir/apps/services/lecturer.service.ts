@@ -40,6 +40,12 @@ export class LecturerService {
       throw new BadRequestError("nip is not valid");
     }
 
+    const examiner = await Examiner.getExaminerByID(examinerID);
+
+    if (examiner === null) {
+      throw new NotFoundError("examiner's not found");
+    }
+
     const examinerOffer = await Examiner.acceptOrRejectexaminerOffer(
       lecturer.dsnId,
       examinerID,
@@ -91,7 +97,13 @@ export class LecturerService {
     const lecturer = await LecturerService.getLecturerProfile(nim);
 
     if (lecturer === null) {
-      throw new BadRequestError("nip is not valid");
+      return null;
+    }
+
+    const supervisor = await Supervisor.getSupervisorByID(supervisorID);
+
+    if (supervisor === null) {
+      return null;
     }
 
     const supervisorOffer = await Supervisor.acceptOrRejectSupervisorOffer(

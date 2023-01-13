@@ -12,18 +12,11 @@ export class LabFree {
     return await prismaDB.bebas_lab.findUnique({ where: { blId: reqlabsID } });
   }
 
-  static async editByID(nim: string, reqlabsID: number, body: ILabFreeUpdate) {
+  static async editByID(reqlabsID: number, body: ILabFreeUpdate) {
     try {
       await prismaDB.bebas_lab.updateMany({
         where: {
-          AND: [
-            {
-              blId: reqlabsID,
-            },
-            {
-              blMhsNim: nim,
-            },
-          ],
+          blId: reqlabsID,
         },
         data: {
           blLabId: body.labID,
@@ -44,18 +37,11 @@ export class LabFree {
     }
   }
 
-  static async deleteByID(nim: string, reqlabsID: number) {
+  static async deleteByID(reqlabsID: number) {
     try {
-      await prismaDB.bebas_lab.deleteMany({
+      return await prismaDB.bebas_lab.deleteMany({
         where: {
-          AND: [
-            {
-              blId: reqlabsID,
-            },
-            {
-              blMhsNim: nim,
-            },
-          ],
+          blId: reqlabsID,
         },
       });
     } catch (error) {

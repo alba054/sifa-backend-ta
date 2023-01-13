@@ -24,7 +24,7 @@ export class LecturerHandler {
         throw new BadRequestError("provide isAccepted");
       }
 
-      const examinerOffer = LecturerService.acceptOrRejectExaminerOffer(
+      const examinerOffer = await LecturerService.acceptOrRejectExaminerOffer(
         nim,
         Number(examinerID),
         Boolean(isAccepted)
@@ -122,11 +122,19 @@ export class LecturerHandler {
     const { isAccepted } = req.body;
 
     try {
-      const supervisorOffer = LecturerService.acceptOrRejectOffer(
+      if (typeof isAccepted === "undefined") {
+        throw new BadRequestError("provide isAccepted");
+      }
+
+      const supervisorOffer = await LecturerService.acceptOrRejectOffer(
         nim,
         Number(supervisorID),
         Boolean(isAccepted)
       );
+
+      if (supervisorOffer === null) {
+        throw new NotFoundError("supervisor's not found");
+      }
 
       return res
         .status(200)

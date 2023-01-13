@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 
 import dotenv from "dotenv";
@@ -19,6 +19,77 @@ import { decodeBase64 } from "../utils/decoder";
 dotenv.config();
 
 export class StudentHandler {
+  static async reuploadKRSAndKHS(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, thesisID } = req.params;
+    const { krs, khs } = req.body;
+
+    try {
+      if (typeof krs === "undefined" || typeof khs === "undefined") {
+        throw new BadRequestError("provide krs and khs");
+      }
+
+      let title1 = uuidv4();
+      let title2 = uuidv4();
+      const path = `${constants.KRS_AND_KHS_PATH}/${nim}`; // * path to save krs and khs
+
+      const krsBuffer = decodeBase64(krs);
+      const khsBuffer = decodeBase64(khs);
+      const KRSPath = `${path}/${title1}`;
+      const KHSPath = `${path}/${title2}`;
+      const updatedThesis = await StudentService.reuploadKRSAndKHS(
+        path,
+        krsBuffer,
+        KRSPath,
+        khsBuffer,
+        KHSPath,
+        nim,
+        Number(thesisID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully reupload KRS and KHS"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getThesisDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, thesisID } = req.params;
+
+    try {
+      const thesis = await StudentService.getThesisDetail(
+        nim,
+        Number(thesisID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get thesis detail",
+            thesis
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getReqLabDetail(
     req: Request,
     res: Response,

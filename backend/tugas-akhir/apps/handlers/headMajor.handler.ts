@@ -32,6 +32,21 @@ interface IAssignedExaminer {
 }
 
 export class HeadMajorHandler {
+  static async getAllThesis(req: Request, res: Response, next: NextFunction) {
+    const { status } = req.query;
+    const thesis = await HeadMajorService.getAllThesis(status);
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully view examiners history",
+          thesis
+        )
+      );
+  }
+
   static async getExaminersHistory(
     req: Request,
     res: Response,
@@ -208,7 +223,6 @@ export class HeadMajorHandler {
 
     try {
       const { vocationID } = res.locals.user;
-      console.log(body);
 
       if (
         typeof body.title1 === "undefined" ||
@@ -217,7 +231,7 @@ export class HeadMajorHandler {
         throw new BadRequestError("provide title1 and title2");
       }
 
-      // * this approve both of proposed thesis which is invalid
+      // ! this approve both of proposed thesis which is invalid
       if (body.title1.isApproved && body.title2.isApproved) {
         throw new BadRequestError("approve only one title");
       }

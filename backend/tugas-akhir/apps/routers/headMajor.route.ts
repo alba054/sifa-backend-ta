@@ -22,6 +22,13 @@ headMajorRouter
     HeadMajorHandler.getApprovedThesisHistory
   );
 
+headMajorRouter
+  .route("/thesis")
+  .get(
+    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    HeadMajorHandler.getAllThesis
+  );
+
 // * approve or reject proposed thesis
 headMajorRouter
   .route("/thesis/:proposalGroupID/approve-thesis")

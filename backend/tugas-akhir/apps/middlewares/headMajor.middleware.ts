@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { HeadLabService } from "../services/headLab.service";
 import { HeadMajorService } from "../services/headMajor.service";
 import { BadRequestError } from "../utils/error/badrequestError";
+import { NotFoundError } from "../utils/error/notFoundError";
 
 interface IAssignedExaminer {
   position: number;
@@ -41,6 +42,12 @@ export class HeadMajorMiddleware {
   ) {
     const { thesisID } = req.params;
     const body = req.body as IAssignedExaminer;
+
+    const thesis = await HeadMajorService.getThesisByID(Number(thesisID));
+
+    if (thesis === null) {
+      return next(new NotFoundError("thesis is not found"));
+    }
 
     let supervisors = await HeadLabService.getSupervisorOfThesis(
       Number(thesisID)
