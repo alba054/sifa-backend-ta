@@ -16,6 +16,7 @@ import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import { getFEDate } from "src/utils/functions/date.function";
+import FESeminarCoordinatorReferenceConversion from "./conversion/FESeminarCoordinatorReferenceConversion";
 import FESeminarCoordinatorReferenceEditModal from "./FESeminarCoordinatorReferenceEditModal";
 import { IFESeminarCoordinatorReferencesValues } from "./FESeminarCoordinatorReferenceInterfaces";
 import FESeminarCoordinatorReferenceModal from "./FESeminarCoordinatorReferenceModal";
@@ -248,13 +249,13 @@ const FESeminarCoordinatorReference: React.FC<
         setOpened={setIsEditScoringRuleModalOpened}
         opened={isEditScoringRuleModalOpened}
         onSubmit={handleEditScoringRule}
-        percentage={dataFromBackend[selectedRow].percentage}
-        scoreRangeEnd={dataFromBackend[selectedRow].scoreRangeEnd}
-        scoreRangeStart={dataFromBackend[selectedRow].scoreRangeStart}
-        scoringName={dataFromBackend[selectedRow].scoringName}
-        scoringType={dataFromBackend[selectedRow].scoringType}
-        seminarType={dataFromBackend[selectedRow].seminarType}
-        status={dataFromBackend[selectedRow].status}
+        percentage={dataFromBackend[selectedRow]?.percentage}
+        scoreRangeEnd={dataFromBackend[selectedRow]?.scoreRangeEnd}
+        scoreRangeStart={dataFromBackend[selectedRow]?.scoreRangeStart}
+        scoringName={dataFromBackend[selectedRow]?.scoringName}
+        scoringType={dataFromBackend[selectedRow]?.scoringType}
+        seminarType={dataFromBackend[selectedRow]?.seminarType}
+        status={dataFromBackend[selectedRow]?.status}
       />
       <Stack className="gap-0">
         <LFPHeaderComponent title="Referensi Item Penilaian" />
@@ -280,6 +281,9 @@ const FESeminarCoordinatorReference: React.FC<
           withSearch={false}
           tableHeaderAction={tableHeaderButtons}
         />
+        <Stack className="w-1/2 justify-start">
+          <FESeminarCoordinatorReferenceConversion />
+        </Stack>
       </Stack>
     </FEMainlayout>
   );
