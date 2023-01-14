@@ -34,6 +34,8 @@ const dummyStudentProposalApplicationsData: IFEStudentHomepageProposalApplicatio
     },
   };  
 
+const dummyStudentName : string = "Takdim"
+
 const dummyStudentLabFreeDataArray: Array<IFEStudentHomepageLabFreeCard> = [
   {
     title: "Permohonan #1",
@@ -53,6 +55,7 @@ const dummyStudentLabFreeDataArray: Array<IFEStudentHomepageLabFreeCard> = [
 ];
 
 const FEStudentHomepage: React.FC<IFEStudentHomepageProps> = ({}) => {
+  const [studentName]= useState(dummyStudentName)
   const [studentProposalApplicationsData] = useState(
     dummyStudentProposalApplicationsData
   );
@@ -70,7 +73,7 @@ const FEStudentHomepage: React.FC<IFEStudentHomepageProps> = ({}) => {
         Home
       </Title>
       <Text className="text-lg text-primary-text-500">
-        Selamat Datang, Takdim 👋.
+        Selamat Datang, {studentName} 👋.
       </Text>
       <FEInformationNotification
         description={

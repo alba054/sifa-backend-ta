@@ -134,6 +134,15 @@ import FEProfileStudyProgramAdmin from "./pages/final-exam/study-program-admin/p
 import FEEditProfilePageStudyProgramAdmin from "./pages/final-exam/study-program-admin/profile/edit-profile/FEEditProfile.page";
 import FEProfileSubsectionChairman from "./pages/final-exam/subsection-chairman/profile/profile-main/FEProfile.page";
 import FEEditProfilePageSubsectionChairman from "./pages/final-exam/subsection-chairman/profile/edit-profile/FEEditProfile.page";
+import FEHomepageFirstViceDean from "./pages/final-exam/first-vice-dean/FEHomepage";
+import FEHomepageSubsectionChairman from "./pages/final-exam/subsection-chairman/FEHomepage";
+import FEHomepageStudyProgramAdmin from "./pages/final-exam/study-program-admin/FEHomepage";
+import FEHomepageHeadAdministrator from "./pages/final-exam/head-administrator/FEHomepage";
+import FEHomepageDean from "./pages/final-exam/dean/FEHomepage";
+import FEHomepageFacultyAdmin from "./pages/final-exam/faculty-admin/FEHomepage";
+import FEHomepageLecturer from "./pages/final-exam/lecturer/FEHomepage";
+import FEHomepageLabHead from "./pages/final-exam/lab-head/FEHomepage";
+import FEHomepageSeminarCoordinator from "./pages/final-exam/seminar-coordinator/FEHomepage";
 
 moment.locale("id");
 
@@ -163,6 +172,7 @@ function App() {
                       path="contoh-table"
                       element={<FETableUseExample />}
                     />
+                    <Route path="ganti-role" element={<FEHomepage />} />
                   </Route>
                   <Route path="nilai">
                     <Route index element={<Mark />} />
@@ -241,7 +251,7 @@ function App() {
                   <Route path="bantuan" element={<Help />} />
                   <Route path="profil" element={<Profile />} />
                   <Route path="tugas-akhir">
-                    <Route index element={<FEHomepage />} />
+                    {/* <Route index element={<FEHomepage />} /> */}
                     <Route path="mahasiswa">
                       <Route index element={<FEStudentHomepage />} />
                       <Route path="tugas-akhir" element={<FEProposalPage />} />
@@ -271,7 +281,7 @@ function App() {
                       </Route>
                     </Route>
                     <Route path="wakil-dekan-1">
-                      <Route index element={<FEHomepage />} />
+                      <Route index element={<FEHomepageFirstViceDean />} />
                       <Route path="profil">
                         <Route path="" element={<FEProfileFirstViceDean />} />
                         <Route
@@ -299,7 +309,7 @@ function App() {
                       </Route>
                     </Route>
                     <Route path="kasubag">
-                      <Route index element={<FEHomepage />} />
+                      <Route index element={<FEHomepageSubsectionChairman />} />
                       <Route path="profil">
                         <Route
                           path=""
@@ -358,7 +368,7 @@ function App() {
                       </Route>
                     </Route>
                     <Route path="admin-program-studi">
-                      <Route index element={<FEHomepage />} />
+                      <Route index element={<FEHomepageStudyProgramAdmin />} />
                       <Route path="profil">
                         <Route
                           path=""
@@ -433,7 +443,7 @@ function App() {
                       </Route>
                     </Route>
                     <Route path="ktu">
-                      <Route index element={<FEHomepage />} />
+                      <Route index element={<FEHomepageHeadAdministrator />} />
                       <Route path="profil">
                         <Route
                           path=""
@@ -492,7 +502,7 @@ function App() {
                       </Route>
                     </Route>
                     <Route path="dekan">
-                      <Route index element={<FEHomepage />} />
+                      <Route index element={<FEHomepageDean />} />
                       <Route path="profil">
                         <Route path="" element={<FEProfileDean />} />
                         <Route
@@ -522,7 +532,7 @@ function App() {
                       </Route>
                     </Route>
                     <Route path="admin-fakultas">
-                      <Route index element={<FEHomepage />} />
+                      <Route index element={<FEHomepageFacultyAdmin />} />
                       <Route path="profil">
                         <Route path="" element={<FEProfileFacultyAdmin />} />
                         <Route
@@ -609,7 +619,7 @@ function App() {
                       </Route>
                     </Route>
                     <Route path="dosen">
-                      <Route index element={<FEHomepage />} />
+                      <Route index element={<FEHomepageLecturer />} />
                       <Route path="profil">
                         <Route path="" element={<FEProfileLecturer />} />
                         <Route
@@ -672,7 +682,7 @@ function App() {
                       </Route>
                     </Route>
                     <Route path="kepala-lab">
-                      <Route index element={<FEHomepage />} />
+                      <Route index element={<FEHomepageLabHead />} />
                       <Route path="profil">
                         <Route path="" element={<FEProfileLabHead />} />
                         <Route
@@ -691,7 +701,7 @@ function App() {
                       />
                     </Route>
                     <Route path="koordinator-seminar">
-                      <Route index element={<FEHomepage />} />
+                      <Route index element={<FEHomepageSeminarCoordinator />} />
                       <Route path="profil">
                         <Route
                           path=""

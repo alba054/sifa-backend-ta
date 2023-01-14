@@ -3,12 +3,21 @@ import React, { useState } from "react";
 import useCurrentTime from "src/hooks/fe-hooks/useCurrentTime";
 
 export interface IFEDateChip {
-  date?: string;
+  date?: Date;
 }
 
-const FEDateChip: React.FC<IFEDateChip> = ({ date = "" }) => {
+const FEDateChip: React.FC<IFEDateChip> = ({ date }) => {
   const [dateString, setDateString] = useState<string>(
-    date || useCurrentTime()
+    date
+      ?.toLocaleTimeString("id", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      })
+      .replaceAll(".", ":") || useCurrentTime()
   );
 
   return (
