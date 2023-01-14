@@ -116,6 +116,8 @@ import FESeminarCoordinatorSeminarScheduling from "./pages/final-exam/seminar-co
 import FESeminarCoordinatorSeminarEvaluation from "./pages/final-exam/seminar-coordinator/seminar/evaluation/FESeminarCoordinatorSeminarEvaluation";
 import FESeminarCoordinatorSeminarEvaluationUngraded from "./pages/final-exam/seminar-coordinator/seminar/evaluation/FESeminarCoordinatorSeminarEvaluationUngraded";
 import FESeminarCoordinatorReference from "./pages/final-exam/seminar-coordinator/reference/FESeminarCoordinatorReference";
+import FEProfileLecturer from "./pages/final-exam/lecturer/profile/profile-main/FEProfile.page";
+import FEEditProfilePageLecturer from "./pages/final-exam/lecturer/profile/edit-profile/FEEditProfile.page";
 
 moment.locale("id");
 
@@ -541,6 +543,10 @@ function App() {
                     </Route>
                     <Route path="dosen">
                       <Route index element={<FEHomepage />} />
+                      <Route path="profil">
+                        <Route path="" element={<FEProfileLecturer />} />
+                        <Route path="edit" element={<FEEditProfilePageLecturer />} />
+                      </Route>
                       <Route
                         path="bimbingan"
                         element={<FELecturerGuidance />}

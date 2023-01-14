@@ -7,7 +7,7 @@ import {
   HomeOutline,
   IFluentProps,
   FESeminar,
-  FEHammerOutline
+  FEHammerOutline,
 } from "src/assets/Icons/Fluent";
 import UnhasLogo from "src/assets/images/unhas_logo.png";
 import FENavbarMenuItem from "./FENavbarMenuItem.component";
@@ -15,7 +15,8 @@ import { useLocation } from "react-router-dom";
 import FEUserNavbarProfileComponent from "../FEUserNavbarProfile.component";
 
 export interface IFEMainNavbarProps {
-  menus: Array<INavbarMenuItem>
+  menus: Array<INavbarMenuItem>;
+  profileLink?: string;
 }
 
 export interface INavbarMenuItem {
@@ -24,7 +25,7 @@ export interface INavbarMenuItem {
   href: string;
 }
 
-const FEMainNavbar: React.FC<IFEMainNavbarProps> = ({menus}) => {
+const FEMainNavbar: React.FC<IFEMainNavbarProps> = ({ menus, profileLink }) => {
   const [isHover, setIsHover] = useState(false);
   const { pathname } = useLocation();
 
@@ -72,7 +73,10 @@ const FEMainNavbar: React.FC<IFEMainNavbarProps> = ({menus}) => {
 
       <Navbar.Section mt="auto">
         <Stack spacing={4}>
-          <FEUserNavbarProfileComponent isHover={isHover} />
+          <FEUserNavbarProfileComponent
+            isHover={isHover}
+            profileLink={profileLink}
+          />
 
           {!!isHover && (
             <Text color="gray">

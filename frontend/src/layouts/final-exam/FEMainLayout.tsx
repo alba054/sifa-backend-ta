@@ -24,27 +24,32 @@ interface IMainLayoutProps {
   breadCrumbsCurrentPage?: string;
 }
 
-const switchMenus: { [role: string | number]: INavbarMenuItem[] } = {
+export interface INavbarItemList {
+  menus: INavbarMenuItem[];
+  profileLink: string;
+}
+
+const switchMenus: { [role: string | number]: INavbarItemList } = {
   0: studentMenus,
-  1: firstViceDeanMenus,
-  2: studyProgramAdminMenus,
-  3: subsectionChairmanMenus,
-  4: headAdministratorMenus,
-  5: deanMenus,
-  6: facultyAdminMenus,
+  // 1: firstViceDeanMenus,
+  // 2: studyProgramAdminMenus,
+  // 3: subsectionChairmanMenus,
+  // 4: headAdministratorMenus,
+  // 5: deanMenus,
+  // 6: facultyAdminMenus,
   7: lecturerMenus,
-  8: labHeadMenus,
-  9: seminarCoordinatorMenus,
+  // 8: labHeadMenus,
+  // 9: seminarCoordinatorMenus,
   student: studentMenus,
-  "first-vice-dean": firstViceDeanMenus,
-  "study-program-admin": studyProgramAdminMenus,
-  "subsection-chairman": subsectionChairmanMenus,
-  "head-administrator": headAdministratorMenus,
-  dean: deanMenus,
-  "faculty-admin": facultyAdminMenus,
+  // "first-vice-dean": firstViceDeanMenus,
+  // "study-program-admin": studyProgramAdminMenus,
+  // "subsection-chairman": subsectionChairmanMenus,
+  // "head-administrator": headAdministratorMenus,
+  // dean: deanMenus,
+  // "faculty-admin": facultyAdminMenus,
   lecturer: lecturerMenus,
-  "lab-head": labHeadMenus,
-  "seminar-coordinator": seminarCoordinatorMenus,
+  // "lab-head": labHeadMenus,
+  // "seminar-coordinator": seminarCoordinatorMenus,
 };
 
 const FEMainlayout: React.FC<IMainLayoutProps> = ({
@@ -61,7 +66,10 @@ const FEMainlayout: React.FC<IMainLayoutProps> = ({
       navbar={
         <>
           <MediaQuery styles={{ display: "none" }}>
-            <FEMainNavbar menus={switchMenus[role] || studentMenus} />
+            <FEMainNavbar
+              menus={switchMenus[role].menus || studentMenus.menus}
+              profileLink={switchMenus[role].profileLink}
+            />
           </MediaQuery>
         </>
       }

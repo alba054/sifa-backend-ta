@@ -19,7 +19,7 @@ import {
   TalkingOutline,
 } from "src/assets/Icons/Fluent";
 import dummy_profile_picture from "./../../../../../assets/images/dummy_profile_picture.png";
-import FEProfilePrivacyInformationComp from "src/components/fe-components/FEProfilePrivacyInformationComp";
+import FEProfilePrivacyInformationComp from "./FEProfilePrivacyInformationComp";
 import FEProfileCard from "src/components/FEProfileCard";
 import { Link } from "react-router-dom";
 import FERoundedChip from "src/components/fe-components/FERoundedChip";

@@ -117,6 +117,8 @@ export const FEROUTES = {
     "/tugas-akhir/dosen/persetujuan/pembimbing",
   LECTURER_HOMEPAGE_SEMINAR: "/tugas-akhir/dosen/seminar",
   LECTURER_HOMEPAGE_GUIDANCE: "/tugas-akhir/dosen/bimbingan",
+  LECTURER_HOMEPAGE_PROFIL: "/tugas-akhir/dosen/profil",
+  LECTURER_HOMEPAGE_PROFIL_EDIT: "/tugas-akhir/dosen/profil/edit",
   // ====================================================================================================
   LAB_HEAD_HOMEPAGE: "/tugas-akhir/kepala-lab",
   LAB_HEAD_LABFREE: "/tugas-akhir/kepala-lab/bebas-lab",

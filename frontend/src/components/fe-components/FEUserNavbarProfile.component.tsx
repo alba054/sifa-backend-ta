@@ -5,13 +5,14 @@ import { FEROUTES } from "src/routes/final-exam.route";
 
 interface IFEUserNavbarProfileComponentProps {
   isHover: boolean;
+  profileLink?: string;
 }
 
 const FEUserNavbarProfileComponent: React.FC<
   IFEUserNavbarProfileComponentProps
-> = ({ isHover }) => {
+> = ({ isHover, profileLink=FEROUTES.STUDENT_PROFILE }) => {
   return (
-    <Link to={`${FEROUTES.STUDENT_PROFILE}`}>
+    <Link to={`${profileLink}`}>
       <Group noWrap>
         <Image
           src="https://img.celebrities.id/okz/600/49j1HU/master_Qs82l8BI82_886_teknik_menggambar_ilustrasi.jpg"

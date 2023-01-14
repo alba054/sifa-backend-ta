@@ -26,11 +26,11 @@ export const feEditProfileFormSchema = yup.object({
     .min(8, "Password minimal 8 karakter")
     .matches(
       /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{8,})/,
-      "Password harus terdiri dari minimal 1 angka dan huruf"
+      "Password harus terdiri dari minimal 1 angka"
     ),
   repeatNewPassword: yup
     .string()
-    .required("Masukkan ulang password baru terlebih dahulu")
+    .required("Masukkan ulang Password baru terlebih dahulu")
     .oneOf([yup.ref("newPassword")], "Password tidak sama"),
 });
 

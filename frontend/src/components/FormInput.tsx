@@ -15,6 +15,8 @@ import {
   RadioProps,
   Textarea as MantineTextArea,
   TextareaProps,
+  PasswordInputProps,
+  PasswordInput,
 } from "@mantine/core";
 
 import { DatePicker, DatePickerProps, TimeInput, TimeInputProps, TimeRangeInput, TimeRangeInputProps } from "@mantine/dates";
@@ -168,6 +170,26 @@ export const FETimeRangeInput = ({ onFocus, onBlur, ...props }: TimeRangeInputPr
 
   return (
     <TimeRangeInput
+      size="md"
+      styles={{ ...getDefaultStyle(isFocus, !!props.error) }}
+      onFocus={(e) => {
+        setIsFocus(true);
+        if (!!onFocus) onFocus(e);
+      }}
+      onBlur={(e) => {
+        setIsFocus(false);
+        if (!!onBlur) onBlur(e);
+      }}
+      {...props}
+    />
+  );
+};
+
+export const FEPasswordInput = ({ onFocus, onBlur, ...props }: PasswordInputProps) => {
+  const [isFocus, setIsFocus] = useState<boolean>(false);
+
+  return (
+    <PasswordInput
       size="md"
       styles={{ ...getDefaultStyle(isFocus, !!props.error) }}
       onFocus={(e) => {

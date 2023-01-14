@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import DateInput from "src/components/DateInput";
 import DocumentInput from "src/components/DocumentInput";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
+import FEFileUpload from "src/components/fe-components/FEFileUpload";
 import FESmallInformationNotificationList from "src/components/fe-components/FESmallInformationNotificationList";
 import FEProfileCard from "src/components/FEProfileCard";
 import { SelectInput, TextInput } from "src/components/FormInput";
@@ -23,13 +24,8 @@ interface IFEEditProfileFormValues {
   profilePicture?: File;
   name: string;
   nim: string;
-  gender: string;
-  address: string;
-  birthPlace: string;
-  birthDate: string;
-  phoneNumber: string;
-  lecturer: string;
   email: string;
+  sign?: File | string | any;
 }
 
 const SIZE = "md";
@@ -37,16 +33,10 @@ const SIZE = "md";
 export const feEditProfileFormSchema = yup.object({
   name: yup.string().required("Input nama terlebih dahulu"),
   nim: yup.string().required("Input NIM terlebih dahulu"),
-  gender: yup.string().required("Pilih jenis kelamin terlebih dahulu"),
-  address: yup.string().required("Input alamat terlebih dahulu"),
-  birthPlace: yup.string().required("Input tempat lahir terlebih dahulu"),
-  birthDate: yup.date().required("Input tanggal lahir terlebih dahulu"),
-  phoneNumber: yup.string().required("Input nomor telephone terlebih dahulu"),
-  lecturer: yup.string().required("Pilih penasihat akademik terlebih dahulu"),
   email: yup.string().required("Input email terlebih dahulu"),
 });
 
-const FEEditProfilePage: React.FC<IFEEditProfilePageProps> = ({}) => {
+const FEEditProfilePageLecturer: React.FC<IFEEditProfilePageProps> = ({}) => {
   const { getInputProps, values, onSubmit, errors } =
     useForm<IFEEditProfileFormValues>({
       validate: yupResolver(feEditProfileFormSchema),
@@ -60,7 +50,7 @@ const FEEditProfilePage: React.FC<IFEEditProfilePageProps> = ({}) => {
   const breadCrumbs: Array<IFEBreadCrumbsItem> = [
     {
       title: "Pengaturan Akun",
-      href: FEROUTES.STUDENT_PROFILE,
+      href: FEROUTES.LECTURER_HOMEPAGE_PROFIL,
     },
   ];
 
@@ -120,76 +110,41 @@ const FEEditProfilePage: React.FC<IFEEditProfilePageProps> = ({}) => {
               jika terdapat kesalahan penulisan.
             </Text>
           </div>
-          <div className={`grid grid-cols-3 gap-x-5 mb-4`}>
-            <SelectInput
-              size={SIZE}
-              label="Jenis Kelamin"
-              data={getGenderOptions()}
-              required
-              {...getInputProps("gender")}
-              error={errors["gender" as keyof IFEEditProfileFormValues]}
+
+          <TextInput
+            size={SIZE}
+            label="Email"
+            required
+            className={`col-span-2`}
+            error={errors["email" as keyof IFEEditProfileFormValues]}
+            {...getInputProps("email")}
+          />
+
+          <Stack className="gap-2" mt={"md"}>
+            <Text className="text-secondary-text-500 font-semibold">
+              Tanda Tangan
+            </Text>
+            <DocumentInput
+              color={"primary"}
+              withDelete
+              maxSize={516000}
+              accept={IMAGE_MIME_TYPE}
+              {...getInputProps("sign")}
+              placeholder="Seret dan tempatkan file tanda tangan ke sini, atau klik untuk memilih file."
+              description="*Ekstensi file PNG, ukuran file maksimal 2 MB."
             />
-            <TextInput
-              size={SIZE}
-              label="Alamat"
-              required
-              className={`col-span-2`}
-              error={errors["address" as keyof IFEEditProfileFormValues]}
-              {...getInputProps("address")}
-            />
-          </div>
-          <div className={`grid grid-cols-3 gap-x-5 mb-4`}>
-            <TextInput
-              required
-              size={SIZE}
-              label="Tempat Lahir"
-              error={errors["birthPlace" as keyof IFEEditProfileFormValues]}
-              {...getInputProps("birthPlace")}
-            />
-            <DateInput
-              required
-              size={SIZE}
-              label="Tanggal Lahir"
-              locale="id"
-              error={errors["birthDate" as keyof IFEEditProfileFormValues]}
-              {...getInputProps("birthDate")}
-            />
-            <TextInput
-              required
-              size={SIZE}
-              label="No. Telephone"
-              error={errors["phoneNumber" as keyof IFEEditProfileFormValues]}
-              {...getInputProps("phoneNumber")}
-            />
-          </div>
-          <div className={`grid grid-cols-4 gap-x-5 mb-4`}>
-            <TextInput
-              size={SIZE}
-              label="Email"
-              required
-              className={`col-span-2`}
-              error={errors["email" as keyof IFEEditProfileFormValues]}
-              {...getInputProps("email")}
-            />
-            <SelectInput
-              required
-              className={`col-span-2`}
-              data={getGenderOptions()}
-              size={SIZE}
-              label="Penasehat Akademik"
-              error={errors["lecturer" as keyof IFEEditProfileFormValues]}
-              {...getInputProps("lecturer")}
-            />
-          </div>
-          
+          </Stack>
           <FESmallInformationNotificationList
             infoList={[
-              "Semua field wajib diisi",
+              "Nama dan NIP tidak dapat diubah. Jika terdapat kesalahan harap hubungi Admin",
               "Email diperlukan untuk mereset password melalui fitur Lupa Password",
+              "File tanda tangan yang diupload sebaiknya berlatar Transparan",
             ]}
           />
           <Group position="right" mt="lg" mb={0}>
-            <Button variant="light" className="font-semibold hover:bg-white">Batal</Button>
+            <Button variant="light" className="font-semibold hover:bg-white">
+              Batal
+            </Button>
             <Button type="submit">Simpan Perubahan</Button>
           </Group>
         </form>
@@ -197,4 +152,4 @@ const FEEditProfilePage: React.FC<IFEEditProfilePageProps> = ({}) => {
     </FEMainlayout>
   );
 };
-export default FEEditProfilePage;
+export default FEEditProfilePageLecturer;
