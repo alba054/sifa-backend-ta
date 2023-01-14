@@ -37,7 +37,7 @@ export const feEditProfileFormSchema = yup.object({
   email: yup.string().required("Input email terlebih dahulu"),
 });
 
-const FEEditProfilePageLecturer: React.FC<IFEEditProfilePageProps> = ({}) => {
+const FEEditProfilePageDean: React.FC<IFEEditProfilePageProps> = ({}) => {
   const { getInputProps, values, onSubmit, errors } =
     useForm<IFEEditProfileFormValues>({
       validate: yupResolver(feEditProfileFormSchema),
@@ -60,7 +60,7 @@ const FEEditProfilePageLecturer: React.FC<IFEEditProfilePageProps> = ({}) => {
   const breadCrumbs: Array<IFEBreadCrumbsItem> = [
     {
       title: "Pengaturan Akun",
-      href: FEROUTES.LECTURER_HOMEPAGE_PROFILE,
+      href: FEROUTES.DEAN_PROFILE,
     },
   ];
 
@@ -170,4 +170,4 @@ const FEEditProfilePageLecturer: React.FC<IFEEditProfilePageProps> = ({}) => {
     </FEMainlayout>
   );
 };
-export default FEEditProfilePageLecturer;
+export default FEEditProfilePageDean;

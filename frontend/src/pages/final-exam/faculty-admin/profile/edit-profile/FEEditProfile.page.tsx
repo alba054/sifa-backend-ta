@@ -37,7 +37,7 @@ export const feEditProfileFormSchema = yup.object({
   email: yup.string().required("Input email terlebih dahulu"),
 });
 
-const FEEditProfilePageLecturer: React.FC<IFEEditProfilePageProps> = ({}) => {
+const FEEditProfilePageFacultyAdmin: React.FC<IFEEditProfilePageProps> = ({}) => {
   const { getInputProps, values, onSubmit, errors } =
     useForm<IFEEditProfileFormValues>({
       validate: yupResolver(feEditProfileFormSchema),
@@ -51,7 +51,7 @@ const FEEditProfilePageLecturer: React.FC<IFEEditProfilePageProps> = ({}) => {
   const [isEditAlertModalOpened, setIsEditAlertModalOpened] = useState(false);
   const navigate = useNavigate()
 
-  function handleConfirmSubmit() {
+  function handleConfirmSubmit(): void {
     console.log(values);
     setIsEditAlertModalOpened(false);
     navigate(-1)
@@ -60,7 +60,7 @@ const FEEditProfilePageLecturer: React.FC<IFEEditProfilePageProps> = ({}) => {
   const breadCrumbs: Array<IFEBreadCrumbsItem> = [
     {
       title: "Pengaturan Akun",
-      href: FEROUTES.LECTURER_HOMEPAGE_PROFILE,
+      href: FEROUTES.FACULTY_ADMIN_PROFILE,
     },
   ];
 
@@ -170,4 +170,4 @@ const FEEditProfilePageLecturer: React.FC<IFEEditProfilePageProps> = ({}) => {
     </FEMainlayout>
   );
 };
-export default FEEditProfilePageLecturer;
+export default FEEditProfilePageFacultyAdmin;

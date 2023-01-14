@@ -10,7 +10,7 @@ export interface IFELinkToSignButton {
 const FELinkToSignButton: React.FC<IFELinkToSignButton> = ({ url = "#" }) => {
   const theme = useMantineTheme();
   return (
-    <Link to={url}>
+    <a href={url} target="_blank">
       <Group className="gap-4 min-w-[49%] cursor-pointer">
         <FESignIcon
           size={34}
@@ -26,7 +26,7 @@ const FELinkToSignButton: React.FC<IFELinkToSignButton> = ({ url = "#" }) => {
           </Text>
         </Stack>
       </Group>
-    </Link>
+    </a>
   );
 };
 export default FELinkToSignButton;

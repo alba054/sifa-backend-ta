@@ -20,8 +20,10 @@ export const FEROUTES = {
     "/tugas-akhir/wakil-dekan-1/persetujuan/ujian-sidang/nim",
   FIRST_VICE_DEAN_APPROVAL_TRIAL_PERMIT_HISTORY:
     "/tugas-akhir/wakil-dekan-1/persetujuan/ujian-sidang/riwayat",
+  FIRST_VICE_DEAN_PROFILE: "/tugas-akhir/wakil-dekan-1/profil",
   // ====================================================================================================
   STUDY_PROGRAM_ADMIN_HOMEPAGE: "/tugas-akhir/admin-program-studi",
+  STUDY_PROGRAM_ADMIN_PROFILE: "/tugas-akhir/admin-program-studi/profil",
   STUDY_PROGRAM_ADMIN_APPROVAL: "/tugas-akhir/admin-program-studi/persetujuan",
   STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL:
     "/tugas-akhir/admin-program-studi/persetujuan/judul-penelitian",
@@ -41,6 +43,7 @@ export const FEROUTES = {
     "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji/riwayat",
   // ====================================================================================================
   SUBSECTION_CHAIRMAN_HOMEPAGE: "/tugas-akhir/kasubag",
+  SUBSECTION_CHAIRMAN_PROFILE: "/tugas-akhir/kasubag/profil",
   SUBSECTION_CHAIRMAN_APPROVAL: "/tugas-akhir/kasubag/persetujuan",
   SUBSECTION_CHAIRMAN_APPROVAL_MENTOR_AND_EXAMINERS:
     "/tugas-akhir/kasubag/persetujuan/sk-pembimbing-dan-penguji",
@@ -58,6 +61,7 @@ export const FEROUTES = {
     "/tugas-akhir/kasubag/persetujuan/izin-ujian-sidang/status-surat-permohonan",
   // ====================================================================================================
   HEAD_ADMINISTRATOR_HOMEPAGE: "/tugas-akhir/ktu",
+  HEAD_ADMINISTRATOR_PROFILE: "/tugas-akhir/ktu/profil",
   HEAD_ADMINISTRATOR_APPROVAL: "/tugas-akhir/ktu/persetujuan",
   HEAD_ADMINISTRATOR_APPROVAL_MENTOR_AND_EXAMINERS:
     "/tugas-akhir/ktu/persetujuan/sk-pembimbing-dan-penguji",
@@ -73,6 +77,7 @@ export const FEROUTES = {
     "/tugas-akhir/ktu/persetujuan/sk-izin-ujian-sidang/riwayat",
   // ====================================================================================================
   DEAN_HOMEPAGE: "/tugas-akhir/dekan",
+  DEAN_PROFILE: "/tugas-akhir/dekan/profil",
   DEAN_APPROVAL: "/tugas-akhir/dekan/persetujuan",
   DEAN_APPROVAL_MENTOR_AND_EXAMINERS:
     "/tugas-akhir/dekan/persetujuan/sk-pembimbing-dan-penguji",
@@ -82,6 +87,7 @@ export const FEROUTES = {
     "/tugas-akhir/dekan/persetujuan/sk-pembimbing-dan-penguji/riwayat",
   // ====================================================================================================
   FACULTY_ADMIN_HOMEPAGE: "/tugas-akhir/admin-fakultas",
+  FACULTY_ADMIN_PROFILE: "/tugas-akhir/admin-fakultas/profil",
   FACULTY_ADMIN_APPROVAL: "/tugas-akhir/admin-fakultas/persetujuan",
   FACULTY_ADMIN_APPROVAL_MENTOR_AND_EXAMINERS:
     "/tugas-akhir/admin-fakultas/persetujuan/sk-pembimbing-dan-penguji",
@@ -107,6 +113,7 @@ export const FEROUTES = {
     "/tugas-akhir/admin-fakultas/persetujuan/izin-ujian-sidang/notifikasi/riwayat",
   // ====================================================================================================
   LECTURER_HOMEPAGE: "/tugas-akhir/dosen",
+  LECTURER_HOMEPAGE_PROFILE: "/tugas-akhir/dosen/profil",
   LECTURER_HOMEPAGE_PROPOSAL: "/tugas-akhir/dosen/usulan",
   LECTURER_HOMEPAGE_MENTOR_PROPOSAL: "/tugas-akhir/dosen/usulan/pembimbing",
   LECTURER_HOMEPAGE_EXAMINER_PROPOSAL: "/tugas-akhir/dosen/usulan/penguji",
@@ -117,17 +124,20 @@ export const FEROUTES = {
     "/tugas-akhir/dosen/persetujuan/pembimbing",
   LECTURER_HOMEPAGE_SEMINAR: "/tugas-akhir/dosen/seminar",
   LECTURER_HOMEPAGE_GUIDANCE: "/tugas-akhir/dosen/bimbingan",
-  LECTURER_HOMEPAGE_PROFIL: "/tugas-akhir/dosen/profil",
-  LECTURER_HOMEPAGE_PROFIL_EDIT: "/tugas-akhir/dosen/profil/edit",
+  LECTURER_HOMEPAGE_PROFILE_EDIT: "/tugas-akhir/dosen/profil/edit",
   // ====================================================================================================
   LAB_HEAD_HOMEPAGE: "/tugas-akhir/kepala-lab",
+  LAB_HEAD_PROFILE: "/tugas-akhir/kepala-lab/profil",
   LAB_HEAD_LABFREE: "/tugas-akhir/kepala-lab/bebas-lab",
   LAB_HEAD_FINAL_EXAM: "/tugas-akhir/kepala-lab/tugas-akhir",
   LAB_HEAD_REFERENCE: "/tugas-akhir/kepala-lab/referensi",
   // ====================================================================================================
   SEMINAR_COORDINATOR_HOMEPAGE: "/tugas-akhir/koordinator-seminar",
+  SEMINAR_COORDINATOR_PROFILE: "/tugas-akhir/koordinator-seminar/profil",
   SEMINAR_COORDINATOR_SEMINAR: "/tugas-akhir/koordinator-seminar/seminar",
-  SEMINAR_COORDINATOR_SEMINAR_SCHEDULING: "/tugas-akhir/koordinator-seminar/seminar/jadwal",
-  SEMINAR_COORDINATOR_SEMINAR_EVALUATION  : "/tugas-akhir/koordinator-seminar/seminar/evaluasi",
-  SEMINAR_COORDINATOR_REFERENCE  : "/tugas-akhir/koordinator-seminar/referensi",
+  SEMINAR_COORDINATOR_SEMINAR_SCHEDULING:
+    "/tugas-akhir/koordinator-seminar/seminar/jadwal",
+  SEMINAR_COORDINATOR_SEMINAR_EVALUATION:
+    "/tugas-akhir/koordinator-seminar/seminar/evaluasi",
+  SEMINAR_COORDINATOR_REFERENCE: "/tugas-akhir/koordinator-seminar/referensi",
 };

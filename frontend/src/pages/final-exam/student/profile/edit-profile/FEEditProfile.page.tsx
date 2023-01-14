@@ -1,10 +1,11 @@
 import { Button, Group, Image, Stack, Text, Title } from "@mantine/core";
 import { IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { useForm, yupResolver } from "@mantine/form";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import DateInput from "src/components/DateInput";
 import DocumentInput from "src/components/DocumentInput";
+import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import FESmallInformationNotificationList from "src/components/fe-components/FESmallInformationNotificationList";
 import FEProfileCard from "src/components/FEProfileCard";
@@ -52,9 +53,18 @@ const FEEditProfilePage: React.FC<IFEEditProfilePageProps> = ({}) => {
       validate: yupResolver(feEditProfileFormSchema),
     });
   const selectedImageUrl = getFileUrl(values.profilePicture);
-
+  //
   function handleSubmit(values: IFEEditProfileFormValues) {
+    setIsEditAlertModalOpened(true);
+  }
+
+  const [isEditAlertModalOpened, setIsEditAlertModalOpened] = useState(false);
+  const navigate = useNavigate();
+
+  function handleConfirmSubmit() {
     console.log(values);
+    setIsEditAlertModalOpened(false);
+    navigate(-1);
   }
 
   const breadCrumbs: Array<IFEBreadCrumbsItem> = [
@@ -69,6 +79,14 @@ const FEEditProfilePage: React.FC<IFEEditProfilePageProps> = ({}) => {
       breadCrumbs={breadCrumbs}
       breadCrumbsCurrentPage="Edit Profil"
     >
+      <FEAlertModal
+        title="Simpan Perubahan?"
+        description="Tekan tombol OK untuk menyimpan perubahan."
+        yesButtonLabel="OK"
+        opened={isEditAlertModalOpened}
+        setOpened={setIsEditAlertModalOpened}
+        onSubmit={handleConfirmSubmit}
+      />
       <Title order={2} mb={"md"}>
         Edit Profil
       </Title>
@@ -181,7 +199,7 @@ const FEEditProfilePage: React.FC<IFEEditProfilePageProps> = ({}) => {
               {...getInputProps("lecturer")}
             />
           </div>
-          
+
           <FESmallInformationNotificationList
             infoList={[
               "Semua field wajib diisi",
@@ -189,7 +207,9 @@ const FEEditProfilePage: React.FC<IFEEditProfilePageProps> = ({}) => {
             ]}
           />
           <Group position="right" mt="lg" mb={0}>
-            <Button variant="light" className="font-semibold hover:bg-white">Batal</Button>
+            <Button variant="light" className="font-semibold hover:bg-white">
+              Batal
+            </Button>
             <Button type="submit">Simpan Perubahan</Button>
           </Group>
         </form>

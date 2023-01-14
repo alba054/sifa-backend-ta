@@ -37,5 +37,5 @@ export const lecturerMenus: INavbarItemList = {
       href: FEROUTES.LECTURER_HOMEPAGE_GUIDANCE,
     },
   ],
-  profileLink: FEROUTES.LECTURER_HOMEPAGE_PROFIL,
+  profileLink: FEROUTES.LECTURER_HOMEPAGE_PROFILE,
 };

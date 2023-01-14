@@ -118,6 +118,22 @@ import FESeminarCoordinatorSeminarEvaluationUngraded from "./pages/final-exam/se
 import FESeminarCoordinatorReference from "./pages/final-exam/seminar-coordinator/reference/FESeminarCoordinatorReference";
 import FEProfileLecturer from "./pages/final-exam/lecturer/profile/profile-main/FEProfile.page";
 import FEEditProfilePageLecturer from "./pages/final-exam/lecturer/profile/edit-profile/FEEditProfile.page";
+import FEEditProfilePageDean from "./pages/final-exam/dean/profile/edit-profile/FEEditProfile.page";
+import FEProfileDean from "./pages/final-exam/dean/profile/profile-main/FEProfile.page";
+import FEProfileFacultyAdmin from "./pages/final-exam/faculty-admin/profile/profile-main/FEProfile.page";
+import FEEditProfilePageFacultyAdmin from "./pages/final-exam/faculty-admin/profile/edit-profile/FEEditProfile.page";
+import FEProfileFirstViceDean from "./pages/final-exam/first-vice-dean/profile/profile-main/FEProfile.page";
+import FEEditProfilePageFirstViceDean from "./pages/final-exam/first-vice-dean/profile/edit-profile/FEEditProfile.page";
+import FEProfileHeadAdministrator from "./pages/final-exam/head-administrator/profile/profile-main/FEProfile.page";
+import FEEditProfilePageHeadAdministrator from "./pages/final-exam/head-administrator/profile/edit-profile/FEEditProfile.page";
+import FEProfileLabHead from "./pages/final-exam/lab-head/profile/profile-main/FEProfile.page";
+import FEEditProfilePageLabHead from "./pages/final-exam/lab-head/profile/edit-profile/FEEditProfile.page";
+import FEProfileSeminarCoordinator from "./pages/final-exam/seminar-coordinator/profile/profile-main/FEProfile.page";
+import FEEditProfilePageSeminarCoordinator from "./pages/final-exam/seminar-coordinator/profile/edit-profile/FEEditProfile.page";
+import FEProfileStudyProgramAdmin from "./pages/final-exam/study-program-admin/profile/profile-main/FEProfile.page";
+import FEEditProfilePageStudyProgramAdmin from "./pages/final-exam/study-program-admin/profile/edit-profile/FEEditProfile.page";
+import FEProfileSubsectionChairman from "./pages/final-exam/subsection-chairman/profile/profile-main/FEProfile.page";
+import FEEditProfilePageSubsectionChairman from "./pages/final-exam/subsection-chairman/profile/edit-profile/FEEditProfile.page";
 
 moment.locale("id");
 
@@ -256,6 +272,13 @@ function App() {
                     </Route>
                     <Route path="wakil-dekan-1">
                       <Route index element={<FEHomepage />} />
+                      <Route path="profil">
+                        <Route path="" element={<FEProfileFirstViceDean />} />
+                        <Route
+                          path="edit"
+                          element={<FEEditProfilePageFirstViceDean />}
+                        />
+                      </Route>
                       <Route path="persetujuan">
                         <Route index element={<FEViceDeanApproval />} />
 
@@ -277,6 +300,16 @@ function App() {
                     </Route>
                     <Route path="kasubag">
                       <Route index element={<FEHomepage />} />
+                      <Route path="profil">
+                        <Route
+                          path=""
+                          element={<FEProfileSubsectionChairman />}
+                        />
+                        <Route
+                          path="edit"
+                          element={<FEEditProfilePageSubsectionChairman />}
+                        />
+                      </Route>
                       <Route path="persetujuan">
                         <Route
                           index
@@ -326,6 +359,16 @@ function App() {
                     </Route>
                     <Route path="admin-program-studi">
                       <Route index element={<FEHomepage />} />
+                      <Route path="profil">
+                        <Route
+                          path=""
+                          element={<FEProfileStudyProgramAdmin />}
+                        />
+                        <Route
+                          path="edit"
+                          element={<FEEditProfilePageStudyProgramAdmin />}
+                        />
+                      </Route>
                       <Route path="persetujuan">
                         <Route
                           index
@@ -391,6 +434,16 @@ function App() {
                     </Route>
                     <Route path="ktu">
                       <Route index element={<FEHomepage />} />
+                      <Route path="profil">
+                        <Route
+                          path=""
+                          element={<FEProfileHeadAdministrator />}
+                        />
+                        <Route
+                          path="edit"
+                          element={<FEEditProfilePageHeadAdministrator />}
+                        />
+                      </Route>
                       <Route path="persetujuan">
                         <Route
                           index
@@ -440,6 +493,13 @@ function App() {
                     </Route>
                     <Route path="dekan">
                       <Route index element={<FEHomepage />} />
+                      <Route path="profil">
+                        <Route path="" element={<FEProfileDean />} />
+                        <Route
+                          path="edit"
+                          element={<FEEditProfilePageDean />}
+                        />
+                      </Route>
                       <Route path="persetujuan">
                         <Route index element={<FEDeanApproval />} />
                         <Route path="sk-pembimbing-dan-penguji">
@@ -463,6 +523,13 @@ function App() {
                     </Route>
                     <Route path="admin-fakultas">
                       <Route index element={<FEHomepage />} />
+                      <Route path="profil">
+                        <Route path="" element={<FEProfileFacultyAdmin />} />
+                        <Route
+                          path="edit"
+                          element={<FEEditProfilePageFacultyAdmin />}
+                        />
+                      </Route>
                       <Route path="persetujuan">
                         <Route index element={<FEFacultyAdminApproval />} />
                         <Route path="sk-pembimbing-dan-penguji">
@@ -545,7 +612,10 @@ function App() {
                       <Route index element={<FEHomepage />} />
                       <Route path="profil">
                         <Route path="" element={<FEProfileLecturer />} />
-                        <Route path="edit" element={<FEEditProfilePageLecturer />} />
+                        <Route
+                          path="edit"
+                          element={<FEEditProfilePageLecturer />}
+                        />
                       </Route>
                       <Route
                         path="bimbingan"
@@ -603,6 +673,13 @@ function App() {
                     </Route>
                     <Route path="kepala-lab">
                       <Route index element={<FEHomepage />} />
+                      <Route path="profil">
+                        <Route path="" element={<FEProfileLabHead />} />
+                        <Route
+                          path="edit"
+                          element={<FEEditProfilePageLabHead />}
+                        />
+                      </Route>
                       <Route path="bebas-lab" element={<FELabHeadLabFree />} />
                       <Route
                         path="tugas-akhir"
@@ -615,16 +692,40 @@ function App() {
                     </Route>
                     <Route path="koordinator-seminar">
                       <Route index element={<FEHomepage />} />
+                      <Route path="profil">
+                        <Route
+                          path=""
+                          element={<FEProfileSeminarCoordinator />}
+                        />
+                        <Route
+                          path="edit"
+                          element={<FEEditProfilePageSeminarCoordinator />}
+                        />
+                      </Route>
                       <Route path="seminar">
                         <Route
                           index
                           element={<FESeminarCoordinatorSeminar />}
                         />
-                        <Route path="jadwal" element={<FESeminarCoordinatorSeminarScheduling />} />
-                        <Route path="evaluasi" element={<FESeminarCoordinatorSeminarEvaluation />} />
-                        <Route path="evaluasi/:nim" element={<FESeminarCoordinatorSeminarEvaluationUngraded />} />
+                        <Route
+                          path="jadwal"
+                          element={<FESeminarCoordinatorSeminarScheduling />}
+                        />
+                        <Route
+                          path="evaluasi"
+                          element={<FESeminarCoordinatorSeminarEvaluation />}
+                        />
+                        <Route
+                          path="evaluasi/:nim"
+                          element={
+                            <FESeminarCoordinatorSeminarEvaluationUngraded />
+                          }
+                        />
                       </Route>
-                        <Route path="referensi" element={<FESeminarCoordinatorReference />} />      
+                      <Route
+                        path="referensi"
+                        element={<FESeminarCoordinatorReference />}
+                      />
                     </Route>
                   </Route>
                   <Route path="*" element={<NotFound />} />

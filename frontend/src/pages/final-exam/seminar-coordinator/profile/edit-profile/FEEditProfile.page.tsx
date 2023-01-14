@@ -37,30 +37,32 @@ export const feEditProfileFormSchema = yup.object({
   email: yup.string().required("Input email terlebih dahulu"),
 });
 
-const FEEditProfilePageLecturer: React.FC<IFEEditProfilePageProps> = ({}) => {
+const FEEditProfilePageSeminarCoordinator: React.FC<
+  IFEEditProfilePageProps
+> = ({}) => {
   const { getInputProps, values, onSubmit, errors } =
     useForm<IFEEditProfileFormValues>({
       validate: yupResolver(feEditProfileFormSchema),
     });
   const selectedImageUrl = getFileUrl(values.profilePicture);
-// 
+  //
   function handleSubmit(values: IFEEditProfileFormValues) {
     setIsEditAlertModalOpened(true);
   }
-  
+
   const [isEditAlertModalOpened, setIsEditAlertModalOpened] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleConfirmSubmit() {
     console.log(values);
     setIsEditAlertModalOpened(false);
-    navigate(-1)
+    navigate(-1);
   }
 
   const breadCrumbs: Array<IFEBreadCrumbsItem> = [
     {
       title: "Pengaturan Akun",
-      href: FEROUTES.LECTURER_HOMEPAGE_PROFILE,
+      href: FEROUTES.SEMINAR_COORDINATOR_PROFILE,
     },
   ];
 
@@ -170,4 +172,4 @@ const FEEditProfilePageLecturer: React.FC<IFEEditProfilePageProps> = ({}) => {
     </FEMainlayout>
   );
 };
-export default FEEditProfilePageLecturer;
+export default FEEditProfilePageSeminarCoordinator;
