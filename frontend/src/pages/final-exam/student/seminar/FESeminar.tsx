@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton
+  ILFPHeaderButton,
 } from "src/components/fe-components/LFPHeader.component";
 import FEInputModal from "src/components/FEInputModal";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
@@ -12,10 +12,12 @@ import { FEROUTES } from "src/routes/final-exam.route";
 import FESeminarForm from "./FESeminarForm";
 import {
   feSeminarFormSchema,
-  IFESeminarFormValues
+  IFESeminarFormValues,
 } from "./FESeminarInterfaces";
 import FESeminarMain, {
-  IFESeminarApprovalStatus, IFESeminarData, IFESeminarTimeInformation
+  IFESeminarApprovalStatus,
+  IFESeminarData,
+  IFESeminarTimeInformation,
 } from "./FESeminarMain";
 
 export interface IFESeminar {}
@@ -28,8 +30,9 @@ const dummySeminarApprovalStatus: IFESeminarApprovalStatus = {
 };
 
 const dummySeminarTimeInformation: IFESeminarTimeInformation = {
-  date: "Jumat, 31 Desember 2022",
-  time: "22:00 - 23:59 WITA",
+  seminarDate: new Date(),
+  seminarTimeStart: new Date(),
+  seminarTimeEnd: new Date(),
   offlinePlace: "Ruang Diskusi Farmasi",
   seminarNote:
     "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09 Meeting ID: 968 7472 2331 Passcode: f4rmasi",
@@ -102,15 +105,19 @@ const FESeminar: React.FC<IFESeminar> = ({}) => {
       />
 
       <Stack spacing={"xl"}>
-        <LFPHeaderComponent title="Seminar" buttons={buttons} disabledButtonTooltipLabel={"Hapus permohonan seminar yang sekarang untuk membuat permohonan yang baru"} />
+        <LFPHeaderComponent
+          title="Seminar"
+          buttons={buttons}
+          disabledButtonTooltipLabel={
+            "Hapus permohonan seminar yang sekarang untuk membuat permohonan yang baru"
+          }
+        />
         {isDataExist ? (
           <FESeminarMain
             seminarData={seminarData}
-            setIsDataExist={
-              ((e) => {
-                setIsDataExist(e);
-              })
-            }
+            setIsDataExist={(e) => {
+              setIsDataExist(e);
+            }}
           />
         ) : (
           <LFPEmptyDataComponent

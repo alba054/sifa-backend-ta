@@ -6,6 +6,7 @@ import FEInformationNotification from "src/components/fe-components/FEInformatio
 import FEProgressBar from "src/components/fe-components/FEProgressBar";
 import FETableHeader1 from "src/components/fe-components/table/FETableHeader1";
 import { FEStatus } from "src/utils/const/type";
+import { dateToRange, extractDate } from "src/utils/functions/date.function";
 import FESeminarApprovalStatus from "./FESeminarApprovalStatus";
 import FESeminarEvaluation from "./FESeminarEvaluation";
 import FESeminarMainCard from "./FESeminarMainCard";
@@ -36,8 +37,9 @@ export interface IFESeminarApprovalStatus {
 }
 
 export interface IFESeminarTimeInformation {
-  date: string;
-  time: string;
+  seminarDate: Date;
+  seminarTimeStart: Date;
+  seminarTimeEnd: Date;
   offlinePlace: string;
   seminarNote: string;
 }
@@ -111,11 +113,12 @@ const FESeminarMain: React.FC<IFESEminarMain> = ({
       />
 
       <FESeminarTimeInformation
-        date={seminarData.seminarTimeInformation.date}
         offlinePlace={seminarData.seminarTimeInformation.offlinePlace}
         seminarNote={seminarData.seminarTimeInformation.seminarNote}
-        time={seminarData.seminarTimeInformation.time}
-      />
+        seminarDate={seminarData.seminarTimeInformation.seminarDate}
+        seminarTimeEnd={seminarData.seminarTimeInformation.seminarTimeEnd}
+        seminarTimeStart={seminarData.seminarTimeInformation.seminarTimeStart}
+        />
       <FETableHeader1 title="Pasca-Seminar">
         <FESeminarEvaluation
           mentorNotes={seminarData.seminarMentorNotes}

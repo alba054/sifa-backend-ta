@@ -49,7 +49,9 @@ function getDataFromBackend() {
       firstExaminerStatus: "Diterima",
       secondExaminer: "Dr. Jailani, S.Si., M.Kom",
       secondExaminerStatus: "Diterima",
-      seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
+      seminarDate:new Date(),
+      seminarTimeStart:new Date(),
+      seminarTimeEnd:new Date(),
       seminarOfflinePlace: "Ruang Diskusi Farmasi",
       seminarNote:
         "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
@@ -71,7 +73,9 @@ function getDataFromBackend() {
       firstExaminerStatus: "Diterima",
       secondExaminer: "Dr. Jailani, S.Si., M.Kom",
       secondExaminerStatus: "Diterima",
-      seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
+      seminarDate:new Date(),
+      seminarTimeStart:new Date(),
+      seminarTimeEnd:new Date(),
       seminarOfflinePlace: "Ruang Diskusi Farmasi",
       seminarNote:
         "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
@@ -93,7 +97,9 @@ function getDataFromBackend() {
       firstExaminerStatus: "Diterima",
       secondExaminer: "Dr. Jailani, S.Si., M.Kom",
       secondExaminerStatus: "Diterima",
-      seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
+      seminarDate:new Date(),
+      seminarTimeStart:new Date(),
+      seminarTimeEnd:new Date(),
       seminarOfflinePlace: "Ruang Diskusi Farmasi",
       seminarNote:
         "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
@@ -137,7 +143,9 @@ function getDataFromBackend() {
       firstExaminerStatus: "Diterima",
       secondExaminer: "Dr. Jailani, S.Si., M.Kom",
       secondExaminerStatus: "Diterima",
-      seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
+      seminarDate:new Date(),
+      seminarTimeStart:new Date(),
+      seminarTimeEnd:new Date(),
       seminarOfflinePlace: "Ruang Diskusi Farmasi",
       seminarNote:
         "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
@@ -159,7 +167,9 @@ function getDataFromBackend() {
       firstExaminerStatus: "Diterima",
       secondExaminer: "Dr. Jailani, S.Si., M.Kom",
       secondExaminerStatus: "Diterima",
-      seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
+      seminarDate:new Date(),
+      seminarTimeStart:new Date(),
+      seminarTimeEnd:new Date(),
       seminarOfflinePlace: "Ruang Diskusi Farmasi",
       seminarNote:
         "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
@@ -349,7 +359,9 @@ const FELecturerSeminarTimeApproval: React.FC<
               dataFromBackend[selectedRow].seminarOfflinePlace
             }
             seminarNote={dataFromBackend[selectedRow].seminarNote}
-            seminarTime={dataFromBackend[selectedRow].seminarTime}
+            seminarDate={dataFromBackend[selectedRow].seminarDate}
+            seminarTimeStart={dataFromBackend[selectedRow].seminarTimeStart}
+            seminarTimeEnd={dataFromBackend[selectedRow].seminarTimeEnd}
             setRefusalReason={(e: string) => {
               setValues({ refusalReason: e });
             }}

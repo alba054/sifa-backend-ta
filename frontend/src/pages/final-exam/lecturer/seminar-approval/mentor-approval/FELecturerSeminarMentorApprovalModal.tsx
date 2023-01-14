@@ -9,6 +9,7 @@ import FERefusalReasonForm, {
 import { statusChip } from "src/components/fe-components/FERoundedChip";
 import FEInputModal from "src/components/FEInputModal";
 import { FEStatus } from "src/utils/const/type";
+import { getFEDate } from "src/utils/functions/date.function";
 
 export interface IFELecturerSeminarTimeApprovalModal {
   opened: boolean;
@@ -29,7 +30,9 @@ export interface IFELecturerSeminarTimeApprovalModal {
   sideMentorStatus: FEStatus;
   firstExaminerStatus: FEStatus;
   secondExaminerStatus: FEStatus;
-  seminarTime: string;
+  seminarDate: Date;
+  seminarTimeStart: Date;
+  seminarTimeEnd: Date;
   seminarOfflinePlace: string;
   seminarNote: string;
   form: any;
@@ -55,7 +58,9 @@ const FELecturerSeminarTimeApprovalModal: React.FC<
   secondExaminerStatus,
   seminarOfflinePlace,
   seminarNote,
-  seminarTime,
+  seminarDate,
+  seminarTimeEnd,
+  seminarTimeStart,
   sideMentor,
   sideMentorStatus,
   index,
@@ -157,7 +162,7 @@ const FELecturerSeminarTimeApprovalModal: React.FC<
             Waktu dan Tempat Pelaksanaan
           </Text>
           <Text className="text-primary-text-500 text-lg tracking-1 font-semibold">
-            {seminarTime}
+            {getFEDate(seminarDate, seminarTimeStart, seminarTimeEnd)}
           </Text>
           <Text className="text-primary-text-500 text-md tracking-1 font-semibold">
             {seminarOfflinePlace}

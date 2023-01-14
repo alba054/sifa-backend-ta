@@ -5,13 +5,13 @@ import ManThinkingAnimation from "src/assets/Icons/ManThinkingAnimation";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton
+  ILFPHeaderButton,
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import FESeminarCoordinatorSeminarSchedulingCard, {
-  IFESeminarCoordinatorSeminarSchedulingCard
+  IFESeminarCoordinatorSeminarSchedulingCard,
 } from "./FESeminarCoordinatorSeminarSchedulingCard";
 import FESeminarCoordinatorSeminarSchedulingModal from "./FESeminarCoordinatorSeminarSchedulingModal";
 export interface IFESeminarCoordinatorSeminarScheduling {}
@@ -22,9 +22,9 @@ const dummySeminarData: Array<IFESeminarCoordinatorSeminarSchedulingCard> = [
     nim: "H071191040",
     proposalTitle:
       "RANCANG BANGUN SISTEM INFORMASI APLIKASI PERPUSTAKAAN UNIVERSITAS HASANUDDIN BERBASIS ANDROID",
-    seminarTime: "Senin, 29 Februari 2023",
-    seminarStartTime: "22",
-    seminarEndTime: "23",
+    seminarDate: new Date(),
+    seminarTimeStart: new Date(),
+    seminarTimeEnd: new Date(),
     seminarOfflinePlace: "Ruang Diskusi Farmasi",
     seminarType: "Seminar Proposal",
     mainMentor: "Dr. Hendra, S.Si., M.Kom.",
@@ -42,9 +42,9 @@ const dummySeminarData: Array<IFESeminarCoordinatorSeminarSchedulingCard> = [
     nim: "H071171308",
     proposalTitle:
       "ANALISA PERBANDINGAN KINERJA METODE CANNY DAN FUZZY LOGIC DALAM DETEKSI KEASLIAN MATA UANG RUPIAH KERTAS BERDASARKAN WATERMARK",
-    seminarTime: "Senin, 29 Februari 2023",
-    seminarStartTime: "22",
-    seminarEndTime: "23",
+    seminarDate: new Date(),
+    seminarTimeStart: new Date(),
+    seminarTimeEnd: new Date(),
     seminarOfflinePlace: "Hiroshima, Jepang",
     seminarType: "Ujian Skripsi",
     mainMentor: "Dr. Hendra, S.Si., M.Kom.",
@@ -62,9 +62,9 @@ const dummySeminarData: Array<IFESeminarCoordinatorSeminarSchedulingCard> = [
     nim: "H071191044",
     proposalTitle:
       "ANALISA PERBANDINGAN KINERJA METODE CANNY DAN FUZZY LOGIC DALAM DETEKSI KEASLIAN MATA UANG RUPIAH KERTAS BERDASARKAN WATERMARK",
-    seminarTime: "Senin, 29 Februari 2023",
-    seminarStartTime: "22",
-    seminarEndTime: "23",
+    seminarDate: new Date(),
+    seminarTimeStart: new Date(),
+    seminarTimeEnd: new Date(),
     seminarOfflinePlace: "Hiroshima, Jepang",
     seminarType: "Ujian Skripsi",
     mainMentor: "Dr. Hendra, S.Si., M.Kom.",
@@ -82,7 +82,7 @@ const dummySeminarData: Array<IFESeminarCoordinatorSeminarSchedulingCard> = [
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
     title: "Seminar",
-    href: FEROUTES.SEMINAR_COORDINATOR_SEMINAR
+    href: FEROUTES.SEMINAR_COORDINATOR_SEMINAR,
   },
 ];
 
@@ -127,7 +127,10 @@ const FESeminarCoordinatorSeminarScheduling: React.FC<
   }
 
   return (
-    <FEMainlayout breadCrumbs={breadCrumbs} breadCrumbsCurrentPage="Jadwal Seminar">
+    <FEMainlayout
+      breadCrumbs={breadCrumbs}
+      breadCrumbsCurrentPage="Jadwal Seminar"
+    >
       <FESeminarCoordinatorSeminarSchedulingModal
         opened={isAddScheduleModalOpened}
         setOpened={setIsAddScheduleModalOpened}

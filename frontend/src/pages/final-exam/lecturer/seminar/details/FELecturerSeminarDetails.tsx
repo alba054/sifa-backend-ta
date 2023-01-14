@@ -31,6 +31,7 @@ import FEInputModal from "src/components/FEInputModal";
 import { NumberInput, TextInput } from "src/components/FormInput";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
+import { getFEDate } from "src/utils/functions/date.function";
 
 export interface IFELecturerSeminarDetails {}
 
@@ -39,7 +40,9 @@ export interface IFELecturerStudentSeminar {
   nim: string;
   proposalTitle: string;
   seminarType: string;
-  seminarTime: string;
+  seminarDate: Date;
+  seminarTimeStart: Date;
+  seminarTimeEnd: Date;
   seminarOfflinePlace: string;
   seminarNote: string;
   mainMentor: string;
@@ -58,7 +61,10 @@ const dummySeminarData: {
     nim: "H071191040",
     proposalTitle:
       "RANCANG BANGUN SISTEM INFORMASI APLIKASI PERPUSTAKAAN UNIVERSITAS HASANUDDIN BERBASIS ANDROID",
-    seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
+
+    seminarDate: new Date(),
+    seminarTimeStart: new Date(),
+    seminarTimeEnd: new Date(),
     seminarOfflinePlace: "Ruang Diskusi Farmasi",
     seminarNote:
       "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
@@ -74,7 +80,9 @@ const dummySeminarData: {
     nim: "H071171308",
     proposalTitle:
       "ANALISA PERBANDINGAN KINERJA METODE CANNY DAN FUZZY LOGIC DALAM DETEKSI KEASLIAN MATA UANG RUPIAH KERTAS BERDASARKAN WATERMARK",
-    seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
+    seminarDate: new Date(),
+    seminarTimeStart: new Date(),
+    seminarTimeEnd: new Date(),
     seminarOfflinePlace: "Hiroshima, Jepang",
     seminarNote:
       "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
@@ -90,7 +98,9 @@ const dummySeminarData: {
     nim: "H071191044",
     proposalTitle:
       "ANALISA PERBANDINGAN KINERJA METODE CANNY DAN FUZZY LOGIC DALAM DETEKSI KEASLIAN MATA UANG RUPIAH KERTAS BERDASARKAN WATERMARK",
-    seminarTime: "Senin, 29 Februari 2023 (23:00 - 23:59 WITA)",
+    seminarDate: new Date(),
+    seminarTimeStart: new Date(),
+    seminarTimeEnd: new Date(),
     seminarOfflinePlace: "Hiroshima, Jepang",
     seminarNote:
       "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09",
@@ -215,7 +225,7 @@ const FELecturerSeminarDetails: React.FC<IFELecturerSeminarDetails> = ({}) => {
                 />
                 <Text className="text-secondary-text-500">
                   {/* Senin, 29 Februari 2023 (23:00 - 23:59 WITA) */}
-                  {seminarData.seminarTime}
+                  {getFEDate(seminarData.seminarDate, seminarData.seminarTimeStart, seminarData.seminarTimeEnd)}
                   {/* {seminarTimeInformation.date} ({seminarTimeInformation.time}) */}
                 </Text>
               </Group>

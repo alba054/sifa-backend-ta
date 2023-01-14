@@ -17,8 +17,9 @@ const dummyFESeminarHistory: Array<IFESeminarHistoryCard> = [
     proposalTitle:
       "Potensi Tumbuhan Libo (Ficus variegata, Blume) Sebagai Sumber Bahan Farmasi Potensial",
     seminarTimeInformation: {
-      date: "Jumat, 31 Desember 2022",
-      time: "22:00 - 23:59 WITA",
+      seminarDate: new Date(),
+      seminarTimeStart: new Date(),
+      seminarTimeEnd: new Date(),
       offlinePlace: "Ruang Diskusi Farmasi",
       seminarNote:
         "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09 Meeting ID: 968 7472 2331 Passcode: f4rmasi",
@@ -32,8 +33,9 @@ const dummyFESeminarHistory: Array<IFESeminarHistoryCard> = [
     proposalTitle:
       "Potensi Tumbuhan Libo (Ficus variegata, Blume) Sebagai Sumber Bahan Farmasi Potensial",
     seminarTimeInformation: {
-      date: "Kamis, 1 Februari 2023",
-      time: "22:00 - 23:59 WITA",
+      seminarDate: new Date(),
+      seminarTimeStart: new Date(),
+      seminarTimeEnd: new Date(),
       offlinePlace: "Ruang Diskusi Farmasi",
       seminarNote:
         "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09 Meeting ID: 968 7472 2331 Passcode: f4rmasi",
@@ -74,9 +76,11 @@ const FESeminarHistory: React.FC<IFESeminarHistory> = ({}) => {
       breadCrumbsCurrentPage="Riwayat Seminar"
     >
       <Stack spacing={"xl"}>
-        <Title order={2} mb={2}>Riwayat Seminar</Title>
+        <Title order={2} mb={2}>
+          Riwayat Seminar
+        </Title>
         {isHistoryExist ? (
-            <FESeminarHistoryMain seminarHistoryData={seminarHistoryData} />
+          <FESeminarHistoryMain seminarHistoryData={seminarHistoryData} />
         ) : (
           <LFPEmptyDataComponent
             title="Riwayat Seminar Masih Kosong"

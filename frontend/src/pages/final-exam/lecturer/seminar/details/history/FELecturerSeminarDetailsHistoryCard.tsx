@@ -20,6 +20,7 @@ import FEDocumentListShowCase from "src/components/fe-components/FEDocumentListS
 import FEScoreCircleBar from "src/components/fe-components/FEScoreCircleBar";
 import FETableRow1 from "src/components/fe-components/table/FETableRow1";
 import FETableRow2 from "src/components/fe-components/table/FETableRow2";
+import { getFEDate } from "src/utils/functions/date.function";
 import { IFELecturerStudentSeminar } from "../FELecturerSeminarDetails";
 
 export interface IFELecturerSeminarDetailsHistoryCard {
@@ -72,7 +73,7 @@ const FELecturerSeminarDetailsHistoryCard: React.FC<
                   />
                   <Text className="text-secondary-text-500">
                     {/* Senin, 29 Februari 2023 (23:00 - 23:59 WITA) */}
-                    {seminarData.seminarTime}
+                    {getFEDate(seminarData.seminarDate, seminarData.seminarTimeStart, seminarData.seminarTimeEnd)}
                     {/* {seminarTimeInformation.date} ({seminarTimeInformation.time}) */}
                   </Text>
                 </Group>

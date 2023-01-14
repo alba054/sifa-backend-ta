@@ -18,6 +18,7 @@ import FEInputModal from "src/components/FEInputModal";
 import FEProfileCard from "src/components/FEProfileCard";
 import { DatePickerInput } from "src/components/FormInput";
 import { FEStatus } from "src/utils/const/type";
+import { getFEDate } from "src/utils/functions/date.function";
 import FESeminarCoordinatorSeminarSchedulingEditModal from "./FESeminarCoordinatorSeminarSchedulingEditModal";
 
 export interface IFESeminarCoordinatorSeminarSchedulingCard {
@@ -25,10 +26,9 @@ export interface IFESeminarCoordinatorSeminarSchedulingCard {
   name: string;
   nim: string;
   proposalTitle: string;
-  seminarType: string;
-  seminarTime: string;
-  seminarStartTime: string;
-  seminarEndTime: string;
+  seminarType: string;seminarDate: Date;
+  seminarTimeStart: Date;
+  seminarTimeEnd: Date;
   seminarOfflinePlace: string;
   mainMentor: string;
   sideMentor: string;
@@ -51,9 +51,7 @@ const FESeminarCoordinatorSeminarSchedulingCard: React.FC<
   nim,
   proposalTitle,
   seminarOfflinePlace,
-  seminarTime,
-  seminarEndTime,
-  seminarStartTime,
+  seminarDate, seminarTimeEnd, seminarTimeStart,
   seminarType,
   firstExaminers,
   firstExaminersStatus,
@@ -186,7 +184,7 @@ const FESeminarCoordinatorSeminarSchedulingCard: React.FC<
               className="relative -top-[1px]"
             />
             <Text className="text-primary-text-500">
-              {seminarTime} ({seminarStartTime} - {seminarEndTime} WITA)
+              {getFEDate(seminarDate, seminarTimeStart, seminarTimeEnd)}
             </Text>
           </Group>
           <Stack className="gap-0">

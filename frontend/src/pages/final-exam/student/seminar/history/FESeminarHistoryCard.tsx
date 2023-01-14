@@ -9,13 +9,14 @@ import {
 import FEDocumentListShowCase from "src/components/fe-components/FEDocumentListShowCase";
 import FETableHeader2 from "src/components/fe-components/table/FETableHeader2";
 import FETableRow1 from "src/components/fe-components/table/FETableRow1";
+import { getFEDate } from "src/utils/functions/date.function";
 import FESeminarEvaluation from "../FESeminarEvaluation";
 import { IFESeminarTimeInformation } from "../FESeminarTimeInformation";
 
 export interface IFESeminarHistoryCard {
   seminarType: string;
   proposalTitle: string;
-  seminarTimeInformation:IFESeminarTimeInformation;
+  seminarTimeInformation: IFESeminarTimeInformation;
   seminarScore: number;
   seminarRubric: string;
   mentorNotes: Array<string>;
@@ -46,7 +47,11 @@ const FESeminarHistoryCard: React.FC<IFESeminarHistoryCard> = ({
                   color={theme.colors["secondary-text"][5]}
                 />
                 <Text className="text-secondary-text-500">
-                  {seminarTimeInformation.date} ({seminarTimeInformation.time})
+                  {getFEDate(
+                    seminarTimeInformation.seminarDate,
+                    seminarTimeInformation.seminarTimeStart,
+                    seminarTimeInformation.seminarTimeEnd
+                  )}
                 </Text>
               </Group>
               <Group className="gap-2">

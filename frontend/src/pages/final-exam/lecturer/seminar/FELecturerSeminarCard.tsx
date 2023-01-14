@@ -3,13 +3,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FEClockOutline, FELocationOutline } from "src/assets/Icons/Fluent";
 import FEProfileCard from "src/components/FEProfileCard";
+import { getFEDate } from "src/utils/functions/date.function";
 
 export interface IFELecturerSeminarCard {
   name: string;
   nim: string;
   proposalTitle: string;
   seminarType: string;
-  seminarTime: string;
+  seminarDate: Date;
+  seminarTimeStart: Date;
+  seminarTimeEnd: Date;
   seminarOfflinePlace: string;
   seminarNote: string;
 }
@@ -20,7 +23,9 @@ const FELecturerSeminarCard: React.FC<IFELecturerSeminarCard> = ({
   proposalTitle,
   seminarOfflinePlace,
   seminarNote,
-  seminarTime,
+  seminarDate,
+  seminarTimeEnd,
+  seminarTimeStart,
   seminarType,
 }) => {
   return (
@@ -31,9 +36,7 @@ const FELecturerSeminarCard: React.FC<IFELecturerSeminarCard> = ({
     >
       <Stack className="gap-6">
         <Stack className="gap-1">
-          <Text className="text-lg tracking-1">
-            {proposalTitle}
-          </Text>
+          <Text className="text-lg tracking-1">{proposalTitle}</Text>
           <Text className="text-secondary-text-500 tracking-4">
             Oleh: {name} ({nim})
           </Text>
@@ -45,9 +48,7 @@ const FELecturerSeminarCard: React.FC<IFELecturerSeminarCard> = ({
               color={"#334155"}
               className="relative -top-[1px]"
             />
-            <Text className="text-primary-text-500">
-              {seminarTime}
-            </Text>
+            <Text className="text-primary-text-500">{getFEDate(seminarDate, seminarTimeStart, seminarTimeEnd)}</Text>
           </Group>
           <Stack className="gap-0">
             <Group className="gap-2">
@@ -61,7 +62,7 @@ const FELecturerSeminarCard: React.FC<IFELecturerSeminarCard> = ({
               </Text>
             </Group>
             <Text className="text-primary-text-500 ml-[26px] truncate">
-                {seminarNote}
+              {seminarNote}
             </Text>
           </Stack>
         </Stack>
