@@ -3,6 +3,7 @@ import { Group, Button, Title, Tooltip, useMantineTheme } from "@mantine/core";
 import React from "react";
 import { Link } from "react-router-dom";
 import { AddFilled } from "src/assets/Icons/Fluent";
+import { COLORS } from "src/themes/colors.theme";
 import FERoundedChip from "./FERoundedChip";
 
 export interface ILFPHeaderButton {
@@ -79,7 +80,15 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
                     className={`border-[1px] border-[#CACCCE] font-bold disabled`}
                     disabled={button.disabled}
                     onClick={button.onClick}
-                    leftIcon={button.icon ?? addIcon}
+                    leftIcon={
+                      button.icon ?? (
+                        <AddFilled
+                          className={`mr-1 mb-[1px]`}
+                          size={14}
+                          color={button.disabled ? COLORS.DIVIDER : "#000"}
+                        />
+                      )
+                    }
                     styles={{
                       leftIcon: {
                         marginRight: "2px !important",
@@ -96,7 +105,16 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
                     className="border-[1px] border-[#CACCCE] font-bold"
                     disabled={button.disabled}
                     component={Link}
-                    leftIcon={button.icon ?? addIcon}
+                    // leftIcon={button.icon ?? addIcon}
+                    leftIcon={
+                      button.icon ?? (
+                        <AddFilled
+                          className={`mr-1 mb-[1px]`}
+                          size={14}
+                          color={button.disabled ? COLORS.DIVIDER : "#000"}
+                        />
+                      )
+                    }
                     to={button.href ?? "#"}
                     styles={{
                       leftIcon: {
@@ -112,28 +130,6 @@ const LFPHeaderComponent: React.FC<ILFGHeaderComponentProps> = ({
           );
         })}
       </Group>
-      {/* {type == "modal" ? (
-        <Button
-          variant="outline"
-          color="primary-text"
-          className="h-[46px] gap-[8px] py-[12px] px-[16px] border-[1px] border-[#CACCCE] rounded-[8px] font-bold"
-          onClick={onClick}
-        >
-          <AddFilled className={`mr-1 mb-[1px]`} size={14} />
-          {label}
-        </Button>
-      ) : (
-        <Button
-          variant="outline"
-          color="primary-text"
-          className="h-[46px] gap-[8px] py-[12px] px-[16px] border-[1px] border-[#CACCCE] rounded-[8px] font-bold"
-          component={Link}
-          to={href}
-        >
-          <AddFilled className={`mr-1 mb-[1px]`} size={14} />
-          {label}
-        </Button>
-      )} */}
     </Group>
   );
 };

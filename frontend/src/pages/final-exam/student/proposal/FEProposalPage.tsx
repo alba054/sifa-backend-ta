@@ -19,6 +19,7 @@ import {
 } from "src/query-functions/const.query-function";
 import { qfGetStudentThesis } from "src/query-functions/student.query-function";
 import { FEROUTES } from "src/routes/final-exam.route";
+import { COLORS } from "src/themes/colors.theme";
 import FEDeleteProposalsButton from "./FEDeleteProposalsButton";
 import { IFEProposalCard } from "./FEProposalCard";
 import FEProposalMain from "./FEProposalMain";
@@ -49,8 +50,14 @@ const FEProposalPage: React.FC<IFEProposalPageProps> = ({}) => {
       label: "Riwayat Usulan",
       type: "href",
       href: FEROUTES.STUDENT_FINAL_EXAM_PROPOSAL_HISTORY,
-      icon: <FEClockRepeatOutline size={15} className="mr-[6px]" />,
-      disabled: false,
+      icon: (
+        <FEClockRepeatOutline
+          color={!finalExamProposalArray?.length ? COLORS.DIVIDER : "#000"}
+          size={15}
+          className="mr-[6px]"
+        />
+      ),
+      disabled: !finalExamProposalArray?.length,
     },
     {
       label: "Buat Usulan Baru",
