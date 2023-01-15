@@ -7,7 +7,14 @@ export interface IFERoleProvider {
 export type possibleRole =
   | "student"
   | "study-program-admin"
-  | "first-vice-dean";
+  | "first-vice-dean" 
+  | "subsection-chairman"
+  | "head-administrator"
+  | "dean"
+  | "faculty-admin"
+  | "lecturer"
+  | "lab-head"
+  | "seminar-coordinator"
   
 export const UserRoleContext = createContext<possibleRole>("student");
 export const UserRoleChangeContext = createContext((e: possibleRole) => {});
