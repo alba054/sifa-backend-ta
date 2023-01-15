@@ -29,6 +29,20 @@ const FEMainNavbar: React.FC<IFEMainNavbarProps> = ({ menus, profileLink }) => {
   const [isHover, setIsHover] = useState(false);
   const { pathname } = useLocation();
 
+  const allRolesHomepageRoutes = [
+    FEROUTES.HOMEPAGE,
+    FEROUTES.STUDENT_HOMEPAGE,
+    FEROUTES.DEAN_HOMEPAGE,
+    FEROUTES.LAB_HEAD_HOMEPAGE,
+    FEROUTES.LECTURER_HOMEPAGE,
+    FEROUTES.FACULTY_ADMIN_HOMEPAGE,
+    FEROUTES.FIRST_VICE_DEAN_HOMEPAGE,
+    FEROUTES.HEAD_ADMINISTRATOR_HOMEPAGE,
+    FEROUTES.SEMINAR_COORDINATOR_HOMEPAGE,
+    FEROUTES.STUDY_PROGRAM_ADMIN_HOMEPAGE,
+    FEROUTES.SUBSECTION_CHAIRMAN_HOMEPAGE,
+  ];
+
   return (
     <Navbar
       hiddenBreakpoint={"sm"}
@@ -59,7 +73,11 @@ const FEMainNavbar: React.FC<IFEMainNavbarProps> = ({ menus, profileLink }) => {
           {menus.map((menu) => {
             return (
               <FENavbarMenuItem
-                isActive={menu.href === pathname}
+                isActive={
+                  allRolesHomepageRoutes.includes(menu.href)
+                    ? menu.href == pathname
+                    : pathname.includes(menu.href)
+                }
                 key={"menu-item" + menu.label}
                 icon={menu.icon}
                 label={menu.label}
