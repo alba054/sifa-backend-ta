@@ -10,6 +10,7 @@ import laboratoryRouter from "./laboratory.route";
 import headMajorRouter from "./headMajor.route";
 import headLabRouter from "./headLab.route";
 import headFacultyRouter from "./headFaculty.route";
+import chatRouter from "./chat.route";
 
 const router = express.Router();
 
@@ -24,5 +25,7 @@ router.use("/laboratories", laboratoryRouter);
 router.use("/head-majors", headMajorRouter);
 router.use("/head-labs", headLabRouter);
 router.use("/head-faculties", headFacultyRouter);
+// * chat service
+router.use("/chat", chatRouter);
 
 export default router;

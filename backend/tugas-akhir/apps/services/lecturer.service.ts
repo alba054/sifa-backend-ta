@@ -42,7 +42,7 @@ export class LecturerService {
 
     const examiner = await Examiner.getExaminerByID(examinerID);
 
-    if (examiner === null) {
+    if (examiner === null || examiner.ujiDsnId !== lecturer.dsnId) {
       throw new NotFoundError("examiner's not found");
     }
 
@@ -103,6 +103,10 @@ export class LecturerService {
     const supervisor = await Supervisor.getSupervisorByID(supervisorID);
 
     if (supervisor === null) {
+      return null;
+    }
+
+    if (supervisor.pmbDsnId !== lecturer.dsnId) {
       return null;
     }
 

@@ -54,6 +54,7 @@ export const constants = {
   USER_INACTIVE_STATUS: 0,
   MAXIMUM_UPLOADED_FILE_SIZE: 5 * 10e6, // * 5 MB
   KRS_AND_KHS_PATH: `${STUDENT_UPLOADED_FILE}/krs_khs`, // * krs and khs path,
+  CHAT_FILE_PATH: `${UPLOADED_FILE_BASE_URL}/chats`,
   PROPOSAL_STATUS_IN_PROCESS: "Belum_diproses",
   PROPOSAL_STATUS_APPROVED: "Diterima",
   PROPOSAL_STATUS_REJECTED: "Ditolak",

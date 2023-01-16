@@ -22,6 +22,26 @@ import { UserAsVocationAdmin } from "../services/user/UserAsVocationAdmin.facade
 dotenv.config();
 
 export class UserHandler {
+  static async getProfile(req: Request, res: Response, next: NextFunction) {
+    const { username } = req.params;
+
+    const userProfile = await UserService.getProfile(username);
+
+    if (userProfile === null) {
+      return next(new NotFoundError("user's not found"));
+    }
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get user's profile",
+          userProfile
+        )
+      );
+  }
+
   static async getUserStudents(
     req: Request,
     res: Response,
