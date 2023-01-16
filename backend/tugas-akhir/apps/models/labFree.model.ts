@@ -8,6 +8,51 @@ import {
 } from "../utils/interfaces/labFree.interface";
 
 export class LabFree {
+  static async changeRequestLabStatus(reqLabID: number, isAccepted: boolean) {
+    try {
+      return await prismaDB.bebas_lab.update({
+        where: { blId: reqLabID },
+        data: { ref_permohonan: isAccepted ? "Diterima" : "Ditolak" },
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
+  static async getFreeLabRequestsByLabID(
+    labID: number,
+    search: string | undefined
+  ) {
+    if (typeof search !== "undefined") {
+      return await prismaDB.bebas_lab.findMany({
+        where: {
+          AND: [
+            { blLabId: labID },
+            {
+              OR: [
+                { blMhsNim: { contains: search } },
+                { mahasiswa: { mhsNama: { contains: search } } },
+              ],
+            },
+          ],
+        },
+      });
+    }
+
+    return await prismaDB.bebas_lab.findMany({
+      where: { blLabId: labID },
+      include: {
+        mahasiswa: true,
+      },
+    });
+  }
+
   static async getFreeLabRequestsByID(reqlabsID: number) {
     return await prismaDB.bebas_lab.findUnique({ where: { blId: reqlabsID } });
   }

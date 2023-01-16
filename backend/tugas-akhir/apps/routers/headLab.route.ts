@@ -79,4 +79,28 @@ headLabRouter
     HeadLabHandler.getDispositionDetail
   );
 
+// * get all requests of free lab
+// * create new requests of free lab
+headLabRouter
+  .route("/reqlabs")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.getReqLabsByLabID
+  )
+  .post(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.createNewReqLabs
+  );
+
+headLabRouter
+  .route("/reqlabs/:reqLabID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.getRequestLabDetail
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.acceptOrRejectRequestLab
+  );
+
 export default headLabRouter;

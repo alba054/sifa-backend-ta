@@ -1,8 +1,10 @@
+import { LabFree } from "../models/labFree.model";
 import { Supervisor } from "../models/supervisor.model";
 import { Thesis } from "../models/thesis.model";
 import { ThesisHeadMajorDisposition } from "../models/thesisHeadMajorDisposition.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
+import { LabFreeService } from "./labFree.service";
 
 interface ISupervisorBodyPost {
   lecturerID: number;
@@ -10,6 +12,34 @@ interface ISupervisorBodyPost {
 }
 
 export class HeadLabService {
+  static async getReqLabDetail(reqLabID: number, labID: number) {
+    const reqlab = await LabFree.getFreeLabRequestsByID(reqLabID);
+
+    if (reqlab === null || reqlab.blLabId !== labID) {
+      throw new NotFoundError("reqlab's not found");
+    }
+
+    return reqlab;
+  }
+
+  static async acceptOrRejectRequestLab(
+    reqLabID: number,
+    labID: number,
+    isAccepted: boolean
+  ) {
+    const reqlab = await LabFree.getFreeLabRequestsByID(reqLabID);
+
+    if (reqlab === null || reqlab.blLabId !== labID) {
+      throw new NotFoundError("request's not found");
+    }
+
+    return await LabFree.changeRequestLabStatus(reqLabID, isAccepted);
+  }
+
+  static async getReqLabsByLabID(labID: number, search: any) {
+    return await LabFree.getFreeLabRequestsByLabID(labID, search);
+  }
+
   static async viewSupervisorsHistory(status: any) {
     return await Supervisor.getAllSupervisors(status);
   }

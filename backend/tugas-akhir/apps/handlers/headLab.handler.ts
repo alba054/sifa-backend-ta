@@ -1,7 +1,9 @@
 import { NextFunction, Response, Request } from "express";
 import { HeadLabService } from "../services/headLab.service";
+import { LabFreeService } from "../services/labFree.service";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
+import { ILabFree } from "../utils/interfaces/labFree.interface";
 import { constants, createResponse } from "../utils/utils";
 
 interface ISupervisorBodyPost {
@@ -10,6 +12,125 @@ interface ISupervisorBodyPost {
 }
 
 export class HeadLabHandler {
+  static async getRequestLabDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { labID } = res.locals.user;
+    const { reqLabID } = req.params;
+
+    try {
+      const reqlab = await HeadLabService.getReqLabDetail(
+        Number(reqLabID),
+        Number(labID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get reqlab detail",
+            reqlab
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async acceptOrRejectRequestLab(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { reqLabID } = req.params;
+    const { labID } = res.locals.user;
+    const { isAccepted } = req.body;
+
+    try {
+      if (typeof isAccepted === "undefined") {
+        throw new BadRequestError("provide isAccepted");
+      }
+
+      await HeadLabService.acceptOrRejectRequestLab(
+        Number(reqLabID),
+        Number(labID),
+        Boolean(isAccepted)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully accept/reject"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async createNewReqLabs(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { labID } = res.locals.user;
+    const { studentNIM } = req.body;
+
+    try {
+      if (typeof studentNIM === "undefined") {
+        throw new BadRequestError("provide studentNIM");
+      }
+
+      const body = {
+        labID,
+        studentNIM,
+      } as ILabFree;
+
+      const labFreeReq = await LabFreeService.insertNewLabFreeDoc(body);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "create new lab free request successfully",
+            labFreeReq
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getReqLabsByLabID(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { labID } = res.locals.user;
+    const { search } = req.query;
+
+    const reqlabs = await HeadLabService.getReqLabsByLabID(
+      Number(labID),
+      search
+    );
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully view all requests free lab",
+          reqlabs
+        )
+      );
+  }
+
   static async viewAssignedSupervisorsHistory(
     req: Request,
     res: Response,
