@@ -1,6 +1,6 @@
 import { API_URL } from "src/utils/const/api";
 import { FEStatus } from "src/utils/const/type";
-import { getLoggedInUserNim } from "src/utils/functions/cookies.function";
+import { cookieGetLoggedInUserNim } from "src/utils/functions/cookies.function";
 import {
   getTokenAuthorizationHeader,
   getFormattedUrlEndpoint,
@@ -35,7 +35,7 @@ export async function qfPutStudent(nim: string, body: IQFPutStudent) {
 }
 
 export async function qfGetStudentReqLabs() {
-  const nim = getLoggedInUserNim();
+  const nim = cookieGetLoggedInUserNim();
   const studentReqLabs = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/reqlabs`),
     {
@@ -54,7 +54,7 @@ export interface IQFPostStudentReqLabs {
   studentNIM: string;
 }
 export async function qfPostStudentReqLabs(body: IQFPostStudentReqLabs) {
-  const nim = getLoggedInUserNim();
+  const nim = cookieGetLoggedInUserNim();
   const studentReqLabs = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/reqlabs`),
     {
@@ -94,7 +94,7 @@ export async function qfPutStudentReqLabs(
 }
 
 export async function qfDeleteStudentReqLabs(reqlabId: string) {
-  const nim = getLoggedInUserNim();
+  const nim = cookieGetLoggedInUserNim();
 
   const studentReqLabs = await fetch(
     getFormattedUrlEndpoint(`${endpoint}/${nim}/reqlabs/${reqlabId}`),
@@ -116,7 +116,7 @@ export interface IQFGetThesisParams {
   proposalStatus?: FEStatus;
 }
 export async function qfGetStudentThesis(params?: IQFGetThesisParams) {
-  const nim = getLoggedInUserNim();
+  const nim = cookieGetLoggedInUserNim();
   const queryParamsArray = Object.keys(params || {}).map((key) => {
     const val = (params as any)[key];
     return `${key}=${val}`;
@@ -154,7 +154,7 @@ export interface IQFPostStudentThesis {
 
 export async function qfPostStudentThesis(body: IQFPostStudentThesis) {
   try {
-    const nim = getLoggedInUserNim();
+    const nim = cookieGetLoggedInUserNim();
     const studentThesis = await fetch(
       getFormattedUrlEndpoint(`${endpoint}/${nim}/thesis`),
       {
@@ -198,7 +198,7 @@ export async function qfPutStudentThesis(
 }
 
 export async function qfDeleteStudentThesis(thesisID: string) {
-  const nim = getLoggedInUserNim();
+  const nim = cookieGetLoggedInUserNim();
   console.log("URL:", `${endpoint}/${nim}/thesis/${thesisID}`);
 
   const studentThesis = await fetch(

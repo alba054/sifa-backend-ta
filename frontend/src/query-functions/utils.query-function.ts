@@ -1,4 +1,5 @@
 import { API_URL } from "src/utils/const/api";
+import { cookieGetLoggedInUserToken } from "src/utils/functions/cookies.function";
 
 export function getFormattedUrlEndpoint(endpoint: string) {
   const urlWithEndpoint = API_URL + endpoint;
@@ -6,17 +7,22 @@ export function getFormattedUrlEndpoint(endpoint: string) {
   return urlWithEndpoint;
 }
 
-export function getBasicAuthorizationHeader() {
+export function getBasicAuthorizationHeader(
+  username: string,
+  password: string
+) {
+  const key = `${username}:${password}`;
+  const encoded = btoa(key);
   return {
     "Content-Type": "application/json",
-    Authorization: "Basic YWRtaW46YWRtaW4=",
+    Authorization: `Basic ${encoded}`,
   };
 }
 
 export function getTokenAuthorizationHeader() {
+  const token = cookieGetLoggedInUserToken();
   return {
     "Content-Type": "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik4wMTExNzEwMDEiLCJlbWFpbCI6IiIsIm5hbWUiOiJBbmlzYWggRmlrcmF0dWwgSW5heWFoIEFud2FyIiwic3RhdHVzIjoxLCJncm91cEFjY2VzcyI6NywiZGVzY3JpcHRpb24iOiIiLCJkZXBhcnRtZW50SUQiOm51bGwsImxhYklEIjpudWxsLCJ2b2NhdGlvbklEIjpudWxsLCJpYXQiOjE2NzI0MTU2OTQsImV4cCI6MTY3NTAwNzY5NCwiaXNzIjoiYXBpLmxvY2FsaG9zdC5jb20ifQ.90kp9Lf3tCtMB-hXy2g3Ol6KYOr47BUzmJM8pg6UiIE",
+    Authorization: `Bearer ${token}`,
   };
 }
