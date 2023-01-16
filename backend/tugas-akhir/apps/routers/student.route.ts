@@ -1,5 +1,6 @@
 import express from "express";
 import { StudentHandler } from "../handlers/student.handler";
+import { AuthenticationMiddleware } from "../middlewares/auth/authentication.middleware";
 import { AuthorizationMiddleware } from "../middlewares/auth/authorization.middleware";
 import { StorageMiddleware } from "../middlewares/utils/storage.middleware";
 import { upload } from "../utils/storage";
@@ -97,6 +98,13 @@ studentRouter
     AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
     upload.array("files"),
     StudentHandler.reuploadKRSAndKHS
+  );
+
+studentRouter
+  .route("/")
+  .get(
+    AuthenticationMiddleware.authenticate("admin"),
+    StudentHandler.getAllStudents
   );
 
 export default studentRouter;

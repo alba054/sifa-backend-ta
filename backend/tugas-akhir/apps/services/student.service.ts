@@ -9,6 +9,10 @@ import {
 import { writeToFile } from "../utils/storage";
 
 export class StudentService {
+  static async getAllStudents() {
+    return await Student.selectAllStudentsWithouPagination();
+  }
+
   static async reuploadKRSAndKHS(
     path: string,
     krsBuffer: Buffer,
