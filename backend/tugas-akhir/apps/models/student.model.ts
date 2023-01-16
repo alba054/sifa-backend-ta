@@ -9,6 +9,18 @@ import {
 } from "../utils/interfaces/student.interface";
 
 export class Student implements IStudent {
+  static async selectAllStudentsWithouPagination() {
+    return await prismaDB.mahasiswa.findMany({
+      include: {
+        penasehat_akademik: true,
+        bebas_lab: true,
+        dosen: true,
+        ref_prodi: true,
+        tugas_akhir: true,
+      },
+    });
+  }
+
   nim: string;
   name: string;
   address?: string | undefined;

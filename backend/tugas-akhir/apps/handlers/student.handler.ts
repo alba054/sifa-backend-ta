@@ -19,6 +19,26 @@ import { decodeBase64 } from "../utils/decoder";
 dotenv.config();
 
 export class StudentHandler {
+  static async getAllStudents(req: Request, res: Response, next: NextFunction) {
+    // const { page, limit } = req.query;
+    // // * pageInNumber : default 0
+    // // * limitInNumber : default 10 items per page
+    // const pageInNumber = typeof page === "undefined" ? 0 : Number(page);
+    // let limitInNumber = typeof limit === "undefined" ? 10 : Number(limit);
+
+    const students = await StudentService.getAllStudents();
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get all students",
+          students
+        )
+      );
+  }
+
   static async reuploadKRSAndKHS(
     req: Request,
     res: Response,
