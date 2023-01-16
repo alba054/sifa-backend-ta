@@ -42,6 +42,9 @@ export class LabFree {
             },
           ],
         },
+        include: {
+          mahasiswa: true,
+        },
       });
     }
 

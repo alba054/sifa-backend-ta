@@ -55,12 +55,12 @@ export class UserHandler {
     let limitInNumber = typeof limit === "undefined" ? 10 : Number(limit);
 
     try {
-      const users = await UserService.getAllStudentUsers(
+      let users = await UserService.getAllStudentUsers(
         pageInNumber,
         limitInNumber
       );
 
-      console.log(users);
+      users.forEach((u) => (u.password = null));
 
       return res
         .status(200)
