@@ -32,6 +32,24 @@ interface IAssignedExaminer {
 }
 
 export class HeadMajorHandler {
+  static async getAllDispositions(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const dispositions = await HeadMajorService.getAllDispositions();
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully view dispositions history",
+          dispositions
+        )
+      );
+  }
+
   static async getAllThesis(req: Request, res: Response, next: NextFunction) {
     const { status } = req.query;
     const thesis = await HeadMajorService.getAllThesis(status);

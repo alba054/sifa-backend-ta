@@ -67,6 +67,14 @@ headMajorRouter
     HeadMajorHandler.getExaminersHistory
   );
 
+// * get dispositions
+headMajorRouter
+  .route("/dispositions")
+  .get(
+    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    HeadMajorHandler.getAllDispositions
+  );
+
 // * get disposition of approved thesis
 // * delete disposition
 headMajorRouter

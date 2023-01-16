@@ -11,6 +11,7 @@ import headMajorRouter from "./headMajor.route";
 import headLabRouter from "./headLab.route";
 import headFacultyRouter from "./headFaculty.route";
 import chatRouter from "./chat.route";
+import refLetterRouter from "./refLetter.route";
 
 const router = express.Router();
 
@@ -25,6 +26,7 @@ router.use("/laboratories", laboratoryRouter);
 router.use("/head-majors", headMajorRouter);
 router.use("/head-labs", headLabRouter);
 router.use("/head-faculties", headFacultyRouter);
+router.use("/ref-letters", refLetterRouter);
 // * chat service
 router.use("/chat", chatRouter);
 

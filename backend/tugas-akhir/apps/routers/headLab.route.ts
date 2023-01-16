@@ -92,6 +92,8 @@ headLabRouter
     HeadLabHandler.createNewReqLabs
   );
 
+// * request lab detail
+// * accept or reject request lab
 headLabRouter
   .route("/reqlabs/:reqLabID")
   .get(
@@ -101,6 +103,34 @@ headLabRouter
   .put(
     AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
     HeadLabHandler.acceptOrRejectRequestLab
+  );
+
+// * get lab letters
+// * create lab letter
+headLabRouter
+  .route("/labLetters")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.getLabLetters
+  )
+  .post(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.createLabLetter
+  );
+
+headLabRouter
+  .route("/labLetters/:labLetterID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.getLabLetterDetail
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.editLabLetter
+  )
+  .delete(
+    AuthorizationMiddleware.authorize([constants.LAB_ADMIN_GROUP_ACCESS]),
+    HeadLabHandler.deleteLabLetter
   );
 
 export default headLabRouter;
