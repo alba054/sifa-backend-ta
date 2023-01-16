@@ -1,9 +1,10 @@
 import {
   getBasicAuthorizationHeader,
   getFormattedUrlEndpoint,
+  getTokenAuthorizationHeader,
 } from "./utils.query-function";
 
-const endpoint = `/api/v0/users/`;
+const endpoint = `/api/v0/users`;
 
 interface IPostUser {
   email: "any";
@@ -16,7 +17,7 @@ export async function qfPostUsers(body: IPostUser) {
     method: "POST",
     body: JSON.stringify(body),
     headers: {
-      ...getBasicAuthorizationHeader(),
+      ...getTokenAuthorizationHeader(),
     },
   });
 
@@ -30,7 +31,7 @@ export async function qfGetUserStudents(body: IPostUser) {
       method: "GET",
       body: JSON.stringify(body),
       headers: {
-        ...getBasicAuthorizationHeader(),
+        ...getTokenAuthorizationHeader(),
       },
     }
   );
@@ -38,15 +39,24 @@ export async function qfGetUserStudents(body: IPostUser) {
   return await userStudents.json();
 }
 
-export async function qfLogin() {
-  const loginResp = await fetch(getFormattedUrlEndpoint(`${endpoint}`), {
+export interface IQFLoginParams {
+  username: string;
+  password: string;
+}
+
+export async function qfLogin(params: IQFLoginParams) {
+  const loginResp = await fetch(getFormattedUrlEndpoint(`${endpoint}/login`), {
     method: "POST",
     headers: {
-      ...getBasicAuthorizationHeader(),
+      ...getBasicAuthorizationHeader(params.username, params.password),
     },
   });
 
-  return await loginResp.json();
+  const resp = await loginResp.json();
+
+  console.log(resp);
+
+  return resp;
 }
 
 export async function qfForgetPassword(username: string) {
@@ -55,7 +65,8 @@ export async function qfForgetPassword(username: string) {
     {
       method: "GET",
       headers: {
-        ...getBasicAuthorizationHeader(),
+        // FIXME: This should be password, verify the flow
+        ...getBasicAuthorizationHeader(username, "THIS_SHOULD_BE_PASSWORD"),
       },
     }
   );
@@ -77,7 +88,8 @@ export async function qfUpdatePassword(
       method: "POST",
       body: JSON.stringify(body),
       headers: {
-        ...getBasicAuthorizationHeader(),
+        // FIXME: This should be password, verify the flow
+        ...getBasicAuthorizationHeader(username, token),
       },
     }
   );

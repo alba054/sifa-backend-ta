@@ -141,3 +141,8 @@ export const FEROUTES = {
     "/tugas-akhir/koordinator-seminar/seminar/evaluasi",
   SEMINAR_COORDINATOR_REFERENCE: "/tugas-akhir/koordinator-seminar/referensi",
 };
+
+export const ROLE_HOMEPAGES: { [i: number]: string } = {
+  0: FEROUTES.HOMEPAGE,
+  7: FEROUTES.FACULTY_ADMIN_HOMEPAGE,
+};

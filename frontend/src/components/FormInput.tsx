@@ -19,7 +19,14 @@ import {
   PasswordInput,
 } from "@mantine/core";
 
-import { DatePicker, DatePickerProps, TimeInput, TimeInputProps, TimeRangeInput, TimeRangeInputProps } from "@mantine/dates";
+import {
+  DatePicker,
+  DatePickerProps,
+  TimeInput,
+  TimeInputProps,
+  TimeRangeInput,
+  TimeRangeInputProps,
+} from "@mantine/dates";
 
 import { useState } from "react";
 
@@ -124,7 +131,11 @@ export const SelectInput = ({ onFocus, onBlur, ...props }: SelectProps) => {
   );
 };
 
-export const DatePickerInput = ({ onFocus, onBlur, ...props }: DatePickerProps) => {
+export const DatePickerInput = ({
+  onFocus,
+  onBlur,
+  ...props
+}: DatePickerProps) => {
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
   return (
@@ -165,7 +176,11 @@ export const FETimeInput = ({ onFocus, onBlur, ...props }: TimeInputProps) => {
   );
 };
 
-export const FETimeRangeInput = ({ onFocus, onBlur, ...props }: TimeRangeInputProps) => {
+export const FETimeRangeInput = ({
+  onFocus,
+  onBlur,
+  ...props
+}: TimeRangeInputProps) => {
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
   return (
@@ -185,7 +200,11 @@ export const FETimeRangeInput = ({ onFocus, onBlur, ...props }: TimeRangeInputPr
   );
 };
 
-export const FEPasswordInput = ({ onFocus, onBlur, ...props }: PasswordInputProps) => {
+export const FEPasswordInput = ({
+  onFocus,
+  onBlur,
+  ...props
+}: PasswordInputProps) => {
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
   return (

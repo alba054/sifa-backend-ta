@@ -28,7 +28,7 @@ import {
   qfGetStudentReqLabs,
   qfPostStudentReqLabs,
 } from "src/query-functions/student.query-function";
-import { getLoggedInUserNim } from "src/utils/functions/cookies.function";
+import { cookieGetLoggedInUserNim } from "src/utils/functions/cookies.function";
 
 interface IFELabFreeProps {}
 
@@ -152,7 +152,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
     });
     const postBody: IQFPostStudentReqLabs = {
       labID: values.laboratory,
-      studentNIM: getLoggedInUserNim(),
+      studentNIM: cookieGetLoggedInUserNim(),
     };
     mutate(postBody);
   }
