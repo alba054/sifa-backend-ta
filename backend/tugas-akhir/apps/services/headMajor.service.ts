@@ -1,5 +1,6 @@
 import { Examiner } from "../models/examiner.model";
 import { Thesis } from "../models/thesis.model";
+import { ThesisHeadMajorDispositionService } from "./thesisHeadMajorDisposition.service";
 
 interface IAssignedExaminer {
   position: number;
@@ -7,6 +8,10 @@ interface IAssignedExaminer {
 }
 
 export class HeadMajorService {
+  static async getAllDispositions() {
+    return await ThesisHeadMajorDispositionService.getAllDispositions();
+  }
+
   static async getThesisByID(thesisID: number) {
     return await Thesis.getThesisByID(Number(thesisID));
   }

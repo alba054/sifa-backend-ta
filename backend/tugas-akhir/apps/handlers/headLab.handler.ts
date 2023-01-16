@@ -1,9 +1,11 @@
 import { NextFunction, Response, Request } from "express";
+import { LabLetter } from "../models/labLetter.model";
 import { HeadLabService } from "../services/headLab.service";
 import { LabFreeService } from "../services/labFree.service";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { ILabFree } from "../utils/interfaces/labFree.interface";
+import { ILabLetterPost } from "../utils/interfaces/labLetter.interface";
 import { constants, createResponse } from "../utils/utils";
 
 interface ISupervisorBodyPost {
@@ -12,6 +14,131 @@ interface ISupervisorBodyPost {
 }
 
 export class HeadLabHandler {
+  static async deleteLabLetter(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { labID } = res.locals.user;
+    const { labLetterID } = req.params;
+
+    try {
+      await HeadLabService.deleteLabLetter(Number(labID), Number(labLetterID));
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully delete lab letter"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async editLabLetter(req: Request, res: Response, next: NextFunction) {
+    const { labID } = res.locals.user;
+    const { labLetterID } = req.params;
+    const body = req.body as ILabLetterPost;
+
+    try {
+      if (typeof body.refLetterID === "undefined") {
+        throw new BadRequestError("provide refLetterID");
+      }
+
+      await HeadLabService.editLabLetter(
+        Number(labID),
+        Number(labLetterID),
+        body
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully edit lab letter"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getLabLetterDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { labID } = res.locals.user;
+    const { labLetterID } = req.params;
+
+    try {
+      const labLetter = await HeadLabService.getLabLetterDetail(
+        Number(labID),
+        Number(labLetterID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get lab letter",
+            labLetter
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getLabLetters(req: Request, res: Response, next: NextFunction) {
+    const { labID } = res.locals.user;
+
+    const labLetters = await HeadLabService.getLabLettersByLabID(Number(labID));
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get lab letters",
+          labLetters
+        )
+      );
+  }
+
+  static async createLabLetter(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { labID } = res.locals.user;
+    const body = req.body as ILabLetterPost;
+
+    try {
+      if (typeof body.refLetterID === "undefined") {
+        throw new BadRequestError("provide refLetterID");
+      }
+
+      await HeadLabService.createLabLetter(Number(labID), body);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully create lab letter"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getRequestLabDetail(
     req: Request,
     res: Response,
@@ -47,7 +174,7 @@ export class HeadLabHandler {
   ) {
     const { reqLabID } = req.params;
     const { labID } = res.locals.user;
-    const { isAccepted } = req.body;
+    const { isAccepted, resolveDate } = req.body;
 
     try {
       if (typeof isAccepted === "undefined") {
@@ -57,7 +184,8 @@ export class HeadLabHandler {
       await HeadLabService.acceptOrRejectRequestLab(
         Number(reqLabID),
         Number(labID),
-        Boolean(isAccepted)
+        Boolean(isAccepted),
+        resolveDate
       );
 
       return res

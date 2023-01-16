@@ -8,11 +8,18 @@ import {
 } from "../utils/interfaces/labFree.interface";
 
 export class LabFree {
-  static async changeRequestLabStatus(reqLabID: number, isAccepted: boolean) {
+  static async changeRequestLabStatus(
+    reqLabID: number,
+    isAccepted: boolean,
+    resolveDate: string
+  ) {
     try {
       return await prismaDB.bebas_lab.update({
         where: { blId: reqLabID },
-        data: { ref_permohonan: isAccepted ? "Diterima" : "Ditolak" },
+        data: {
+          ref_permohonan: isAccepted ? "Diterima" : "Ditolak",
+          blTglSurat: resolveDate,
+        },
       });
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {

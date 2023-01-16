@@ -53,7 +53,7 @@ export class UserService {
       .setStatus(constants.USER_ACTIVE_STATUS)
       .setEmail(newUser.email || "")
       .setDescription(newUser.description || "")
-      .setGroupAccess(newUser.groupAccess)
+      .setGroupAccess(Number(newUser.groupAccess))
       .setDepartmentID(newUser.departmentID)
       .setLabID(newUser.labID)
       .setVocationID(newUser.vocationID);

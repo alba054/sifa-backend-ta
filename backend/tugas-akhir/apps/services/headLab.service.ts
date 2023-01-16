@@ -1,9 +1,11 @@
 import { LabFree } from "../models/labFree.model";
+import { LabLetter } from "../models/labLetter.model";
 import { Supervisor } from "../models/supervisor.model";
 import { Thesis } from "../models/thesis.model";
 import { ThesisHeadMajorDisposition } from "../models/thesisHeadMajorDisposition.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
+import { ILabLetterPost } from "../utils/interfaces/labLetter.interface";
 import { LabFreeService } from "./labFree.service";
 
 interface ISupervisorBodyPost {
@@ -12,6 +14,48 @@ interface ISupervisorBodyPost {
 }
 
 export class HeadLabService {
+  static async deleteLabLetter(labID: number, labLetterID: number) {
+    const labLetter = await LabLetter.getLabLettersByID(labLetterID);
+
+    if (labLetter === null || labLetter.tsLabId !== labID) {
+      throw new NotFoundError("lab letter's not found");
+    }
+
+    return await LabLetter.deleteLabLetter(labLetterID);
+  }
+
+  static async editLabLetter(
+    labID: number,
+    labLetterID: number,
+    body: ILabLetterPost
+  ) {
+    const labLetter = await LabLetter.getLabLettersByID(labLetterID);
+
+    if (labLetter === null || labLetter.tsLabId !== labID) {
+      throw new NotFoundError("lab letter's not found");
+    }
+
+    return await LabLetter.editLabLetter(labLetterID, body);
+  }
+
+  static async getLabLetterDetail(labID: number, labLetterID: number) {
+    const labLetter = await LabLetter.getLabLettersByID(labLetterID);
+
+    if (labLetter === null || labLetter.tsLabId !== labID) {
+      throw new NotFoundError("lab letter is not found");
+    }
+
+    return labLetter;
+  }
+
+  static async createLabLetter(labID: number, body: ILabLetterPost) {
+    return LabLetter.createNewLabLetter(labID, body);
+  }
+
+  static async getLabLettersByLabID(labID: number) {
+    return LabLetter.getLabLettersByLabID(labID);
+  }
+
   static async getReqLabDetail(reqLabID: number, labID: number) {
     const reqlab = await LabFree.getFreeLabRequestsByID(reqLabID);
 
@@ -25,7 +69,8 @@ export class HeadLabService {
   static async acceptOrRejectRequestLab(
     reqLabID: number,
     labID: number,
-    isAccepted: boolean
+    isAccepted: boolean,
+    resolveDate: string
   ) {
     const reqlab = await LabFree.getFreeLabRequestsByID(reqLabID);
 
@@ -33,7 +78,15 @@ export class HeadLabService {
       throw new NotFoundError("request's not found");
     }
 
-    return await LabFree.changeRequestLabStatus(reqLabID, isAccepted);
+    if (isAccepted && typeof resolveDate === "undefined") {
+      throw new BadRequestError("provide resolveDate");
+    }
+
+    return await LabFree.changeRequestLabStatus(
+      reqLabID,
+      isAccepted,
+      resolveDate
+    );
   }
 
   static async getReqLabsByLabID(labID: number, search: any) {
