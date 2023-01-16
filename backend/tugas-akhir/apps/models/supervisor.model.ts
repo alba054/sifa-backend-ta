@@ -93,8 +93,10 @@ export class Supervisor {
           include: {
             ref_laboratorium: true,
             ref_laboratorium2: true,
+            mahasiswa: true,
           },
         },
+        asal_usulan: true,
       },
     });
   }
