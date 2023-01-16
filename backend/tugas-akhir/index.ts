@@ -14,7 +14,8 @@ const app = express();
 app.disable("x-powered-by");
 
 app.use(cors());
-app.use(express.json({ limit: "11mb" }));
+app.use(express.json({ limit: "100mb" }));
+app.use("/uploaded_file", express.static("uploaded_file"));
 
 app.use("/api/v0", router);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerfile));

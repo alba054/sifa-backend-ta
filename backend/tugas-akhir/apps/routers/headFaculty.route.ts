@@ -29,4 +29,11 @@ headFacultyRouter
     HeadFacultyHandler.acceptOrRejectProposal
   );
 
+headFacultyRouter
+  .route("/examiners/sk")
+  .post(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.createExaminerSK
+  );
+
 export default headFacultyRouter;

@@ -5,6 +5,12 @@ import { NotFoundError } from "../utils/error/notFoundError";
 import { constants, createResponse } from "../utils/utils";
 
 export class HeadFacultyHandler {
+  static async createExaminerSK(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {}
+
   static async acceptOrRejectProposal(
     req: Request,
     res: Response,

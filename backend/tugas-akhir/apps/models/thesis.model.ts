@@ -62,7 +62,17 @@ export class Thesis {
   }
 
   static async getThesisByID(thesisID: number) {
-    return await prismaDB.tugas_akhir.findUnique({ where: { taId: thesisID } });
+    return await prismaDB.tugas_akhir.findUnique({
+      where: { taId: thesisID },
+      include: {
+        mahasiswa: true,
+        penguji: { include: { dosen: true } },
+        pembimbing: { include: { dosen: true } },
+        pengusul: true,
+        ref_laboratorium: true,
+        ref_laboratorium2: true,
+      },
+    });
   }
 
   static async getAllThesis(
@@ -96,6 +106,14 @@ export class Thesis {
   static async getThesisByProposalGroupID(proposalGroupID: string) {
     return await prismaDB.tugas_akhir.findMany({
       where: { proposalGroupID },
+      include: {
+        mahasiswa: true,
+        penguji: { include: { dosen: true } },
+        pembimbing: { include: { dosen: true } },
+        pengusul: true,
+        ref_laboratorium: true,
+        ref_laboratorium2: true,
+      },
     });
   }
 
@@ -106,6 +124,14 @@ export class Thesis {
           { statusPermohonan: "Diterima" },
           // { OR: [{ taLabId: labID }, { taLabId2: labID }] },
         ],
+      },
+      include: {
+        mahasiswa: true,
+        penguji: { include: { dosen: true } },
+        pembimbing: { include: { dosen: true } },
+        pengusul: true,
+        ref_laboratorium: true,
+        ref_laboratorium2: true,
       },
     });
 
@@ -122,7 +148,8 @@ export class Thesis {
         mahasiswa: true,
         ref_laboratorium: true,
         ref_laboratorium2: true,
-        pembimbing: true,
+        pembimbing: { include: { dosen: true } },
+        penguji: { include: { dosen: true } },
       },
     });
 

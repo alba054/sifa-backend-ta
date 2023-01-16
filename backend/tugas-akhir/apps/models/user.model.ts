@@ -7,6 +7,17 @@ import { IUser } from "../utils/interfaces/user.interface";
 import { constants } from "../utils/utils";
 
 export class User {
+  static async getUserByUsername(username: string) {
+    return await prismaDB.user.findUnique({
+      where: { username },
+      include: {
+        ref_departemen: true,
+        ref_laboratorium: true,
+        ref_prodi: true,
+      },
+    });
+  }
+
   username: string;
   password: string;
   email?: string;

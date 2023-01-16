@@ -148,9 +148,9 @@ model pembimbingan {
   bimId        Int          @id @default(autoincrement()) @db.UnsignedInt
   bimTaId      Int?
   bimUserId    String?      @db.VarChar(30)
-  bimTanggal   DateTime?    @db.Date
-  bimJam       DateTime?    @db.Time(0)
-  bimPesanType Int?
+  bimTanggal   String?
+  bimJam       String?
+  bimPesanType Int? // pesantype 0:plain text, 1:file, 2:image
   bimPesan     String?      @db.Text
   bimUserNama  String?      @db.VarChar(100)
   tugas_akhir  tugas_akhir? @relation(fields: [bimTaId], references: [taId], onDelete: Cascade, map: "pembimbingan_ibfk_1")

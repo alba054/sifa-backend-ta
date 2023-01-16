@@ -7,6 +7,10 @@ import { IUser } from "../utils/interfaces/user.interface";
 import { constants } from "../utils/utils";
 
 export class UserService {
+  static async getProfile(username: string) {
+    return await User.getUserByUsername(username);
+  }
+
   static async getUserResetPasswordToken(token: string) {
     const userResetPasswordToken = await User.getUserResetPasswordToken(token);
 
