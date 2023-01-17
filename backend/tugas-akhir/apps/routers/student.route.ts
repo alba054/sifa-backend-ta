@@ -2,7 +2,6 @@ import express from "express";
 import { StudentHandler } from "../handlers/student.handler";
 import { AuthenticationMiddleware } from "../middlewares/auth/authentication.middleware";
 import { AuthorizationMiddleware } from "../middlewares/auth/authorization.middleware";
-import { StorageMiddleware } from "../middlewares/utils/storage.middleware";
 import { upload } from "../utils/storage";
 import { constants } from "../utils/utils";
 
