@@ -83,7 +83,7 @@ const FEProposalApplicationForm: React.FC<IFEProposalApplicationFormProps> = ({
         <LaboratoryInput
           placeholder="Pilih laboratorium kedua jika diperlukan"
           label="Laboratorium 2"
-          shouldDisabled={value?.firstLaboratory}
+          shouldDisabled={[value?.firstLaboratory]}
           error={errors?.[`${name}.${"secondLaboratory" as keyof TOffer}`]}
           name={"secondLaboratory" as keyof TOffer}
           onChange={(e) =>

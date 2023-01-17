@@ -137,8 +137,8 @@ const FELabHeadReference: React.FC<IFELabHeadReference> = ({}) => {
   useEffect(() => {
     if (!isEditModalOpened) {
       setValues({
-        letterName: undefined,
-        letterNumberFormat: undefined,
+        letterName: "",
+        letterNumberFormat: "",
       });
     }
   }, [isEditModalOpened]);
@@ -152,14 +152,14 @@ const FELabHeadReference: React.FC<IFELabHeadReference> = ({}) => {
       letterType: obj.letterName,
       letterNumberFormat: obj.letterNumberFormat,
     });
-    setValues({ letterName: undefined, letterNumberFormat: undefined });
+    setValues({ letterName: "", letterNumberFormat: "" });
   }
 
   function EditProposalHandler(row: any) {
     setisEditModalOpened(false);
     dataFromBackend[selectedRow].letterName = values.letterName;
     dataFromBackend[selectedRow].letterNumberFormat = values.letterNumberFormat;
-    setValues({ letterName: undefined, letterNumberFormat: undefined });
+    setValues({ letterName: "", letterNumberFormat: "" });
     // remove(row);
   }
 
@@ -191,7 +191,7 @@ const FELabHeadReference: React.FC<IFELabHeadReference> = ({}) => {
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
         setSelectedRow(row.no.label - 1);
-        setValues({ letterName: undefined, letterNumberFormat: undefined });
+        setValues({ letterName: "", letterNumberFormat: "" });
         setisDeleteModalOpened(true);
       },
       icon: <FETrashOutline size={20} color={theme.colors["error"][5]} />,

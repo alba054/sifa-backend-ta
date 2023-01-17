@@ -9,7 +9,7 @@ export function cookieGetLoggedInUserRole(): number | undefined {
 
 export function cookieGetLoggedInUserNim() {
   // N011171001
-  return __getCookie(COOKIES_KEY.LOGIN_NIM);
+  return __getCookie(COOKIES_KEY.LOGIN_NIM) || "";
 }
 
 export function cookieGetLoggedInUserToken() {

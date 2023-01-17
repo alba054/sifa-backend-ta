@@ -15,6 +15,7 @@ export function getBasicAuthorizationHeader(
   const encoded = btoa(key);
   return {
     "Content-Type": "application/json",
+    // Authorization: `Basic YWRtaW46YWRtaW4=`,
     Authorization: `Basic ${encoded}`,
   };
 }
@@ -25,4 +26,8 @@ export function getTokenAuthorizationHeader() {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
   };
+}
+
+export function encodeBase64(value: string) {
+  return Buffer.from(value, "base64").toString();
 }

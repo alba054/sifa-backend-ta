@@ -1,6 +1,7 @@
 import { Stack, Text } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 import FETableComponent, {
   IFETableAction,
@@ -17,6 +18,8 @@ import LFPHeaderComponent, {
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
+import { QF_DATA_KEYS } from "src/query-functions/const.query-function";
+import { qfGetMentorProposals } from "src/query-functions/lecturer.query-function";
 import { FEROUTES } from "src/routes/final-exam.route";
 import FELecturerMentorProposalAcceptModal from "./FELecturerMentorProposalAcceptModal";
 import FELecturerMentorProposalRefuseModal from "./FELecturerMentorProposalRefuseModal";
@@ -26,7 +29,7 @@ export interface IFELecturerMentorProposal {}
 const breadCrumbs: Array<IFEBreadCrumbsItem> = [
   {
     title: "Usulan",
-    href: FEROUTES.LECTURER_HOMEPAGE_PROPOSAL
+    href: FEROUTES.LECTURER_HOMEPAGE_PROPOSAL,
   },
 ];
 
@@ -112,6 +115,11 @@ function getDataFromBackend() {
 }
 
 const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
+  const { data } = useQuery(QF_DATA_KEYS.MENTOR_PROPOSAL, () =>
+    qfGetMentorProposals()
+  );
+
+  console.log(data);
   const {
     array: dataFromBackend,
     remove,
@@ -130,27 +138,26 @@ const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
 
   const { getInputProps, errors, setValues, values } = form;
 
-  useEffect(() => {
-    for (let i = 0; i < dataFromBackend.length; i++) {
-      dataFromBackend[i].id = i;
-    }
-
-    console.log(dataFromBackend);
-  }, [dataFromBackend]);
-
   const tableHeadings: IFETableHeadingProps[] = [
-    { label: "No", sortable: false, textAlign: "center", cellKey: "no", width: "80px"  },
+    {
+      label: "No",
+      sortable: false,
+      textAlign: "center",
+      cellKey: "no",
+      width: "80px",
+    },
     {
       label: "Mahasiswa",
       sortable: true,
       textAlign: "left",
       cellKey: "studentName",
     },
-    {label: "Judul Tugas Akhir",
+    {
+      label: "Judul Tugas Akhir",
       sortable: true,
       textAlign: "left",
       cellKey: "title",
-      width: "300px"
+      width: "300px",
     },
     {
       label: "Asal Usulan",
@@ -318,7 +325,7 @@ const FELecturerMentorProposal: React.FC<IFELecturerMentorProposal> = ({}) => {
         tableTitle="Daftar Bimbingan"
         tableRows={tableRows}
         tableHeadings={tableHeadings}
-        noDataMsg={'Data tidak ditemukan'}
+        noDataMsg={"Data tidak ditemukan"}
       />
     </FEMainlayout>
   );

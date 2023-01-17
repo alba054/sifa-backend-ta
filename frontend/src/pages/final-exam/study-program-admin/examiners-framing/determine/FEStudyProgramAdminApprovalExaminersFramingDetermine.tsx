@@ -150,11 +150,11 @@ const FEStudyProgramAdminApprovalExaminersFramingDetermine: React.FC<
     setValues({
       proposedFirstExaminers:
         currentProposal.proposedFirstExaminers == null
-          ? undefined
+          ? ""
           : currentProposal.proposedFirstExaminers.name,
       proposedSecondExaminers:
         currentProposal.proposedSecondExaminers == null
-          ? undefined
+          ? ""
           : currentProposal.proposedSecondExaminers.name,
     });
   }, []);

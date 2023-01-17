@@ -1,6 +1,7 @@
 export const QF_DATA_KEYS = {
   THESIS: "thesis",
   THESIS_HISTORY: "thesis-history",
+  MENTOR_PROPOSAL: "mentor-proposal",
 };
 export const QF_LABORATORY_KEY = "laboratory";
 export const QF_LECTURE_KEY = "lecture";

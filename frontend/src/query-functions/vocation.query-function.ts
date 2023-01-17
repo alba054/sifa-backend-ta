@@ -11,7 +11,7 @@ export async function qfGetVocations(departmentID: number) {
     {
       method: "GET",
       headers: {
-        ...getBasicAuthorizationHeader(),
+        ...getBasicAuthorizationHeader("", ""),
       },
     }
   );

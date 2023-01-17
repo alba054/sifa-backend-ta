@@ -1,13 +1,13 @@
 import * as yup from "yup";
 
 export interface IFESeminarCoordinatorReferencesValues {
-  seminarType: string;
-  scoringType: string;
-  scoringName: string;
-  percentage: number;
-  scoringRangeStart: number;
-  scoringRangeEnd: number;
-  status: string;
+  seminarType?: string;
+  scoringType?: string;
+  scoringName?: string;
+  percentage?: number;
+  scoringRangeStart?: number;
+  scoringRangeEnd?: number;
+  status?: string;
 }
 
 export const feSeminarCoordinatorReferencesSchema = yup.object({

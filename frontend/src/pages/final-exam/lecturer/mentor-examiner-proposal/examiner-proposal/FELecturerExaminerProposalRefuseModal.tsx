@@ -10,7 +10,7 @@ import FEInputModal from "src/components/FEInputModal";
 export interface IFELecturerExaminerProposalRefuseModal {
   opened: boolean;
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  onSubmit?: () => void;
+  onSubmit?: (val: any) => void;
   index: number;
   name: string;
   nim: number;
@@ -20,7 +20,7 @@ export interface IFELecturerExaminerProposalRefuseModal {
   laboratory: string;
   mainMentor: string;
   sideMentor: string;
-  form: any
+  form: any;
 }
 
 const FELecturerExaminerProposalRefuseModal: React.FC<
@@ -38,9 +38,8 @@ const FELecturerExaminerProposalRefuseModal: React.FC<
   mainMentor,
   sideMentor,
   index,
-  form
+  form,
 }) => {
-
   return (
     <FEInputModal
       opened={opened}
@@ -53,10 +52,8 @@ const FELecturerExaminerProposalRefuseModal: React.FC<
       <Stack>
         <Text className="text-primary-text-500">
           Terima usulan sebagai{" "}
-          <Text className="text-error-500 font-bold inline">
-            PENGUJI
-          </Text>{" "}
-          untuk Tugas Akhir dengan detail sebagai berikut?
+          <Text className="text-error-500 font-bold inline">PENGUJI</Text> untuk
+          Tugas Akhir dengan detail sebagai berikut?
         </Text>
         <Stack className="gap-0">
           <Text className="text-secondary-text-500">Mahasiswa</Text>
@@ -91,7 +88,11 @@ const FELecturerExaminerProposalRefuseModal: React.FC<
             {sideMentor} (Pendamping)
           </Text>
         </Stack>
-        <FERefusalReasonForm form={form} textSize="md" label="Alasan Penolakan" />
+        <FERefusalReasonForm
+          form={form}
+          textSize="md"
+          label="Alasan Penolakan"
+        />
       </Stack>
     </FEInputModal>
   );

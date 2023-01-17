@@ -9,7 +9,7 @@ export async function qfGetGroupUnits() {
   const groupUnits = await fetch(getFormattedUrlEndpoint(endpoint), {
     method: "GET",
     headers: {
-      ...getBasicAuthorizationHeader(),
+      ...getBasicAuthorizationHeader("", ""),
     },
   });
 
@@ -25,7 +25,7 @@ export async function qfPostGroupUnits(groupUnitParams: IPostGroupUnit) {
     method: "POST",
     body: JSON.stringify(groupUnitParams),
     headers: {
-      ...getBasicAuthorizationHeader(),
+      ...getBasicAuthorizationHeader("", ""),
     },
   });
 

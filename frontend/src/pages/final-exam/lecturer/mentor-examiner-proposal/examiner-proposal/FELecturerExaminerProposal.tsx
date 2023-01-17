@@ -147,18 +147,25 @@ const FELecturerExaminerProposal: React.FC<
   }, [dataFromBackend]);
 
   const tableHeadings: IFETableHeadingProps[] = [
-    { label: "No", sortable: false, textAlign: "center", cellKey: "no", width: "80px" },
+    {
+      label: "No",
+      sortable: false,
+      textAlign: "center",
+      cellKey: "no",
+      width: "80px",
+    },
     {
       label: "Mahasiswa",
       sortable: true,
       textAlign: "left",
       cellKey: "studentName",
     },
-    {label: "Judul Tugas Akhir",
+    {
+      label: "Judul Tugas Akhir",
       sortable: true,
       textAlign: "left",
       cellKey: "title",
-      width: "300px"
+      width: "300px",
     },
     {
       label: "Asal Usulan",
@@ -171,7 +178,7 @@ const FELecturerExaminerProposal: React.FC<
       sortable: true,
       textAlign: "left",
       cellKey: "mentor",
-      width: "250px"
+      width: "250px",
     },
   ];
 
@@ -206,15 +213,15 @@ const FELecturerExaminerProposal: React.FC<
             <Stack className="gap-2 text-md">
               <Stack className="gap-0">
                 <Text className="text-primary-text-500">Utama</Text>
-                  <Text className="text-secondary-text-500">
-                    {data.mainMentor}
-                  </Text>
+                <Text className="text-secondary-text-500">
+                  {data.mainMentor}
+                </Text>
               </Stack>
               <Stack className="gap-0">
                 <Text className="text-primary-text-500">Pendamping</Text>
-                  <Text className="text-secondary-text-500">
-                    {data.sideMentor}
-                  </Text>
+                <Text className="text-secondary-text-500">
+                  {data.sideMentor}
+                </Text>
               </Stack>
             </Stack>
           ),

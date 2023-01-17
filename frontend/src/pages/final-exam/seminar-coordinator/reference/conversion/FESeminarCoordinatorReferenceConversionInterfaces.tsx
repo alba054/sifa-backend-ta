@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
 export interface IFESeminarCoordinatorConversionReferencesValues {
-  rubric: string;
-  scoreBottomThreshold: number;
+  rubric?: string;
+  scoreBottomThreshold?: number;
 }
 
 export const feSeminarCoordinatorConversionReferencesSchema = yup.object({

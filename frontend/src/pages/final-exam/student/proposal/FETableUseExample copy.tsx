@@ -78,18 +78,25 @@ const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
   // const [activeSort, setActiveSort] = useState<IActiveSort | null>(null);
 
   const tableHeadings: IFETableHeadingProps[] = [
-    { label: "No", sortable: false, textAlign: "center", cellKey: "no", width: "80px"  },
+    {
+      label: "No",
+      sortable: false,
+      textAlign: "center",
+      cellKey: "no",
+      width: "80px",
+    },
     {
       label: "Mahasiswa",
       sortable: true,
       textAlign: "left",
       cellKey: "studentName",
     },
-    {label: "Judul Tugas Akhir",
+    {
+      label: "Judul Tugas Akhir",
       sortable: true,
       textAlign: "left",
       cellKey: "title",
-      width: "300px"
+      width: "300px",
     },
     {
       label: "Dosen Pembimbing",
@@ -188,6 +195,7 @@ const FETableUseExample: React.FC<IFEStudentCounselingProps> = ({}) => {
       </Title>
 
       <FETableComponent
+        noDataMsg="Data tidak ditemukan"
         isLoading={isLoading}
         dataPerPageAmt={2}
         onSearch={(value) => {

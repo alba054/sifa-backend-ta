@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from "react";
 import { useQuery, UseQueryResult } from "react-query";
 import { QF_LECTURE_KEY } from "src/query-functions/const.query-function";
-import { qfGetLecturers } from "src/query-functions/lecurer.query-function";
+import { qfGetLecturers } from "src/query-functions/lecturer.query-function";
 
 const LecturersDataCtx = React.createContext<UseQueryResult<
   any,

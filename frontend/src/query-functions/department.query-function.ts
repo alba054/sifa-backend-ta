@@ -9,7 +9,7 @@ export async function qfGetDepartments() {
   const departments = await fetch(getFormattedUrlEndpoint(endpoint), {
     method: "GET",
     headers: {
-      ...getBasicAuthorizationHeader(),
+      ...getBasicAuthorizationHeader("", ""),
     },
   });
 

@@ -83,13 +83,9 @@ const FELabHeadFinalExamProposalModal: React.FC<
   useEffect(() => {
     setValues({
       proposedMainMentor:
-        initialProposedMainMentor == null
-          ? undefined
-          : initialProposedMainMentor,
+        initialProposedMainMentor == null ? "" : initialProposedMainMentor,
       proposedSideMentor:
-        initialProposedSideMentor == null
-          ? undefined
-          : initialProposedSideMentor,
+        initialProposedSideMentor == null ? "" : initialProposedSideMentor,
     });
   }, []);
 
@@ -276,14 +272,12 @@ const FELabHeadFinalExamProposalModal: React.FC<
           </Group>
           <FESmallInformationNotification
             info={
-              <Stack className="gap-0" >
-                <Text className="text-lg">
-                  Informasi
-                </Text>
+              <Stack className="gap-0">
+                <Text className="text-lg">Informasi</Text>
                 <List type="unordered" className="text-primary-500 text-md">
                   <List.Item>
-                    1. Anda masih bisa mengganti pembimbing utama/pendamping selama
-                    mereka belum menyetujui usulan yang diberikan.
+                    1. Anda masih bisa mengganti pembimbing utama/pendamping
+                    selama mereka belum menyetujui usulan yang diberikan.
                   </List.Item>
                   <List.Item>
                     2. Jika terdapat field pembimbing yang telah terisi,

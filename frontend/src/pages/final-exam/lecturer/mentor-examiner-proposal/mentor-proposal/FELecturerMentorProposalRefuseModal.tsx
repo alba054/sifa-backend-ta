@@ -10,7 +10,7 @@ import FEInputModal from "src/components/FEInputModal";
 export interface IFELecturerMentorProposalRefuseModal {
   opened: boolean;
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  onSubmit?: () => void;
+  onSubmit?: (v: any) => void;
   index: number;
   name: string;
   nim: number;
@@ -19,7 +19,7 @@ export interface IFELecturerMentorProposalRefuseModal {
   proposerName?: string;
   laboratory: string;
   mentorPosition: string;
-  form: any
+  form: any;
 }
 
 const FELecturerMentorProposalRefuseModal: React.FC<
@@ -36,9 +36,8 @@ const FELecturerMentorProposalRefuseModal: React.FC<
   proposerName,
   mentorPosition,
   index,
-  form
+  form,
 }) => {
-
   return (
     <FEInputModal
       opened={opened}
@@ -80,7 +79,11 @@ const FELecturerMentorProposalRefuseModal: React.FC<
             {laboratory}
           </Text>
         </Stack>
-        <FERefusalReasonForm form={form} textSize="md" label="Alasan Penolakan" />
+        <FERefusalReasonForm
+          form={form}
+          textSize="md"
+          label="Alasan Penolakan"
+        />
       </Stack>
     </FEInputModal>
   );

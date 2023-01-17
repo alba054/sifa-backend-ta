@@ -9,7 +9,7 @@ export async function qfGetGroups() {
   const groups = await fetch(getFormattedUrlEndpoint(endpoint), {
     method: "GET",
     headers: {
-      ...getBasicAuthorizationHeader(),
+      ...getBasicAuthorizationHeader("", ""),
     },
   });
 
