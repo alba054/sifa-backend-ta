@@ -12,6 +12,7 @@ import headLabRouter from "./headLab.route";
 import headFacultyRouter from "./headFaculty.route";
 import chatRouter from "./chat.route";
 import refLetterRouter from "./refLetter.route";
+import fileRouter from "./file.route";
 
 const router = express.Router();
 
@@ -29,5 +30,6 @@ router.use("/head-faculties", headFacultyRouter);
 router.use("/ref-letters", refLetterRouter);
 // * chat service
 router.use("/chat", chatRouter);
+router.use("/files", fileRouter);
 
 export default router;
