@@ -16,19 +16,15 @@ export class FileHandler {
   }
 
   static async uploadSign(req: Request, res: Response, next: NextFunction) {
-    const { sign, extension } = req.body;
+    const { sign } = req.body;
     const { username } = res.locals.user;
 
     try {
-      if (typeof sign === "undefined" || typeof extension === "undefined") {
+      if (typeof sign === "undefined") {
         throw new BadRequestError("provide sign and extension");
       }
 
-      const signPath = await FileService.uploadFileSign(
-        sign,
-        extension,
-        username
-      );
+      const signPath = await FileService.uploadFileSign(sign, username);
 
       return res
         .status(201)
