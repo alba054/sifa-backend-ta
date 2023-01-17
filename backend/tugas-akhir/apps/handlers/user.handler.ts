@@ -203,7 +203,7 @@ export class UserHandler {
 
       let insertedUser = {};
       // todo: add user to student if groupAccess is student
-      if (newUser.groupAccess === constants.STUDENT_GROUP_ACCESS) {
+      if (Number(newUser.groupAccess) === constants.STUDENT_GROUP_ACCESS) {
         // todo: insert into mahasiswa table
         // const insertedNewStudent = await StudentService.insertUserIntoStudent({
         //   nim: newUser.username,
@@ -211,13 +211,17 @@ export class UserHandler {
         //   email: newUser.email,
         // });
         insertedUser = await UserAsStudent.insertUserAsStudent(newUser);
-      } else if (newUser.groupAccess === constants.LECTURER_GROUP_ACCESS) {
+      } else if (
+        Number(newUser.groupAccess) === constants.LECTURER_GROUP_ACCESS
+      ) {
         // todo: lecturer departmentID is undefined so create a default value
         insertedUser = await UserAsLecturer.insertUserAsLecturer(newUser);
-      } else if (newUser.groupAccess === constants.LAB_ADMIN_GROUP_ACCESS) {
+      } else if (
+        Number(newUser.groupAccess) === constants.LAB_ADMIN_GROUP_ACCESS
+      ) {
         insertedUser = await UserAsLabAdmin.insertUserAsLabAdmin(newUser);
       } else if (
-        newUser.groupAccess === constants.VOCATION_ADMIN_GROUP_ACCESS
+        Number(newUser.groupAccess) === constants.VOCATION_ADMIN_GROUP_ACCESS
       ) {
         insertedUser = await UserAsVocationAdmin.insertUserAsVocationAdmin(
           newUser
