@@ -83,6 +83,7 @@ lecturerRouter
     LecturerHandler.accceptOrRejectExaminerOffer
   );
 
+// lecturerRouter.route("/:nim/")
 // // * restore status to InProcess
 // lecturerRouter
 //   .route("/:nim/supervisors/:supervisorID/restore")
