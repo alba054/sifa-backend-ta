@@ -207,6 +207,8 @@ model ref_departemen {
   sk_pembimbing_dep sk_pembimbing_dep[]
   sk_penguji_dep    sk_penguji_dep[]
   user              user[]
+  sk_penguji        sk_penguji[]
+  sk_pembimbing     sk_pembimbing[]
 }
 
 model ref_dokumenseminar {
@@ -623,16 +625,20 @@ model sk_fakultas {
 }
 
 model sk_pembimbing {
-  skbId          Int         @id @default(autoincrement())
-  skbTaId        Int
-  skbNomor       Int
-  skbLabId       Int
-  skbTglSurat    DateTime    @db.Date
-  skbStatus      Int
-  skbStatusAkses Int
-  tugas_akhir    tugas_akhir @relation(fields: [skbTaId], references: [taId], onDelete: Cascade, map: "sk_pembimbing_ibfk_1")
+  skbId            Int              @id @default(autoincrement())
+  skbTaId          Int
+  skbNomor         String
+  // skbLabId             Int
+  skbDprtId        Int
+  skbTglSurat      DateTime         @db.Date
+  skbStatus        Int?
+  note             String?
+  statusPermohonan StatusPermohonan @default(Belum_Diproses)
+  skbStatusAkses   Int?
+  tugas_akhir      tugas_akhir      @relation(fields: [skbTaId], references: [taId], onDelete: Cascade, map: "sk_pembimbing_ibfk_1")
+  ref_departemen   ref_departemen   @relation(fields: [skbDprtId], references: [dprtId])
 
-  @@index([skbLabId], map: "skbLabId")
+  // @@index([skbLabId], map: "skbLabId")
   @@index([skbStatus], map: "skbStatus")
   @@index([skbStatusAkses], map: "skbStatusAkses")
   @@index([skbTaId], map: "skbTaId")
@@ -688,14 +694,18 @@ model sk_pembimbing_fakultas {
 }
 
 model sk_penguji {
-  skpId       Int         @id @default(autoincrement())
-  skpTaId     Int
-  skpNomor    Int
-  skpPrdId    Int
-  skpTglSurat DateTime    @db.Date
-  skpStatus   Int
-  tugas_akhir tugas_akhir @relation(fields: [skpTaId], references: [taId], onDelete: Cascade, map: "sk_penguji_ibfk_1")
-  ref_prodi   ref_prodi   @relation(fields: [skpPrdId], references: [prdId], map: "sk_penguji_ibfk_2")
+  skpId            Int              @id @default(autoincrement())
+  skpTaId          Int
+  skpNomor         String
+  skpPrdId         Int
+  skpDprtId        Int
+  skpTglSurat      DateTime         @db.Date
+  skpStatus        Int?
+  note             String?
+  statusPermohonan StatusPermohonan @default(Belum_Diproses)
+  tugas_akhir      tugas_akhir      @relation(fields: [skpTaId], references: [taId], onDelete: Cascade, map: "sk_penguji_ibfk_1")
+  ref_prodi        ref_prodi        @relation(fields: [skpPrdId], references: [prdId], map: "sk_penguji_ibfk_2")
+  ref_departemen   ref_departemen   @relation(fields: [skpDprtId], references: [dprtId])
 
   @@index([skpPrdId], map: "skpJbId")
   @@index([skpStatus], map: "skpStatus")

@@ -22,6 +22,6 @@ export interface IStudentUpdate {
   gender?: "L" | "P";
   // status?: string;
   // educationStage?: number;
-  // vocation?: number;
+  vocation?: number;
   // academicTeacher?: number;
 }

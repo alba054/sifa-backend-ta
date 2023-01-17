@@ -16,6 +16,27 @@ interface IBody {
 }
 
 export class Thesis {
+  static async getApprovedThesis() {
+    return await prismaDB.tugas_akhir.findMany({
+      where: {
+        AND: [
+          { statusPermohonan: "Diterima" },
+          // { OR: [{ taLabId: labID }, { taLabId2: labID }] },
+        ],
+      },
+      include: {
+        mahasiswa: true,
+        penguji: { include: { dosen: true } },
+        pembimbing: { include: { dosen: true } },
+        pengusul: true,
+        ref_laboratorium: true,
+        ref_laboratorium2: true,
+        sk_pembimbing: true,
+        sk_penguji: true,
+      },
+    });
+  }
+
   static async updateKRSAndKHSPath(
     KHSPath: string,
     KRSPath: string,
@@ -150,6 +171,8 @@ export class Thesis {
         ref_laboratorium2: true,
         pembimbing: { include: { dosen: true } },
         penguji: { include: { dosen: true } },
+        sk_pembimbing: true,
+        sk_penguji: true,
       },
     });
 

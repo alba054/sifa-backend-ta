@@ -97,6 +97,7 @@ export class Student implements IStudent {
           mhsNoTelp: updatedData.phone,
           mhsTempatLahir: updatedData.birthPlace,
           mhsTglLahir: updatedData.birthDate,
+          mhsPrdId: updatedData.vocation,
         },
       });
 

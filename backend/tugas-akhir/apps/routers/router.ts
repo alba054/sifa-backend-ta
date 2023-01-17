@@ -13,6 +13,9 @@ import headFacultyRouter from "./headFaculty.route";
 import chatRouter from "./chat.route";
 import refLetterRouter from "./refLetter.route";
 import fileRouter from "./file.route";
+import subsectionAdminRouter from "./subsectionAdmin.route";
+import headAdminRouter from "./headAdmin.route";
+import deanRouter from "./dean.route";
 
 const router = express.Router();
 
@@ -28,6 +31,9 @@ router.use("/head-majors", headMajorRouter);
 router.use("/head-labs", headLabRouter);
 router.use("/head-faculties", headFacultyRouter);
 router.use("/ref-letters", refLetterRouter);
+router.use("/subsection-admins", subsectionAdminRouter);
+router.use("/head-admins", headAdminRouter); // * ktu
+router.use("/deans", deanRouter);
 // * chat service
 router.use("/chat", chatRouter);
 router.use("/files", fileRouter);
