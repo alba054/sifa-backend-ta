@@ -1,4 +1,7 @@
 import swaggerAutogen from "swagger-autogen";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const doc = {
   info: {
@@ -11,6 +14,7 @@ const doc = {
     },
     version: "3.0.3",
   },
+  host: `${process.env.SWAGGER_HOSTNAME}:${process.env.PORT}`,
 };
 
 const outputFile = "./swagger-output.json";
