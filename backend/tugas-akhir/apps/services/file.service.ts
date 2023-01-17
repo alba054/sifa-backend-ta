@@ -4,9 +4,13 @@ import { writeToFile } from "../utils/storage";
 import { constants } from "../utils/utils";
 
 export class FileService {
-  static async uploadFileSign(sign: string, extension: string) {
+  static async uploadFileSign(
+    sign: string,
+    extension: string,
+    username: string
+  ) {
     const signBuffer = decodeBase64(sign);
-    const title = uuidv4() + "." + extension;
+    const title = username;
     const path = `${constants.SIGN_FILE_PATH}`;
 
     return writeToFile(path, title, signBuffer);
