@@ -101,8 +101,11 @@ export class Examiner {
           dosen: true,
           tugas_akhir: {
             include: {
+              mahasiswa: true,
               ref_laboratorium: true,
               ref_laboratorium2: true,
+              pembimbing: { include: { dosen: true } },
+              penguji: { include: { dosen: true } },
             },
           },
         },
@@ -117,8 +120,11 @@ export class Examiner {
         dosen: true,
         tugas_akhir: {
           include: {
+            mahasiswa: true,
             ref_laboratorium: true,
             ref_laboratorium2: true,
+            pembimbing: { include: { dosen: true } },
+            penguji: { include: { dosen: true } },
           },
         },
       },
