@@ -21,7 +21,63 @@ import { UserAsVocationAdmin } from "../services/user/UserAsVocationAdmin.facade
 
 dotenv.config();
 
+interface ICredential {
+  username: string;
+  email: string;
+  name: string;
+  status: "Active" | "Inactive";
+  groupAccess: string;
+  description: string;
+  departmentID: string | null;
+  labID: string | null;
+  vocationID: string | null;
+}
+
 export class UserHandler {
+  static async getUserCredential(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const roleMap = new Map();
+    roleMap.set(constants.DEAN_GROUP_ACCESS, "Dekan");
+    roleMap.set(constants.STUDENT_GROUP_ACCESS, "Mahasiswa");
+    roleMap.set(constants.LECTURER_GROUP_ACCESS, "Dosen");
+    roleMap.set(constants.ADMINHEAD_GROUP_ACCCESS, "KTU");
+    roleMap.set(constants.LAB_ADMIN_GROUP_ACCESS, "Kepala_Lab");
+    roleMap.set(constants.SUPERUSER_GROUP_ACCESS, "Superuser");
+    roleMap.set(constants.FACULTY_ADMIN_GROUP_ACCESS, "Admin_Fakultas");
+    roleMap.set(constants.SUBSECTIONHEAD_GROUP_ACCESS, "Kasubag");
+    roleMap.set(constants.VOCATION_ADMIN_GROUP_ACCESS, "Admin_Prodi");
+    roleMap.set(constants.DEPARTMENT_ADMIN_GROUP_ACCESS, "Admin_departemen");
+    roleMap.set(
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+      "Koordinator_Seminar"
+    );
+
+    const credential = {
+      username: res.locals.user.username,
+      email: res.locals.user.email,
+      name: res.locals.user.name,
+      status: res.locals.user.status === 1 ? "Active" : "Inactive",
+      departmentID: res.locals.user.departmentID,
+      description: res.locals.user.description,
+      groupAccess: roleMap.get(res.locals.user.groupAccess),
+      labID: res.locals.user.labID,
+      vocationID: res.locals.user.vocationID,
+    } as ICredential;
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get user's credential",
+          credential
+        )
+      );
+  }
+
   static async getProfile(req: Request, res: Response, next: NextFunction) {
     const { username } = req.params;
 
