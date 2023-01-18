@@ -12,7 +12,12 @@ export class ThesisHeadMajorDisposition {
   static async getDispositions() {
     const thesisDisposition = await prismaDB.disposisi_kaprodi.findMany({
       include: {
-        tugas_akhir: true,
+        tugas_akhir: {
+          include: {
+            ref_laboratorium: true,
+            ref_laboratorium2: true,
+          },
+        },
       },
     });
 

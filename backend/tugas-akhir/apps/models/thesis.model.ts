@@ -16,6 +16,29 @@ interface IBody {
 }
 
 export class Thesis {
+  static async getThesisWithExaminerStatus(
+    status: "Belum_Diproses" | "Diterima" | "Ditolak" | undefined
+  ) {
+    // if (
+    // typeof status === "undefined" ||
+    // !["Belum_Diproses", "Diterima", "Ditolak"].includes(status);
+    // ) {
+    return await prismaDB.tugas_akhir.findMany({
+      include: {
+        penguji: { include: { dosen: true } },
+      },
+    });
+    // }
+
+    // return await prismaDB.tugas_akhir.findMany({
+    //   where: { statusTerima: status },
+    //   include: {
+    //     dosen: true,
+    //     tugas_akhir: true,
+    //   },
+    // });
+  }
+
   static async deleteThesisByID(thesisID: number) {
     try {
       return await prismaDB.tugas_akhir.delete({
@@ -126,6 +149,7 @@ export class Thesis {
           pengusul: true,
           ref_laboratorium: true,
           ref_laboratorium2: true,
+          mahasiswa: true,
         },
       });
     }
@@ -138,6 +162,7 @@ export class Thesis {
         pengusul: true,
         ref_laboratorium: true,
         ref_laboratorium2: true,
+        mahasiswa: true,
       },
     });
   }
@@ -260,6 +285,10 @@ export class Thesis {
           // { mahasiswa: { mhsPrdId: vocationID } },
           { statusPermohonan: "Diterima" },
         ],
+      },
+      include: {
+        ref_laboratorium: true,
+        ref_laboratorium2: true,
       },
     });
 
