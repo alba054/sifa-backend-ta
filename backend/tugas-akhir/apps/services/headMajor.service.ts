@@ -1,5 +1,6 @@
 import { Examiner } from "../models/examiner.model";
 import { Thesis } from "../models/thesis.model";
+import { NotFoundError } from "../utils/error/notFoundError";
 import { ThesisHeadMajorDispositionService } from "./thesisHeadMajorDisposition.service";
 
 interface IAssignedExaminer {
@@ -8,6 +9,16 @@ interface IAssignedExaminer {
 }
 
 export class HeadMajorService {
+  static async deleteThesisByID(thesisID: number) {
+    const thesis = await Thesis.getThesisByID(thesisID);
+
+    if (thesis === null) {
+      throw new NotFoundError("thesis's not found");
+    }
+
+    return await Thesis.deleteThesisByID(thesisID);
+  }
+
   static async getAllDispositions() {
     return await ThesisHeadMajorDispositionService.getAllDispositions();
   }

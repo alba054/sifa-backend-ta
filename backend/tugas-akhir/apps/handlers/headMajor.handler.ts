@@ -32,6 +32,28 @@ interface IAssignedExaminer {
 }
 
 export class HeadMajorHandler {
+  static async deleteThesisByID(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { thesisID } = req.params;
+    try {
+      await HeadMajorService.deleteThesisByID(Number(thesisID));
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully delete thesis"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getAllDispositions(
     req: Request,
     res: Response,
@@ -54,13 +76,32 @@ export class HeadMajorHandler {
     const { status } = req.query;
     const thesis = await HeadMajorService.getAllThesis(status);
 
+    const uniqueNIM: string[] = [];
+
+    // todo: separate thesis by student's nim
+    for (const t of thesis) {
+      if (!uniqueNIM.includes(t.taMhsNim)) {
+        uniqueNIM.push(t.taMhsNim);
+      }
+    }
+
+    const response: any[] = [];
+    for (const nim of uniqueNIM) {
+      const studentThesis = thesis.filter((t) => t.taMhsNim === nim);
+
+      response.push({
+        NIM: nim,
+        data: studentThesis,
+      });
+    }
+
     return res
       .status(200)
       .json(
         createResponse(
           constants.SUCCESS_MESSAGE,
-          "successfully view examiners history",
-          thesis
+          "successfully get all thesis history",
+          response
         )
       );
   }
