@@ -32,7 +32,12 @@ export class HeadMajorService {
   }
 
   static async viewExaminersHistory(status: any) {
-    return await Examiner.getAllExaminersAcceptedOrRejected(status);
+    let examiners = await Thesis.getThesisWithExaminerStatus(status);
+    examiners = examiners.filter((e) => {
+      return e.penguji.length > 0;
+    });
+
+    return examiners;
   }
 
   static async getExaminersOfThesis(thesisID: number) {
