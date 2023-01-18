@@ -1,7 +1,6 @@
 import express from "express";
 import { FileHandler } from "../handlers/file.handler";
 import { AuthorizationMiddleware } from "../middlewares/auth/authorization.middleware";
-import { upload } from "../utils/storage";
 import { constants } from "../utils/utils";
 
 const fileRouter = express.Router();
