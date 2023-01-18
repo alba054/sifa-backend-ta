@@ -66,7 +66,11 @@ export class ThesisService {
   }
 
   static async getApprovedThesisByHeadMajor(vocationID: number) {
-    const approvedThesis = await Thesis.getApprovedThesisByVocation(vocationID);
+    let approvedThesis = await Thesis.getApprovedThesisByVocation(vocationID);
+
+    approvedThesis = approvedThesis.filter((t) => {
+      return t.disposisi_kaprodi.length < 1;
+    });
 
     return approvedThesis;
   }

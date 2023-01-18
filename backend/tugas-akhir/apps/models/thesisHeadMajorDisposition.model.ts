@@ -16,6 +16,7 @@ export class ThesisHeadMajorDisposition {
           include: {
             ref_laboratorium: true,
             ref_laboratorium2: true,
+            mahasiswa: true,
           },
         },
       },
