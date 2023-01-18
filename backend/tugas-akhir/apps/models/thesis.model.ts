@@ -57,11 +57,12 @@ export class Thesis {
     }
   }
 
-  static async getApprovedThesis() {
+  static async getApprovedThesis(nim?: string) {
     return await prismaDB.tugas_akhir.findMany({
       where: {
         AND: [
           { statusPermohonan: "Diterima" },
+          { taMhsNim: nim },
           // { OR: [{ taLabId: labID }, { taLabId2: labID }] },
         ],
       },
