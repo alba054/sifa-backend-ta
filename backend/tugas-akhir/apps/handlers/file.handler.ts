@@ -10,9 +10,13 @@ export class FileHandler {
     const { username } = res.locals.user;
 
     const path = `${constants.SIGN_FILE_PATH}/${username}`;
-    const sign = await readFile(path);
-    res.contentType("image/jpeg");
-    res.send(sign);
+    try {
+      const sign = await readFile(path);
+      res.contentType("image/jpeg");
+      res.send(sign);
+    } catch (error) {
+      return next(error);
+    }
   }
 
   static async uploadSign(req: Request, res: Response, next: NextFunction) {
