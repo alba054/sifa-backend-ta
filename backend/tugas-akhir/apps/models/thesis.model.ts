@@ -26,6 +26,10 @@ export class Thesis {
     return await prismaDB.tugas_akhir.findMany({
       include: {
         penguji: { include: { dosen: true } },
+        mahasiswa: true,
+        pembimbing: { include: { dosen: true } },
+        ref_laboratorium: true,
+        ref_laboratorium2: true,
       },
     });
     // }
@@ -290,6 +294,8 @@ export class Thesis {
       include: {
         ref_laboratorium: true,
         ref_laboratorium2: true,
+        mahasiswa: true,
+        disposisi_kaprodi: true,
       },
     });
 
