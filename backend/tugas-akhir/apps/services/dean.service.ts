@@ -33,8 +33,8 @@ export class DeanService {
     return await ExaminerSK.signSK(SKID, signed);
   }
 
-  static async getApprovedThesisWithSK() {
-    let thesis = await Thesis.getApprovedThesis();
+  static async getApprovedThesisWithSK(nim: any) {
+    let thesis = await Thesis.getApprovedThesis(nim);
 
     thesis = thesis.filter((t) => {
       return t.sk_pembimbing.length > 0 && t.sk_penguji.length > 0;

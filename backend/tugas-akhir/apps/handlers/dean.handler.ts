@@ -55,7 +55,9 @@ export class DeanHandler {
     res: Response,
     next: NextFunction
   ) {
-    const thesisWithSK = await DeanService.getApprovedThesisWithSK();
+    const { nim } = req.query;
+
+    const thesisWithSK = await DeanService.getApprovedThesisWithSK(nim);
 
     return res
       .status(200)
