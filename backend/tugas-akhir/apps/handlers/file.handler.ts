@@ -3,6 +3,7 @@ import { readFile } from "fs/promises";
 
 import { FileService } from "../services/file.service";
 import { BadRequestError } from "../utils/error/badrequestError";
+import { NotFoundError } from "../utils/error/notFoundError";
 import { constants, createResponse } from "../utils/utils";
 
 export class FileHandler {
@@ -15,7 +16,10 @@ export class FileHandler {
       res.contentType("image/jpeg");
       res.send(sign);
     } catch (error) {
-      return next(error);
+      if (error instanceof Error) {
+        if (error.message.includes("ENOENT"))
+          return next(new NotFoundError("sign's not found"));
+      }
     }
   }
 
