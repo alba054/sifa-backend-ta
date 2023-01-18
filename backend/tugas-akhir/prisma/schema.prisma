@@ -179,7 +179,7 @@ model penguji {
   ujiDsnId       Int
   catatan        String?
   statusTerima   StatusPermohonan @default(Belum_Diproses)
-  tugas_akhir    tugas_akhir      @relation(fields: [ujiTaId], references: [taId], onDelete: NoAction, map: "penguji_ibfk_1")
+  tugas_akhir    tugas_akhir      @relation(fields: [ujiTaId], references: [taId], onDelete: Cascade, map: "penguji_ibfk_1")
   dosen          dosen            @relation(fields: [ujiDsnId], references: [dsnId], onDelete: NoAction, map: "penguji_ibfk_4")
   revisi_penguji revisi_penguji[]
 
@@ -484,7 +484,7 @@ model seminar {
   smrTglUndangan            DateTime?                   @db.Date
   smrNilaiAngka             Float?                      @db.Float
   smrNilaiHuruf             String?                     @db.VarChar(2)
-  tugas_akhir               tugas_akhir                 @relation(fields: [smrTaId], references: [taId], onDelete: NoAction, map: "seminar_ibfk_2")
+  tugas_akhir               tugas_akhir                 @relation(fields: [smrTaId], references: [taId], onDelete: Cascade, map: "seminar_ibfk_2")
   ref_jenisujian            JenisUjian
   // ref_jenisujian            ref_jenisujian              @relation(fields: [smrJenisUjian], references: [jenisId], onUpdate: Restrict, map: "seminar_ibfk_3")
   seminar_catatan           seminar_catatan[]
@@ -799,7 +799,7 @@ model tugas_akhir {
   ref_laboratorium                                       ref_laboratorium?   @relation("primary", fields: [taLabId], references: [labId], onDelete: Cascade, onUpdate: Restrict, map: "tugas_akhir_ibfk_3")
   ref_laboratorium2                                      ref_laboratorium?   @relation("secondary", fields: [taLabId2], references: [labId], onDelete: Cascade, onUpdate: Restrict, map: "tugas_akhir_lab2")
   mahasiswa                                              mahasiswa           @relation(fields: [taMhsNim], references: [mhsNim], onDelete: Cascade, map: "tugas_akhir_ibfk_4")
-  pengusul                                               dosen?              @relation(fields: [taDosenPengusul], references: [dsnId])
+  pengusul                                               dosen?              @relation(fields: [taDosenPengusul], references: [dsnId], onDelete: Cascade)
   pembimbing                                             pembimbing[]
   pembimbingan                                           pembimbingan[]
   penguji                                                penguji[]
@@ -822,7 +822,7 @@ model disposisi_kaprodi {
   id              Int         @id @default(autoincrement())
   tugas_akhirTaId Int         @unique
   departmentName  String
-  tugas_akhir     tugas_akhir @relation(fields: [tugas_akhirTaId], references: [taId])
+  tugas_akhir     tugas_akhir @relation(fields: [tugas_akhirTaId], references: [taId], onDelete: Cascade)
 }
 
 model user {

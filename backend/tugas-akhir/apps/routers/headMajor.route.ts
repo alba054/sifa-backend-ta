@@ -29,6 +29,14 @@ headMajorRouter
     HeadMajorHandler.getAllThesis
   );
 
+// * delete thesisID
+headMajorRouter
+  .route("/thesis/:thesisID")
+  .delete(
+    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    HeadMajorHandler.deleteThesisByID
+  );
+
 // * approve or reject proposed thesis
 headMajorRouter
   .route("/thesis/:proposalGroupID/approve-thesis")
@@ -39,7 +47,6 @@ headMajorRouter
 
 // * get approved thesis detail
 // * create approval of approved thesis by headmajor
-// * delete disposition
 headMajorRouter
   .route("/thesis/approved/:id")
   .get(

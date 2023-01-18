@@ -16,6 +16,24 @@ interface IBody {
 }
 
 export class Thesis {
+  static async deleteThesisByID(thesisID: number) {
+    try {
+      return await prismaDB.tugas_akhir.delete({
+        where: {
+          taId: thesisID,
+        },
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
   static async getApprovedThesis() {
     return await prismaDB.tugas_akhir.findMany({
       where: {
