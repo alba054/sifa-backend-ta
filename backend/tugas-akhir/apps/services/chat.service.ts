@@ -44,6 +44,11 @@ export class ChatService {
     username: string
   ) {
     const thesis = await ThesisService.getApprovedThesisDetail(thesisID);
+
+    if (typeof thesis === "undefined") {
+      throw new NotFoundError("thesis's not found");
+    }
+
     if (
       thesis.pembimbing.length < 2 ||
       (thesis.pembimbing[0].statusTerima === "Ditolak" &&

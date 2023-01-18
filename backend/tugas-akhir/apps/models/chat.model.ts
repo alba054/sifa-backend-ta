@@ -11,7 +11,9 @@ export class Chat {
         data: {
           bimPesan: message,
           bimPesanType: type,
-          bimTanggal: `${curtime.getDate()}-${curtime.getMonth()}-${curtime.getFullYear()}`,
+          bimTanggal: `${curtime.getDate()}-${
+            curtime.getMonth() + 1
+          }-${curtime.getFullYear()}`,
           bimJam: `${curtime.getHours()}:${curtime.getMinutes()}`,
           bimTaId: thesisID,
         },
