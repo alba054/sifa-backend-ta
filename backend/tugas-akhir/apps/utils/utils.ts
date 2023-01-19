@@ -56,6 +56,7 @@ export const constants = {
   KRS_AND_KHS_PATH: `${STUDENT_UPLOADED_FILE}/krs_khs`, // * krs and khs path,
   CHAT_FILE_PATH: `${UPLOADED_FILE_BASE_URL}/chats`,
   SIGN_FILE_PATH: `${UPLOADED_FILE_BASE_URL}/signs`,
+  SEMINAR_FILE_PATH: `${UPLOADED_FILE_BASE_URL}/seminars`,
   PROPOSAL_STATUS_IN_PROCESS: "Belum_diproses",
   PROPOSAL_STATUS_APPROVED: "Diterima",
   PROPOSAL_STATUS_REJECTED: "Ditolak",

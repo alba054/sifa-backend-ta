@@ -4,6 +4,16 @@ import { Thesis } from "../models/thesis.model";
 import { NotFoundError } from "../utils/error/notFoundError";
 
 export class SubsectionAdminService {
+  static async getApprovedThesisWithSKDetail(thesisID: number) {
+    const thesis = await Thesis.getApprovedThesisDetail(thesisID);
+
+    if (typeof thesis === "undefined") {
+      throw new NotFoundError("thesis's not found");
+    }
+
+    return thesis;
+  }
+
   static async acceptOrRejectSupervisorSK(
     SKID: number,
     isAccepted: boolean,
@@ -27,7 +37,7 @@ export class SubsectionAdminService {
     isAccepted: boolean,
     note?: string
   ) {
-    const examinerSK = ExaminerSK.getSKByID(SKID);
+    const examinerSK = await ExaminerSK.getSKByID(SKID);
 
     if (examinerSK === null) {
       throw new NotFoundError("sk's not found");

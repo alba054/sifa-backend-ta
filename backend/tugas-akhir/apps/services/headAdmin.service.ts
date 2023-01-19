@@ -4,6 +4,16 @@ import { SupervisorSK } from "../models/supervisorSK.model";
 import { Thesis } from "../models/thesis.model";
 
 export class HeadAdminService {
+  static async getApprovedThesisWithSKDetail(thesisID: number) {
+    const thesis = await Thesis.getApprovedThesisDetail(thesisID);
+
+    if (typeof thesis === "undefined") {
+      throw new NotFoundError("thesis's not found");
+    }
+
+    return thesis;
+  }
+
   static async acceptOrRejectSupervisorSK(
     SKID: number,
     isAccepted: boolean,

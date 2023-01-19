@@ -7,6 +7,62 @@ import { NotFoundError } from "../utils/error/notFoundError";
 import { constants, createResponse } from "../utils/utils";
 
 export class FileHandler {
+  static async getSeminarDocs(req: Request, res: Response, next: NextFunction) {
+    const { username, groupAccess } = res.locals.user;
+    const { docname } = req.params;
+
+    const docnameSanitation = docname.split("_");
+
+    try {
+      if (groupAccess === constants.STUDENT_GROUP_ACCESS) {
+        if (docnameSanitation.at(-1) !== username) {
+          throw new NotFoundError("document's not found");
+        }
+      }
+
+      const path = `${constants.SEMINAR_FILE_PATH}/${docname}`;
+      const document = await readFile(path);
+      res.contentType("application/pdf");
+      res.send(document);
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message.includes("ENOENT"))
+          return next(new NotFoundError("document's not found"));
+      }
+
+      return next(error);
+    }
+  }
+
+  static async uploadSeminarDocs(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { doc } = req.body;
+    const { username } = res.locals.user;
+
+    try {
+      if (typeof doc === "undefined") {
+        throw new BadRequestError("provide doc");
+      }
+
+      const docPath = await FileService.uploadFileSeminarDoc(doc, username);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully upload seminar document",
+            docPath
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getSign(req: Request, res: Response, next: NextFunction) {
     const { username } = res.locals.user;
 

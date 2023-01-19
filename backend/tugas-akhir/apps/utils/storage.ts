@@ -16,7 +16,7 @@ export function writeToFile(path: string, filename: string, file: Buffer) {
 
   fs.createWriteStream(`${path}/${filename}`).write(file);
 
-  return `${path}/${filename}`;
+  return `${filename}`;
 }
 
 export function deleteFile(path: string) {

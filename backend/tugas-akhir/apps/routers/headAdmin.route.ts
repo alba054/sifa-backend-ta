@@ -13,6 +13,13 @@ headAdminRouter
   );
 
 headAdminRouter
+  .route("/sk/:thesisID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.SUBSECTIONHEAD_GROUP_ACCESS]),
+    HeadAdminHandler.getThesisSKDetail
+  );
+
+headAdminRouter
   .route("/examiners/sk/:SKID")
   .get(
     AuthorizationMiddleware.authorize([constants.SUBSECTIONHEAD_GROUP_ACCESS]),

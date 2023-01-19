@@ -32,4 +32,26 @@ fileRouter
     FileHandler.getSign
   );
 
+fileRouter
+  .route("/students/seminar-docs")
+  .post(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    FileHandler.uploadSeminarDocs
+  );
+
+fileRouter
+  .route("/students/seminar-docs/:docname")
+  .get(
+    AuthorizationMiddleware.authorize([
+      constants.STUDENT_GROUP_ACCESS,
+      constants.LECTURER_GROUP_ACCESS,
+      constants.ADMINHEAD_GROUP_ACCCESS,
+      constants.DEAN_GROUP_ACCESS,
+      constants.SUBSECTIONHEAD_GROUP_ACCESS,
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+    ]),
+    FileHandler.getSeminarDocs
+  );
+
 export default fileRouter;
