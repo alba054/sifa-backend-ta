@@ -14,6 +14,13 @@ subsectionAdminRouter
     SubsectionAdminHandler.getThesisWithSK
   );
 
+subsectionAdminRouter
+  .route("/sk/:thesisID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.SUBSECTIONHEAD_GROUP_ACCESS]),
+    SubsectionAdminHandler.getThesisSKDetail
+  );
+
 // * get examiner sk detail
 // * accept or reject examiner sk
 subsectionAdminRouter

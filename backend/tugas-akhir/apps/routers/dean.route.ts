@@ -13,6 +13,13 @@ deanRouter
   );
 
 deanRouter
+  .route("/sk/:thesisID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.DEAN_GROUP_ACCESS]),
+    DeanHandler.getThesisSKDetail
+  );
+
+deanRouter
   .route("/examiners/sk/:SKID")
   .put(
     AuthorizationMiddleware.authorize([constants.DEAN_GROUP_ACCESS]),

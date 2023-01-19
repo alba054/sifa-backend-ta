@@ -5,6 +5,16 @@ import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 
 export class DeanService {
+  static async getApprovedThesisWithSKDetail(thesisID: number) {
+    const thesis = await Thesis.getApprovedThesisDetail(thesisID);
+
+    if (typeof thesis === "undefined") {
+      throw new NotFoundError("thesis's not found");
+    }
+
+    return thesis;
+  }
+
   static async signSupervisorSK(SKID: number, signed: boolean) {
     const supervisorSK = await SupervisorSK.getSKByID(SKID);
 

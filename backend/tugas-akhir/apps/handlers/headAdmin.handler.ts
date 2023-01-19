@@ -5,6 +5,32 @@ import { NotFoundError } from "../utils/error/notFoundError";
 import { constants, createResponse } from "../utils/utils";
 
 export class HeadAdminHandler {
+  static async getThesisSKDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { thesisID } = req.params;
+
+    try {
+      const thesis = await HeadAdminService.getApprovedThesisWithSKDetail(
+        Number(thesisID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get thesis with sk detail",
+            thesis
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getSupervisorSKDetail(
     req: Request,
     res: Response,
