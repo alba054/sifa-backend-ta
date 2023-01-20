@@ -63,6 +63,7 @@ export class UserHandler {
       departmentID: res.locals.user.departmentID,
       description: res.locals.user.description,
       groupAccess: roleMap.get(res.locals.user.groupAccess),
+      roleNumber: res.locals.user.groupAccess,
       labID: res.locals.user.labID,
       vocationID: res.locals.user.vocationID,
     } as ICredential;
