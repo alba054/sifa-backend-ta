@@ -54,6 +54,7 @@ export class UserHandler {
       constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
       "Koordinator_Seminar"
     );
+    roleMap.set(constants.VICE_DEAN_GROUP_ACCESS, "Wakil_Dekan");
 
     const credential = {
       username: res.locals.user.username,
