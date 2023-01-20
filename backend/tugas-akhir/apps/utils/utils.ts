@@ -48,6 +48,7 @@ export const constants = {
   DEAN_GROUP_ACCESS: 9,
   SUBSECTIONHEAD_GROUP_ACCESS: 10,
   ADMINHEAD_GROUP_ACCCESS: 11,
+  VICE_DEAN_GROUP_ACCESS: 12,
   SUCCESS_MESSAGE: "success",
   FAILED_MESSAGE: "failed",
   USER_ACTIVE_STATUS: 1,
@@ -60,5 +61,6 @@ export const constants = {
   PROPOSAL_STATUS_IN_PROCESS: "Belum_diproses",
   PROPOSAL_STATUS_APPROVED: "Diterima",
   PROPOSAL_STATUS_REJECTED: "Ditolak",
+  SEMINAR_COORDINATOR_DOC_POSTFIX: "seminarkoordinator", // * use encrypted for future dev
   PASSWORD_RESET_TOKEN_EXP,
 };
