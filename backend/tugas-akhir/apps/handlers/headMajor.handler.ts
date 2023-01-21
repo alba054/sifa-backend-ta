@@ -91,6 +91,8 @@ export class HeadMajorHandler {
       const rejected: any[] = [];
       const inprocess: any[] = [];
       const studentThesis = thesis.filter((t) => t.taMhsNim === nim);
+      const name = studentThesis[0].mahasiswa.mhsNama;
+
       studentThesis.forEach((t) => {
         if (t.statusPermohonan === "Diterima") {
           accepted.push(t);
@@ -103,6 +105,7 @@ export class HeadMajorHandler {
 
       response.push({
         NIM: nim,
+        nama: name,
         data: {
           accepted,
           rejected,
