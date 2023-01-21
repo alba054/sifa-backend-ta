@@ -317,6 +317,8 @@ export class Thesis {
       include: {
         mahasiswa: true,
         pengusul: true,
+        ref_laboratorium: true,
+        ref_laboratorium2: true,
       },
     });
 
