@@ -314,6 +314,10 @@ export class Thesis {
           { statusPermohonan: "Belum_Diproses" },
         ],
       },
+      include: {
+        mahasiswa: true,
+        pengusul: true,
+      },
     });
 
     return proposedThesis;
