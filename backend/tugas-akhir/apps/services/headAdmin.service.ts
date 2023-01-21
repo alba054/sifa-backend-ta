@@ -1,9 +1,42 @@
 import { NotFoundError } from "@prisma/client/runtime";
 import { ExaminerSK } from "../models/examinerSK.model";
+import { ExamProposal } from "../models/examProposal.model";
 import { SupervisorSK } from "../models/supervisorSK.model";
 import { Thesis } from "../models/thesis.model";
 
 export class HeadAdminService {
+  static async getHistoryOfExamProposal() {
+    return await ExamProposal.getHistoryOfAcceptedOrRejectedExamProposal();
+  }
+
+  static async acceptOrRejectExamProposal(
+    examID: number,
+    isAccepted: boolean,
+    note?: string
+  ) {
+    const proposal = await ExamProposal.getExamProposalByID(examID);
+
+    if (proposal === null) {
+      throw new NotFoundError("proposal's not found");
+    }
+
+    return await ExamProposal.updateAcceptanceStatus(examID, isAccepted, note);
+  }
+
+  static async getExamProposalDetail(examID: number) {
+    const proposal = await ExamProposal.getExamProposalByID(examID);
+
+    if (proposal === null) {
+      throw new NotFoundError("proposal's not found");
+    }
+
+    return proposal;
+  }
+
+  static async getListOfUnvalidatedExamProposal() {
+    return await ExamProposal.getInProcessExamProposals();
+  }
+
   static async getApprovedThesisWithSKDetail(thesisID: number) {
     const thesis = await Thesis.getApprovedThesisDetail(thesisID);
 

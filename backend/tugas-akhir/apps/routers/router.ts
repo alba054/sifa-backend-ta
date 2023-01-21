@@ -17,6 +17,7 @@ import subsectionAdminRouter from "./subsectionAdmin.route";
 import headAdminRouter from "./headAdmin.route";
 import deanRouter from "./dean.route";
 import seminarCoordinatorRouter from "./seminarCoordinator.route";
+import viceDeanRouter from "./viceDean.route";
 
 const router = express.Router();
 
@@ -36,6 +37,7 @@ router.use("/subsection-admins", subsectionAdminRouter);
 router.use("/head-admins", headAdminRouter); // * ktu
 router.use("/deans", deanRouter);
 router.use("/seminar-coordinators", seminarCoordinatorRouter);
+router.use("vice-deans", viceDeanRouter);
 // * chat service
 router.use("/chat", chatRouter);
 router.use("/files", fileRouter);

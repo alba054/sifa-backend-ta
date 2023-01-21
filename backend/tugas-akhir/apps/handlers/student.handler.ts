@@ -16,10 +16,83 @@ import { IThesis, IThesisPost } from "../utils/interfaces/thesis.interface";
 import { ThesisService } from "../services/thesis.service";
 import { decodeBase64 } from "../utils/decoder";
 import { ISeminarDocumentPost } from "../utils/interfaces/seminar.interface";
+import { IRequestExamDocumentPost } from "../utils/interfaces/exam.interface";
 
 dotenv.config();
 
 export class StudentHandler {
+  static async deleteExamProposal(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim } = req.params;
+
+    try {
+      await StudentService.deleteExamProposal(nim);
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully delete exam proposal"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getExamProposalDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim } = req.params;
+
+    try {
+      const exam = await StudentService.getExamProposalDetail(nim);
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get exam propsal detail",
+            exam
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async requestExam(req: Request, res: Response, next: NextFunction) {
+    const { nim } = req.params;
+    const body = req.body as IRequestExamDocumentPost;
+
+    try {
+      if (typeof body.doc === "undefined") {
+        throw new BadRequestError("provide doc");
+      }
+
+      if (!Array.isArray(body.doc) || body.doc.length < 1) {
+        throw new BadRequestError("provide documents at least 1");
+      }
+
+      await StudentService.requestExam(nim, body);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(constants.SUCCESS_MESSAGE, "successfully request exam")
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getSeminarDetail(
     req: Request,
     res: Response,

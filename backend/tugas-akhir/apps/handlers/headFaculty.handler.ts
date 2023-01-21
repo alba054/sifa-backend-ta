@@ -7,6 +7,101 @@ import { ISupervisorSKPost } from "../utils/interfaces/supervisorSK.interface";
 import { constants, createResponse } from "../utils/utils";
 
 export class HeadFacultyHandler {
+  static async getHistoryOfExamProposal(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const proposals = await HeadFacultyService.getHistoryOfExamProposal();
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get unverified proposals",
+          proposals
+        )
+      );
+  }
+
+  static async acceptOrRejectExamProposal(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { examID } = req.params;
+    const { isAccepted, note } = req.body;
+
+    try {
+      if (typeof isAccepted === "undefined") {
+        throw new BadRequestError("provide isAccepted");
+      }
+
+      await HeadFacultyService.acceptOrRejectExamProposal(
+        Number(examID),
+        Boolean(isAccepted),
+        note
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully accept/reject proposal"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getUnverifiedExamProposalDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { examID } = req.params;
+
+    try {
+      const proposal = await HeadFacultyService.getExamProposalDetail(
+        Number(examID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get proposal detail",
+            proposal
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getListOfUnverifiedExamProposal(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const proposals =
+      await HeadFacultyService.getListOfUnverifiedExamProposal();
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get unverified proposals",
+          proposals
+        )
+      );
+  }
+
   static async getThesisWithSK(
     req: Request,
     res: Response,
