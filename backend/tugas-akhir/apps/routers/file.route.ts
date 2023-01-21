@@ -54,4 +54,24 @@ fileRouter
     FileHandler.getSeminarDocs
   );
 
+fileRouter
+  .route("/seminar-coordinators/seminar-docs")
+  .post(
+    AuthorizationMiddleware.authorize([
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+    ]),
+    FileHandler.uploadSeminarDocsFromCoord
+  );
+
+fileRouter
+  .route("/seminar-coordinators/seminar-docs/:docname")
+  .get(
+    AuthorizationMiddleware.authorize([
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+      constants.STUDENT_GROUP_ACCESS,
+      constants.LECTURER_GROUP_ACCESS,
+    ]),
+    FileHandler.getSeminarDocFromCoord
+  );
+
 export default fileRouter;

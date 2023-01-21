@@ -1,11 +1,192 @@
 import { Examiner } from "../models/examiner.model";
 import { Lecturer } from "../models/lecturer.model";
+import { Seminar } from "../models/seminar.model";
+import { SeminarNote } from "../models/seminarNote.model";
+import { SeminarScore } from "../models/seminarScore.model";
 import { Supervisor } from "../models/supervisor.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { ILecturer } from "../utils/interfaces/lecturer.interface";
 
 export class LecturerService {
+  static async getSeminarOfThesis(nim: string, thesisID: number) {
+    return await Seminar.getSeminarOfThesisByLecturer(nim, thesisID);
+  }
+
+  static async noteSeminar(nim: string, seminarID: number, note: string) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null) {
+      throw new NotFoundError("seminar's not found");
+    }
+    const lecturer = seminar.seminar_persetujuan.find(
+      (s) => s.dosen.dsnNip === nim
+    );
+    if (typeof lecturer === "undefined") {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    if (seminar.smrFileKesediaan === null && seminar.smrFileUndangan === null) {
+      throw new BadRequestError("seminar's not found");
+    }
+
+    return await SeminarNote.noteSeminar(seminarID, lecturer.dosen.dsnId, note);
+  }
+
+  static async scoreSeminar(nim: string, seminarID: number, score: number) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null) {
+      throw new NotFoundError("seminar's not found");
+    }
+    const lecturer = seminar.seminar_persetujuan.find(
+      (s) => s.dosen.dsnNip === nim
+    );
+    if (typeof lecturer === "undefined") {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    if (seminar.smrFileKesediaan === null && seminar.smrFileUndangan === null) {
+      throw new BadRequestError("cannot scores yet");
+    }
+
+    if (seminar.smrFileBeritaAcara !== null) {
+      throw new BadRequestError("has been blocked");
+    }
+
+    const seminarScore = await SeminarScore.scoreSeminar(
+      seminarID,
+      lecturer.dosen.dsnId,
+      score
+    );
+
+    const seminarScores = await SeminarScore.getSeminarScoresBySeminarID(
+      seminarID
+    );
+
+    if (seminarScores.length > 3) {
+      const scores = seminarScores.map((s) => s.snilaiNilai);
+      if (scores.every((s) => s !== null)) {
+        console.log(scores);
+
+        let finalScore = scores.reduce((total, s) => (total ?? 0) + (s ?? 0));
+        console.log(finalScore);
+
+        finalScore = (finalScore ?? 0) / seminarScores.length;
+
+        await Seminar.updateAvgScore(seminarID, finalScore);
+      }
+    }
+
+    return seminarScore;
+  }
+
+  static async getInvitedSeminarDetail(nim: string, seminarID: number) {
+    const seminar = await Seminar.getInvitedSeminarDetail(nim, seminarID);
+
+    if (
+      seminar === null ||
+      seminar.seminar_persetujuan.some((s) => s.dosen.dsnNip !== nim)
+    ) {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    // if (
+    //   seminar.seminar_persetujuan.every(
+    //     (s) => s.statusPermohonan !== "Diterima"
+    //   )
+    // ) {
+    //   throw new NotFoundError("seminar has not been approved by all lecturers");
+    // }
+
+    return seminar;
+  }
+
+  static async getInvitedSeminars(nim: string) {
+    const invitedSeminars =
+      await Seminar.getInvitedSeminarsBySupervisorUsername(nim);
+
+    return invitedSeminars;
+  }
+
+  static async acceptOrRejectScheduledSeminar(
+    nim: string,
+    seminarID: number,
+    isAccepted: boolean
+  ) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (
+      seminar === null ||
+      typeof seminar.seminar_persetujuan.find((s) => s.dosen.dsnNip === nim) ===
+        "undefined"
+    ) {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    return await Seminar.changeScheduledSeminarApproval(
+      seminarID,
+      isAccepted,
+      nim
+    );
+  }
+
+  static async getScheduledSeminarDetail(nim: string, seminarID: number) {
+    const seminar = await Seminar.getScheduledSeminarDetailByLecturerUsername(
+      nim,
+      seminarID
+    );
+
+    if (
+      seminar === null ||
+      typeof seminar.seminar_persetujuan.find((s) => s.dosen.dsnNip === nim) ===
+        "undefined"
+    ) {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    return seminar;
+  }
+
+  static async getScheduledSeminars(nim: string) {
+    const scheduledSeminar =
+      await Seminar.getScheduledSeminarBySupervisorUsername(nim);
+
+    return scheduledSeminar;
+  }
+
+  static async acceptOrRejectSeminar(
+    nim: string,
+    seminarID: number,
+    isAccepted: boolean
+  ) {
+    const seminar = await Seminar.getSeminarSupervisorDetail(nim, seminarID);
+
+    if (seminar === null) {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    return await Seminar.changeSupervisorSeminarApproval(
+      seminarID,
+      isAccepted,
+      nim
+    );
+  }
+
+  static async getSeminarDetail(nim: string, seminarID: number) {
+    const seminar = await Seminar.getSeminarSupervisorDetail(nim, seminarID);
+
+    if (seminar === null) {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    return seminar;
+  }
+
+  static async getSeminarRequests(nim: string) {
+    return await Seminar.getSeminarBySupervisorNIP(nim);
+  }
+
   static async deleteExaminer(nim: string, examinerID: number) {
     const lecturer = await LecturerService.getLecturerProfile(nim);
     const examinerOffer = await Examiner.getExaminerByID(examinerID);

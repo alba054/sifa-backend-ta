@@ -45,21 +45,22 @@ model bebas_lab {
 }
 
 model dosen {
-  dsnId             Int               @id @default(autoincrement())
-  dsnNip            String            @unique(map: "dsnNip") @db.VarChar(30)
-  dsnNama           String            @db.VarChar(60)
+  dsnId             Int       @id @default(autoincrement())
+  dsnNip            String    @unique(map: "dsnNip") @db.VarChar(30)
+  dsnNama           String    @db.VarChar(60)
   dsnDprtId         Int?
-  dsnGelarDepan     String?           @default("") @db.VarChar(20)
-  dsnGelarBelakang  String?           @default("") @db.VarChar(20)
-  dsnTempatLahir    String?           @db.VarChar(30)
-  dsnTglLahir       DateTime?         @db.Date
-  dsnAlamat         String?           @db.VarChar(100)
-  dsnNIDN           String?           @db.VarChar(10)
-  dsnNoSertifikasi  String?           @db.VarChar(30)
-  dsnBidangKeahlian String?           @db.VarChar(150)
-  dsnTtd            String?           @db.VarChar(100)
-  dsnFoto           String?           @db.VarChar(100)
-  dsnEmail          String?           @db.VarChar(100)
+  dsnGelarDepan     String?   @default("") @db.VarChar(20)
+  dsnGelarBelakang  String?   @default("") @db.VarChar(20)
+  dsnTempatLahir    String?   @db.VarChar(30)
+  dsnTglLahir       DateTime? @db.Date
+  dsnAlamat         String?   @db.VarChar(100)
+  dsnNIDN           String?   @db.VarChar(10)
+  dsnNoSertifikasi  String?   @db.VarChar(30)
+  dsnBidangKeahlian String?   @db.VarChar(150)
+  dsnTtd            String?   @db.VarChar(100)
+  dsnFoto           String?   @db.VarChar(100)
+  dsnEmail          String?   @db.VarChar(100)
+
   // dsnJenisKelamin      String?           @db.Char(1)
   dsnJK             JK?
   // dsnStatusKepegawaian Int               @db.UnsignedInt
@@ -83,6 +84,7 @@ model dosen {
   // @@index([dsnStatusKepegawaian], map: "dsnStatusKepegawaian")
   // @@index([dsnJenisKelamin], map: "dsnJenisKelamin")
   tugas_akhir                                              tugas_akhir[]
+  koordinator_seminar                                      koordinator_seminar[]
 
   @@index([dsnBidangKeahlian], map: "dsnBidangKeahlian")
   @@index([dsnDprtId], map: "dsnDprtId")
@@ -470,9 +472,8 @@ model seminar {
   smrId                     Int                         @id @default(autoincrement())
   smrTaId                   Int
   smrTglSeminar             DateTime?                   @db.Date
-  smrJamMulai               DateTime?                   @db.Time(0)
-  smrJenisUjian             Int
-  smrJamSelesai             DateTime?                   @db.Time(0)
+  smrJamMulai               String?
+  smrJamSelesai             String?
   smrStatus                 Int?
   smrStatusUjian            Int?
   smrFileUndangan           String?                     @db.VarChar(200)
@@ -481,11 +482,13 @@ model seminar {
   smrTempat                 String?                     @db.VarChar(100)
   smrLink                   String?                     @db.Text
   smrFileKesediaan          String?                     @db.VarChar(200)
+  smrFileBeritaAcara        String?
+  smrFileKeteranganNilai    String?
   smrTglUndangan            DateTime?                   @db.Date
   smrNilaiAngka             Float?                      @db.Float
   smrNilaiHuruf             String?                     @db.VarChar(2)
-  tugas_akhir               tugas_akhir                 @relation(fields: [smrTaId], references: [taId], onDelete: Cascade, map: "seminar_ibfk_2")
   ref_jenisujian            JenisUjian
+  tugas_akhir               tugas_akhir                 @relation(fields: [smrTaId], references: [taId], onDelete: Cascade, map: "seminar_ibfk_2")
   // ref_jenisujian            ref_jenisujian              @relation(fields: [smrJenisUjian], references: [jenisId], onUpdate: Restrict, map: "seminar_ibfk_3")
   seminar_catatan           seminar_catatan[]
   seminar_dokumen           seminar_dokumen[]
@@ -493,7 +496,6 @@ model seminar {
   seminar_persetujuan       seminar_persetujuan[]
   seminar_status_pembimbing seminar_status_pembimbing[]
 
-  @@index([smrJenisUjian], map: "smrJenisUjian")
   @@index([smrStatus], map: "smrStatus")
   @@index([smrStatusUjian], map: "smrStatusUjian")
   @@index([smrTaId], map: "smrTaId")
@@ -513,58 +515,61 @@ model seminar_catatan {
 }
 
 model seminar_dokumen {
-  dokId              Int                @id @default(autoincrement()) @db.UnsignedInt
-  dokSmrId           Int?
-  dokSdokId          Int                @db.UnsignedInt
-  dokFile            String?            @db.VarChar(200)
-  seminar            seminar?           @relation(fields: [dokSmrId], references: [smrId], onDelete: Cascade, map: "seminar_dokumen_FK")
-  ref_dokumenseminar ref_dokumenseminar @relation(fields: [dokSdokId], references: [sdokId], onUpdate: Restrict, map: "seminar_dokumen_ibfk_2")
+  dokId                    Int                 @id @default(autoincrement()) @db.UnsignedInt
+  dokSmrId                 Int?
+  // dokSdokId          Int                @db.UnsignedInt
+  namaDokumenSeminar       String
+  dokFile                  String?             @db.VarChar(200)
+  seminar                  seminar?            @relation(fields: [dokSmrId], references: [smrId], onDelete: Cascade, map: "seminar_dokumen_FK")
+  // ref_dokumenseminar ref_dokumenseminar @relation(fields: [dokSdokId], references: [sdokId], onUpdate: Restrict, map: "seminar_dokumen_ibfk_2")
+  ref_dokumenseminar       ref_dokumenseminar? @relation(fields: [ref_dokumenseminarSdokId], references: [sdokId])
+  ref_dokumenseminarSdokId Int?                @db.UnsignedInt
 
-  @@index([dokSdokId], map: "dokSdokId")
+  // @@index([dokSdokId], map: "dokSdokId")
   @@index([dokSmrId], map: "seminar_dokumen_FK")
 }
 
 model seminar_nilai {
-  snilaiId      Int           @id @default(autoincrement()) @db.UnsignedInt
-  snilaiSmrId   Int?
-  snilaiDsnId   Int?
-  snilaiItemId  Int           @db.UnsignedInt
-  snilaiNilai   Float?        @db.Float
-  snilaiDate    DateTime?     @db.DateTime(0)
-  snilaiUser    String?       @db.VarChar(30)
-  seminar       seminar?      @relation(fields: [snilaiSmrId], references: [smrId], onDelete: Restrict, map: "seminar_nilai_ibfk_1")
-  dosen         dosen?        @relation(fields: [snilaiDsnId], references: [dsnId], onDelete: Restrict, map: "seminar_nilai_ibfk_2")
-  ref_itemnilai ref_itemnilai @relation(fields: [snilaiItemId], references: [itemId], map: "seminar_nilai_ibfk_3")
+  snilaiId            Int            @id @default(autoincrement()) @db.UnsignedInt
+  snilaiSmrId         Int?
+  snilaiDsnId         Int?
+  snilaiNilai         Float?         @db.Float
+  snilaiDate          DateTime?      @db.DateTime(0)
+  snilaiUser          String?        @db.VarChar(30)
+  seminar             seminar?       @relation(fields: [snilaiSmrId], references: [smrId], onDelete: Restrict, map: "seminar_nilai_ibfk_1")
+  dosen               dosen?         @relation(fields: [snilaiDsnId], references: [dsnId], onDelete: Restrict, map: "seminar_nilai_ibfk_2")
+  ref_itemnilai       ref_itemnilai? @relation(fields: [ref_itemnilaiItemId], references: [itemId])
+  ref_itemnilaiItemId Int?           @db.UnsignedInt
 
   @@index([snilaiDsnId], map: "snilaiDsnId")
-  @@index([snilaiItemId], map: "snilaiItemId")
   @@index([snilaiSmrId], map: "snilaiSmrId")
 }
 
 model seminar_persetujuan {
-  ssetujuId      Int       @id @default(autoincrement()) @db.UnsignedInt
-  ssetujuSmrId   Int
-  ssetujuDsnId   Int
-  ssetujuDate    DateTime? @db.Date
-  ssetujuStatus  Int?
-  ssetujuCatatan String?   @db.Text
-  dosen          dosen     @relation(fields: [ssetujuDsnId], references: [dsnId], onDelete: Cascade, map: "seminar_persetujuan_ibfk_1")
-  seminar        seminar   @relation(fields: [ssetujuSmrId], references: [smrId], onDelete: Cascade, map: "seminar_persetujuan_ibfk_2")
+  ssetujuId        Int              @id @default(autoincrement()) @db.UnsignedInt
+  ssetujuSmrId     Int
+  ssetujuDsnId     Int
+  ssetujuDate      DateTime?        @db.Date
+  ssetujuStatus    Int?
+  statusPermohonan StatusPermohonan @default(Belum_Diproses)
+  ssetujuCatatan   String?          @db.Text
+  dosen            dosen            @relation(fields: [ssetujuDsnId], references: [dsnId], onDelete: Cascade, map: "seminar_persetujuan_ibfk_1")
+  seminar          seminar          @relation(fields: [ssetujuSmrId], references: [smrId], onDelete: Cascade, map: "seminar_persetujuan_ibfk_2")
 
   @@unique([ssetujuSmrId, ssetujuDsnId], map: "ssgabung")
   @@index([ssetujuDsnId], map: "ssetujuDsnId")
 }
 
 model seminar_status_pembimbing {
-  setujuId      Int          @id @default(autoincrement()) @db.UnsignedInt
-  setujuSmrId   Int
-  setujuPmbId   Int
+  setujuId         Int              @id @default(autoincrement()) @db.UnsignedInt
+  setujuSmrId      Int
+  setujuPmbId      Int
   // setujuStatusId    Int               @db.UnsignedInt
-  setujuDate    DateTime?    @db.Date
-  setujuCatatan String?      @db.Text
-  seminar       seminar      @relation(fields: [setujuSmrId], references: [smrId], onDelete: Cascade, map: "seminar_status_pembimbing_ibfk_1")
-  pembimbing    pembimbing   @relation(fields: [setujuPmbId], references: [pmbId], onDelete: Cascade, map: "seminar_status_pembimbing_ibfk_2")
-  status_setuju StatusSetuju
+  setujuDate       DateTime?        @db.Date
+  setujuCatatan    String?          @db.Text
+  seminar          seminar          @relation(fields: [setujuSmrId], references: [smrId], onDelete: Cascade, map: "seminar_status_pembimbing_ibfk_1")
+  pembimbing       pembimbing       @relation(fields: [setujuPmbId], references: [pmbId], onDelete: Cascade, map: "seminar_status_pembimbing_ibfk_2")
+  statusPermohonan StatusPermohonan @default(Belum_Diproses)
   // ref_status_setuju ref_status_setuju @relation(fields: [setujuStatusId], references: [statusId], onDelete: Cascade, map: "seminar_status_pembimbing_ibfk_3")
   // @@index([setujuStatusId], map: "setujuStatusId")
   // ref_status_setuju         ref_status_setuju? @relation(fields: [ref_status_setujuStatusId], references: [statusId])
@@ -844,6 +849,12 @@ model user {
   password_reset_token password_reset_token[]
 
   @@index([aksesgroup], map: "group")
+}
+
+model koordinator_seminar {
+  id         Int   @id @default(autoincrement())
+  dosen      dosen @relation(fields: [dosenDsnId], references: [dsnId])
+  dosenDsnId Int
 }
 
 model password_reset_token {

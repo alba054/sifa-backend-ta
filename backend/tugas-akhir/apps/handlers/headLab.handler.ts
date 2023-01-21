@@ -97,8 +97,12 @@ export class HeadLabHandler {
 
   static async getLabLetters(req: Request, res: Response, next: NextFunction) {
     const { labID } = res.locals.user;
+    const { search } = req.query;
 
-    const labLetters = await HeadLabService.getLabLettersByLabID(Number(labID));
+    const labLetters = await HeadLabService.getLabLettersByLabID(
+      Number(labID),
+      search
+    );
 
     return res
       .status(200)
@@ -475,7 +479,8 @@ export class HeadLabHandler {
     next: NextFunction
   ) {
     const { labID } = res.locals.user;
-    let approvedThesis = await HeadLabService.getApprovedThesis(labID);
+    const { title } = req.query;
+    let approvedThesis = await HeadLabService.getApprovedThesis(labID, title);
 
     console.log(labID);
 
