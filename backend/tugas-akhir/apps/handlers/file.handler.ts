@@ -127,7 +127,7 @@ export class FileHandler {
     const path = `${constants.SIGN_FILE_PATH}/${username}`;
     try {
       const sign = await readFile(path);
-      res.contentType("image/jpeg");
+      res.contentType("image/png");
       res.send(sign);
     } catch (error) {
       if (error instanceof Error) {
