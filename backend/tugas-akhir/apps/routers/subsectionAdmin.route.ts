@@ -47,4 +47,29 @@ subsectionAdminRouter
     SubsectionAdminHandler.acceptOrRejectSupervisorSK
   );
 
+subsectionAdminRouter
+  .route("/exams")
+  .get(
+    AuthorizationMiddleware.authorize([constants.SUBSECTIONHEAD_GROUP_ACCESS]),
+    SubsectionAdminHandler.getListOfUnvalidatedExamProposal
+  );
+
+subsectionAdminRouter
+  .route("/exams/history")
+  .get(
+    AuthorizationMiddleware.authorize([constants.SUBSECTIONHEAD_GROUP_ACCESS]),
+    SubsectionAdminHandler.getHistoryOfExamProposal
+  );
+
+subsectionAdminRouter
+  .route("/exams/:examID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.SUBSECTIONHEAD_GROUP_ACCESS]),
+    SubsectionAdminHandler.getUnvalidatedExamProposalDetail
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.SUBSECTIONHEAD_GROUP_ACCESS]),
+    SubsectionAdminHandler.acceptOrRejectExamProposal
+  );
+
 export default subsectionAdminRouter;

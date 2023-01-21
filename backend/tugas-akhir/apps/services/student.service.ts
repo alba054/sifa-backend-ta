@@ -1,9 +1,11 @@
+import { ExamProposal } from "../models/examProposal.model";
 import { Seminar } from "../models/seminar.model";
 import { Student } from "../models/student.model";
 import { Thesis } from "../models/thesis.model";
 import { StudentBuilder } from "../utils/builder/student.builder";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
+import { IRequestExamDocumentPost } from "../utils/interfaces/exam.interface";
 import { ISeminarDocumentPost } from "../utils/interfaces/seminar.interface";
 import {
   IStudent,
@@ -12,6 +14,50 @@ import {
 import { writeToFile } from "../utils/storage";
 
 export class StudentService {
+  static async deleteExamProposal(nim: string) {
+    const examProposal = await ExamProposal.getExamProposalByNIM(nim);
+
+    if (examProposal === null) {
+      throw new NotFoundError("proposal's not found");
+    }
+
+    if (examProposal?.statusVerifikasiBerkas === "Diterima") {
+      throw new BadRequestError("can't accepted exam proposal");
+    }
+
+    return await ExamProposal.deleteExamProposalByStudentNIM(nim);
+  }
+
+  static async getExamProposalDetail(nim: string) {
+    const exam = await ExamProposal.getExamProposalByNIM(nim);
+
+    if (exam === null) {
+      throw new NotFoundError("exam proposal's not found");
+    }
+
+    return exam;
+  }
+
+  static async requestExam(nim: string, body: IRequestExamDocumentPost) {
+    const thesis = await Thesis.getApprovedThesis(nim);
+
+    if (thesis.length < 1) {
+      throw new NotFoundError("you have no approved thesis");
+    }
+
+    const examProposal = await ExamProposal.getExamProposalByThesisID(
+      thesis[0].taId
+    );
+
+    if (examProposal?.statusVerifikasiBerkas === "Diterima") {
+      throw new BadRequestError(
+        "can't request exam if the previous is already accepted"
+      );
+    }
+
+    return await ExamProposal.createExamProposal(body, Number(thesis[0].taId));
+  }
+
   static async getSeminarDetail(nim: string, seminarID: number) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 

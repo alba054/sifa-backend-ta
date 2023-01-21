@@ -87,6 +87,31 @@ headFacultyRouter
     AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
     HeadFacultyHandler.getThesisWithSK
   );
+
+headFacultyRouter
+  .route("/exams")
+  .get(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.getListOfUnverifiedExamProposal
+  );
+
+headFacultyRouter
+  .route("/exams/history")
+  .get(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.getHistoryOfExamProposal
+  );
+
+headFacultyRouter
+  .route("/exams/:examID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.getUnverifiedExamProposalDetail
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.acceptOrRejectExamProposal
+  );
 // .get(
 //   AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
 //   HeadFacultyHandler.getSupervisorSK

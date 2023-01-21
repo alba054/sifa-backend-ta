@@ -1,4 +1,5 @@
 import { ExaminerSK } from "../models/examinerSK.model";
+import { ExamProposal } from "../models/examProposal.model";
 import { SupervisorSK } from "../models/supervisorSK.model";
 import { Thesis } from "../models/thesis.model";
 import { BadRequestError } from "../utils/error/badrequestError";
@@ -7,6 +8,42 @@ import { IExaminerSKPost } from "../utils/interfaces/examinerSK.interface";
 import { ISupervisorSKPost } from "../utils/interfaces/supervisorSK.interface";
 
 export class HeadFacultyService {
+  static async getHistoryOfExamProposal() {
+    return await ExamProposal.getHistoryOfExamProposal();
+  }
+
+  static async acceptOrRejectExamProposal(
+    examID: number,
+    isAccepted: boolean,
+    note?: string
+  ) {
+    const proposal = await ExamProposal.getExamProposalByID(examID);
+
+    if (proposal === null) {
+      throw new NotFoundError("proposal's not found");
+    }
+
+    return await ExamProposal.updateVerificationStatus(
+      examID,
+      isAccepted,
+      note
+    );
+  }
+
+  static async getExamProposalDetail(examID: number) {
+    const proposal = await ExamProposal.getExamProposalByID(examID);
+
+    if (proposal === null) {
+      throw new NotFoundError("proposal's not found");
+    }
+
+    return proposal;
+  }
+
+  static async getListOfUnverifiedExamProposal() {
+    return await ExamProposal.getUnverifiedExamProposals();
+  }
+
   static async getThesisWithSK() {
     let thesis = await Thesis.getApprovedThesis();
 

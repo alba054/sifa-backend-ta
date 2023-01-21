@@ -777,34 +777,34 @@ model sk_penguji_fakultas {
 }
 
 model tugas_akhir {
-  taId                                                   Int                 @id @default(autoincrement())
-  taMhsNim                                               String              @db.Char(12)
-  taJudul                                                String              @db.Text
+  taId                                                   Int                       @id @default(autoincrement())
+  taMhsNim                                               String                    @db.Char(12)
+  taJudul                                                String                    @db.Text
   // taStatusPmb                                            Int
   // taStatusKep                                            Int
   taLabId                                                Int?
   taLabId2                                               Int?
-  taFile                                                 String?             @db.VarChar(255)
+  taFile                                                 String?                   @db.VarChar(255)
   taKRS                                                  String?
   taKHS                                                  String?
-  taKRSKHSStatus                                         StatusPermohonan    @default(Belum_Diproses)
-  taCatatan                                              String?             @db.Text
+  taKRSKHSStatus                                         StatusPermohonan          @default(Belum_Diproses)
+  taCatatan                                              String?                   @db.Text
   taCatatanFA                                            String?
-  taCatatanMhs                                           String?             @db.Text
+  taCatatanMhs                                           String?                   @db.Text
   taStatusSk                                             Int?
   taDosenPengusul                                        Int?
   proposalGroupID                                        String
-  tanggalMasuk                                           DateTime            @default(now())
+  tanggalMasuk                                           DateTime                  @default(now())
   tanggalPenyelesaian                                    DateTime?
-  ref_permohonan_ref_permohonanTotugas_akhir_taStatusPmb StatusPermohonan    @default(Belum_Diproses)
-  ref_permohonan_ref_permohonanTotugas_akhir_taStatusKep StatusPermohonan    @default(Belum_Diproses)
-  statusPermohonan                                       StatusPermohonan    @default(Belum_Diproses)
+  ref_permohonan_ref_permohonanTotugas_akhir_taStatusPmb StatusPermohonan          @default(Belum_Diproses)
+  ref_permohonan_ref_permohonanTotugas_akhir_taStatusKep StatusPermohonan          @default(Belum_Diproses)
+  statusPermohonan                                       StatusPermohonan          @default(Belum_Diproses)
   // ref_permohonan_ref_permohonanTotugas_akhir_taStatusPmb ref_permohonan      @relation("ref_permohonanTotugas_akhir_taStatusPmb", fields: [taStatusPmb], references: [tastatusId], onDelete: Cascade, map: "tugas_akhir_ibfk_1")
   // ref_permohonan_ref_permohonanTotugas_akhir_taStatusKep ref_permohonan      @relation("ref_permohonanTotugas_akhir_taStatusKep", fields: [taStatusKep], references: [tastatusId], onDelete: Cascade, map: "tugas_akhir_ibfk_2")
-  ref_laboratorium                                       ref_laboratorium?   @relation("primary", fields: [taLabId], references: [labId], onDelete: Cascade, onUpdate: Restrict, map: "tugas_akhir_ibfk_3")
-  ref_laboratorium2                                      ref_laboratorium?   @relation("secondary", fields: [taLabId2], references: [labId], onDelete: Cascade, onUpdate: Restrict, map: "tugas_akhir_lab2")
-  mahasiswa                                              mahasiswa           @relation(fields: [taMhsNim], references: [mhsNim], onDelete: Cascade, map: "tugas_akhir_ibfk_4")
-  pengusul                                               dosen?              @relation(fields: [taDosenPengusul], references: [dsnId], onDelete: Cascade)
+  ref_laboratorium                                       ref_laboratorium?         @relation("primary", fields: [taLabId], references: [labId], onDelete: Cascade, onUpdate: Restrict, map: "tugas_akhir_ibfk_3")
+  ref_laboratorium2                                      ref_laboratorium?         @relation("secondary", fields: [taLabId2], references: [labId], onDelete: Cascade, onUpdate: Restrict, map: "tugas_akhir_lab2")
+  mahasiswa                                              mahasiswa                 @relation(fields: [taMhsNim], references: [mhsNim], onDelete: Cascade, map: "tugas_akhir_ibfk_4")
+  pengusul                                               dosen?                    @relation(fields: [taDosenPengusul], references: [dsnId], onDelete: Cascade)
   pembimbing                                             pembimbing[]
   pembimbingan                                           pembimbingan[]
   penguji                                                penguji[]
@@ -818,9 +818,40 @@ model tugas_akhir {
   // @@index([taStatusPmb], map: "taStatus")
   // @@index([taStatusKep], map: "taStatusKep")
   disposisi_kaprodi                                      disposisi_kaprodi[]
+  permohonan_ujian_sidang                                permohonan_ujian_sidang[]
 
   @@index([taLabId], map: "taLabId")
   @@index([taMhsNim], map: "taMhsNim")
+}
+
+model permohonan_ujian_sidang {
+  id                     Int                               @id @default(autoincrement())
+  tugas_akhirTaId        Int
+  statusValidasiBerkas   StatusPermohonan                  @default(Belum_Diproses)
+  statusVerifikasiBerkas StatusPermohonan                  @default(Belum_Diproses)
+  statusPermohonan       StatusPermohonan                  @default(Belum_Diproses)
+  catatanKasubag         String?
+  catatanAdminFakultas   String?
+  catatanKTU             String?
+  statusTTD              Boolean                           @default(false)
+  dokumen_ujian_sidang   dokumen_permohonan_ujian_sidang[]
+  tugas_akhir            tugas_akhir                       @relation(fields: [tugas_akhirTaId], references: [taId])
+}
+
+model ref_dokumen_ujian_sidang {
+  id                              Int                               @id @default(autoincrement())
+  namaDokumen                     String?
+  dokumen_permohonan_ujian_sidang dokumen_permohonan_ujian_sidang[]
+}
+
+model dokumen_permohonan_ujian_sidang {
+  id                         Int                       @id @default(autoincrement())
+  fileDokumen                String?
+  permohonan_ujian_sidang    permohonan_ujian_sidang?  @relation(fields: [permohonan_ujian_sidangId], references: [id])
+  permohonan_ujian_sidangId  Int?
+  namaDokumen                String?
+  jenis_dokumen              ref_dokumen_ujian_sidang? @relation(fields: [ref_dokumen_ujian_sidangId], references: [id])
+  ref_dokumen_ujian_sidangId Int?
 }
 
 model disposisi_kaprodi {

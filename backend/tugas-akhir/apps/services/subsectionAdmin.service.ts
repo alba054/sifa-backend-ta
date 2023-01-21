@@ -1,9 +1,42 @@
 import { ExaminerSK } from "../models/examinerSK.model";
+import { ExamProposal } from "../models/examProposal.model";
 import { SupervisorSK } from "../models/supervisorSK.model";
 import { Thesis } from "../models/thesis.model";
 import { NotFoundError } from "../utils/error/notFoundError";
 
 export class SubsectionAdminService {
+  static async getHistoryOfExamProposal() {
+    return await ExamProposal.getHistoryOfValidatedExamProposal();
+  }
+
+  static async acceptOrRejectExamProposal(
+    examID: number,
+    isAccepted: boolean,
+    note?: string
+  ) {
+    const proposal = await ExamProposal.getExamProposalByID(examID);
+
+    if (proposal === null) {
+      throw new NotFoundError("proposal's not found");
+    }
+
+    return await ExamProposal.updateValidationStatus(examID, isAccepted, note);
+  }
+
+  static async getExamProposalDetail(examID: number) {
+    const proposal = await ExamProposal.getExamProposalByID(examID);
+
+    if (proposal === null) {
+      throw new NotFoundError("proposal's not found");
+    }
+
+    return proposal;
+  }
+
+  static async getListOfUnvalidatedExamProposal() {
+    return await ExamProposal.getUnvalidatedExamProposals();
+  }
+
   static async getApprovedThesisWithSKDetail(thesisID: number) {
     const thesis = await Thesis.getApprovedThesisDetail(thesisID);
 

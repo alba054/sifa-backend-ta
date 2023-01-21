@@ -208,10 +208,23 @@ export class ThesisService {
       throw new BadRequestError("provide 2 proposal");
     }
 
+    const approvedThesis = await ThesisService.getApprovedThesisByNIM(
+      thesis[0].studentNIM
+    );
+
+    if (approvedThesis.length > 0) {
+      throw new BadRequestError(
+        "can't propose thesis anymore, you have approved thesis"
+      );
+    }
+
     await this.insertNewThesis(thesis[0]);
     await this.insertNewThesis(thesis[1]);
 
     writeToFile(path, KRSTitle, KRSBuffer);
     writeToFile(path, KHSTitle, KHSBuffer);
+  }
+  static async getApprovedThesisByNIM(studentNIM: string) {
+    return await Thesis.getApprovedThesis(studentNIM);
   }
 }

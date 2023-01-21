@@ -119,7 +119,24 @@ studentRouter
     AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
     StudentHandler.provideSeminarDocument
   )
-  .get( AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
-  StudentHandler.getSeminarDetail);
+  .get(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.getSeminarDetail
+  );
+
+studentRouter
+  .route("/:nim/exams")
+  .post(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.requestExam
+  )
+  .get(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.getExamProposalDetail
+  )
+  .delete(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.deleteExamProposal
+  );
 
 export default studentRouter;

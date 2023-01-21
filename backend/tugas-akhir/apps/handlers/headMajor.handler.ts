@@ -86,12 +86,28 @@ export class HeadMajorHandler {
     }
 
     const response: any[] = [];
+    const accepted: any[] = [];
+    const rejected: any[] = [];
+    const inprocess: any[] = [];
     for (const nim of uniqueNIM) {
       const studentThesis = thesis.filter((t) => t.taMhsNim === nim);
+      studentThesis.forEach((t) => {
+        if (t.statusPermohonan === "Diterima") {
+          accepted.push(t);
+        } else if (t.statusPermohonan === "Ditolak") {
+          rejected.push(t);
+        } else {
+          inprocess.push(t);
+        }
+      });
 
       response.push({
         NIM: nim,
-        data: studentThesis,
+        data: {
+          accepted,
+          rejected,
+          inprocess
+        },
       });
     }
 
