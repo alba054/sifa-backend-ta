@@ -86,10 +86,10 @@ export class HeadMajorHandler {
     }
 
     const response: any[] = [];
-    const accepted: any[] = [];
-    const rejected: any[] = [];
-    const inprocess: any[] = [];
     for (const nim of uniqueNIM) {
+      const accepted: any[] = [];
+      const rejected: any[] = [];
+      const inprocess: any[] = [];
       const studentThesis = thesis.filter((t) => t.taMhsNim === nim);
       studentThesis.forEach((t) => {
         if (t.statusPermohonan === "Diterima") {
@@ -106,7 +106,7 @@ export class HeadMajorHandler {
         data: {
           accepted,
           rejected,
-          inprocess
+          inprocess,
         },
       });
     }
