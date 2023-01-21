@@ -52,8 +52,8 @@ export class HeadLabService {
     return LabLetter.createNewLabLetter(labID, body);
   }
 
-  static async getLabLettersByLabID(labID: number) {
-    return LabLetter.getLabLettersByLabID(labID);
+  static async getLabLettersByLabID(labID: number, search?: any) {
+    return LabLetter.getLabLettersByLabID(labID, search);
   }
 
   static async getReqLabDetail(reqLabID: number, labID: number) {
@@ -194,8 +194,8 @@ export class HeadLabService {
     return thesis;
   }
 
-  static async getApprovedThesis(labID: number) {
-    const approvedThesis = await Thesis.getApprovedThesisByLab(labID);
+  static async getApprovedThesis(labID: number, title?: any) {
+    const approvedThesis = await Thesis.getApprovedThesisByLab(labID, title);
 
     return approvedThesis;
   }

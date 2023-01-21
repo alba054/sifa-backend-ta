@@ -83,6 +83,77 @@ lecturerRouter
     LecturerHandler.accceptOrRejectExaminerOffer
   );
 
+lecturerRouter
+  .route("/:nim/seminars")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getSeminarRequests
+  );
+
+lecturerRouter
+  .route("/:nim/seminars/scheduled")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getScheduledSeminars
+  );
+
+lecturerRouter
+  .route("/:nim/seminars/scheduled/:seminarID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getScheduledSeminarDetail
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.acceptOrRejectScheduledSeminar
+  );
+
+lecturerRouter
+  .route("/:nim/seminars/invited")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getInvitedSeminars
+  );
+
+lecturerRouter
+  .route("/:nim/seminars/invited/:seminarID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getInvitedSeminarDetail
+  );
+
+lecturerRouter
+  .route("/:nim/seminars/invited/:seminarID/scoring")
+  .post(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.scoreInvitedSeminar
+  );
+
+lecturerRouter
+  .route("/:nim/seminars/invited/:seminarID/noting")
+  .post(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.noteInvitedSeminar
+  );
+
+lecturerRouter
+  .route("/:nim/thesis/:thesisID/seminars")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getSeminarsOfThesis
+  );
+
+lecturerRouter
+  .route("/:nim/seminars/:seminarID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getSeminarRequestsDetail
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.acceptOrRejectSeminarRequest
+  );
+
 // lecturerRouter.route("/:nim/")
 // // * restore status to InProcess
 // lecturerRouter

@@ -54,9 +54,9 @@ export class LabLetter {
     });
   }
 
-  static async getLabLettersByLabID(labID: number) {
+  static async getLabLettersByLabID(labID: number, search?: string) {
     return prismaDB.ref_temp_nosurat.findMany({
-      where: { tsLabId: labID },
+      where: { AND: [{ tsLabId: labID }, {}] },
       include: { ref_laboratorium: true, ref_jenis_surat: true },
     });
   }

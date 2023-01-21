@@ -1,7 +1,10 @@
+import { Seminar } from "../models/seminar.model";
 import { Student } from "../models/student.model";
 import { Thesis } from "../models/thesis.model";
 import { StudentBuilder } from "../utils/builder/student.builder";
+import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
+import { ISeminarDocumentPost } from "../utils/interfaces/seminar.interface";
 import {
   IStudent,
   IStudentUpdate,
@@ -9,6 +12,70 @@ import {
 import { writeToFile } from "../utils/storage";
 
 export class StudentService {
+  static async getSeminarDetail(nim: string, seminarID: number) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null || seminar.tugas_akhir.taMhsNim !== nim) {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    return seminar;
+  }
+
+  static async provideSeminarDocument(
+    nim: string,
+    seminarID: number,
+    body: ISeminarDocumentPost
+  ) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null || seminar.tugas_akhir.taMhsNim !== nim) {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    return await Seminar.provideSeminarDocument(seminarID, body);
+  }
+
+  static async requestSeminar(nim: string, seminarType: string) {
+    if (
+      seminarType !== "Seminar_Proposal" &&
+      seminarType !== "Seminar_Hasil" &&
+      seminarType !== "Ujian_Skripsi"
+    ) {
+      throw new BadRequestError(
+        "seminar type should be Seminar_Proposal | Seminar_Hasil | Ujian_Skripsi"
+      );
+    }
+
+    const thesis = await Thesis.getApprovedThesis(nim);
+    if (typeof thesis === "undefined" || thesis.length !== 1) {
+      throw new NotFoundError(
+        "cannot request seminar if thesis's not approved"
+      );
+    }
+
+    if (
+      thesis[0].pembimbing.length < 2 ||
+      thesis[0].pembimbing[0].statusTerima !== "Diterima" ||
+      thesis[0].pembimbing[1].statusTerima !== "Diterima"
+    ) {
+      throw new NotFoundError(
+        "thesis's supervisors has not been assigned or accepted"
+      );
+    }
+
+    const supervisorsID = [
+      thesis[0].pembimbing[0].pmbId,
+      thesis[0].pembimbing[1].pmbId,
+    ];
+
+    return await Seminar.createRequestSeminar(
+      thesis[0].taId,
+      supervisorsID,
+      seminarType
+    );
+  }
+
   static async getAllStudents() {
     return await Student.selectAllStudentsWithouPagination();
   }

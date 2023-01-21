@@ -106,4 +106,20 @@ studentRouter
     StudentHandler.getAllStudents
   );
 
+studentRouter
+  .route("/:nim/seminars")
+  .post(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.requestSeminar
+  );
+
+studentRouter
+  .route("/:nim/seminars/:seminarID")
+  .post(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.provideSeminarDocument
+  )
+  .get( AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+  StudentHandler.getSeminarDetail);
+
 export default studentRouter;

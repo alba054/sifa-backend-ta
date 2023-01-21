@@ -1,4 +1,4 @@
-import { NextFunction, Request, RequestHandler, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 
 import dotenv from "dotenv";
@@ -15,10 +15,95 @@ import { LabFreeService } from "../services/labFree.service";
 import { IThesis, IThesisPost } from "../utils/interfaces/thesis.interface";
 import { ThesisService } from "../services/thesis.service";
 import { decodeBase64 } from "../utils/decoder";
+import { ISeminarDocumentPost } from "../utils/interfaces/seminar.interface";
 
 dotenv.config();
 
 export class StudentHandler {
+  static async getSeminarDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+
+    try {
+      const seminar = await StudentService.getSeminarDetail(
+        nim,
+        Number(seminarID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get seminar detail",
+            seminar
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async provideSeminarDocument(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+    const body = req.body as ISeminarDocumentPost;
+
+    try {
+      if (typeof body.doc === "undefined") {
+        throw new BadRequestError("provide doc");
+      }
+
+      if (!Array.isArray(body.doc) || body.doc.length < 1) {
+        throw new BadRequestError("provide documents at least 1");
+      }
+
+      await StudentService.provideSeminarDocument(nim, Number(seminarID), body);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully provide seminar document"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async requestSeminar(req: Request, res: Response, next: NextFunction) {
+    const { nim } = req.params;
+
+    const { seminarType } = req.body;
+
+    try {
+      if (typeof seminarType === "undefined") {
+        throw new BadRequestError("provide seminarType");
+      }
+
+      await StudentService.requestSeminar(nim, seminarType);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully request seminar"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getAllStudents(req: Request, res: Response, next: NextFunction) {
     // const { page, limit } = req.query;
     // // * pageInNumber : default 0

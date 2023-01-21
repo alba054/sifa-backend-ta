@@ -11,6 +11,290 @@ import { NotFoundError } from "../utils/error/notFoundError";
 dotenv.config();
 
 export class LecturerHandler {
+  static async getSeminarsOfThesis(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, thesisID } = req.params;
+
+    const seminars = await LecturerService.getSeminarOfThesis(
+      nim,
+      Number(thesisID)
+    );
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get thesis's seminars",
+          seminars
+        )
+      );
+  }
+
+  static async noteInvitedSeminar(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+    const { note } = req.body;
+
+    try {
+      if (typeof note === "undefined") {
+        throw new BadRequestError("provide note");
+      }
+
+      await LecturerService.noteSeminar(nim, Number(seminarID), note);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully give note to seminar"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async scoreInvitedSeminar(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+    const { score } = req.body;
+
+    try {
+      if (typeof score === "undefined") {
+        throw new BadRequestError("provide score");
+      }
+
+      await LecturerService.scoreSeminar(nim, Number(seminarID), Number(score));
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully give score to seminar"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getInvitedSeminarDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+
+    try {
+      const seminar = await LecturerService.getInvitedSeminarDetail(
+        nim,
+        Number(seminarID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully get invited seminar detail",
+            seminar
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getInvitedSeminars(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim } = req.params;
+
+    const scheduledSeminars = await LecturerService.getInvitedSeminars(nim);
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get invited seminars",
+          scheduledSeminars
+        )
+      );
+  }
+
+  static async acceptOrRejectScheduledSeminar(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+    const { isAccepted } = req.body;
+
+    try {
+      if (typeof isAccepted === "undefined") {
+        throw new BadRequestError("provide isAccepted");
+      }
+
+      await LecturerService.acceptOrRejectScheduledSeminar(
+        nim,
+        Number(seminarID),
+        Boolean(isAccepted)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully accept/reject scheduled seminar"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getScheduledSeminarDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+
+    try {
+      const seminar = await LecturerService.getScheduledSeminarDetail(
+        nim,
+        Number(seminarID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully get seminar detail",
+            seminar
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getScheduledSeminars(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim } = req.params;
+
+    const scheduledSeminars = await LecturerService.getScheduledSeminars(nim);
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get scheduled seminars",
+          scheduledSeminars
+        )
+      );
+  }
+
+  static async acceptOrRejectSeminarRequest(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+    const { isAccepted } = req.body;
+
+    try {
+      if (typeof isAccepted === "undefined") {
+        throw new BadRequestError("provide isAccepted");
+      }
+
+      await LecturerService.acceptOrRejectSeminar(
+        nim,
+        Number(seminarID),
+        Boolean(isAccepted)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully accept/reject seminar"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getSeminarRequestsDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+
+    try {
+      const seminar = await LecturerService.getSeminarDetail(
+        nim,
+        Number(seminarID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully get seminar detail",
+            seminar
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getSeminarRequests(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim } = req.params;
+
+    const seminars = await LecturerService.getSeminarRequests(nim);
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get seminars",
+          seminars
+        )
+      );
+  }
+
   static async accceptOrRejectExaminerOffer(
     req: Request,
     res: Response,

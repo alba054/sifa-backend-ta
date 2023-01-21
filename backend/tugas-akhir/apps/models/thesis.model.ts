@@ -27,6 +27,7 @@ export class Thesis {
       include: {
         penguji: { include: { dosen: true } },
         mahasiswa: true,
+        pengusul: true,
         pembimbing: { include: { dosen: true } },
         ref_laboratorium: true,
         ref_laboratorium2: true,
@@ -79,6 +80,7 @@ export class Thesis {
         ref_laboratorium2: true,
         sk_pembimbing: true,
         sk_penguji: true,
+        seminar: true,
       },
     });
   }
@@ -186,12 +188,13 @@ export class Thesis {
     });
   }
 
-  static async getApprovedThesisByLab(labID: number) {
+  static async getApprovedThesisByLab(labID: number, title?: string) {
     const approvedThesis = await prismaDB.tugas_akhir.findMany({
       where: {
         AND: [
           { statusPermohonan: "Diterima" },
           // { OR: [{ taLabId: labID }, { taLabId2: labID }] },
+          { taJudul: { contains: title } },
         ],
       },
       include: {
@@ -295,6 +298,7 @@ export class Thesis {
         ref_laboratorium: true,
         ref_laboratorium2: true,
         mahasiswa: true,
+        pengusul: true,
         disposisi_kaprodi: true,
       },
     });
