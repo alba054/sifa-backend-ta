@@ -108,6 +108,10 @@ studentRouter
 
 studentRouter
   .route("/:nim/seminars")
+  .get(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.getSeminars
+  )
   .post(
     AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
     StudentHandler.requestSeminar

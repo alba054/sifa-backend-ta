@@ -8,6 +8,22 @@ import {
 } from "../utils/interfaces/seminar.interface";
 
 export class Seminar {
+  static async getSeminarsByStudentNIM(nim: string) {
+    return await prismaDB.seminar.findMany({
+      where: {
+        tugas_akhir: {
+          taMhsNim: nim,
+        },
+      },
+      include: {
+        tugas_akhir: true,
+        seminar_dokumen: true,
+        seminar_nilai: true,
+        seminar_catatan: true,
+      },
+    });
+  }
+
   static async deleteScoringAndEventLetter(seminarID: number) {
     try {
       return await prismaDB.seminar.update({
