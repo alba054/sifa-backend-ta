@@ -32,7 +32,7 @@ export class StudentHandler {
         createResponse(
           constants.SUCCESS_MESSAGE,
           "successfully delete exam proposal",
-          seminars;
+          seminars
         )
       );
   }
