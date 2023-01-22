@@ -18,6 +18,7 @@ import headAdminRouter from "./headAdmin.route";
 import deanRouter from "./dean.route";
 import seminarCoordinatorRouter from "./seminarCoordinator.route";
 import viceDeanRouter from "./viceDean.route";
+import docRouter from "./doc.route";
 
 const router = express.Router();
 
@@ -41,5 +42,6 @@ router.use("/vice-deans", viceDeanRouter);
 // * chat service
 router.use("/chat", chatRouter);
 router.use("/files", fileRouter);
+router.use("/docs", docRouter);
 
 export default router;

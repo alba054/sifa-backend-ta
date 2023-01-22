@@ -64,7 +64,13 @@ export class LabFree {
   }
 
   static async getFreeLabRequestsByID(reqlabsID: number) {
-    return await prismaDB.bebas_lab.findUnique({ where: { blId: reqlabsID } });
+    return await prismaDB.bebas_lab.findUnique({
+      where: { blId: reqlabsID },
+      include: {
+        mahasiswa: true,
+        ref_laboratorium: true,
+      },
+    });
   }
 
   static async editByID(reqlabsID: number, body: ILabFreeUpdate) {
