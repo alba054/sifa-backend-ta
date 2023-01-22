@@ -21,6 +21,22 @@ import { IRequestExamDocumentPost } from "../utils/interfaces/exam.interface";
 dotenv.config();
 
 export class StudentHandler {
+  static async getSeminars(req: Request, res: Response, next: NextFunction) {
+    const { nim } = req.params;
+
+    const seminars = await StudentService.getSeminars(nim);
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully delete exam proposal",
+          seminars;
+        )
+      );
+  }
+
   static async deleteExamProposal(
     req: Request,
     res: Response,

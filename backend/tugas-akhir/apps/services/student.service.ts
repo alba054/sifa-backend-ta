@@ -14,6 +14,10 @@ import {
 import { writeToFile } from "../utils/storage";
 
 export class StudentService {
+  static async getSeminars(nim: string) {
+    return await Seminar.getSeminarsByStudentNIM(nim);
+  }
+
   static async deleteExamProposal(nim: string) {
     const examProposal = await ExamProposal.getExamProposalByNIM(nim);
 
