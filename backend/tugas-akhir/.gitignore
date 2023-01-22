@@ -12,3 +12,4 @@ uploaded_file
 # swagger docs
 swagger-output.json
 seed/ujiansidang.seed.sql
+dist/
