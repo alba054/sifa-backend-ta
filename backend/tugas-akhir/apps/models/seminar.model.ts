@@ -634,7 +634,18 @@ export class Seminar {
         seminar_status_pembimbing: {
           include: { pembimbing: { include: { dosen: true } } },
         },
-        tugas_akhir: true,
+        seminar_nilai: {
+          include: {
+            dosen: true,
+          },
+        },
+        tugas_akhir: {
+          include: {
+            pembimbing: { include: { dosen: true } },
+            penguji: { include: { dosen: true } },
+            mahasiswa: { include: { ref_prodi: true } },
+          },
+        },
       },
     });
   }

@@ -3,6 +3,111 @@ import { DocumentService } from "../services/document.service";
 import { createResponse, constants } from "../utils/utils";
 
 export class DocumentHandler {
+  static async getSeminarInvitationData(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+
+    try {
+      const data = await DocumentService.getSeminarInvitationData(
+        nim,
+        Number(seminarID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get seminar invitation data",
+            data
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getSeminarLetterEventData(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+
+    try {
+      const data = await DocumentService.getSeminarLetterEventData(
+        nim,
+        Number(seminarID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get seminar letter event data",
+            data
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getSeminarApprovalData(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+
+    try {
+      const data = await DocumentService.getSeminarApprovalData(
+        nim,
+        Number(seminarID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get seminar approval data",
+            data
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getExaminerSKData(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, SKID } = req.params;
+
+    try {
+      const data = await DocumentService.getExaminerSKData(nim, Number(SKID));
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get examiner SK data",
+            data
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getSupervisorSKData(
     req: Request,
     res: Response,
