@@ -32,7 +32,7 @@ function getDataFromBackend() {
       name: "John Brown",
       nim: "H071191044",
       letterNumber: 0,
-      letterDate: "01-01-2023",
+      letterDate: new Date(),
       status: "Belum_Diproses",
     },
     {
@@ -40,7 +40,7 @@ function getDataFromBackend() {
       name: "Yusuf Syam",
       nim: "H071191044",
       letterNumber: 10,
-      letterDate: "01-01-2023",
+      letterDate: new Date(),
       status: "Diterima",
     },
     {
@@ -48,7 +48,7 @@ function getDataFromBackend() {
       name: "Richard",
       nim: "H071191044",
       letterNumber: 31,
-      letterDate: "01-01-2023",
+      letterDate: new Date(),
       status: "Diterima",
     },
     {
@@ -56,7 +56,7 @@ function getDataFromBackend() {
       name: "John Sajaa",
       nim: "H071191044",
       letterNumber: 78,
-      letterDate: "01-01-2023",
+      letterDate: new Date(),
       status: "Belum_Diproses",
     },
     {
@@ -70,7 +70,7 @@ function getDataFromBackend() {
       name: "John Tia",
       nim: "H071191044",
       letterNumber: 12,
-      letterDate: "01-01-2023",
+      letterDate: new Date(),
       status: "Belum_Diproses",
     },
   ];
@@ -183,7 +183,7 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
         setSelectedRow(row.no.label - 1);
-        setIsPDFModalOpened(true)
+        setIsPDFModalOpened(true);
       },
       display: (row: any) => {
         return dataFromBackend[row.no.label - 1].status != "Diterima";
@@ -226,13 +226,7 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
 
   function acceptLabHandler() {
     dataFromBackend[selectedRow].status = "Diterima";
-    dataFromBackend[selectedRow].letterDate = acceptedLabDate
-      .toLocaleDateString("id", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      })
-      .replaceAll("/", "-");
+    dataFromBackend[selectedRow].letterDate = acceptedLabDate;
     dataFromBackend[selectedRow].letterNumber = letterNumberCount;
     setLetterNumberCount(letterNumberCount + 1);
     setIsConfirmLabModalOpened(false);
@@ -269,7 +263,15 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
           label: data.letterNumber || "-",
         },
         letterDate: {
-          label: data.letterDate || "-",
+          label: data.letterDate
+            ? data.letterDate
+                .toLocaleDateString("id", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                })
+                .replaceAll("/", "-")
+            : "-",
         },
         status: {
           label: data.status,
@@ -286,14 +288,20 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
         setOpened={setIsPDFModalOpened}
         title="Dokumen Bebas Lab"
       >
+        {/* id: 5,
+      name: "John Tia",
+      nim: "H071191044",
+      letterNumber: 12,
+      letterDate: "01-01-2023",
+      status: "Belum_Diproses", */}
         <PDFBebasLab
-          name={"Muh. Yusuf Syam"}
-          nim={"H071191044"}
+          name={dataFromBackend[selectedRow].name}
+          nim={dataFromBackend[selectedRow].nim}
           faculty={"Farmasi"}
           labHead={"Abdul Rahim, S.Si, M.Si, Ph.D, Apt. Devon"}
           labHeadNip={"8281970019283100"}
-          letterDate={new Date()}
-          letterNumber={"19/J/J04.01/PP.12/2022"}
+          letterDate={dataFromBackend[selectedRow].letterDate}
+          letterNumber={dataFromBackend[selectedRow].letterNumber}
         />
       </FEPDFModal>
       <FEInputModalForm

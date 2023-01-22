@@ -17,7 +17,7 @@ const FEPDFModal = ({
   setOpened,
   title,
   children,
-  maxWidth = 900,
+  maxWidth = 1000,
   onClose=()=>{},
 }: IFEPDFModalProps) => {
   return (
