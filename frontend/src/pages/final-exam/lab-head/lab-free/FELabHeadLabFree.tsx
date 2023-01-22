@@ -1,20 +1,14 @@
 import { Stack, Text } from "@mantine/core";
-import { DatePicker } from "@mantine/dates";
 import { useForm, yupResolver } from "@mantine/form";
 import React, { useEffect, useState } from "react";
-import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 import FETableComponent, {
   IFETableAction,
   IFETableHeadingProps,
   IFETableRowColumnProps,
 } from "src/components/fe-components/fe-table/FETable";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
-import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import FEInputModalForm from "src/components/fe-components/FEInputModalForm";
-import {
-  feRefusalReasonFormSchema,
-  IFERefusalReasonFormSchema,
-} from "src/components/fe-components/FERefusalReasonForm";
+import FEPDFModal from "src/components/fe-components/FEPDFModal";
 import { statusChip } from "src/components/fe-components/FERoundedChip";
 import LFPHeaderComponent, {
   ILFPHeaderButton,
@@ -23,7 +17,7 @@ import FEInputModal from "src/components/FEInputModal";
 import { DatePickerInput, SelectInput } from "src/components/FormInput";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
-import { FEROUTES } from "src/routes/final-exam.route";
+import PDFBebasLab from "src/letter/PDFBebasLab";
 import {
   feLabFreeAddFormSchema,
   IFELabFreeAddFormValues,
@@ -103,7 +97,8 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
   const [isRejectLabModalOpened, setIsRejectLabModalOpened] = useState(false);
   const [acceptedLabDate, setAcceptedLabDate] = useState(new Date());
   const [selectedRow, setSelectedRow] = useState(0);
-  const [refresh, setRefresh] = useState(true)
+  const [refresh, setRefresh] = useState(true);
+  const [isPDFModalOpened, setIsPDFModalOpened] = useState(false);
 
   const buttons: ILFPHeaderButton[] = [
     {
@@ -188,6 +183,7 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
       // Row disini itu row yang ada di table rows
       onClick: (row: any) => {
         setSelectedRow(row.no.label - 1);
+        setIsPDFModalOpened(true)
       },
       display: (row: any) => {
         return dataFromBackend[row.no.label - 1].status != "Diterima";
@@ -241,9 +237,9 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
     setLetterNumberCount(letterNumberCount + 1);
     setIsConfirmLabModalOpened(false);
     setAcceptedLabDate(new Date());
-      
-    console.log(dataFromBackend[selectedRow])
-    setRefresh(!refresh)
+
+    console.log(dataFromBackend[selectedRow]);
+    setRefresh(!refresh);
   }
 
   function rejectLabHandler() {
@@ -251,13 +247,13 @@ const FELabHeadLabFree: React.FC<IFELabHeadLabFree> = ({}) => {
     dataFromBackend[selectedRow].letterDate = "-";
     dataFromBackend[selectedRow].letterNumber = "-";
     setIsRejectLabModalOpened(false);
-    console.log(dataFromBackend[selectedRow])
-    setRefresh(!refresh)
+    console.log(dataFromBackend[selectedRow]);
+    setRefresh(!refresh);
   }
 
-console.log('KE SINI TABEL!', dataFromBackend[selectedRow])
+  console.log("KE SINI TABEL!", dataFromBackend[selectedRow]);
 
-const tableRows = dataFromBackend.map(
+  const tableRows = dataFromBackend.map(
     (data: any, idx: number) =>
       ({
         no: {
@@ -285,6 +281,21 @@ const tableRows = dataFromBackend.map(
 
   return (
     <FEMainlayout>
+      <FEPDFModal
+        opened={isPDFModalOpened}
+        setOpened={setIsPDFModalOpened}
+        title="Dokumen Bebas Lab"
+      >
+        <PDFBebasLab
+          name={"Muh. Yusuf Syam"}
+          nim={"H071191044"}
+          faculty={"Farmasi"}
+          labHead={"Abdul Rahim, S.Si, M.Si, Ph.D, Apt. Devon"}
+          labHeadNip={"8281970019283100"}
+          letterDate={new Date()}
+          letterNumber={"19/J/J04.01/PP.12/2022"}
+        />
+      </FEPDFModal>
       <FEInputModalForm
         title="Tambah Permohonan"
         opened={isAddLabModalOpened}

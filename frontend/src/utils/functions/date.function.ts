@@ -38,3 +38,7 @@ export function dateToRange(start: Date, end: Date, format?: string) {
 
   return `${s} - ${e} ${format || ""}`;
 }
+
+export function extractDay(date:Date){
+  return date.toLocaleDateString("id", { weekday: 'long' });  
+}
