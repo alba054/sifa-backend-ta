@@ -66,6 +66,8 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            ref_laboratorium: true,
+            ref_laboratorium2: true,
           },
         },
       },
@@ -118,6 +120,8 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            ref_laboratorium: true,
+            ref_laboratorium2: true,
           },
         },
       },
@@ -135,7 +139,7 @@ export class ExamProposal {
         data: {
           statusValidasiBerkas: isAccepted ? "Diterima" : "Ditolak",
           catatanKasubag: note,
-          tanggalSK: new Date()
+          tanggalSK: new Date(),
         },
       });
     } catch (error) {
@@ -224,6 +228,8 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            ref_laboratorium: true,
+            ref_laboratorium2: true,
           },
         },
       },
