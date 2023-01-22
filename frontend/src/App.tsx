@@ -426,12 +426,12 @@ function App() {
                             }
                           />
 
-                          <Route
+                          {/* <Route
                             path="riwayat"
                             element={
                               <FEStudyProgramAdminApprovalExaminersFramingHistory />
                             }
-                          />
+                          /> */}
                         </Route>
 
                         <Route

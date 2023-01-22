@@ -1,18 +1,19 @@
-import { Stack } from "@mantine/core";
+import { Divider, Stack } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FEClockRepeatOutline } from "src/assets/Icons/Fluent";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import LFPEmptyDataComponent from "src/components/fe-components/LFPEmptyData.component";
 import LFPHeaderComponent, {
-  ILFPHeaderButton
+  ILFPHeaderButton,
 } from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
 import { FEROUTES } from "src/routes/final-exam.route";
 import FEStudyProgramAdminApprovalExaminersFramingCard, {
-  IFEStudyProgramAdminApprovalExaminersFramingCard
+  IFEStudyProgramAdminApprovalExaminersFramingCard,
 } from "./FEStudyProgramAdminApprovalExaminersFramingCard";
+import FEStudyProgramAdminApprovalExaminersFramingHistory from "./history/FEStudyProgramAdminApprovalExaminersFramingHistory.section";
 export interface IFEStudyProgramAdminApprovalExaminersFraming {}
 
 const buttons: ILFPHeaderButton[] = [
@@ -92,7 +93,7 @@ const FEStudyProgramAdminApprovalExaminersFraming: React.FC<
   );
 
   function onDelete(index: number) {
-    remove(index)
+    remove(index);
     // console.log(nim);
     // navigate(`${nim}`);
     // window.scrollTo(0, 0);
@@ -112,33 +113,41 @@ const FEStudyProgramAdminApprovalExaminersFraming: React.FC<
       breadCrumbs={breadCrumbs}
       breadCrumbsCurrentPage="Penyusunan Tim Penguji"
     >
-      <LFPHeaderComponent title="Penyusunan Tim Penguji" buttons={buttons} />
-      {isDataExist ? (
-        <Stack mt={"md"} className="gap-6">
-          {proposalList.map(
-            (
-              proposal: IFEStudyProgramAdminApprovalExaminersFramingCard,
-              e: number
-            ) => {
-              return (
-                <FEStudyProgramAdminApprovalExaminersFramingCard
-                  key={e}
-                  index={e}
-                  onDelete={(e: number) => {
-                    onDelete(e);
-                  }}
-                  {...proposal}
-                />
-              );
-            }
-          )}
-        </Stack>
-      ) : (
-        <LFPEmptyDataComponent
-          title="Belum Ada Permintaan Penyusunan Tim Penguji"
-          caption="Riwayat penyusunan tim penguji yang telah disetujui berada di “History Penyusunan di pojok kanan atas"
-        />
-      )}
+      <LFPHeaderComponent
+        title="Penyusunan Tim Penguji"
+        // buttons={buttons}
+      />
+
+      <Stack mt={"md"} className="gap-12">
+        {isDataExist ? (
+          <Stack className="gap-6">
+            {proposalList.map(
+              (
+                proposal: IFEStudyProgramAdminApprovalExaminersFramingCard,
+                e: number
+              ) => {
+                return (
+                  <FEStudyProgramAdminApprovalExaminersFramingCard
+                    key={e}
+                    index={e}
+                    onDelete={(e: number) => {
+                      onDelete(e);
+                    }}
+                    {...proposal}
+                  />
+                );
+              }
+            )}
+          </Stack>
+        ) : (
+          <LFPEmptyDataComponent
+            title="Belum Ada Permintaan Penyusunan Tim Penguji"
+            caption="Riwayat penyusunan tim penguji yang telah disetujui berada di “History Penyusunan di pojok kanan atas"
+          />
+        )}
+        <Divider />
+        <FEStudyProgramAdminApprovalExaminersFramingHistory />
+      </Stack>
     </FEMainlayout>
   );
 };
