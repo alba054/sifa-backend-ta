@@ -4,6 +4,14 @@ import { writeToFile } from "../utils/storage";
 import { constants } from "../utils/utils";
 
 export class FileService {
+  static async uploadExamProposalDoc(doc: any, username: any) {
+    const docBuffer = decodeBase64(doc);
+    const title = `${uuidv4()}_${username}`;
+    const path = `${constants.EXAM_FILE_PATH}`;
+
+    return writeToFile(path, title, docBuffer);
+  }
+
   static async uploadFileSeminarDocFromCoord(doc: string) {
     const docBuffer = decodeBase64(doc);
 

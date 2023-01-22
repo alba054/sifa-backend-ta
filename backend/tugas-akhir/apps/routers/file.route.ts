@@ -74,4 +74,25 @@ fileRouter
     FileHandler.getSeminarDocFromCoord
   );
 
+fileRouter
+  .route("/students/exams")
+  .post(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    FileHandler.uploadExamProposalDocument
+  );
+
+fileRouter
+  .route("/student/exams/:docname")
+  .get(
+    AuthorizationMiddleware.authorize([
+      constants.STUDENT_GROUP_ACCESS,
+      constants.LECTURER_GROUP_ACCESS,
+      constants.ADMINHEAD_GROUP_ACCCESS,
+      constants.VICE_DEAN_GROUP_ACCESS,
+      constants.SUBSECTIONHEAD_GROUP_ACCESS,
+      constants.FACULTY_ADMIN_GROUP_ACCESS,
+    ]),
+    FileHandler.getSeminarDocFromCoord
+  );
+
 export default fileRouter;

@@ -21,6 +21,7 @@ export class ExamProposal {
       },
     });
   }
+
   static async signExamProposal(examID: number, isAccepted: boolean) {
     try {
       return await prismaDB.permohonan_ujian_sidang.update({
@@ -42,7 +43,7 @@ export class ExamProposal {
 
   static async getUnsignedProposals() {
     return await prismaDB.permohonan_ujian_sidang.findMany({
-      where: { statusTTD: false },
+      where: { AND: [{ statusTTD: false }, { statusPermohonan: "Diterima" }] },
       include: {
         tugas_akhir: {
           include: {
@@ -134,6 +135,7 @@ export class ExamProposal {
         data: {
           statusValidasiBerkas: isAccepted ? "Diterima" : "Ditolak",
           catatanKasubag: note,
+          tanggalSK: new Date()
         },
       });
     } catch (error) {
