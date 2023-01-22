@@ -14,6 +14,8 @@ export class DocumentService {
       sk.skbStatus !== 1
     ) {
     }
+    // todo: supervisor sk data
+    return null;
   }
 
   static async getFreeLabData(nim: string, reqLabID: number) {
