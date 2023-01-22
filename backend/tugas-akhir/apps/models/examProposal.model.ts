@@ -66,6 +66,7 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            penguji: { include: { dosen: true } },
             ref_laboratorium: true,
             ref_laboratorium2: true,
           },
@@ -106,6 +107,7 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            penguji: { include: { dosen: true } },
             ref_laboratorium: true,
             ref_laboratorium2: true,
           },
@@ -122,6 +124,7 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            penguji: { include: { dosen: true } },
             ref_laboratorium: true,
             ref_laboratorium2: true,
           },
@@ -163,6 +166,7 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            penguji: { include: { dosen: true } },
             ref_laboratorium: true,
             ref_laboratorium2: true,
           },
@@ -179,6 +183,7 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            penguji: { include: { dosen: true } },
             ref_laboratorium: true,
             ref_laboratorium2: true,
           },
@@ -219,6 +224,7 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            penguji: { include: { dosen: true } },
             ref_laboratorium: true,
             ref_laboratorium2: true,
           },
@@ -236,6 +242,7 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            penguji: { include: { dosen: true } },
             ref_laboratorium: true,
             ref_laboratorium2: true,
           },
