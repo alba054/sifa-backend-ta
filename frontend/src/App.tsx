@@ -143,11 +143,12 @@ import FEHomepageFacultyAdmin from "./pages/final-exam/faculty-admin/FEHomepage"
 import FEHomepageLecturer from "./pages/final-exam/lecturer/FEHomepage";
 import FEHomepageLabHead from "./pages/final-exam/lab-head/FEHomepage";
 import FEHomepageSeminarCoordinator from "./pages/final-exam/seminar-coordinator/FEHomepage";
+import FEStudyProgramAdminReference from "./pages/final-exam/study-program-admin/reference/FEStudyProgramAdminReference";
 
 moment.locale("id");
 
 const queryClient = new QueryClient({});
-
+// study
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -369,6 +370,11 @@ function App() {
                     </Route>
                     <Route path="admin-program-studi">
                       <Route index element={<FEHomepageStudyProgramAdmin />} />
+
+                      <Route
+                        path="referensi"
+                        element={<FEStudyProgramAdminReference />}
+                      />
                       <Route path="profil">
                         <Route
                           path=""
@@ -608,12 +614,12 @@ function App() {
                               index
                               element={<FEFacultyAdminTrialPermitNotify />}
                             />
-                            <Route
+                            {/* <Route
                               path="riwayat"
                               element={
                                 <FEFacultyAdminTrialPermitNotifyHistory />
                               }
-                            />
+                            /> */}
                           </Route>
                         </Route>
                       </Route>

@@ -24,6 +24,7 @@ export const FEROUTES = {
   // ====================================================================================================
   STUDY_PROGRAM_ADMIN_HOMEPAGE: "/tugas-akhir/admin-program-studi",
   STUDY_PROGRAM_ADMIN_PROFILE: "/tugas-akhir/admin-program-studi/profil",
+  STUDY_PROGRAM_ADMIN_REFERENCE: "/tugas-akhir/admin-program-studi/referensi",
   STUDY_PROGRAM_ADMIN_APPROVAL: "/tugas-akhir/admin-program-studi/persetujuan",
   STUDY_PROGRAM_ADMIN_APPROVAL_PROPOSAL:
     "/tugas-akhir/admin-program-studi/persetujuan/judul-penelitian",

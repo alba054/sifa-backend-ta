@@ -143,8 +143,8 @@ const FEFacultyAdminTrialPermitNotify: React.FC<
       />
       <LFPHeaderComponent
         title="Notifikasi Surat Permohonan"
-        buttons={buttons}
-        disabledButtonTooltipLabel={"Riwayat kosong"}
+        // buttons={buttons}
+        // disabledButtonTooltipLabel={"Riwayat kosong"}
       />
       {isDataExist ? (
         <FEFacultyAdminTrialPermitNotifyMain

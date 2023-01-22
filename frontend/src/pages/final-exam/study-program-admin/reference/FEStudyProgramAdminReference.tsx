@@ -58,7 +58,7 @@ function getDataFromBackend() {
   ];
 }
 
-const FESeminarCoordinatorReference: React.FC<
+const FEStudyProgramAdminReference: React.FC<
   IFESeminarCoordinatorReference
 > = ({}) => {
   const {
@@ -288,4 +288,4 @@ const FESeminarCoordinatorReference: React.FC<
     </FEMainlayout>
   );
 };
-export default FESeminarCoordinatorReference;
+export default FEStudyProgramAdminReference;
