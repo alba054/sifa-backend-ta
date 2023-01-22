@@ -2,7 +2,6 @@ import express from "express";
 import { HeadAdminHandler } from "../handlers/headAdmin.handler";
 import { AuthorizationMiddleware } from "../middlewares/auth/authorization.middleware";
 import { constants } from "../utils/utils";
-import headMajorRouter from "./headMajor.route";
 
 const headAdminRouter = express.Router();
 
@@ -42,21 +41,21 @@ headAdminRouter
     HeadAdminHandler.acceptOrRejectSupervisorSK
   );
 
-headMajorRouter
+headAdminRouter
   .route("/exams")
   .get(
     AuthorizationMiddleware.authorize([constants.ADMINHEAD_GROUP_ACCCESS]),
     HeadAdminHandler.getListOfUnvalidatedExamProposal
   );
 
-headMajorRouter
+headAdminRouter
   .route("/exams/history")
   .get(
     AuthorizationMiddleware.authorize([constants.ADMINHEAD_GROUP_ACCCESS]),
     HeadAdminHandler.getHistoryOfExamProposal
   );
 
-headMajorRouter
+headAdminRouter
   .route("/exams/:examID")
   .get(
     AuthorizationMiddleware.authorize([constants.ADMINHEAD_GROUP_ACCCESS]),
