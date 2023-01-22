@@ -106,6 +106,8 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            ref_laboratorium: true,
+            ref_laboratorium2: true,
           },
         },
       },
@@ -161,6 +163,8 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            ref_laboratorium: true,
+            ref_laboratorium2: true,
           },
         },
       },
@@ -175,6 +179,8 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            ref_laboratorium: true,
+            ref_laboratorium2: true,
           },
         },
       },
@@ -213,6 +219,8 @@ export class ExamProposal {
           include: {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
+            ref_laboratorium: true,
+            ref_laboratorium2: true,
           },
         },
         dokumen_ujian_sidang: true,
