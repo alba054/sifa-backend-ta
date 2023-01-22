@@ -16,10 +16,28 @@ export class Seminar {
         },
       },
       include: {
-        tugas_akhir: true,
+        tugas_akhir: {
+          include: {
+            mahasiswa: true,
+            pembimbing: {
+              include: { dosen: true },
+            },
+            penguji: {
+              include: { dosen: true },
+            },
+          },
+        },
         seminar_dokumen: true,
-        seminar_nilai: true,
-        seminar_catatan: true,
+        seminar_nilai: {
+          include: {
+            dosen: true,
+          },
+        },
+        seminar_catatan: {
+          include: {
+            dosen: true,
+          },
+        },
       },
     });
   }
