@@ -92,7 +92,7 @@ fileRouter
       constants.SUBSECTIONHEAD_GROUP_ACCESS,
       constants.FACULTY_ADMIN_GROUP_ACCESS,
     ]),
-    FileHandler.getSeminarDocFromCoord
+    FileHandler.getExamProposalDocument
   );
 
 export default fileRouter;
