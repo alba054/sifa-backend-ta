@@ -56,12 +56,12 @@ export class ChatHandler {
     res: Response,
     next: NextFunction
   ) {
-    const { thesisID } = req.params;
+    const { nim } = req.params;
     const { type } = req.query;
 
     try {
       const chats = await ChatService.getAllChatOfThesis(
-        Number(thesisID),
+        nim,
         type,
         res.locals.user.username
       );

@@ -76,23 +76,23 @@ export class ChatService {
   }
 
   static async getAllChatOfThesis(
-    thesisID: number,
+    nim: string,
     type: any | undefined,
     username: string | undefined
   ) {
-    const thesis = await ThesisService.getApprovedThesisDetail(thesisID);
+    const thesis = await ThesisService.getApprovedThesisByNIM(nim);
 
-    if (typeof thesis === "undefined") {
+    if (typeof thesis[0] === "undefined") {
       throw new NotFoundError("thesis is not found");
     }
 
     if (
-      thesis.pembimbing[0].dosen.dsnNip !== username &&
-      thesis.pembimbing[1].dosen.dsnNip !== username &&
-      thesis.mahasiswa.mhsNim !== username
+      thesis[0].pembimbing[0].dosen.dsnNip !== username &&
+      thesis[0].pembimbing[1].dosen.dsnNip !== username &&
+      thesis[0].mahasiswa.mhsNim !== username
     ) {
       throw new NotFoundError("you are not eligible to view chats");
     }
-    return await Chat.getAllChatsByThesisID(thesisID, type);
+    return await Chat.getAllChatsByThesisID(thesis[0].taId, type);
   }
 }
