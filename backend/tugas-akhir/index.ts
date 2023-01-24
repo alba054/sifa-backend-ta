@@ -6,6 +6,7 @@ import router from "./apps/routers/router";
 
 import swaggerUi from "swagger-ui-express";
 import swaggerfile from "./swagger-output.json";
+import { fetchNewUserData } from "./remoteDB";
 
 dotenv.config();
 
@@ -27,3 +28,8 @@ const HOST = process.env.HOSTNAME || "localhost";
 app.listen(PORT, HOST, () => {
   console.log(`server is running on ${HOST}:${PORT}`);
 });
+
+setInterval(() => {
+  fetchNewUserData();
+  console.log("hai");
+}, 1000);

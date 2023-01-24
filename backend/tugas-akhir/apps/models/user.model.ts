@@ -13,7 +13,7 @@ export class User {
         username,
       },
       data: {
-        notificationID: player_id
+        notificationID: player_id,
       },
     });
   }

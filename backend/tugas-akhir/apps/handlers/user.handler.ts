@@ -161,8 +161,7 @@ export class UserHandler {
 
     try {
       if (typeof playerID !== "undefined") {
-
-console.log(res.locals.user.username);
+        console.log(res.locals.user.username);
         await UserService.updateNotificationID(
           playerID,
           res.locals.user.username
@@ -179,7 +178,7 @@ console.log(res.locals.user.username);
         createResponse("success", "login successfully", {
           token,
           role: tokenPayload.groupAccess,
-          playerID
+          playerID,
         })
       );
     } catch (error: any) {

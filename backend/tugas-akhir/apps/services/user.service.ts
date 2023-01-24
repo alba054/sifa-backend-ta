@@ -58,7 +58,12 @@ export class UserService {
   // }
 
   static async insertNewUserBySuperUser(newUser: IUser) {
-    const hashedPassword = await bcryptjs.hash(newUser.username, 10);
+    let hashedPassword = null;
+    if (newUser.password) {
+      hashedPassword = newUser.password;
+    } else {
+      hashedPassword = await bcryptjs.hash(newUser.username, 10);
+    }
     const user = UserBuilder.build(newUser.username, hashedPassword)
       .setName(newUser.name || "")
       .setStatus(constants.USER_ACTIVE_STATUS)

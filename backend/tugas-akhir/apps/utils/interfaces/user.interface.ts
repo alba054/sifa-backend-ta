@@ -8,6 +8,7 @@ export interface IUser {
   departmentID?: number;
   vocationID?: number;
   labID?: number;
+  password?: string;
 }
 
 // export interface IStudentRequestSignUp {
