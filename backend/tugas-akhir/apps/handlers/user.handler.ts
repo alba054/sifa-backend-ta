@@ -156,12 +156,15 @@ export class UserHandler {
       );
     }
 
-    const { player_id } = req.body;
+    const { playerID } = req.body;
+    console.log(req.body);
 
     try {
-      if (typeof player_id !== "undefined") {
+      if (typeof playerID !== "undefined") {
+
+console.log(res.locals.user.username);
         await UserService.updateNotificationID(
-          player_id,
+          playerID,
           res.locals.user.username
         );
       }
@@ -176,6 +179,7 @@ export class UserHandler {
         createResponse("success", "login successfully", {
           token,
           role: tokenPayload.groupAccess,
+          playerID
         })
       );
     } catch (error: any) {
