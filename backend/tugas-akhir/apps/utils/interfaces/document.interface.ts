@@ -100,3 +100,13 @@ export interface ISeminarInvitationDoc {
   department: string;
   coordinatorSeminarNote: string;
 }
+
+export interface ISeminarScoreDoc {
+  department: string;
+  letterDate: string;
+  studentNIM: string;
+  studentName: string;
+  proposalTitle: string;
+  score: number;
+  season: string;
+}

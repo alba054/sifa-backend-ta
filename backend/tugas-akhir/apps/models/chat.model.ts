@@ -4,7 +4,12 @@ import { BadRequestError } from "../utils/error/badrequestError";
 import { InternalServerError } from "../utils/error/internalError";
 
 export class Chat {
-  static async createNewMessage(thesisID: number, message: any, type: number) {
+  static async createNewMessage(
+    thesisID: number,
+    message: any,
+    type: number,
+    username: string
+  ) {
     try {
       const curtime = new Date();
       return await prismaDB.pembimbingan.create({
@@ -16,6 +21,7 @@ export class Chat {
           }-${curtime.getFullYear()}`,
           bimJam: `${curtime.getHours()}:${curtime.getMinutes()}`,
           bimTaId: thesisID,
+          bimUserNama: username,
         },
       });
     } catch (error) {

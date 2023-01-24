@@ -7,6 +7,17 @@ import { IUser } from "../utils/interfaces/user.interface";
 import { constants } from "../utils/utils";
 
 export class User {
+  static async updateNotificationID(player_id: string, username: string) {
+    return await prismaDB.user.update({
+      where: {
+        username,
+      },
+      data: {
+        notificationID: player_id
+      },
+    });
+  }
+
   static async getUserByUsername(username: string) {
     return await prismaDB.user.findUnique({
       where: { username },

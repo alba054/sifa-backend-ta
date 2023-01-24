@@ -3,10 +3,21 @@ import bcryptjs from "bcryptjs";
 import { User } from "../models/user.model";
 import { UserBuilder } from "../utils/builder/user.builder";
 import { BadRequestError } from "../utils/error/badrequestError";
+import { NotFoundError } from "../utils/error/notFoundError";
 import { IUser } from "../utils/interfaces/user.interface";
 import { constants } from "../utils/utils";
 
 export class UserService {
+  static async updateNotificationID(player_id: string, username: string) {
+    const user = await User.getUserByUsername(username);
+
+    if (user === null) {
+      throw new NotFoundError("user's not found");
+    }
+
+    return await User.updateNotificationID(player_id, username);
+  }
+
   static async getProfile(username: string) {
     return await User.getUserByUsername(username);
   }

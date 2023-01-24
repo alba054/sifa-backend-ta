@@ -33,7 +33,7 @@ export class ChatService {
     ) {
       throw new NotFoundError("you are not eligible to view chats");
     }
-    return await Chat.createNewMessage(thesisID, message, 0);
+    return await Chat.createNewMessage(thesisID, message, 0, username);
   }
 
   static async createNewImageMessage(
@@ -72,7 +72,7 @@ export class ChatService {
       file
     );
 
-    return await Chat.createNewMessage(thesisID, path, type);
+    return await Chat.createNewMessage(thesisID, path, type, username);
   }
 
   static async getAllChatOfThesis(

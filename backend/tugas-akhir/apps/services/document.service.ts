@@ -10,10 +10,33 @@ import {
   ISeminarApprovalDoc,
   ISeminarInvitationDoc,
   ISeminarLetterEventDoc,
+  ISeminarScoreDoc,
   ISupervisorSKDoc,
 } from "../utils/interfaces/document.interface";
 
 export class DocumentService {
+  static async getSeminarScoreData(nim: string, seminarID: number) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null || seminar.smrFileBeritaAcara === null) {
+      throw new NotFoundError("data hasn't been provided");
+    }
+
+    if (seminar.tugas_akhir.taMhsNim !== nim) {
+      throw new BadRequestError("data's not for this student");
+    }
+
+    return {
+      department: "Farmasi",
+      letterDate: "",
+      proposalTitle: seminar.tugas_akhir.taJudul,
+      score: seminar.smrNilaiAngka,
+      season: "",
+      studentName: seminar.tugas_akhir.mahasiswa.mhsNama,
+      studentNIM: seminar.tugas_akhir.mahasiswa.mhsNim,
+    } as ISeminarScoreDoc;
+  }
+
   static async getSeminarInvitationData(nim: string, seminarID: number) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 
