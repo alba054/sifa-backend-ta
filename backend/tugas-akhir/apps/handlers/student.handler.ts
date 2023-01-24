@@ -620,6 +620,7 @@ export class StudentHandler {
       ) {
         throw new BadRequestError("provide labID, studentNIM");
       }
+      body.labID = Number(body.labID);
       const labFreeReq = await LabFreeService.insertNewLabFreeDoc(body);
 
       res
