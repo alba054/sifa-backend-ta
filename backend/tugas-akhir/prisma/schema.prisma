@@ -124,6 +124,10 @@ model notifikasi {
   notifStatus   Int     @default(0)
 }
 
+// model notifikasi_dosen {
+
+// }
+
 model pembimbing {
   pmbId                     Int                         @id @default(autoincrement())
   pmbTaId                   Int
@@ -874,6 +878,7 @@ model user {
   departementID        Int?
   keterangan           String?                @db.VarChar(100)
   labID                Int?
+  notificationID       String?
   adm_group_unit       adm_group_unit?        @relation(fields: [aksesgroup], references: [aksesId], onDelete: Restrict, map: "user_ibfk_1")
   ref_prodi            ref_prodi?             @relation(fields: [prodiID], references: [prdId], onDelete: Restrict, map: "user_ibfk_2")
   ref_departemen       ref_departemen?        @relation(fields: [departementID], references: [dprtId])

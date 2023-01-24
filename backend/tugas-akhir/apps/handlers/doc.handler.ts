@@ -3,6 +3,33 @@ import { DocumentService } from "../services/document.service";
 import { createResponse, constants } from "../utils/utils";
 
 export class DocumentHandler {
+  static async getSeminarScoreLetterData(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+
+    try {
+      const data = await DocumentService.getSeminarScoreData(
+        nim,
+        Number(seminarID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get seminar score data",
+            data
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getSeminarInvitationData(
     req: Request,
     res: Response,

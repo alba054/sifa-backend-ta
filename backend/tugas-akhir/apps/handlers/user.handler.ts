@@ -156,7 +156,16 @@ export class UserHandler {
       );
     }
 
+    const { player_id } = req.body;
+
     try {
+      if (typeof player_id !== "undefined") {
+        await UserService.updateNotificationID(
+          player_id,
+          res.locals.user.username
+        );
+      }
+
       const token = await tokenGenerator.sign(
         tokenPayload,
         process.env.SECRET_KEY,
@@ -170,7 +179,7 @@ export class UserHandler {
         })
       );
     } catch (error: any) {
-      next(new InternalServerError(error.message));
+      return next(new InternalServerError(error.message));
     }
   }
 

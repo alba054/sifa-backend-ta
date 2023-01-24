@@ -99,4 +99,21 @@ docRouter
     DocumentHandler.getSeminarInvitationData
   );
 
+docRouter
+  .route("/students/:nim/seminars/:seminarID/score")
+  .get(
+    AuthorizationMiddleware.authorize([
+      constants.STUDENT_GROUP_ACCESS,
+      constants.LAB_ADMIN_GROUP_ACCESS,
+      constants.ADMINHEAD_GROUP_ACCCESS,
+      constants.SUBSECTIONHEAD_GROUP_ACCESS,
+      constants.FACULTY_ADMIN_GROUP_ACCESS,
+      constants.DEAN_GROUP_ACCESS,
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+      constants.LECTURER_GROUP_ACCESS,
+    ]),
+    DocumentHandler.getSeminarScoreLetterData
+  );
+
 export default docRouter;

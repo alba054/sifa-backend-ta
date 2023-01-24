@@ -4,9 +4,11 @@ import { Seminar } from "../models/seminar.model";
 import { SeminarNote } from "../models/seminarNote.model";
 import { SeminarScore } from "../models/seminarScore.model";
 import { Supervisor } from "../models/supervisor.model";
+import { User } from "../models/user.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { ILecturer } from "../utils/interfaces/lecturer.interface";
+import { notifService } from "../utils/notification";
 
 export class LecturerService {
   static async getSeminarOfThesis(nim: string, thesisID: number) {
@@ -116,12 +118,27 @@ export class LecturerService {
   ) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 
-    if (
-      seminar === null ||
-      typeof seminar.seminar_persetujuan.find((s) => s.dosen.dsnNip === nim) ===
-        "undefined"
-    ) {
+    if (seminar === null) {
       throw new NotFoundError("seminar's not found");
+    }
+
+    const lecturer = seminar.seminar_persetujuan.find(
+      (s) => s.dosen.dsnNip === nim
+    );
+
+    if (typeof lecturer === "undefined") {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    const user = await User.getUserByUsername(
+      seminar.tugas_akhir.mahasiswa.mhsNim
+    );
+
+    if (user !== null) {
+      const message = `${lecturer.dosen.dsnNama} ${
+        isAccepted ? "menyetujui" : "menolak"
+      } jadwal`;
+      notifService.sendNotification(message, [user.notificationID]);
     }
 
     return await Seminar.changeScheduledSeminarApproval(
