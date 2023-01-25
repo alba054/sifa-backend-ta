@@ -1,10 +1,11 @@
 import https from "https";
 import dotenv from "dotenv";
+import { Notification } from "../models/notification.model";
 
 dotenv.config();
 
 class NotificationService {
-  async sendNotification(content: string, subs: any) {
+  async sendNotification(content: string, subs: any, username: string | null) {
     const ONE_SIGNAL_URI = "https://onesignal.com/api/v1/notifications";
 
     const body = {
@@ -38,6 +39,8 @@ class NotificationService {
 
     req.write(JSON.stringify(body));
     req.end();
+
+    await Notification.saveNotification(content, username);
   }
 }
 

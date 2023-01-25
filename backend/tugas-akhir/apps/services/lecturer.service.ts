@@ -138,7 +138,11 @@ export class LecturerService {
       const message = `${lecturer.dosen.dsnNama} ${
         isAccepted ? "menyetujui" : "menolak"
       } jadwal`;
-      notifService.sendNotification(message, [user.notificationID]);
+      notifService.sendNotification(
+        message,
+        [user.notificationID],
+        user.username
+      );
     }
 
     return await Seminar.changeScheduledSeminarApproval(

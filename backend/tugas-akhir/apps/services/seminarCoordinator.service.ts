@@ -1,8 +1,10 @@
 import { Seminar } from "../models/seminar.model";
 import { Thesis } from "../models/thesis.model";
+import { User } from "../models/user.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { ISeminarSchedulePost } from "../utils/interfaces/seminar.interface";
+import { notifService } from "../utils/notification";
 
 /* <PDFSuratKesediaan
         name={"Muh. Yusuf Syam"}
@@ -205,6 +207,18 @@ export class SeminarCoordinatorService {
 
     if (seminar.smrNilaiAngka !== null || seminar.smrNilaiHuruf !== null) {
       throw new NotFoundError("seminar has been scored");
+    }
+
+    const user = await User.getUserByUsername(
+      seminar.tugas_akhir.mahasiswa.mhsNim
+    );
+
+    if (user !== null) {
+      notifService.sendNotification(
+        `seminar koordinator telah menjadwalkan seminar`,
+        [user.notificationID],
+        seminar.tugas_akhir.mahasiswa.mhsNim
+      );
     }
 
     return await Seminar.updateSeminarSchedule(seminarID, body);

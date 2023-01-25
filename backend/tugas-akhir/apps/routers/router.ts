@@ -19,6 +19,7 @@ import deanRouter from "./dean.route";
 import seminarCoordinatorRouter from "./seminarCoordinator.route";
 import viceDeanRouter from "./viceDean.route";
 import docRouter from "./doc.route";
+import notifRouter from "./notification.route";
 
 const router = express.Router();
 
@@ -43,5 +44,6 @@ router.use("/vice-deans", viceDeanRouter);
 router.use("/chat", chatRouter);
 router.use("/files", fileRouter);
 router.use("/docs", docRouter);
+router.use("/notifications", notifRouter);
 
 export default router;

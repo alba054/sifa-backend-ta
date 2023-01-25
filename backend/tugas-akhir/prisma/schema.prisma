@@ -117,11 +117,14 @@ model mahasiswa {
 }
 
 model notifikasi {
-  notifid       Int     @id @default(autoincrement()) @db.UnsignedInt
-  notifKode     String? @db.VarChar(10)
-  notifPengirim String? @db.VarChar(30)
-  notifPenerima String? @db.VarChar(30)
-  notifStatus   Int     @default(0)
+  notifid       Int      @id @default(autoincrement()) @db.UnsignedInt
+  notifKode     String?  @db.VarChar(10)
+  notifPengirim String?  @db.VarChar(30)
+  notifPenerima String?  @db.VarChar(30)
+  notifStatus   Int      @default(0)
+  message       String?
+  username      String?
+  created_at    DateTime @default(now())
 }
 
 // model notifikasi_dosen {
