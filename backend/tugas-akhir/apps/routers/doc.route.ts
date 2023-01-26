@@ -6,7 +6,7 @@ import { constants } from "../utils/utils";
 const docRouter = express.Router();
 
 docRouter
-  .route("/students/:nim/free-lab/:reqLabID")
+  .route("/students/free-lab/:reqLabID")
   .get(
     AuthorizationMiddleware.authorize([
       constants.STUDENT_GROUP_ACCESS,
@@ -19,7 +19,7 @@ docRouter
   );
 
 docRouter
-  .route("/students/:nim/sk/supervisors/:SKID")
+  .route("/students/sk/supervisors/:SKID")
   .get(
     AuthorizationMiddleware.authorize([
       constants.STUDENT_GROUP_ACCESS,
@@ -34,7 +34,7 @@ docRouter
   );
 
 docRouter
-  .route("/students/:nim/sk/examiners/:SKID")
+  .route("/students/sk/examiners/:SKID")
   .get(
     AuthorizationMiddleware.authorize([
       constants.STUDENT_GROUP_ACCESS,
@@ -49,7 +49,7 @@ docRouter
   );
 
 docRouter
-  .route("/students/:nim/seminars/:seminarID/approval")
+  .route("/students/seminars/:seminarID/approval")
   .get(
     AuthorizationMiddleware.authorize([
       constants.STUDENT_GROUP_ACCESS,
@@ -66,7 +66,7 @@ docRouter
   );
 
 docRouter
-  .route("/students/:nim/seminars/:seminarID/event")
+  .route("/students/seminars/:seminarID/event")
   .get(
     AuthorizationMiddleware.authorize([
       constants.STUDENT_GROUP_ACCESS,
@@ -83,7 +83,7 @@ docRouter
   );
 
 docRouter
-  .route("/students/:nim/seminars/:seminarID/invitation")
+  .route("/students/seminars/:seminarID/invitation")
   .get(
     AuthorizationMiddleware.authorize([
       constants.STUDENT_GROUP_ACCESS,
@@ -100,7 +100,7 @@ docRouter
   );
 
 docRouter
-  .route("/students/:nim/seminars/:seminarID/score")
+  .route("/students/seminars/:seminarID/score")
   .get(
     AuthorizationMiddleware.authorize([
       constants.STUDENT_GROUP_ACCESS,
