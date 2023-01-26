@@ -124,7 +124,7 @@ export class Seminar {
           ],
         },
         include: {
-          tugas_akhir: true,
+          tugas_akhir: { include: { mahasiswa: true } },
         },
       });
     }
