@@ -8,59 +8,59 @@ import { v4 as uuidv4 } from "uuid";
 
 export class ChatService {
   static async createNewTextMessage(
-    thesisID: number,
+    nim: string,
     message: any,
     username: string
   ) {
-    const thesis = await ThesisService.getApprovedThesisDetail(thesisID);
+    const thesis = await ThesisService.getApprovedThesisByNIM(nim);
 
-    if (typeof thesis === "undefined") {
+    if (typeof thesis[0] === "undefined") {
       throw new NotFoundError("thesis's not found");
     }
 
     if (
-      thesis.pembimbing.length < 2 ||
-      (thesis.pembimbing[0].statusTerima === "Ditolak" &&
-        thesis.pembimbing[1].statusTerima === "Ditolak")
+      thesis[0].pembimbing.length < 2 ||
+      (thesis[0].pembimbing[0].statusTerima === "Ditolak" &&
+        thesis[0].pembimbing[1].statusTerima === "Ditolak")
     ) {
       throw new NotFoundError("thesis has no supervisors");
     }
 
     if (
-      thesis.pembimbing[0].dosen.dsnNip !== username &&
-      thesis.pembimbing[1].dosen.dsnNip !== username &&
-      thesis.mahasiswa.mhsNim !== username
+      thesis[0].pembimbing[0].dosen.dsnNip !== username &&
+      thesis[0].pembimbing[1].dosen.dsnNip !== username &&
+      thesis[0].mahasiswa.mhsNim !== username
     ) {
       throw new NotFoundError("you are not eligible to view chats");
     }
-    return await Chat.createNewMessage(thesisID, message, 0, username);
+    return await Chat.createNewMessage(thesis[0].taId, message, 0, username);
   }
 
   static async createNewImageMessage(
-    thesisID: number,
+    nim: string,
     message: any,
     type: number,
     extension: string,
     username: string
   ) {
-    const thesis = await ThesisService.getApprovedThesisDetail(thesisID);
+    const thesis = await ThesisService.getApprovedThesisByNIM(nim);
 
-    if (typeof thesis === "undefined") {
+    if (typeof thesis[0] === "undefined") {
       throw new NotFoundError("thesis's not found");
     }
 
     if (
-      thesis.pembimbing.length < 2 ||
-      (thesis.pembimbing[0].statusTerima === "Ditolak" &&
-        thesis.pembimbing[1].statusTerima === "Ditolak")
+      thesis[0].pembimbing.length < 2 ||
+      (thesis[0].pembimbing[0].statusTerima === "Ditolak" &&
+        thesis[0].pembimbing[1].statusTerima === "Ditolak")
     ) {
       throw new NotFoundError("thesis has no supervisors");
     }
 
     if (
-      thesis.pembimbing[0].dosen.dsnNip !== username &&
-      thesis.pembimbing[1].dosen.dsnNip !== username &&
-      thesis.mahasiswa.mhsNim !== username
+      thesis[0].pembimbing[0].dosen.dsnNip !== username &&
+      thesis[0].pembimbing[1].dosen.dsnNip !== username &&
+      thesis[0].mahasiswa.mhsNim !== username
     ) {
       throw new NotFoundError("you are not eligible to view chats");
     }
@@ -72,7 +72,7 @@ export class ChatService {
       file
     );
 
-    return await Chat.createNewMessage(thesisID, path, type, username);
+    return await Chat.createNewMessage(thesis[0].taId, path, type, username);
   }
 
   static async getAllChatOfThesis(

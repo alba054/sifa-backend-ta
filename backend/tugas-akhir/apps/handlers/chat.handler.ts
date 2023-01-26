@@ -9,7 +9,7 @@ export class ChatHandler {
     res: Response,
     next: NextFunction
   ) {
-    const { thesisID } = req.params;
+    const { nim } = req.params;
     const { type, message, extension } = req.body;
 
     try {
@@ -19,7 +19,7 @@ export class ChatHandler {
 
       if (Number(type) === 0) {
         await ChatService.createNewTextMessage(
-          Number(thesisID),
+          nim,
           message,
           res.locals.user.username
         );
@@ -28,7 +28,7 @@ export class ChatHandler {
           throw new BadRequestError("provide extension");
         }
         await ChatService.createNewImageMessage(
-          Number(thesisID),
+          nim,
           message,
           type,
           extension,
