@@ -115,7 +115,15 @@ export function fetchNewUserData() {
               });
             }
           } else {
-            await User.resetPassword(username, password);
+            await User.resetPassword(
+              username,
+              password,
+              role,
+              department,
+              major,
+              email,
+              name
+            );
           }
         } catch (error) {
           console.error(error);
