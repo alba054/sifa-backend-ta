@@ -31,6 +31,8 @@ export class Thesis {
         pembimbing: { include: { dosen: true } },
         ref_laboratorium: true,
         ref_laboratorium2: true,
+        sk_pembimbing: true,
+        sk_penguji: true,
       },
     });
     // }
@@ -140,6 +142,8 @@ export class Thesis {
         pengusul: true,
         ref_laboratorium: true,
         ref_laboratorium2: true,
+        sk_pembimbing: true,
+        sk_penguji: true,
       },
     });
   }
@@ -157,6 +161,8 @@ export class Thesis {
           ref_laboratorium: true,
           ref_laboratorium2: true,
           mahasiswa: true,
+          sk_pembimbing: true,
+          sk_penguji: true,
         },
       });
     }
@@ -170,6 +176,8 @@ export class Thesis {
         ref_laboratorium: true,
         ref_laboratorium2: true,
         mahasiswa: true,
+        sk_pembimbing: true,
+        sk_penguji: true,
       },
     });
   }
@@ -184,6 +192,8 @@ export class Thesis {
         pengusul: true,
         ref_laboratorium: true,
         ref_laboratorium2: true,
+        sk_pembimbing: true,
+        sk_penguji: true,
       },
     });
   }
@@ -204,6 +214,8 @@ export class Thesis {
         pengusul: true,
         ref_laboratorium: true,
         ref_laboratorium2: true,
+        sk_pembimbing: true,
+        sk_penguji: true,
       },
     });
 
@@ -300,6 +312,8 @@ export class Thesis {
         mahasiswa: true,
         pengusul: true,
         disposisi_kaprodi: true,
+        sk_pembimbing: true,
+        sk_penguji: true,
       },
     });
 
@@ -319,6 +333,8 @@ export class Thesis {
         pengusul: true,
         ref_laboratorium: true,
         ref_laboratorium2: true,
+        sk_pembimbing: true,
+        sk_penguji: true,
       },
     });
 
@@ -380,6 +396,8 @@ export class Thesis {
         mahasiswa: true,
         pengusul: true,
         ref_laboratorium: true,
+        sk_pembimbing: true,
+        sk_penguji: true,
       },
     });
 
@@ -413,6 +431,8 @@ export class Thesis {
         ref_laboratorium: true,
         // _count: true,
         pengusul: true,
+        sk_pembimbing: true,
+        sk_penguji: true,
       },
     });
 
