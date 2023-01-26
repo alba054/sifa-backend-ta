@@ -119,11 +119,11 @@ export class User {
   static async resetPassword(
     username: string,
     newPassword: string,
-    role: number,
-    department: number,
-    major: number,
-    email: string,
-    name: string
+    role?: number,
+    department?: number,
+    major?: number,
+    email?: string,
+    name?: string
   ) {
     try {
       const updatedUser = await prismaDB.user.update({
