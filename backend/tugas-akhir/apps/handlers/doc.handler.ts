@@ -8,7 +8,8 @@ export class DocumentHandler {
     res: Response,
     next: NextFunction
   ) {
-    const { nim, seminarID } = req.params;
+    const { seminarID } = req.params;
+    const { nim } = req.query;
 
     try {
       const data = await DocumentService.getSeminarScoreData(
@@ -35,8 +36,8 @@ export class DocumentHandler {
     res: Response,
     next: NextFunction
   ) {
-    const { nim, seminarID } = req.params;
-
+    const { seminarID } = req.params;
+    const { nim } = req.query;
     try {
       const data = await DocumentService.getSeminarInvitationData(
         nim,
@@ -62,7 +63,8 @@ export class DocumentHandler {
     res: Response,
     next: NextFunction
   ) {
-    const { nim, seminarID } = req.params;
+    const { seminarID } = req.params;
+    const { nim } = req.query;
 
     try {
       const data = await DocumentService.getSeminarLetterEventData(
@@ -89,7 +91,8 @@ export class DocumentHandler {
     res: Response,
     next: NextFunction
   ) {
-    const { nim, seminarID } = req.params;
+    const { seminarID } = req.params;
+    const { nim } = req.query;
 
     try {
       const data = await DocumentService.getSeminarApprovalData(
@@ -116,7 +119,8 @@ export class DocumentHandler {
     res: Response,
     next: NextFunction
   ) {
-    const { nim, SKID } = req.params;
+    const { SKID } = req.params;
+    const { nim } = req.query;
 
     try {
       const data = await DocumentService.getExaminerSKData(nim, Number(SKID));
@@ -140,7 +144,8 @@ export class DocumentHandler {
     res: Response,
     next: NextFunction
   ) {
-    const { nim, SKID } = req.params;
+    const { SKID } = req.params;
+    const { nim } = req.query;
 
     try {
       const data = await DocumentService.getSupervisorSKData(nim, Number(SKID));
@@ -160,7 +165,8 @@ export class DocumentHandler {
   }
 
   static async getFreeLabData(req: Request, res: Response, next: NextFunction) {
-    const { nim, reqLabID } = req.params;
+    const { reqLabID } = req.params;
+    const { nim } = req.query;
 
     try {
       const data = await DocumentService.getFreeLabData(nim, Number(reqLabID));

@@ -15,7 +15,7 @@ import {
 } from "../utils/interfaces/document.interface";
 
 export class DocumentService {
-  static async getSeminarScoreData(nim: string, seminarID: number) {
+  static async getSeminarScoreData(nim: any, seminarID: number) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 
     if (seminar === null || seminar.smrFileBeritaAcara === null) {
@@ -37,7 +37,7 @@ export class DocumentService {
     } as ISeminarScoreDoc;
   }
 
-  static async getSeminarInvitationData(nim: string, seminarID: number) {
+  static async getSeminarInvitationData(nim: any, seminarID: number) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 
     if (seminar === null || seminar.smrFileUndangan === null) {
@@ -87,7 +87,7 @@ export class DocumentService {
       studentNIM: seminar.tugas_akhir.taMhsNim,
     } as ISeminarInvitationDoc;
   }
-  static async getSeminarLetterEventData(nim: string, seminarID: number) {
+  static async getSeminarLetterEventData(nim: any, seminarID: number) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 
     if (seminar === null || seminar.smrFileBeritaAcara === null) {
@@ -149,7 +149,7 @@ export class DocumentService {
     } as ISeminarLetterEventDoc;
   }
 
-  static async getSeminarApprovalData(nim: string, seminarID: number) {
+  static async getSeminarApprovalData(nim: any, seminarID: number) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 
     if (seminar === null || seminar.smrFileKesediaan === null) {
@@ -182,7 +182,7 @@ export class DocumentService {
     } as ISeminarApprovalDoc;
   }
 
-  static async getExaminerSKData(nim: string, SKID: number) {
+  static async getExaminerSKData(nim: any, SKID: number) {
     const sk = await ExaminerSK.getSKByID(SKID);
 
     if (sk === null || sk.statusPermohonan !== "Diterima" || sk.skpId !== 1) {
@@ -214,7 +214,7 @@ export class DocumentService {
     } as IExaminerSKDoc;
   }
 
-  static async getSupervisorSKData(nim: string, SKID: number) {
+  static async getSupervisorSKData(nim: any, SKID: number) {
     const sk = await SupervisorSK.getSKByID(SKID);
 
     if (
@@ -249,7 +249,7 @@ export class DocumentService {
     } as ISupervisorSKDoc;
   }
 
-  static async getFreeLabData(nim: string, reqLabID: number) {
+  static async getFreeLabData(nim: any, reqLabID: number) {
     const freeLab = await LabFree.getFreeLabRequestsByID(reqLabID);
 
     if (freeLab === null || freeLab.ref_permohonan !== "Diterima") {
