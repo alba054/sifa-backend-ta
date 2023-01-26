@@ -5,8 +5,10 @@ import { FEFileMultipleOutline } from "src/assets/Icons/Fluent";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FEDisabledTooltip from "src/components/fe-components/FEDisabledTooltip";
 import FEDocumentListShowCase from "src/components/fe-components/FEDocumentListShowCase";
+import FEPDFModal from "src/components/fe-components/FEPDFModal";
 import FEProgressBar from "src/components/fe-components/FEProgressBar";
 import { statusChipNoIcon } from "src/components/fe-components/FERoundedChip";
+import PDFSKIzinUjianSidang from "src/letter/PDFSKIzinUjianSidang";
 import { FEStatus } from "src/utils/const/type";
 
 export interface IFESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails {
@@ -17,8 +19,13 @@ const FESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails: React.
   IFESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails
 > = ({ status }) => {
   const navigate = useNavigate();
+  const [isSuratIzinOpened, setIsSuratIzinOpened] = useState(false)
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const theme = useMantineTheme();
+  console.log('a')
+  console.log('hei',window.location.origin + "/images/logo-unhas.png")
+  console.log(window.location.origin)
+  console.log('v')
 
   useEffect(() => {
     if (status == "Menunggu") {
@@ -33,6 +40,42 @@ const FESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails: React.
 
   return (
     <>
+    <FEPDFModal
+        opened={isSuratIzinOpened}
+        setOpened={setIsSuratIzinOpened}
+        title="Dokumen Surat Kesediaan Penguji"
+      >
+        <PDFSKIzinUjianSidang
+      letterDate={new Date()}
+        name={"Muh. Yusuf Syam"}
+        nim={"H071191044"}
+        department="Farmasi"
+        faculty={"Farmasi"}
+        checkList={[
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ]}
+        firstViceDean={"Abdul Rahim, S.Si, M.Si, Ph.D, Apt. Devon"}
+        firstViceDeanNip={"8281970019283100"}
+      />
+      </FEPDFModal>
       <FEAlertModal
         title="Buat Kembali Surat Permohonan?"
         description="Pastikan pilihan anda sudah BENAR"
@@ -84,6 +127,11 @@ const FESubsectionChairmanTrialPermitApprovalApplicationProcessedDetails: React.
         </Text>
         <FEDocumentListShowCase
           documentLabelList={["Surat Permohonan Izin Ujian Sidang"]}
+          onClickList={[
+            ()=>{
+              setIsSuratIzinOpened(true)
+            }
+          ]}
         />
       </Stack>
       <FEDisabledTooltip

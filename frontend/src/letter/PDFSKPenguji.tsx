@@ -144,7 +144,7 @@ const PDFSKPenguji: React.FC<IPDFSKPenguji> = ({
 
 const styles = StyleSheet.create({
   viewer: {
-    width: "100vw",
+    width: "100%",
     height: "100vh"
   },
   page: {

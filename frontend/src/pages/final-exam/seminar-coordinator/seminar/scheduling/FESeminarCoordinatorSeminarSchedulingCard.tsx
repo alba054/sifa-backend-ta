@@ -13,10 +13,13 @@ import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import FEDisabledTooltip from "src/components/fe-components/FEDisabledTooltip";
 import FEDocumentListShowCase from "src/components/fe-components/FEDocumentListShowCase";
 import FENotifyButton from "src/components/fe-components/FENotifyButton";
+import FEPDFModal from "src/components/fe-components/FEPDFModal";
 import { statusChipNoIcon } from "src/components/fe-components/FERoundedChip";
 import FEInputModal from "src/components/FEInputModal";
 import FEProfileCard from "src/components/FEProfileCard";
 import { DatePickerInput } from "src/components/FormInput";
+import PDFSuratKesediaan from "src/letter/PDFSuratKesediaan";
+import PDFUndanganSeminar from "src/letter/PDFUndanganSeminar";
 import { FEStatus } from "src/utils/const/type";
 import { getFEDate } from "src/utils/functions/date.function";
 import FESeminarCoordinatorSeminarSchedulingEditModal from "./FESeminarCoordinatorSeminarSchedulingEditModal";
@@ -26,7 +29,8 @@ export interface IFESeminarCoordinatorSeminarSchedulingCard {
   name: string;
   nim: string;
   proposalTitle: string;
-  seminarType: string;seminarDate: Date;
+  seminarType: string;
+  seminarDate: Date;
   seminarTimeStart: Date;
   seminarTimeEnd: Date;
   seminarOfflinePlace: string;
@@ -51,7 +55,9 @@ const FESeminarCoordinatorSeminarSchedulingCard: React.FC<
   nim,
   proposalTitle,
   seminarOfflinePlace,
-  seminarDate, seminarTimeEnd, seminarTimeStart,
+  seminarDate,
+  seminarTimeEnd,
+  seminarTimeStart,
   seminarType,
   firstExaminers,
   firstExaminersStatus,
@@ -75,6 +81,9 @@ const FESeminarCoordinatorSeminarSchedulingCard: React.FC<
 
   const [isMakeInvitationModalOpened, setIsMakeInvitationModalOpened] =
     useState(false);
+
+  const [isKesediaanPDFOpened, setIsKesediaanPDFOpened] = useState(false);
+  const [isUndanganPDFOpened, setIsUndanganPDFOpened] = useState(false);
 
   const [isNotifyModalOpened, setisNotifyModalOpened] = useState(false);
   const [invitationDate, setInvitationDate] = useState(new Date());
@@ -169,6 +178,65 @@ const FESeminarCoordinatorSeminarSchedulingCard: React.FC<
         yesButtonLabel={"Kirim"}
         onSubmit={notifySeminarHandler}
       />
+
+      <FEPDFModal
+        opened={isUndanganPDFOpened}
+        setOpened={setIsUndanganPDFOpened}
+        title="Dokumen Undangan Seminar"
+      >
+        <PDFUndanganSeminar
+          name={"Muh. Yusuf Syam"}
+          nim={"H071191044"}
+          letterDate={new Date()}
+          proposalTitle={
+            "RANCANG BANGUN SISTEM INFORMASI APLIKASI PERPUSTAKAAN UNIVERSITAS HASANUDDIN BERBASIS ANDROID"
+          }
+          firstExaminer={"A"}
+          secondExaminer={"A"}
+          seminarCoordinator={"Abdul Rahim, S.Si, M.Si, Ph.D, Apt. Devon"}
+          seminarCoordinatorNip={"8281970019283100"}
+          mainMentor={"A"}
+          sideMentor={"A"}
+          seminarDate={new Date()}
+          seminarTimeStart={new Date()}
+          seminarTimeEnd={new Date()}
+          mainMentorNip={"8281970019283100"}
+          sideMentorNip={"8281970019283100"}
+          firstExaminerNip={"8281970019283100"}
+          secondExaminerNip={"8281970019283100"}
+          letterNumber={"19/J/J04.01/PP.12/2022"}
+          department={"Matematika"}
+          studyProgram={"Ilmu Komputer"}
+          onlinePlace={
+            "https://telkomsel.zoom.us/j/96874722331?pwd=cDVrVVBhVFBjY1d4NHpSRlEvam5OUT09"
+          }
+          place={"Lt. 2 Farmasi"}
+        />
+      </FEPDFModal>
+
+      <FEPDFModal
+        opened={isKesediaanPDFOpened}
+        setOpened={setIsKesediaanPDFOpened}
+        title="Dokumen Surat Kesediaan Penguji"
+      >
+        <PDFSuratKesediaan
+          name={"Muh. Yusuf Syam"}
+          nim={"H071191044"}
+          letterDate={new Date()}
+          seminarDate={new Date()}
+          seminarTimeStart={new Date()}
+          seminarTimeEnd={new Date()}
+          proposalTitle={
+            "RANCANG BANGUN SISTEM INFORMASI APLIKASI PERPUSTAKAAN UNIVERSITAS HASANUDDIN BERBASIS ANDROID"
+          }
+          place={"Hybrid (via Zoom)"}
+          firstExaminer={"A"}
+          secondExaminer={"A"}
+          thirdExaminer={"A"}
+          fourthExaminer={"A"}
+        />
+      </FEPDFModal>
+
       <Stack className="gap-6">
         <Stack className="gap-1">
           <Text className="text-lg tracking-1">{proposalTitle}</Text>
@@ -275,6 +343,14 @@ const FESeminarCoordinatorSeminarSchedulingCard: React.FC<
               documentLabelList={[
                 "Surat Persetujuan",
                 "Undangan Seminar/Ujian",
+              ]}
+              onClickList={[
+                () => {
+                  setIsKesediaanPDFOpened(true);
+                },
+                () => {
+                  setIsUndanganPDFOpened(true);
+                },
               ]}
             />
           </Stack>

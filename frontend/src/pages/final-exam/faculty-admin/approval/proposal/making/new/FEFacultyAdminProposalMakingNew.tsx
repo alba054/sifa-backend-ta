@@ -15,8 +15,11 @@ import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
 import FEDisabledTooltip from "src/components/fe-components/FEDisabledTooltip";
 import FEDocumentListCard from "src/components/fe-components/FEDocumentListCard";
 import FEDocumentListShowCase from "src/components/fe-components/FEDocumentListShowCase";
+import FEPDFModal from "src/components/fe-components/FEPDFModal";
 import { approvalChip2 } from "src/components/fe-components/FERoundedChip";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
+import PDFSKPembimbing from "src/letter/PDFSKPembimbing";
+import PDFSKPenguji from "src/letter/PDFSKPenguji";
 import { FEROUTES } from "src/routes/final-exam.route";
 import { IFEFacultyAdminProposalMakingCard } from "../FEFacultyAdminProposalMakingCard";
 
@@ -57,9 +60,9 @@ const dummyProposalMaking: {
     skMentors: {
       status: "Menunggu",
     },
-    skExaminers:{
-      status: "Menunggu"
-    }
+    skExaminers: {
+      status: "Menunggu",
+    },
   },
   H071191044: {
     name: "Muh. Yusuf Syam",
@@ -74,14 +77,14 @@ const dummyProposalMaking: {
       firstExaminer: "Indo Lalo S.Si., M.Si., Apt.",
       secondExaminer: "KASKJDAJKSDA",
     },
-    skMentors:{
-      status:"Diterima",
+    skMentors: {
+      status: "Diterima",
       refusalReason: "Berkas Tidak Valid",
       repellentRole: "Kasubag",
     },
-    skExaminers:{
-      status: "Diterima"
-    }
+    skExaminers: {
+      status: "Diterima",
+    },
   },
 };
 
@@ -93,6 +96,8 @@ const FEFacultyAdminProposalMakingNew: React.FC<
   const [applicationData] = useState(dummyProposalMaking[nim!]);
   const [isAlertMentorsOpened, setIsAlertMentorsOpened] = useState(false);
   const [isAlertExaminersOpened, setIsAlertExaminersOpened] = useState(false);
+  const [isSKPembimbingPDF, setIsSKPembimbingPDF] = useState(false);
+  const [isSKPengujiPDF, setIsSKPengujiPDF] = useState(false);
   const [skMentorStatus, setSkMentorStatus] = useState(
     applicationData.skMentors.status
   );
@@ -112,8 +117,8 @@ const FEFacultyAdminProposalMakingNew: React.FC<
     setSkExaminersStatus("Belum_Diproses");
   }
 
-  function endHandler(){
-    navigate(-1)
+  function endHandler() {
+    navigate(-1);
   }
 
   return (
@@ -124,6 +129,46 @@ const FEFacultyAdminProposalMakingNew: React.FC<
       <Title order={2} mb={"md"}>
         {applicationData.name} ({applicationData.nim})
       </Title>
+
+      <FEPDFModal
+        opened={isSKPembimbingPDF}
+        setOpened={setIsSKPembimbingPDF}
+        title="Dokumen SK Pembimbing"
+      >
+        <PDFSKPembimbing
+          name={"Muh. Yusuf Syam"}
+          nim={"H071191044"}
+          dean={"Abdul Rahim, S.Si, M.Si, Ph.D, Apt. Devon"}
+          deanNip={"8281970019283100"}
+          letterDate={new Date()}
+          letterNumber={"19/J/J04.01/PP.12/2022"}
+          department={"Matematika"}
+          mainMentor={"A"}
+          sideMentor={"A"}
+          studyProgram={"Ilmu Komputer"}
+        />
+      </FEPDFModal>
+
+      <FEPDFModal
+        opened={isSKPengujiPDF}
+        setOpened={setIsSKPengujiPDF}
+        title="Dokumen SK Penguji"
+      >
+        <PDFSKPenguji
+          name={"Muh. Yusuf Syam"}
+          nim={"H071191044"}
+          dean={"Abdul Rahim, S.Si, M.Si, Ph.D, Apt. Devon"}
+          deanNip={"8281970019283100"}
+          letterDate={new Date()}
+          letterNumber={"19/J/J04.01/PP.12/2022"}
+          department={"Matematika"}
+          chairman={"A"}
+          secretary={"A"}
+          studyProgram={"Ilmu Komputer"}
+          member={["a", "b", "c"]}
+        />
+      </FEPDFModal>
+
       <FEAlertModal
         description="Pastikan pilihan anda sudah BENAR"
         opened={isAlertMentorsOpened}
@@ -198,7 +243,7 @@ const FEFacultyAdminProposalMakingNew: React.FC<
                   </Text>
                 ) : (
                   <Stack className="gap-0">
-                    <FEDocumentListCard description="SK Pembimbing" />
+                    <FEDocumentListCard description="SK Pembimbing" onClick={()=> setIsSKPembimbingPDF(true)} />
                     {skMentorStatus === "Ditolak" ? (
                       <>
                         <Text className="text-secondary-text-500 text-md tracking-1 mt-2">
@@ -277,7 +322,7 @@ const FEFacultyAdminProposalMakingNew: React.FC<
                   </Text>
                 ) : (
                   <Stack className="gap-0">
-                    <FEDocumentListCard description="SK Penguji" />
+                    <FEDocumentListCard description="SK Penguji" onClick={()=>setIsSKPengujiPDF(true)} />
                     {skExaminersStatus === "Ditolak" ? (
                       <>
                         <Text className="text-secondary-text-500 text-md tracking-1 mt-2">

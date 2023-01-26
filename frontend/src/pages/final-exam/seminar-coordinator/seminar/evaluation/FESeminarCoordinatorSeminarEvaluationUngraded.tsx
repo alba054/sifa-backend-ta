@@ -1,4 +1,11 @@
-import { Button, Group, Stack, Text, useMantineTheme } from "@mantine/core";
+import {
+  Button,
+  Group,
+  Stack,
+  Text,
+  useMantineTheme,
+  Divider,
+} from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -15,6 +22,7 @@ import FETableComponent, {
 } from "src/components/fe-components/fe-table/FETable";
 import FEAlertModal from "src/components/fe-components/FEAlertModal";
 import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
+import FEPDFModal from "src/components/fe-components/FEPDFModal";
 import FEScoreCircleBar from "src/components/fe-components/FEScoreCircleBar";
 import LFPHeaderComponent from "src/components/fe-components/LFPHeader.component";
 import FETableRow1 from "src/components/fe-components/table/FETableRow1";
@@ -22,6 +30,8 @@ import FEInputModal from "src/components/FEInputModal";
 import { NumberInput } from "src/components/FormInput";
 import useArray from "src/hooks/fe-hooks/useArray";
 import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
+import PDFBeritaAcaraKeteranganSeminar from "src/letter/PDFBeritaAcaraKeteranganSeminar";
+import PDFBlankoNilaiSurat from "src/letter/PDFBlankoNilaiSurat";
 import { FEROUTES } from "src/routes/final-exam.route";
 import { getFEDate } from "src/utils/functions/date.function";
 
@@ -247,12 +257,17 @@ const FESeminarCoordinatorSeminarEvaluationUngraded: React.FC<
   //   seminarExecutiveData[selectedRow].score = scoreValue
   // }
 
+  const [isDownloadScoreModalOpened, setIsDownloadScoreModalOpened] =
+    useState(false);
+
   function generateScoreLetterHandle() {
     setIsScoreLetterGenerated(true);
     setGenerateScoreModalOpened(false);
   }
 
-  function downloadScoreLetterHandle() {}
+  function downloadScoreLetterHandle() {
+    setIsDownloadScoreModalOpened(true);
+  }
 
   function cancelScoreLetterHandle() {
     setIsScoreLetterGenerated(false);
@@ -369,6 +384,70 @@ const FESeminarCoordinatorSeminarEvaluationUngraded: React.FC<
         noButtonLabel={"Kembali"}
         onSubmit={cancelScoreLetterHandle}
       />
+      <FEPDFModal
+        opened={isDownloadScoreModalOpened}
+        setOpened={setIsDownloadScoreModalOpened}
+        title="Dokumen Keterangan Nilai"
+      >
+        <Stack className="gap-14">
+          <Stack className="gap-4">
+            <Text className="text-primary-text-500 text-xl font-semibold">
+              Surat Berita Acara Ujian Skripsi
+            </Text>
+            <PDFBeritaAcaraKeteranganSeminar
+              name={"Muh. Yusuf Syam"}
+              nim={"H071191044"}
+              letterDate={new Date()}
+              seminarType={seminarData.seminarType}
+              proposalTitle={
+                "RANCANG BANGUN SISTEM INFORMASI APLIKASI PERPUSTAKAAN UNIVERSITAS HASANUDDIN BERBASIS ANDROID"
+              }
+              firstExaminer={"A"}
+              secondExaminer={"A"}
+              thirdExaminer={"A"}
+              fourthxaminer={"A"}
+              firstExaminerScore={88}
+              secondExaminerScore={88}
+              thirdExaminerScore={88}
+              fourthxaminerScore={88}
+              dean={"Abdul Rahim, S.Si, M.Si, Ph.D, Apt. Devon"}
+              deanNip={"8281970019283100"}
+              mainMentor={"A"}
+              sideMentor={"A"}
+              seminarDate={new Date()}
+              seminarTimeStart={new Date()}
+              seminarTimeEnd={new Date()}
+              studyProgram={"Sistem Informasi"}
+              isPassed={true}
+            />
+          </Stack>
+          <Divider />
+          <Stack className="gap-4">
+            <Text className="text-primary-text-500 text-xl font-semibold">
+              Surat Keterangan Nilai Ujian Skripsi
+            </Text>
+          {
+            seminarData.seminarType=="Ujian Skripsi" ?
+            <PDFBlankoNilaiSurat
+              department="Sistem Informasi"
+              letterDate={new Date()}
+              mainMentorNim={"H071191044"}
+              name={"Muh. Yusuf Syam"}
+              nim={"H071191044"}
+              proposalTitle={"CARA BERTERNAK LELE"}
+              score={89}
+              season={"2022/2023"}
+              sideMentorNim={"1341193921900182"}
+              whatSeason={"Akhir"}
+            />
+            :
+            <Text className="text-secondary-text-500 text-lg -mt-2">
+              Surat keterangan nilai ujian skripsi hanya digenerate untuk jenis seminar ujian skripsi
+            </Text>
+          }
+          </Stack>
+        </Stack>
+      </FEPDFModal>
 
       <LFPHeaderComponent title={seminarData.seminarType} />
       <Stack className="border rounded-xl border-secondary-500 pb-6 pt-8">

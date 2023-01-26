@@ -1,4 +1,4 @@
-import { Stack, Text, useMantineTheme } from "@mantine/core";
+import { useMantineTheme } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FETableComponent, {
@@ -6,12 +6,7 @@ import FETableComponent, {
   IFETableHeadingProps,
   IFETableRowColumnProps
 } from "src/components/fe-components/fe-table/FETable";
-import { IFEBreadCrumbsItem } from "src/components/fe-components/FEBreadCrumbs";
-import LFPHeaderComponent from "src/components/fe-components/LFPHeader.component";
 import useArray from "src/hooks/fe-hooks/useArray";
-import FEMainlayout from "src/layouts/final-exam/FEMainLayout";
-import { FEROUTES } from "src/routes/final-exam.route";
-import { getFEDate } from "src/utils/functions/date.function";
 import { getFERubric } from "src/utils/functions/scoring.function";
 
 export interface IFESeminarCoordinatorSeminarEvaluationHistory {}

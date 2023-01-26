@@ -32,8 +32,6 @@ import { cookieGetLoggedInUserNim } from "src/utils/functions/cookies.function";
 
 interface IFELabFreeProps {}
 
-const lastApplicationDone = 3;
-
 const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
   const { data, isLoading: isFetchingData } = useLaboratoryData();
   const { mutate, isLoading: isPostingLab } = useMutation(
@@ -87,7 +85,6 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isDataExist, setIsDataExist] = useState(true);
-  const [applicationDone, setapplicationDone] = useState(lastApplicationDone);
   const { array: possibleLabValue } = useArray(data?.data || []); // <-- Wrong way?
 
   function handleAddApplicationClick() {
@@ -147,9 +144,6 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
   });
 
   function handleSubmit(values: IFELabFreeFormValues) {
-    setapplicationDone(() => {
-      return applicationDone + 1;
-    });
     const postBody: IQFPostStudentReqLabs = {
       labID: values.laboratory,
       studentNIM: cookieGetLoggedInUserNim(),
@@ -207,7 +201,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
   return (
     <FEMainlayout>
       {/* Input modal */}
-      <FEInputModal
+      {/* <FEInputModal
         opened={isOpen}
         title="Pilih Laboratorium"
         setOpened={setIsOpen}
@@ -219,7 +213,7 @@ const FELabFree: React.FC<IFELabFreeProps> = ({}) => {
             data={possibleLabValue}
           />
         }
-      />
+      /> */}
 
       <Stack spacing={"xl"}>
         {/* Bebas lab, tugas akhir Header */}

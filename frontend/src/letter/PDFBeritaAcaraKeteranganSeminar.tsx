@@ -6,13 +6,13 @@ import {
   Document,
   StyleSheet,
   PDFViewer,
-  Image
+  Image,
 } from "@react-pdf/renderer";
 import KopSurat from "./KopSurat";
 import {
   dateToRange,
   extractDate,
-  extractDay
+  extractDay,
 } from "../utils/functions/date.function";
 import { getFERubric } from "../utils/functions/scoring.function";
 
@@ -41,6 +41,7 @@ export interface IPDFBeritaAcaraKeteranganSeminar {
   thirdExaminerScore: number;
   fourthxaminerScore: number;
   isPassed: boolean;
+  seminarType: string;
 }
 const PDFBeritaAcaraKeteranganSeminar: React.FC<
   IPDFBeritaAcaraKeteranganSeminar
@@ -65,7 +66,8 @@ const PDFBeritaAcaraKeteranganSeminar: React.FC<
   fourthxaminerScore,
   thirdExaminer,
   thirdExaminerScore,
-  isPassed
+  isPassed,
+  seminarType,
 }) => (
   <PDFViewer style={styles.viewer}>
     <Document title="PDF Sifa">
@@ -75,7 +77,10 @@ const PDFBeritaAcaraKeteranganSeminar: React.FC<
         <View style={styles.content}>
           <View style={styles.contentTitle}>
             <Text style={styles.contentTitleText}>
-              BERITA ACARA SEMINAR PROPOSAL
+              BERITA ACARA{" "}
+              {seminarType.trim().toUpperCase() === "UJIAN SKRIPSI"
+                ? "SEMINAR UJIAN SKRIPSI"
+                : seminarType.toUpperCase()}
             </Text>
           </View>
 
@@ -244,36 +249,36 @@ const PDFBeritaAcaraKeteranganSeminar: React.FC<
 
 const styles = StyleSheet.create({
   viewer: {
-    width: "100vw",
-    height: "100vh"
+    width: "100%",
+    height: "100vh",
   },
   page: {
     paddingHorizontal: 52,
-    paddingVertical: 30
+    paddingVertical: 30,
   },
 
   section: {
     margin: 10,
     padding: 10,
-    flexGrow: 1
+    flexGrow: 1,
   },
   kopSurat: {
     display: "flex",
     flexDirection: "row",
-    marginBottom: 10
+    marginBottom: 10,
   },
   images: {
     width: 55,
-    height: 65
+    height: 65,
   },
   location: {
     fontSize: 10,
     position: "absolute",
     top: 0,
-    right: 0
+    right: 0,
   },
   textBold: {
-    fontFamily: "Helvetica-Bold"
+    fontFamily: "Helvetica-Bold",
   },
   header: {
     display: "flex",
@@ -282,65 +287,65 @@ const styles = StyleSheet.create({
     fontFamily: "Times-Roman",
     fontSize: 13.5,
     width: "100%",
-    paddingLeft: 16
+    paddingLeft: 16,
   },
   name: {
-    marginBottom: 3
+    marginBottom: 3,
   },
   faculty: {
     textTransform: "uppercase",
     marginBottom: 3,
-    fontFamily: "Helvetica-Bold"
+    fontFamily: "Helvetica-Bold",
   },
   stack: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   university: {
     textTransform: "uppercase",
     fontWeight: "bold",
     marginBottom: 3,
-    fontFamily: "Helvetica-Bold"
+    fontFamily: "Helvetica-Bold",
   },
   line: {
     width: "100%",
     height: "3px",
-    backgroundColor: "black"
+    backgroundColor: "black",
   },
   footerBottomText: {
     fontSize: 11,
-    fontFamily: "Helvetica"
+    fontFamily: "Helvetica",
   },
   contentTitle: {
     textAlign: "center",
     fontSize: 10,
     marginBottom: 20,
-    fontFamily: "Helvetica-Bold"
+    fontFamily: "Helvetica-Bold",
   },
   contentTitleText: {
-    fontSize: 12
+    fontSize: 12,
   },
   data: {
     fontSize: 11,
     fontWeight: "bold",
     paddingLeft: 12,
-    marginBottom: 4
+    marginBottom: 4,
   },
   data2: {
     fontSize: 11,
     fontWeight: "bold",
     paddingLeft: 1,
-    marginBottom: 4
+    marginBottom: 4,
   },
   headerTextContent: {
     fontSize: 11,
     textAlign: "justify",
-    marginBottom: 10
+    marginBottom: 10,
   },
   headerTextContent2: {
     fontSize: 11,
     textAlign: "justify",
-    marginBottom: 8
+    marginBottom: 8,
   },
   footerTextContent: {
     fontSize: 11,
@@ -348,101 +353,101 @@ const styles = StyleSheet.create({
     marginTop: 0,
     lineHeight: "1.75px",
     letterSpacing: "0.5px",
-    fontFamily: "Helvetica"
+    fontFamily: "Helvetica",
   },
   address: {
     fontSize: 11,
-    fontFamily: "Helvetica-Bold"
+    fontFamily: "Helvetica-Bold",
   },
   content: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   students: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   biodata: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   dataMT: {
     fontSize: 11,
     fontWeight: "bold",
     paddingLeft: 12,
-    marginTop: 1
+    marginTop: 1,
   },
   dataMB: {
     fontSize: 11,
     fontWeight: "bold",
     paddingLeft: 12,
-    marginBottom: 19
+    marginBottom: 19,
   },
   studentData: {
     width: "30%",
-    fontFamily: "Helvetica"
+    fontFamily: "Helvetica",
   },
   studentDataValue: {
-    width: "70%"
+    width: "70%",
   },
 
   footer: {
     display: "flex",
     flexDirection: "row",
     marginTop: 50,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   footer1: {
     display: "flex",
     flexDirection: "row",
     marginTop: 30,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
 
   barcodeImage: {
     width: 90,
-    height: 90
+    height: 90,
   },
   ttdImage: {
     width: 45,
-    height: 45
+    height: 45,
   },
 
   table: {
-    borderWidth: 1
+    borderWidth: 1,
   },
   tableHead: {
     flexDirection: "row",
     fontFamily: "Helvetica-Bold",
-    fontSize: 12
+    fontSize: 12,
   },
   tableRow: {
     flexDirection: "row",
     fontFamily: "Helvetica",
     fontSize: 11,
-    borderTop: 1
+    borderTop: 1,
   },
   row1: {
     width: "6%",
     paddingHorizontal: 5,
     paddingVertical: 5,
-    borderRight: 1
+    borderRight: 1,
   },
   row2: {
     width: "35%",
     paddingHorizontal: 7,
     paddingVertical: 5,
-    borderRight: 1
+    borderRight: 1,
   },
 
   rowFooter: {
     paddingHorizontal: 4,
     paddingVertical: 4,
-    fontSize: 11
+    fontSize: 11,
   },
   rowFooterContainer: {
     width: "100%",
     // borderRight: 1,
-    borderTop: 1
+    borderTop: 1,
     // borderLeft: 1,
     // borderBottom: 1
   },
@@ -450,19 +455,19 @@ const styles = StyleSheet.create({
     width: "10%",
     paddingHorizontal: 7,
     paddingVertical: 5,
-    borderRight: 1
+    borderRight: 1,
   },
   row3: {
     width: "27%",
     paddingHorizontal: 7,
     paddingVertical: 5,
-    borderRight: 1
+    borderRight: 1,
   },
   row4: {
     width: "22%",
     paddingHorizontal: 7,
-    paddingVertical: 5
-  }
+    paddingVertical: 5,
+  },
 });
 
 export default PDFBeritaAcaraKeteranganSeminar;
