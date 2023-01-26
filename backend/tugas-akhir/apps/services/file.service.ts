@@ -23,7 +23,7 @@ export class FileService {
 
   static async uploadFileSeminarDoc(doc: any, username: any) {
     const docBuffer = decodeBase64(doc);
-    const title = `${uuidv4()}_${username}`;
+    const title = `${uuidv4()}_${username}.pdf`;
     const path = `${constants.SEMINAR_FILE_PATH}`;
 
     return writeToFile(path, title, docBuffer);
