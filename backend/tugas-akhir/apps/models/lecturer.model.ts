@@ -5,6 +5,14 @@ import { InternalServerError } from "../utils/error/internalError";
 import { ILecturer } from "../utils/interfaces/lecturer.interface";
 
 export class Lecturer {
+  static async deleteLecturerByNIP(nip: string) {
+    return await prismaDB.dosen.delete({
+      where: {
+        dsnNip: nip,
+      },
+    });
+  }
+
   static async getAllLecturers(departmentID: number) {
     let lecturers = [];
 

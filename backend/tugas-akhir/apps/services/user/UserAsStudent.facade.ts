@@ -1,3 +1,5 @@
+import { Lecturer } from "../../models/lecturer.model";
+import { User } from "../../models/user.model";
 import { IStudent } from "../../utils/interfaces/student.interface";
 import { IUser } from "../../utils/interfaces/user.interface";
 import { constants } from "../../utils/utils";
@@ -12,10 +14,13 @@ export class UserAsStudent {
       user = await UserService.insertNewUserBySuperUser(userData);
     }
 
-    const student = await StudentService.insertUserIntoStudent({
-      name: userData.name || "",
-      nim: userData.username,
-    });
+    const student = await StudentService.getStudentByNIM(userData.username);
+    if (student === null) {
+      await StudentService.insertUserIntoStudent({
+        name: userData.name || "",
+        nim: userData.username,
+      });
+    }
 
     return user;
   }
@@ -37,5 +42,10 @@ export class UserAsStudent {
     const student = await StudentService.insertUserIntoStudent(studentData);
 
     return student;
+  }
+
+  static async deleteUserLecturer(nip: string) {
+    await Lecturer.deleteLecturerByNIP(nip);
+    await User.deleteUserByUsername(nip);
   }
 }
