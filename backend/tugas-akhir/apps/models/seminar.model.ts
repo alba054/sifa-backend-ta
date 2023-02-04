@@ -70,6 +70,7 @@ export class Seminar {
         data: {
           smrFileBeritaAcara: eventLetterPath,
           smrFileKeteranganNilai: scoringLetterPath,
+          smrTglBeritaAcara: new Date(),
         },
       });
     } catch (error) {
@@ -196,6 +197,7 @@ export class Seminar {
         data: {
           smrFileUndangan: invitationPath,
           smrFileKesediaan: approvalPath,
+          smrTglUndangan: new Date(),
         },
       });
     } catch (error) {

@@ -16,6 +16,36 @@ interface IBody {
 }
 
 export class Thesis {
+  static async confirmProposedThesisByLecturer(
+    nim: string,
+    thesisID: number,
+    isAccepted: boolean
+  ) {
+    return await prismaDB.pengusul.updateMany({
+      where: {
+        dosen: { dsnNip: nim },
+        tugas_akhirTaId: thesisID,
+      },
+      data: {
+        statusPermohonan: isAccepted ? "Diterima" : "Ditolak",
+      },
+    });
+  }
+
+  static async getThesisByLecturerProposer(nim: string) {
+    return await prismaDB.tugas_akhir.findMany({
+      where: {
+        pengusul: { some: { dosen: { dsnNip: nim } } },
+      },
+      include: {
+        pengusul: { include: { dosen: true } },
+        mahasiswa: true,
+        ref_laboratorium: true,
+        ref_laboratorium2: true,
+      },
+    });
+  }
+
   static async getThesisWithExaminerStatus(
     status: "Belum_Diproses" | "Diterima" | "Ditolak" | undefined
   ) {
@@ -27,7 +57,7 @@ export class Thesis {
       include: {
         penguji: { include: { dosen: true } },
         mahasiswa: true,
-        pengusul: true,
+        pengusul: { include: { dosen: true } },
         pembimbing: { include: { dosen: true } },
         ref_laboratorium: true,
         ref_laboratorium2: true,
@@ -77,7 +107,7 @@ export class Thesis {
         mahasiswa: true,
         penguji: { include: { dosen: true } },
         pembimbing: { include: { dosen: true } },
-        pengusul: true,
+        pengusul: { include: { dosen: true } },
         ref_laboratorium: true,
         ref_laboratorium2: true,
         sk_pembimbing: true,
@@ -139,7 +169,7 @@ export class Thesis {
         mahasiswa: true,
         penguji: { include: { dosen: true } },
         pembimbing: { include: { dosen: true } },
-        pengusul: true,
+        pengusul: { include: { dosen: true } },
         ref_laboratorium: true,
         ref_laboratorium2: true,
         sk_pembimbing: true,
@@ -153,11 +183,11 @@ export class Thesis {
   ) {
     if (typeof status === "undefined") {
       return await prismaDB.tugas_akhir.findMany({
-        where: {},
+        where: { pengusul: { every: { statusPermohonan: "Diterima" } } },
         include: {
           penguji: { include: { dosen: true } },
           pembimbing: { include: { dosen: true } },
-          pengusul: true,
+          pengusul: { include: { dosen: true } },
           ref_laboratorium: true,
           ref_laboratorium2: true,
           mahasiswa: true,
@@ -168,11 +198,16 @@ export class Thesis {
     }
 
     return await prismaDB.tugas_akhir.findMany({
-      where: { statusPermohonan: status },
+      where: {
+        AND: [
+          { statusPermohonan: status },
+          { pengusul: { every: { statusPermohonan: "Diterima" } } },
+        ],
+      },
       include: {
         penguji: { include: { dosen: true } },
         pembimbing: { include: { dosen: true } },
-        pengusul: true,
+        pengusul: { include: { dosen: true } },
         ref_laboratorium: true,
         ref_laboratorium2: true,
         mahasiswa: true,
@@ -189,7 +224,7 @@ export class Thesis {
         mahasiswa: true,
         penguji: { include: { dosen: true } },
         pembimbing: { include: { dosen: true } },
-        pengusul: true,
+        pengusul: { include: { dosen: true } },
         ref_laboratorium: true,
         ref_laboratorium2: true,
         sk_pembimbing: true,
@@ -211,7 +246,7 @@ export class Thesis {
         mahasiswa: true,
         penguji: { include: { dosen: true } },
         pembimbing: { include: { dosen: true } },
-        pengusul: true,
+        pengusul: { include: { dosen: true } },
         ref_laboratorium: true,
         ref_laboratorium2: true,
         sk_pembimbing: true,
@@ -228,7 +263,7 @@ export class Thesis {
         AND: [{ taId: id }, { statusPermohonan: "Diterima" }],
       },
       include: {
-        pengusul: true,
+        pengusul: { include: { dosen: true } },
         mahasiswa: true,
         ref_laboratorium: true,
         ref_laboratorium2: true,
@@ -302,6 +337,7 @@ export class Thesis {
     const approvedThesis = await prismaDB.tugas_akhir.findMany({
       where: {
         AND: [
+          { pengusul: { every: { statusPermohonan: "Diterima" } } },
           // { mahasiswa: { mhsPrdId: vocationID } },
           { statusPermohonan: "Diterima" },
         ],
@@ -310,7 +346,7 @@ export class Thesis {
         ref_laboratorium: true,
         ref_laboratorium2: true,
         mahasiswa: true,
-        pengusul: true,
+        pengusul: { include: { dosen: true } },
         disposisi_kaprodi: true,
         sk_pembimbing: true,
         sk_penguji: true,
@@ -326,11 +362,12 @@ export class Thesis {
         AND: [
           // { mahasiswa: { mhsPrdId: vocationID } },
           { statusPermohonan: "Belum_Diproses" },
+          { pengusul: { every: { statusPermohonan: "Diterima" } } },
         ],
       },
       include: {
         mahasiswa: true,
-        pengusul: true,
+        pengusul: { include: { dosen: true } },
         ref_laboratorium: true,
         ref_laboratorium2: true,
         sk_pembimbing: true,
@@ -394,7 +431,7 @@ export class Thesis {
       },
       include: {
         mahasiswa: true,
-        pengusul: true,
+        pengusul: { include: { dosen: true } },
         ref_laboratorium: true,
         sk_pembimbing: true,
         sk_penguji: true,
@@ -430,7 +467,7 @@ export class Thesis {
         mahasiswa: true,
         ref_laboratorium: true,
         // _count: true,
-        pengusul: true,
+        pengusul: { include: { dosen: true } },
         sk_pembimbing: true,
         sk_penguji: true,
       },
@@ -441,7 +478,7 @@ export class Thesis {
 
   static async insertNewThesis(thesis: IThesis) {
     try {
-      return await prismaDB.tugas_akhir.create({
+      const newThesis = await prismaDB.tugas_akhir.create({
         data: {
           taJudul: thesis.title,
           taMhsNim: thesis.studentNIM,
@@ -456,6 +493,28 @@ export class Thesis {
           proposalGroupID: thesis.proposalGroupID,
         },
       });
+
+      if (typeof thesis.lecturerPropose !== "undefined") {
+        await prismaDB.pengusul.create({
+          data: {
+            dosenDsnId: thesis.lecturerPropose,
+            tugas_akhirTaId: newThesis.taId,
+            statusPermohonan: "Belum_Diproses",
+          },
+        });
+      }
+
+      if (typeof thesis.coLecturerPropose !== "undefined") {
+        await prismaDB.pengusul.create({
+          data: {
+            dosenDsnId: thesis.coLecturerPropose,
+            tugas_akhirTaId: newThesis.taId,
+            statusPermohonan: "Belum_Diproses",
+          },
+        });
+      }
+
+      return newThesis;
       // const newThesis = await prismaDB.tugas_akhir.create({
       //   data: {
       //     taJudul: thesis.title,

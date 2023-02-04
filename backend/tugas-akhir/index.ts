@@ -6,7 +6,13 @@ import router from "./apps/routers/router";
 
 import swaggerUi from "swagger-ui-express";
 import swaggerfile from "./swagger-output.json";
-import { fetchNewUserData } from "./remoteDB";
+import {
+  fetchNewBadges,
+  fetchNewDepartment,
+  fetchNewLabs,
+  fetchNewRoles,
+  fetchNewUserData,
+} from "./remoteDB";
 
 dotenv.config();
 
@@ -30,6 +36,22 @@ app.listen(PORT, HOST, () => {
 });
 
 setInterval(() => {
+  fetchNewRoles();
+}, 5000);
+
+setInterval(() => {
+  fetchNewBadges();
+}, 5000);
+
+setInterval(() => {
+  fetchNewDepartment();
+}, 5000);
+
+setInterval(() => {
+  fetchNewLabs();
+}, 5000);
+
+setInterval(() => {
   fetchNewUserData();
   console.log("hai");
-}, 1000);
+}, 7000);

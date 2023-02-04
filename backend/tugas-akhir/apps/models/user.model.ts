@@ -51,6 +51,7 @@ export class User {
   departmentID?: number;
   vocationID?: number;
   labID?: number;
+  id?: number;
 
   constructor(username: string, password: string) {
     this.username = username;
@@ -69,6 +70,11 @@ export class User {
       status: this.status,
       username: this.username,
     } as IUser;
+  }
+
+  setID(id?: number) {
+    this.id = id;
+    return this;
   }
 
   setEmail(email: string) {
@@ -112,18 +118,25 @@ export class User {
   }
 
   static async selectByUsername(username: string) {
-    const user = await prismaDB.user.findUnique({ where: { username } });
+    const user = await prismaDB.user.findUnique({
+      where: { username },
+      include: {
+        user_badge: { include: { badge: true } },
+        adm_group_unit: true,
+      },
+    });
 
     return user;
   }
   static async resetPassword(
     username: string,
     newPassword: string,
-    role?: number,
+    role?: any,
     department?: number,
     major?: number,
     email?: string,
-    name?: string
+    name?: string,
+    lab?: number
   ) {
     try {
       const updatedUser = await prismaDB.user.update({
@@ -135,6 +148,7 @@ export class User {
           email: email,
           prodiID: major,
           name,
+          labID: lab,
         },
       });
 
@@ -160,7 +174,7 @@ export class User {
   }
   static async selectUserStudents(page: number, limit: number) {
     const user = await prismaDB.user.findMany({
-      where: { aksesgroup: constants.STUDENT_GROUP_ACCESS },
+      where: { aksesgroup: constants.STUDENT_GROUP_ACCESS as any },
       skip: page,
       take: limit,
     });
@@ -198,13 +212,14 @@ export class User {
     try {
       const user = await prismaDB.user.create({
         data: {
+          id: newUser.id,
           username: newUser.username,
           password: newUser.password,
           email: newUser.email,
           keterangan: newUser.description,
           name: newUser.name,
           status: newUser.status,
-          aksesgroup: newUser.groupAccess,
+          aksesgroup: newUser.groupAccess as any,
           labID: newUser.labID,
           prodiID: newUser.vocationID,
           departementID: newUser.departmentID,

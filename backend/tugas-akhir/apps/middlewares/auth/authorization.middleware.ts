@@ -8,7 +8,7 @@ import { constants } from "../../utils/utils";
 import { tokenGenerator } from "./tokenGenerator";
 
 export class AuthorizationMiddleware {
-  static authorize(roles: number[]) {
+  static authorize(roles: string[]) {
     return async function authorizationHandler(
       req: Request,
       res: Response,
@@ -71,7 +71,10 @@ export class AuthorizationMiddleware {
           return next(new UnathorizedError("You are not an active user"));
         }
 
-        if (!roles.includes(tokenPayload.groupAccess)) {
+        if (
+          !roles.includes(tokenPayload.groupAccess) &&
+          tokenPayload.badges.some((e) => roles.includes(e))
+        ) {
           return next(new UnathorizedError("you cannot access this resource"));
         }
 

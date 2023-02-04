@@ -20,9 +20,12 @@ export interface IThesis {
   KRSPath?: string;
   KHSPath?: string;
   lecturerPropose?: number;
+  coLecturerPropose?: number;
   note?: string;
   thesisFile?: string;
   studentNote?: string;
+  acceptanceStatusProposer1?: "Belum_Diproses" | "Diterima" | "Ditolak";
+  acceptanceStatusProposer2?: "Belum_Diproses" | "Diterima" | "Ditolak";
   // thesisStatusPMB?: "Belum_Diproses" | "Diterima" | "Ditolak";
   // thesisStatusKEP?: "Belum_Diproses" | "Diterima" | "Ditolak";
   // proposalStatus?: "Belum_Diproses" | "Diterima" | "Ditolak";
@@ -33,10 +36,12 @@ export interface IThesisPost {
   labID_1st: number;
   labID2_1st?: number;
   lecturerPropose_1st?: number;
+  coLecturerPropose_1st?: number;
   title_2nd: string;
   labID_2nd: number;
   labID2_2nd?: number;
   lecturerPropose_2nd?: number;
+  coLecturerPropose_2nd?: number;
   krs: string;
   khs: string;
 }

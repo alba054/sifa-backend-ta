@@ -3,6 +3,24 @@ import { DocumentService } from "../services/document.service";
 import { createResponse, constants } from "../utils/utils";
 
 export class DocumentHandler {
+  static async getExamProposalDocumentData(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { examID } = req.params;
+    const { nim } = req.query;
+
+    try {
+      const data = await DocumentService.getExamProposalData(
+        nim,
+        Number(examID)
+      );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getSeminarScoreLetterData(
     req: Request,
     res: Response,

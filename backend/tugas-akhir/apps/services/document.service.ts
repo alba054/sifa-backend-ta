@@ -1,4 +1,5 @@
 import { ExaminerSK } from "../models/examinerSK.model";
+import { ExamProposal } from "../models/examProposal.model";
 import { LabFree } from "../models/labFree.model";
 import { Seminar } from "../models/seminar.model";
 import { SupervisorSK } from "../models/supervisorSK.model";
@@ -6,6 +7,7 @@ import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import {
   IExaminerSKDoc,
+  IExamProposalDoc,
   IFreeLabDoc,
   ISeminarApprovalDoc,
   ISeminarInvitationDoc,
@@ -13,8 +15,119 @@ import {
   ISeminarScoreDoc,
   ISupervisorSKDoc,
 } from "../utils/interfaces/document.interface";
+import { LabFreeService } from "./labFree.service";
 
 export class DocumentService {
+  static async getExamProposalData(nim: any, examID: number) {
+    const exam = await ExamProposal.getExamProposalByID(examID);
+
+    if (exam === null) {
+      throw new NotFoundError("exam proposal's not found");
+    }
+
+    if (exam.tugas_akhir.taMhsNim !== nim) {
+      throw new BadRequestError("data's not for this student");
+    }
+
+    const krs =
+      exam.tugas_akhir.taKRS !== null &&
+      typeof exam.tugas_akhir.taKRS !== "undefined" &&
+      exam.tugas_akhir.taKRSKHSStatus === "Diterima";
+
+    const khs =
+      exam.tugas_akhir.taKHS !== null &&
+      typeof exam.tugas_akhir.taKHS !== "undefined" &&
+      exam.tugas_akhir.taKRSKHSStatus === "Diterima";
+
+    const freeLabDocs = await LabFreeService.getFreeLabRequestsByNIM(
+      exam.tugas_akhir.taMhsNim
+    );
+
+    const biofarmaka = freeLabDocs.some(
+      (d) =>
+        d.ref_laboratorium.labNama.toLowerCase() === "biofarmaka" &&
+        d.ref_permohonan === "Diterima"
+    );
+    const biofarmasi = freeLabDocs.some(
+      (d) =>
+        d.ref_laboratorium.labNama.toLowerCase() === "biofarmasi" &&
+        d.ref_permohonan === "Diterima"
+    );
+    const fitokimia = freeLabDocs.some(
+      (d) =>
+        d.ref_laboratorium.labNama.toLowerCase() === "fitokimia" &&
+        d.ref_permohonan === "Diterima"
+    );
+    const mikrobiologi = freeLabDocs.some(
+      (d) =>
+        d.ref_laboratorium.labNama.toLowerCase() === "mikrobiologi farmasi" &&
+        d.ref_permohonan === "Diterima"
+    );
+    const farmasetika = freeLabDocs.some(
+      (d) =>
+        d.ref_laboratorium.labNama.toLowerCase() === "farmasetika" &&
+        d.ref_permohonan === "Diterima"
+    );
+    const kimia = freeLabDocs.some(
+      (d) =>
+        d.ref_laboratorium.labNama.toLowerCase() === "kimia farmasi" &&
+        d.ref_permohonan === "Diterima"
+    );
+    const farmakologi = freeLabDocs.some(
+      (d) =>
+        d.ref_laboratorium.labNama.toLowerCase() === "farmakologi toksilogi" &&
+        d.ref_permohonan === "Diterima"
+    );
+    const farmakognosi = freeLabDocs.some(
+      (d) =>
+        d.ref_laboratorium.labNama.toLowerCase() === "farmakognosi" &&
+        d.ref_permohonan === "Diterima"
+    );
+    const farmasi = freeLabDocs.some(
+      (d) =>
+        d.ref_laboratorium.labNama.toLowerCase() === "farmasi klinik" &&
+        d.ref_permohonan === "Diterima"
+    );
+
+    const examinerSK = exam.tugas_akhir.sk_pembimbing.some(
+      (sk) => sk.skbStatus === 1 && sk.statusPermohonan === "Diterima"
+    );
+    const supervisoerSK = exam.tugas_akhir.sk_penguji.some(
+      (sk) => sk.skpStatus === 1 && sk.statusPermohonan === "Diterima"
+    );
+    const sk = examinerSK && supervisoerSK;
+
+    return {
+      name: exam.tugas_akhir.mahasiswa.mhsNama,
+      nim: exam.tugas_akhir.taMhsNim,
+      department: "Farmasi",
+      faculty: "Farmasi",
+      firstViceDean: "",
+      firstViceDeanNIP: "",
+      checkList: [
+        krs,
+        true,
+        true,
+        true,
+        true,
+        biofarmaka,
+        biofarmasi,
+        fitokimia,
+        mikrobiologi,
+        farmasetika,
+        kimia,
+        farmakologi,
+        farmakognosi,
+        farmasi,
+        khs,
+        true,
+        true,
+        sk,
+      ],
+      letterDate: exam.tanggalSK,
+    } as IExamProposalDoc;
+  }
+
   static async getSeminarScoreData(nim: any, seminarID: number) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 
@@ -74,7 +187,7 @@ export class DocumentService {
       secondExaminerNIP: secondExaminer?.dsnNip,
       seminarCoordinatorName: "",
       seminarCoordinatorNIP: "",
-      letterDate: "",
+      letterDate: seminar.smrTglUndangan || "",
       mainMentor: mainMentor?.dsnNama,
       sideMentor: sideMentor?.dsnNama,
       major: seminar.tugas_akhir.mahasiswa.ref_prodi?.prdNama,
@@ -171,7 +284,7 @@ export class DocumentService {
         ?.dosen.dsnNama,
       forthExaminer: seminar.tugas_akhir.penguji.find((s) => s.ujiUrutan === 2)
         ?.dosen.dsnNama,
-      letterDate: "",
+      letterDate: seminar.smrTglUndangan || "",
       proposalTitle: seminar.tugas_akhir.taJudul,
       seminarDate: seminar.smrTglSeminar ?? "",
       seminarEndTime: seminar.smrJamSelesai,
@@ -185,7 +298,11 @@ export class DocumentService {
   static async getExaminerSKData(nim: any, SKID: number) {
     const sk = await ExaminerSK.getSKByID(SKID);
 
-    if (sk === null || sk.statusPermohonan !== "Diterima" || sk.skpId !== 1) {
+    if (
+      sk === null ||
+      sk.statusPermohonan !== "Diterima" ||
+      sk.skpStatus !== 1
+    ) {
       throw new NotFoundError("sk hasn't been provided");
     }
 
@@ -197,9 +314,7 @@ export class DocumentService {
       deanName: "",
       deanNIP: "",
       department: "Farmasi",
-      letterDate: `${sk.skpTglSurat.getDate()}-${
-        sk.skpTglSurat.getMonth() + 1
-      }-${sk.skpTglSurat.getFullYear()}`,
+      letterDate: sk.skpTglSurat,
       letterNumber: sk.skpNomor,
       chaiman: sk.tugas_akhir.pembimbing.find(
         (s) => s.ref_posisipmb === "Utama"
@@ -233,9 +348,7 @@ export class DocumentService {
       deanName: "",
       deanNIP: "",
       department: "Farmasi",
-      letterDate: `${sk.skbTglSurat.getDate()}-${
-        sk.skbTglSurat.getMonth() + 1
-      }-${sk.skbTglSurat.getFullYear()}`,
+      letterDate: sk.skbTglSurat,
       letterNumber: sk.skbNomor,
       mainMentor: sk.tugas_akhir.pembimbing.find(
         (s) => s.ref_posisipmb === "Utama"

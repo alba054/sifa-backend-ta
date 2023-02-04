@@ -20,6 +20,7 @@ import seminarCoordinatorRouter from "./seminarCoordinator.route";
 import viceDeanRouter from "./viceDean.route";
 import docRouter from "./doc.route";
 import notifRouter from "./notification.route";
+import userIntegrationRouter from "./userIntegration.route";
 
 const router = express.Router();
 
@@ -45,5 +46,6 @@ router.use("/chat", chatRouter);
 router.use("/files", fileRouter);
 router.use("/docs", docRouter);
 router.use("/notifications", notifRouter);
+router.use("/user-integration", userIntegrationRouter);
 
 export default router;

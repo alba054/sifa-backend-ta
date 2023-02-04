@@ -73,8 +73,8 @@ export class SeminarCoordinatorService {
     }
 
     if (seminar.ref_jenisujian === "Ujian_Skripsi") {
-      if (typeof eventLetterPath === "undefined") {
-        throw new BadRequestError("provide eventLetterPath");
+      if (typeof scoringLetterPath === "undefined") {
+        throw new BadRequestError("provide scoringLetterPath");
       }
     }
 

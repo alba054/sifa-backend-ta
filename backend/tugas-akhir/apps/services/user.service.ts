@@ -65,11 +65,12 @@ export class UserService {
       hashedPassword = await bcryptjs.hash(newUser.username, 10);
     }
     const user = UserBuilder.build(newUser.username, hashedPassword)
+      .setID(newUser.id)
       .setName(newUser.name || "")
       .setStatus(constants.USER_ACTIVE_STATUS)
       .setEmail(newUser.email || "")
       .setDescription(newUser.description || "")
-      .setGroupAccess(Number(newUser.groupAccess))
+      .setGroupAccess(newUser.groupAccess)
       .setDepartmentID(newUser.departmentID)
       .setLabID(newUser.labID)
       .setVocationID(newUser.vocationID);

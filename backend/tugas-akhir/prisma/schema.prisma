@@ -83,8 +83,8 @@ model dosen {
   seminar_persetujuan                                      seminar_persetujuan[]
   // @@index([dsnStatusKepegawaian], map: "dsnStatusKepegawaian")
   // @@index([dsnJenisKelamin], map: "dsnJenisKelamin")
-  tugas_akhir                                              tugas_akhir[]
   koordinator_seminar                                      koordinator_seminar[]
+  pengusul                                                 pengusul[]
 
   @@index([dsnBidangKeahlian], map: "dsnBidangKeahlian")
   @@index([dsnDprtId], map: "dsnDprtId")
@@ -304,8 +304,8 @@ model ref_konversi_nilai {
 model ref_laboratorium {
   labId            Int                @id @default(autoincrement())
   labNama          String             @db.VarChar(40)
-  labKepalaNip     String             @default("") @db.VarChar(25)
-  labKepalaNama    String             @default("") @db.VarChar(60)
+  labKepalaNip     String?            @db.VarChar(25)
+  labKepalaNama    String?            @db.VarChar(60)
   labPrdId         Int?
   labTTd           String?            @db.VarChar(100)
   labKodeNomor     String?            @db.VarChar(50)
@@ -345,10 +345,10 @@ model ref_peminjaman {
 
 model ref_prodi {
   prdId                  Int                      @id @default(autoincrement())
-  prdKode                String                   @db.VarChar(5)
+  prdKode                String                   @unique @db.VarChar(255)
   prdNama                String                   @db.VarChar(50)
-  prdKepalaNip           String                   @db.VarChar(25)
-  prdKepalaNama          String                   @db.VarChar(60)
+  prdKepalaNip           String?                  @db.VarChar(25)
+  prdKepalaNama          String?                  @db.VarChar(60)
   prdDprtId              Int?
   prdJenjang             String?                  @db.VarChar(3)
   jenjang                Jenjang?
@@ -491,6 +491,7 @@ model seminar {
   smrFileKesediaan          String?                     @db.VarChar(200)
   smrFileBeritaAcara        String?
   smrFileKeteranganNilai    String?
+  smrTglBeritaAcara         DateTime?                   @db.Date
   smrTglUndangan            DateTime?                   @db.Date
   smrNilaiAngka             Float?                      @db.Float
   smrNilaiHuruf             String?                     @db.VarChar(2)
@@ -783,6 +784,15 @@ model sk_penguji_fakultas {
   @@index([skTtdId], map: "skTtdId")
 }
 
+model pengusul {
+  id               Int              @id @default(autoincrement())
+  statusPermohonan StatusPermohonan @default(Belum_Diproses)
+  dosen            dosen?           @relation(fields: [dosenDsnId], references: [dsnId], onDelete: Cascade, onUpdate: Cascade)
+  tugas_akhir      tugas_akhir      @relation(fields: [tugas_akhirTaId], references: [taId], onDelete: Cascade, onUpdate: Cascade)
+  dosenDsnId       Int?
+  tugas_akhirTaId  Int
+}
+
 model tugas_akhir {
   taId                                                   Int                       @id @default(autoincrement())
   taMhsNim                                               String                    @db.Char(12)
@@ -811,7 +821,6 @@ model tugas_akhir {
   ref_laboratorium                                       ref_laboratorium?         @relation("primary", fields: [taLabId], references: [labId], onDelete: Cascade, onUpdate: Restrict, map: "tugas_akhir_ibfk_3")
   ref_laboratorium2                                      ref_laboratorium?         @relation("secondary", fields: [taLabId2], references: [labId], onDelete: Cascade, onUpdate: Restrict, map: "tugas_akhir_lab2")
   mahasiswa                                              mahasiswa                 @relation(fields: [taMhsNim], references: [mhsNim], onDelete: Cascade, map: "tugas_akhir_ibfk_4")
-  pengusul                                               dosen?                    @relation(fields: [taDosenPengusul], references: [dsnId], onDelete: Cascade)
   pembimbing                                             pembimbing[]
   pembimbingan                                           pembimbingan[]
   penguji                                                penguji[]
@@ -826,6 +835,7 @@ model tugas_akhir {
   // @@index([taStatusKep], map: "taStatusKep")
   disposisi_kaprodi                                      disposisi_kaprodi[]
   permohonan_ujian_sidang                                permohonan_ujian_sidang[]
+  pengusul                                               pengusul[]
 
   @@index([taLabId], map: "taLabId")
   @@index([taMhsNim], map: "taMhsNim")
@@ -841,7 +851,7 @@ model permohonan_ujian_sidang {
   catatanAdminFakultas   String?
   catatanKTU             String?
   statusTTD              Boolean                           @default(false)
-  tanggalSK              DateTime?
+  tanggalSK              DateTime?                         @db.Date
   dokumen_ujian_sidang   dokumen_permohonan_ujian_sidang[]
   tugas_akhir            tugas_akhir                       @relation(fields: [tugas_akhirTaId], references: [taId])
 }
@@ -869,26 +879,45 @@ model disposisi_kaprodi {
   tugas_akhir     tugas_akhir @relation(fields: [tugas_akhirTaId], references: [taId], onDelete: Cascade)
 }
 
+model badge {
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
+  user       user[]
+  user_badge user_badge[]
+}
+
 model user {
-  id                   Int                    @id @default(autoincrement())
-  username             String?                @unique(map: "username") @db.VarChar(30)
-  password             String?                @db.VarChar(100)
-  email                String?                @db.VarChar(100)
-  name                 String?                @db.VarChar(100)
-  status               Int?
-  aksesgroup           Int?
-  prodiID              Int?
-  departementID        Int?
-  keterangan           String?                @db.VarChar(100)
-  labID                Int?
-  notificationID       String?
-  adm_group_unit       adm_group_unit?        @relation(fields: [aksesgroup], references: [aksesId], onDelete: Restrict, map: "user_ibfk_1")
+  id             Int     @id @default(autoincrement())
+  username       String? @unique(map: "username") @db.VarChar(30)
+  password       String? @db.VarChar(100)
+  email          String? @db.VarChar(100)
+  name           String? @db.VarChar(100)
+  status         Int?
+  badges         badge[]
+  prodiID        Int?
+  departementID  Int?
+  keterangan     String? @db.VarChar(100)
+  labID          Int?
+  notificationID String?
+
   ref_prodi            ref_prodi?             @relation(fields: [prodiID], references: [prdId], onDelete: Restrict, map: "user_ibfk_2")
   ref_departemen       ref_departemen?        @relation(fields: [departementID], references: [dprtId])
   ref_laboratorium     ref_laboratorium?      @relation(fields: [labID], references: [labId])
   password_reset_token password_reset_token[]
+  adm_group_unit       adm_group_unit?        @relation(fields: [aksesgroup], references: [aksesId])
+  aksesgroup           Int?
+  user_badge           user_badge[]
 
   @@index([aksesgroup], map: "group")
+}
+
+model user_badge {
+  user    user  @relation(fields: [userId], references: [id])
+  userId  Int
+  badge   badge @relation(fields: [badgeId], references: [id])
+  badgeId Int
+
+  @@id([userId, badgeId])
 }
 
 model koordinator_seminar {
@@ -958,4 +987,12 @@ enum Jenjang {
 enum Valid {
   Valid
   Invalid
+}
+
+enum Role {
+  SUPERUSER
+  MAHASISWA
+  DOSEN
+  ADMIN_PRODI
+  ADMIN_FAKULTAS
 }

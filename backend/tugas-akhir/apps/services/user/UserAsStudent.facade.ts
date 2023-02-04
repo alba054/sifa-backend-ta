@@ -8,7 +8,7 @@ import { UserService } from "../user.service";
 
 export class UserAsStudent {
   static async insertUserAsStudent(userData: IUser) {
-    let user = await UserService.getUserByUsername(userData.username);
+    let user = (await UserService.getUserByUsername(userData.username)) as any;
 
     if (user === null) {
       user = await UserService.insertNewUserBySuperUser(userData);
@@ -26,26 +26,27 @@ export class UserAsStudent {
   }
 
   // * this will register lecturer to user
-  static async insertLecturertoUser(studentData: IStudent) {
-    const registeredUserStudent = await UserService.getUserByUsername(
-      studentData.nim
-    );
+  // !deprecated
+  // static async insertLecturertoUser(studentData: IStudent) {
+  //   const registeredUserStudent = await UserService.getUserByUsername(
+  //     studentData.nim
+  //   );
 
-    if (registeredUserStudent === null) {
-      const userStudent = await UserService.insertNewUserBySuperUser({
-        name: studentData.name,
-        groupAccess: constants.STUDENT_GROUP_ACCESS,
-        username: studentData.nim,
-      });
-    }
+  //   if (registeredUserStudent === null) {
+  //     const userStudent = await UserService.insertNewUserBySuperUser({
+  //       name: studentData.name,
+  //       groupAccess: constants.STUDENT_GROUP_ACCESS,
+  //       username: studentData.nim,
+  //     });
+  //   }
 
-    const student = await StudentService.insertUserIntoStudent(studentData);
+  //   const student = await StudentService.insertUserIntoStudent(studentData);
 
-    return student;
-  }
+  //   return student;
+  // }
 
-  static async deleteUserLecturer(nip: string) {
-    await Lecturer.deleteLecturerByNIP(nip);
-    await User.deleteUserByUsername(nip);
-  }
+  // static async deleteUserLecturer(nip: string) {
+  //   await Lecturer.deleteLecturerByNIP(nip);
+  //   await User.deleteUserByUsername(nip);
+  // }
 }

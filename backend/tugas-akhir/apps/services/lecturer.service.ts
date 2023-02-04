@@ -4,6 +4,7 @@ import { Seminar } from "../models/seminar.model";
 import { SeminarNote } from "../models/seminarNote.model";
 import { SeminarScore } from "../models/seminarScore.model";
 import { Supervisor } from "../models/supervisor.model";
+import { Thesis } from "../models/thesis.model";
 import { User } from "../models/user.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
@@ -11,6 +12,49 @@ import { ILecturer } from "../utils/interfaces/lecturer.interface";
 import { notifService } from "../utils/notification";
 
 export class LecturerService {
+  static async confirmProposedThesis(
+    nim: string,
+    thesisID: number,
+    isAccepted: boolean
+  ) {
+    const thesis = await Thesis.getThesisByID(thesisID);
+
+    if (
+      thesis === null ||
+      thesis.pengusul.every((p) => p.dosen?.dsnNip !== nim)
+    ) {
+      throw new NotFoundError("thesis's not found");
+    }
+
+    return await Thesis.confirmProposedThesisByLecturer(
+      nim,
+      thesisID,
+      isAccepted
+    );
+  }
+
+  static async getUncorfimedProposedThesisDetail(
+    nim: string,
+    thesisID: number
+  ) {
+    const thesis = await Thesis.getThesisByID(thesisID);
+
+    if (
+      thesis === null ||
+      thesis.pengusul.every((p) => p.dosen?.dsnNip !== nim)
+    ) {
+      throw new NotFoundError("thesis's not found");
+    }
+
+    return thesis;
+  }
+
+  static async getUncorfimedProposedThesis(nim: string) {
+    const thesis = await Thesis.getThesisByLecturerProposer(nim);
+
+    return thesis;
+  }
+
   static async getSeminarOfThesis(nim: string, thesisID: number) {
     return await Seminar.getSeminarOfThesisByLecturer(nim, thesisID);
   }

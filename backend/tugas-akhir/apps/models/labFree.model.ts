@@ -18,7 +18,7 @@ export class LabFree {
         where: { blId: reqLabID },
         data: {
           ref_permohonan: isAccepted ? "Diterima" : "Ditolak",
-          blTglSurat: resolveDate,
+          blTglSurat: new Date(),
         },
       });
     } catch (error) {

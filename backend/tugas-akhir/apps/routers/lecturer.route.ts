@@ -7,11 +7,12 @@ import { constants } from "../utils/utils";
 const lecturerRouter = express.Router();
 
 // * post new lecturer
-lecturerRouter.post(
-  "/",
-  AuthorizationMiddleware.authorize([constants.SUPERUSER_GROUP_ACCESS]),
-  LecturerHandler.insertNewLecturer
-);
+// !deprecated
+// lecturerRouter.post(
+//   "/",
+//   AuthorizationMiddleware.authorize([constants.SUPERUSER_GROUP_ACCESS]),
+//   LecturerHandler.insertNewLecturer
+// );
 
 // * use {departmentID} as query param to get spesific lecturer based on departmentID
 lecturerRouter.get(
@@ -30,6 +31,24 @@ lecturerRouter.get(
   ]),
   LecturerHandler.getLecturersProfile
 );
+
+lecturerRouter
+  .route("/:nim/thesis")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getUnconfirmedProposedThesis
+  );
+
+lecturerRouter
+  .route("/:nim/thesis/:thesisID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getUnconfirmedProposedThesisDetail
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.confirmProposedThesis
+  );
 
 // * view all offer becoming supervisor/co-supervisor
 lecturerRouter

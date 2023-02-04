@@ -227,6 +227,8 @@ export class ExamProposal {
             penguji: { include: { dosen: true } },
             ref_laboratorium: true,
             ref_laboratorium2: true,
+            sk_pembimbing: true,
+            sk_penguji: true,
           },
         },
         dokumen_ujian_sidang: true,

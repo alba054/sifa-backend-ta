@@ -436,6 +436,11 @@ export class StudentHandler {
         );
       }
 
+      body.lecturerPropose_1st = Number(body.lecturerPropose_1st);
+      body.coLecturerPropose_1st = Number(body.coLecturerPropose_1st);
+      body.lecturerPropose_2nd = Number(body.lecturerPropose_2nd);
+      body.coLecturerPropose_2nd = Number(body.coLecturerPropose_2nd);
+
       const proposalGroupID = uuidv4();
       const path = `${constants.KRS_AND_KHS_PATH}/${nim}`; // * path to save krs and khs
 
@@ -465,6 +470,7 @@ export class StudentHandler {
           labID: body.labID_1st,
           labID2: body.labID2_1st,
           lecturerPropose: body.lecturerPropose_1st,
+          coLecturerPropose: body.coLecturerPropose_1st,
           proposalGroupID,
         } as IThesis,
         {
@@ -475,6 +481,7 @@ export class StudentHandler {
           labID: body.labID_2nd,
           labID2: body.labID2_2nd,
           lecturerPropose: body.lecturerPropose_2nd,
+          coLecturerPropose: body.coLecturerPropose_2nd,
           proposalGroupID,
         } as IThesis,
       ];

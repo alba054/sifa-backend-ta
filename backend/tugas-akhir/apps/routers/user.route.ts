@@ -7,11 +7,12 @@ import { constants } from "../utils/utils";
 const userRouter = express.Router();
 
 // * superuser create a new user
-userRouter.post(
-  "/",
-  AuthorizationMiddleware.authorize([constants.SUPERUSER_GROUP_ACCESS]),
-  UserHandler.addNewUserHandler
-);
+// !deprecated
+// userRouter.post(
+//   "/",
+//   AuthorizationMiddleware.authorize([constants.SUPERUSER_GROUP_ACCESS]),
+//   UserHandler.addNewUserHandler
+// );
 
 userRouter.get(
   "/",

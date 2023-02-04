@@ -6,6 +6,7 @@ import { UserAsStudent } from "./apps/services/user/UserAsStudent.facade";
 import { UserAsLecturer } from "./apps/services/user/UserAsLecturer.facade";
 import { UserAsVocationAdmin } from "./apps/services/user/UserAsVocationAdmin.facade";
 import { UserFacade } from "./apps/services/user/User.facade";
+import prismaDB from "./apps/utils/database";
 
 dotenv.config();
 
@@ -37,8 +38,107 @@ roleMap.set(10, 12);
 roleMap.set(11, 8);
 roleMap.set(12, 5);
 
+export function fetchNewRoles() {
+  connection.query("select * from user_role", (err, res, fields) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    res.forEach(async (r: { id: number; name: string }) => {
+      try {
+        await prismaDB.adm_group_unit.create({
+          data: { aksesId: r.id, aksesNama: r.name },
+        });
+      } catch (error) {}
+    });
+  });
+}
+
+export function fetchNewBadges() {
+  connection.query("select * from badge", (err, res, fields) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    res.forEach(async (b: { id: number; name: string }) => {
+      try {
+        await prismaDB.badge.create({
+          data: { name: b.name, id: b.id },
+        });
+      } catch (error) {}
+    });
+  });
+}
+
+export function fetchNewLabs() {
+  connection.query("select * from lab", (err, res, fields) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    res.forEach(async (l: { id: number; name: string }) => {
+      try {
+        await prismaDB.ref_laboratorium.create({
+          data: {
+            labId: l.id,
+            labNama: l.name,
+          },
+        });
+      } catch (error) {}
+    });
+  });
+}
+
+export function fetchNewDepartment() {
+  connection.query("select * from department", (err, res, fields) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    res.forEach(async (d: { id: number; name: string }) => {
+      try {
+        const department = await prismaDB.ref_departemen.create({
+          data: {
+            dprtNama: d.name,
+            dprtId: d.id,
+          },
+        });
+      } catch (error) {}
+      connection.query(
+        `select * from major where department_id = '${d.id}'`,
+        (err, res, fields) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+          res.forEach(async (m: { code: string; name: string }) => {
+            const oldMajor = await prismaDB.ref_prodi.findFirst({
+              where: { prdKode: m.code },
+            });
+
+            if (oldMajor !== null) {
+              await prismaDB.ref_prodi.updateMany({
+                where: { prdKode: oldMajor.prdKode },
+                data: { prdNama: m.name },
+              });
+            } else {
+              await prismaDB.ref_prodi.create({
+                data: { prdNama: m.name, prdKode: m.code },
+              });
+            }
+          });
+        }
+      );
+    });
+  });
+}
+
 export function fetchNewUserData() {
-  connection.query("select * from user", (err, res, fields) => {
+  connection.query(`select * from user`, (err, res, fields) => {
     if (err) {
       console.error(err);
       return;
@@ -46,6 +146,7 @@ export function fetchNewUserData() {
 
     res.forEach(
       async (u: {
+        id: number;
         username: string;
         password: string;
         department: number;
@@ -53,82 +154,126 @@ export function fetchNewUserData() {
         name: string;
         user_role_id: number;
         major: number;
+        is_enable: number;
+        lab_id: number;
+        signature_path: number;
       }) => {
+        const id = u.id;
         const username = u.username;
         const password = u.password.replace("{bcrypt}", "");
         const department = Number(u.department);
         const email = u.email;
         const name = u.name;
-        const role = roleMap.get(Number(u.user_role_id));
-        console.log(role);
-
         const major = Number(u.major);
+        const role = Number(u.user_role_id);
+        const status = Number(u.is_enable);
+        const lab = u.lab_id;
 
         const user = await User.getUserByUsername(username);
-
-        try {
-          if (user === null) {
-            if (Number(role) === constants.STUDENT_GROUP_ACCESS) {
-              // todo: insert into mahasiswa table
-              // const insertedNewStudent = await StudentService.insertUserIntoStudent({
-              //   nim: newUser.username,
-              //   name: newUser.name || "",
-              //   email: newUser.email,
-              // });
-              await UserAsStudent.insertUserAsStudent({
-                groupAccess: role,
-                username,
-                email,
-                name,
-                password,
-              });
-            } else if (Number(role) === constants.LECTURER_GROUP_ACCESS) {
-              // todo: lecturer departmentID is undefined so create a default value
-              await UserAsLecturer.insertUserAsLecturer({
-                groupAccess: role,
-                username,
-                email,
-                name,
-                password,
-              });
-              // } else if (
-              //   Number(role) === constants.LAB_ADMIN_GROUP_ACCESS
-              // ) {
-              //   insertedUser = await UserAsLabAdmin.insertUserAsLabAdmin(newUser);
-            } else if (Number(role) === constants.VOCATION_ADMIN_GROUP_ACCESS) {
-              await UserAsVocationAdmin.insertUserAsVocationAdmin({
-                groupAccess: role,
-                username,
-                password,
-                email,
-                name,
-                vocationID: major ?? 1,
-                departmentID: department ?? 1,
-              });
-            } else {
-              await UserFacade.insertUser({
-                username,
-                groupAccess: role,
-                password,
-                email,
-                name,
-              });
+        connection.query(
+          `select * from user_role where id = '${role}'`,
+          async (err, res, fields) => {
+            try {
+              if (user === null) {
+                if (res[0].name === constants.STUDENT_GROUP_ACCESS) {
+                  // todo: insert into mahasiswa table
+                  // const insertedNewStudent = await StudentService.insertUserIntoStudent({
+                  //   nim: newUser.username,
+                  //   name: newUser.name || "",
+                  //   email: newUser.email,
+                  // });
+                  await UserAsStudent.insertUserAsStudent({
+                    id,
+                    groupAccess: role,
+                    username,
+                    email,
+                    name,
+                    password,
+                    vocationID: major,
+                    departmentID: department,
+                    status,
+                  });
+                } else if (res[0].name === constants.LECTURER_GROUP_ACCESS) {
+                  // todo: lecturer departmentID is undefined so create a default value
+                  await UserAsLecturer.insertUserAsLecturer({
+                    id,
+                    groupAccess: role,
+                    username,
+                    email,
+                    name,
+                    password,
+                    departmentID: department,
+                    vocationID: major,
+                    labID: lab ?? null,
+                    status,
+                  });
+                  // } else if (
+                  //   Number(role) === constants.LAB_ADMIN_GROUP_ACCESS
+                  // ) {
+                  //   insertedUser = await UserAsLabAdmin.insertUserAsLabAdmin(
+                  //     newUser
+                  //   );
+                  // } else if (
+                  //   res[0].name === constants.VOCATION_ADMIN_GROUP_ACCESS
+                  // ) {
+                  //   await UserAsVocationAdmin.insertUserAsVocationAdmin({
+                  //     groupAccess: role,
+                  //     username,
+                  //     password,
+                  //     email,
+                  //     name,
+                  //     vocationID: major ?? 1,
+                  //     departmentID: department ?? 1,
+                  //   });
+                } else {
+                  await UserFacade.insertUser({
+                    id,
+                    username,
+                    groupAccess: role,
+                    password,
+                    email,
+                    name,
+                    vocationID: major,
+                    departmentID: department,
+                    status,
+                    labID: lab ?? null,
+                  });
+                }
+              } else {
+                await User.resetPassword(
+                  username,
+                  password,
+                  role,
+                  department,
+                  major,
+                  email,
+                  name,
+                  lab
+                );
+              }
+            } catch (error) {
+              console.error(error);
             }
-          } else {
-            await User.resetPassword(
-              username,
-              password,
-              role,
-              department,
-              major,
-              email,
-              name
-            );
           }
-        } catch (error) {
-          console.error(error);
-        }
+        );
       }
     );
+  });
+
+  connection.query("select * from user_badges", (err, res, fields) => {
+    if (err) {
+      return console.error(err);
+    }
+
+    res.forEach(async (b: { user_id: number; badges_id: number }) => {
+      try {
+        await prismaDB.user_badge.create({
+          data: {
+            badgeId: b.badges_id,
+            userId: b.user_id,
+          },
+        });
+      } catch (error) {}
+    });
   });
 }

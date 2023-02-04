@@ -31,6 +31,7 @@ interface ICredential {
   departmentID: string | null;
   labID: string | null;
   vocationID: string | null;
+  badges: string[];
 }
 
 export class UserHandler {
@@ -39,22 +40,22 @@ export class UserHandler {
     res: Response,
     next: NextFunction
   ) {
-    const roleMap = new Map();
-    roleMap.set(constants.DEAN_GROUP_ACCESS, "Dekan");
-    roleMap.set(constants.STUDENT_GROUP_ACCESS, "Mahasiswa");
-    roleMap.set(constants.LECTURER_GROUP_ACCESS, "Dosen");
-    roleMap.set(constants.ADMINHEAD_GROUP_ACCCESS, "KTU");
-    roleMap.set(constants.LAB_ADMIN_GROUP_ACCESS, "Kepala_Lab");
-    roleMap.set(constants.SUPERUSER_GROUP_ACCESS, "Superuser");
-    roleMap.set(constants.FACULTY_ADMIN_GROUP_ACCESS, "Admin_Fakultas");
-    roleMap.set(constants.SUBSECTIONHEAD_GROUP_ACCESS, "Kasubag");
-    roleMap.set(constants.VOCATION_ADMIN_GROUP_ACCESS, "Admin_Prodi");
-    roleMap.set(constants.DEPARTMENT_ADMIN_GROUP_ACCESS, "Admin_departemen");
-    roleMap.set(
-      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
-      "Koordinator_Seminar"
-    );
-    roleMap.set(constants.VICE_DEAN_GROUP_ACCESS, "Wakil_Dekan");
+    // const roleMap = new Map();
+    // roleMap.set(constants.DEAN_GROUP_ACCESS, "Dekan");
+    // roleMap.set(constants.STUDENT_GROUP_ACCESS, "Mahasiswa");
+    // roleMap.set(constants.LECTURER_GROUP_ACCESS, "Dosen");
+    // roleMap.set(constants.ADMINHEAD_GROUP_ACCCESS, "KTU");
+    // roleMap.set(constants.LAB_ADMIN_GROUP_ACCESS, "Kepala_Lab");
+    // roleMap.set(constants.SUPERUSER_GROUP_ACCESS, "Superuser");
+    // roleMap.set(constants.FACULTY_ADMIN_GROUP_ACCESS, "Admin_Fakultas");
+    // roleMap.set(constants.SUBSECTIONHEAD_GROUP_ACCESS, "Kasubag");
+    // roleMap.set(constants.VOCATION_ADMIN_GROUP_ACCESS, "Admin_Prodi");
+    // roleMap.set(constants.DEPARTMENT_ADMIN_GROUP_ACCESS, "Admin_departemen");
+    // roleMap.set(
+    //   constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+    //   "Koordinator_Seminar"
+    // );
+    // roleMap.set(constants.VICE_DEAN_GROUP_ACCESS, "Wakil_Dekan");
 
     const credential = {
       username: res.locals.user.username,
@@ -63,8 +64,9 @@ export class UserHandler {
       status: res.locals.user.status === 1 ? "Active" : "Inactive",
       departmentID: res.locals.user.departmentID,
       description: res.locals.user.description,
-      groupAccess: roleMap.get(res.locals.user.groupAccess),
+      groupAccess: res.locals.user.adm_group_unit,
       roleNumber: res.locals.user.groupAccess,
+      badges: res.locals.user.user_badge,
       labID: res.locals.user.labID,
       vocationID: res.locals.user.vocationID,
     } as ICredential;
@@ -140,11 +142,12 @@ export class UserHandler {
       email: res.locals.user.email,
       name: res.locals.user.name,
       status: res.locals.user.status,
-      groupAccess: res.locals.user.aksesgroup,
+      groupAccess: res.locals.user.adm_group_unit,
       description: res.locals.user.keterangan,
       departmentID: res.locals.user.departementID,
       labID: res.locals.user.labID,
       vocationID: res.locals.user.prodiID,
+      badges: res.locals.user.user_badge,
     } as TokenPayload;
 
     let tokenClaims = { subject: tokenPayload.username };
@@ -186,81 +189,78 @@ export class UserHandler {
     }
   }
 
-  static async addNewUserHandler(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
-    const payload = req.body as IUser;
-    if (
-      typeof payload.email === "undefined" ||
-      typeof payload.name === "undefined" ||
-      typeof payload.username === "undefined" ||
-      typeof payload.groupAccess === "undefined"
-    ) {
-      return next(
-        new BadRequestError("provide email, name, username, groupAccess")
-      );
-    }
+  // !deprecated
+  // static async addNewUserHandler(
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction
+  // ) {
+  //   const payload = req.body as IUser;
+  //   if (
+  //     typeof payload.email === "undefined" ||
+  //     typeof payload.name === "undefined" ||
+  //     typeof payload.username === "undefined" ||
+  //     typeof payload.groupAccess === "undefined"
+  //   ) {
+  //     return next(
+  //       new BadRequestError("provide email, name, username, groupAccess")
+  //     );
+  //   }
 
-    try {
-      const newUser = {
-        username: payload.username,
-        name: payload.name,
-        email: payload.email,
-        groupAccess: payload.groupAccess,
-        departmentID: payload.departmentID,
-        description: payload.description,
-        labID: payload.labID,
-        vocationID: payload.vocationID,
-      } as IUser;
+  //   try {
+  //     const newUser = {
+  //       username: payload.username,
+  //       name: payload.name,
+  //       email: payload.email,
+  //       groupAccess: payload.groupAccess,
+  //       departmentID: payload.departmentID,
+  //       description: payload.description,
+  //       labID: payload.labID,
+  //       vocationID: payload.vocationID,
+  //     } as IUser;
 
-      let insertedUser = {};
-      // todo: add user to student if groupAccess is student
-      if (Number(newUser.groupAccess) === constants.STUDENT_GROUP_ACCESS) {
-        // todo: insert into mahasiswa table
-        // const insertedNewStudent = await StudentService.insertUserIntoStudent({
-        //   nim: newUser.username,
-        //   name: newUser.name || "",
-        //   email: newUser.email,
-        // });
-        insertedUser = await UserAsStudent.insertUserAsStudent(newUser);
-      } else if (
-        Number(newUser.groupAccess) === constants.LECTURER_GROUP_ACCESS
-      ) {
-        // todo: lecturer departmentID is undefined so create a default value
-        insertedUser = await UserAsLecturer.insertUserAsLecturer(newUser);
-      } else if (
-        Number(newUser.groupAccess) === constants.LAB_ADMIN_GROUP_ACCESS
-      ) {
-        insertedUser = await UserAsLabAdmin.insertUserAsLabAdmin(newUser);
-      } else if (
-        Number(newUser.groupAccess) === constants.VOCATION_ADMIN_GROUP_ACCESS
-      ) {
-        insertedUser = await UserAsVocationAdmin.insertUserAsVocationAdmin(
-          newUser
-        );
-      } else {
-        insertedUser = await UserFacade.insertUser(newUser);
-      }
+  //     let insertedUser = {};
+  //     // todo: add user to student if groupAccess is student
+  //     if (newUser.groupAccess === constants.STUDENT_GROUP_ACCESS) {
+  //       // todo: insert into mahasiswa table
+  //       // const insertedNewStudent = await StudentService.insertUserIntoStudent({
+  //       //   nim: newUser.username,
+  //       //   name: newUser.name || "",
+  //       //   email: newUser.email,
+  //       // });
+  //       insertedUser = await UserAsStudent.insertUserAsStudent(newUser);
+  //     } else if (newUser.groupAccess === constants.LECTURER_GROUP_ACCESS) {
+  //       // todo: lecturer departmentID is undefined so create a default value
+  //       insertedUser = await UserAsLecturer.insertUserAsLecturer(newUser);
+  //     } else if (newUser.groupAccess === constants.LAB_ADMIN_GROUP_ACCESS) {
+  //       insertedUser = await UserAsLabAdmin.insertUserAsLabAdmin(newUser);
+  //     } else if (
+  //       newUser.groupAccess === constants.VOCATION_ADMIN_GROUP_ACCESS
+  //     ) {
+  //       insertedUser = await UserAsVocationAdmin.insertUserAsVocationAdmin(
+  //         newUser
+  //       );
+  //     } else {
+  //       insertedUser = await UserFacade.insertUser(newUser);
+  //     }
 
-      // const insertedNewUser = await UserService.insertNewUserBySuperUser(
-      //   newUser
-      // );
+  //     // const insertedNewUser = await UserService.insertNewUserBySuperUser(
+  //     //   newUser
+  //     // );
 
-      return res
-        .status(201)
-        .json(
-          createResponse(
-            "success",
-            "inserted new user successfully",
-            insertedUser
-          )
-        );
-    } catch (error) {
-      return next(error);
-    }
-  }
+  //     return res
+  //       .status(201)
+  //       .json(
+  //         createResponse(
+  //           "success",
+  //           "inserted new user successfully",
+  //           insertedUser
+  //         )
+  //       );
+  //   } catch (error) {
+  //     return next(error);
+  //   }
+  // }
 
   // static async studentSignUp(req: Request, res: Response, next: NextFunction) {
   //   const payload = req.body as IUser;

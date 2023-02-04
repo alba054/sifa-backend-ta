@@ -58,7 +58,7 @@ export class FileHandler {
         .json(
           createResponse(
             constants.SUCCESS_MESSAGE,
-            "successfully upload seminar document",
+            "successfully upload exam document",
             docPath
           )
         );

@@ -11,6 +11,85 @@ import { NotFoundError } from "../utils/error/notFoundError";
 dotenv.config();
 
 export class LecturerHandler {
+  static async confirmProposedThesis(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, thesisID } = req.params;
+    const { isAccepted } = req.body;
+
+    try {
+      if (typeof isAccepted === "undefined") {
+        throw new BadRequestError("provide isAccepted");
+      }
+
+      await LecturerService.confirmProposedThesis(
+        nim,
+        Number(thesisID),
+        Boolean(isAccepted)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully get confirm proposed thesis"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getUnconfirmedProposedThesisDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, thesisID } = req.params;
+
+    try {
+      const thesis = await LecturerService.getUncorfimedProposedThesisDetail(
+        nim,
+        Number(thesisID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully get unconfirmed thesis detail",
+            thesis
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getUnconfirmedProposedThesis(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim } = req.params;
+
+    const thesis = await LecturerService.getUncorfimedProposedThesis(nim);
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get unconfirmed thesis",
+          thesis
+        )
+      );
+  }
+
   static async getSeminarsOfThesis(
     req: Request,
     res: Response,
@@ -529,37 +608,38 @@ export class LecturerHandler {
       );
   }
 
-  static async insertNewLecturer(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
-    // todo: insert new lecturer
-    const body = req.body as ILecturer;
-    try {
-      if (
-        typeof body.name === "undefined" ||
-        typeof body.nip === "undefined" ||
-        typeof body.departmentID === "undefined"
-      ) {
-        throw new BadRequestError("provide nip, name, and departmentID");
-      }
+  // !deprecated
+  // static async insertNewLecturer(
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction
+  // ) {
+  //   // todo: insert new lecturer
+  //   const body = req.body as ILecturer;
+  //   try {
+  //     if (
+  //       typeof body.name === "undefined" ||
+  //       typeof body.nip === "undefined" ||
+  //       typeof body.departmentID === "undefined"
+  //     ) {
+  //       throw new BadRequestError("provide nip, name, and departmentID");
+  //     }
 
-      const newLecturer = await UserAsLecturer.insertLecturertoUser(body);
+  //     const newLecturer = await UserAsLecturer.insertLecturertoUser(body);
 
-      return res
-        .status(201)
-        .json(
-          createResponse(
-            constants.SUCCESS_MESSAGE,
-            "successfully create new lecturer",
-            newLecturer
-          )
-        );
-    } catch (error) {
-      return next(error);
-    }
-  }
+  //     return res
+  //       .status(201)
+  //       .json(
+  //         createResponse(
+  //           constants.SUCCESS_MESSAGE,
+  //           "successfully create new lecturer",
+  //           newLecturer
+  //         )
+  //       );
+  //   } catch (error) {
+  //     return next(error);
+  //   }
+  // }
 
   static async getAllLecturers(
     req: Request,

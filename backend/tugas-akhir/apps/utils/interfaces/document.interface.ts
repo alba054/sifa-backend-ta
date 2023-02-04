@@ -4,7 +4,7 @@ export interface IFreeLabDoc {
   faculty: string;
   headLabName: string;
   headLabNIP: string;
-  letterDate: string;
+  letterDate: string | Date;
   letterNumber: string;
 }
 
@@ -13,7 +13,7 @@ export interface ISupervisorSKDoc {
   studentNIM: string;
   deanName: string;
   deanNIP: string;
-  letterDate: string;
+  letterDate: string | Date;
   letterNumber: string;
   department: string;
   mainMentor: string;
@@ -26,7 +26,7 @@ export interface IExaminerSKDoc {
   studentNIM: string;
   deanName: string;
   deanNIP: string;
-  letterDate: string;
+  letterDate: string | Date;
   letterNumber: string;
   department: string;
   chaiman: string;
@@ -38,8 +38,8 @@ export interface IExaminerSKDoc {
 export interface ISeminarApprovalDoc {
   studentName: string;
   studentNIM: string;
-  letterDate: string;
-  seminarDate: string;
+  letterDate: string | Date;
+  seminarDate: string | Date;
   seminarStartTime: string;
   seminarEndTime: string;
   proposalTitle: string;
@@ -53,8 +53,8 @@ export interface ISeminarApprovalDoc {
 export interface ISeminarLetterEventDoc {
   studentName: string;
   studentNIM: string;
-  letterDate: string;
-  seminarDate: string;
+  letterDate: string | Date;
+  seminarDate: string | Date;
   seminarStartTime: string;
   seminarEndTime: string;
   proposalTitle: string;
@@ -77,8 +77,8 @@ export interface ISeminarLetterEventDoc {
 export interface ISeminarInvitationDoc {
   studentName: string;
   studentNIM: string;
-  letterDate: string;
-  seminarDate: string;
+  letterDate: string | Date;
+  seminarDate: string | Date;
   seminarStartTime: string;
   seminarEndTime: string;
   proposalTitle: string;
@@ -103,10 +103,21 @@ export interface ISeminarInvitationDoc {
 
 export interface ISeminarScoreDoc {
   department: string;
-  letterDate: string;
+  letterDate: string | Date;
   studentNIM: string;
   studentName: string;
   proposalTitle: string;
   score: number;
   season: string;
+}
+
+export interface IExamProposalDoc {
+  name: string;
+  nim: string;
+  department: string;
+  faculty: string;
+  checkList: boolean[];
+  firstViceDean: string;
+  firstViceDeanNIP: string;
+  letterDate: string | Date;
 }

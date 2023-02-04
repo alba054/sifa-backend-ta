@@ -3,9 +3,10 @@ export interface TokenPayload {
   email: string;
   name: string;
   status: number;
-  groupAccess: number;
+  groupAccess: string;
   description: string;
   departmentID: number;
   vocationID: number;
   labID: number;
+  badges: string[];
 }
