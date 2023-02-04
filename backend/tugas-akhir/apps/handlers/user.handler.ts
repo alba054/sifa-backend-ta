@@ -64,11 +64,10 @@ export class UserHandler {
       status: res.locals.user.status === 1 ? "Active" : "Inactive",
       departmentID: res.locals.user.departmentID,
       description: res.locals.user.description,
-      groupAccess: res.locals.user.adm_group_unit,
-      roleNumber: res.locals.user.groupAccess,
-      badges: res.locals.user.user_badge,
+      badges: res.locals.user.badges,
       labID: res.locals.user.labID,
       vocationID: res.locals.user.vocationID,
+      groupAccess: res.locals.user.groupAccess,
     } as ICredential;
 
     return res
@@ -181,6 +180,7 @@ export class UserHandler {
         createResponse("success", "login successfully", {
           token,
           role: tokenPayload.groupAccess,
+          badges: tokenPayload.badges,
           playerID,
         })
       );
