@@ -61,7 +61,8 @@ export class AuthorizationMiddleware {
         if (typeof nim !== "undefined") {
           if (
             nim !== tokenPayload.username &&
-            tokenPayload.groupAccess !== constants.SUPERUSER_GROUP_ACCESS
+            tokenPayload.groupAccess.aksesNama !==
+              constants.SUPERUSER_GROUP_ACCESS
           ) {
             return next(new UnathorizedError("you are not who you declare"));
           }
@@ -71,9 +72,10 @@ export class AuthorizationMiddleware {
           return next(new UnathorizedError("You are not an active user"));
         }
 
+        console.log(tokenPayload.badges);
         if (
-          !roles.includes(tokenPayload.groupAccess) &&
-          tokenPayload.badges.some((e) => roles.includes(e))
+          !roles.includes(tokenPayload.groupAccess.aksesNama) &&
+          !tokenPayload.badges.some((e) => roles.includes(e.badge.name))
         ) {
           return next(new UnathorizedError("you cannot access this resource"));
         }
