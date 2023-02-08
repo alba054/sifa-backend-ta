@@ -33,9 +33,16 @@ export class HeadMajorService {
 
   static async viewExaminersHistory(status: any) {
     let examiners = await Thesis.getThesisWithExaminerStatus(status);
-    // examiners = examiners.filter((e) => {
-    //   return e.penguji.length > 0;
-    // });
+
+    if (status === "unresolved") {
+      examiners = examiners.filter((e) => {
+        return e.penguji.length < 1;
+      });
+    } else {
+      examiners = examiners.filter((e) => {
+        return e.penguji.length > 1;
+      });
+    }
 
     return examiners;
   }
