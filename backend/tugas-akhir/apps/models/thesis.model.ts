@@ -468,6 +468,7 @@ export class Thesis {
         ref_laboratorium: true,
         // _count: true,
         pengusul: { include: { dosen: true } },
+        pembimbing: { include: { dosen: true } },
         sk_pembimbing: true,
         sk_penguji: true,
       },
