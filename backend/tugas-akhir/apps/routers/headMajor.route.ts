@@ -10,7 +10,10 @@ const headMajorRouter = express.Router();
 headMajorRouter
   .route("/thesis/proposed")
   .get(
-    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
     HeadMajorHandler.getListOfProposedThesis
   );
 
@@ -18,14 +21,20 @@ headMajorRouter
 headMajorRouter
   .route("/thesis/approved")
   .get(
-    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
     HeadMajorHandler.getApprovedThesisHistory
   );
 
 headMajorRouter
   .route("/thesis")
   .get(
-    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
     HeadMajorHandler.getAllThesis
   );
 
@@ -33,7 +42,10 @@ headMajorRouter
 headMajorRouter
   .route("/thesis/:thesisID")
   .delete(
-    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
     HeadMajorHandler.deleteThesisByID
   );
 
@@ -41,7 +53,10 @@ headMajorRouter
 headMajorRouter
   .route("/thesis/:proposalGroupID/approve-thesis")
   .put(
-    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
     HeadMajorHandler.approveProposedThesis
   );
 
@@ -50,11 +65,17 @@ headMajorRouter
 headMajorRouter
   .route("/thesis/approved/:id")
   .get(
-    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
     HeadMajorHandler.getApprovedThesisDetail
   )
   .post(
-    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
     HeadMajorHandler.createApprovalOfApprovedThesis
   );
 
@@ -62,7 +83,10 @@ headMajorRouter
 headMajorRouter
   .route("/thesis/approved/:thesisID/examiners")
   .post(
-    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
     HeadMajorMiddleware.checkEligibilityToAssignExaminer,
     HeadMajorHandler.assignExaminers
   );
@@ -70,7 +94,10 @@ headMajorRouter
 headMajorRouter
   .route("/examiners")
   .get(
-    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
     HeadMajorHandler.getExaminersHistory
   );
 
@@ -78,7 +105,10 @@ headMajorRouter
 headMajorRouter
   .route("/dispositions")
   .get(
-    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
     HeadMajorHandler.getAllDispositions
   );
 
@@ -87,11 +117,17 @@ headMajorRouter
 headMajorRouter
   .route("/dispositions/:thesisID")
   .get(
-    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
     HeadMajorHandler.getDispositionOfApprovedThesis
   )
   .delete(
-    AuthorizationMiddleware.authorize([constants.VOCATION_ADMIN_GROUP_ACCESS]),
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
     HeadMajorHandler.deleteDispositionOfApprovedThesis
   );
 

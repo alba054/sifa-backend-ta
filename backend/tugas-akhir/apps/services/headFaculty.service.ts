@@ -124,7 +124,7 @@ export class HeadFacultyService {
     }
     console.log(thesis.mahasiswa.mhsPrdId);
 
-    return ExaminerSK.createNewSK(body, thesis.mahasiswa.mhsPrdId);
+    return await ExaminerSK.createNewSK(body, thesis.mahasiswa.mhsPrdId);
   }
 
   static async approveOrRejectProposedThesis(
