@@ -8,6 +8,10 @@ import { IUser } from "../utils/interfaces/user.interface";
 import { constants } from "../utils/utils";
 
 export class UserService {
+  static async deleteByUsername(username: string) {
+    return await User.deleteUserByUsername(username);
+  }
+
   static async updateNotificationID(player_id: string, username: string) {
     const user = await User.getUserByUsername(username);
 

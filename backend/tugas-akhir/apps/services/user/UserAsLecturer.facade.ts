@@ -1,3 +1,4 @@
+import { Lecturer } from "../../models/lecturer.model";
 import { Student } from "../../models/student.model";
 import { User } from "../../models/user.model";
 import { ILecturer } from "../../utils/interfaces/lecturer.interface";
@@ -7,6 +8,11 @@ import { LecturerService } from "../lecturer.service";
 import { UserService } from "../user.service";
 
 export class UserAsLecturer {
+  static async deleteUserLecturer(username: string) {
+    await User.deleteUserByUsername(username);
+    await Lecturer.deleteLecturerByNIP(username);
+  }
+
   // * this will insert user to lecturer
   static async insertUserAsLecturer(userData: IUser) {
     let user = (await UserService.getUserByUsername(userData.username)) as any;
@@ -47,9 +53,4 @@ export class UserAsLecturer {
 
   //   return lecturer;
   // }
-
-  static async deleteUserStudent(nim: string) {
-    await Student.deleteStudentByNIM(nim);
-    await User.deleteUserByUsername(nim);
-  }
 }

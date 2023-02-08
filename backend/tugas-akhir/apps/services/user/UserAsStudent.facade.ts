@@ -25,6 +25,11 @@ export class UserAsStudent {
     return user;
   }
 
+  static async deleteUserAsStudent(username: string) {
+    await UserService.deleteByUsername(username);
+    await StudentService.deleteByNIM(username);
+  }
+
   // * this will register lecturer to user
   // !deprecated
   // static async insertLecturertoUser(studentData: IStudent) {

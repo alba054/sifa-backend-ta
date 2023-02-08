@@ -37,6 +37,7 @@ export class User {
         ref_departemen: true,
         ref_laboratorium: true,
         ref_prodi: true,
+        adm_group_unit: true,
       },
     });
   }
