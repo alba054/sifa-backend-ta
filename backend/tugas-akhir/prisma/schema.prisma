@@ -710,15 +710,15 @@ model sk_penguji {
   skpId            Int              @id @default(autoincrement())
   skpTaId          Int
   skpNomor         String
-  skpPrdId         Int
-  skpDprtId        Int
+  skpPrdId         Int?
+  skpDprtId        Int?
   skpTglSurat      DateTime         @db.Date
   skpStatus        Int?
   note             String?
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
   tugas_akhir      tugas_akhir      @relation(fields: [skpTaId], references: [taId], onDelete: Cascade, map: "sk_penguji_ibfk_1")
-  ref_prodi        ref_prodi        @relation(fields: [skpPrdId], references: [prdId], map: "sk_penguji_ibfk_2")
-  ref_departemen   ref_departemen   @relation(fields: [skpDprtId], references: [dprtId])
+  ref_prodi        ref_prodi?       @relation(fields: [skpPrdId], references: [prdId], map: "sk_penguji_ibfk_2")
+  ref_departemen   ref_departemen?  @relation(fields: [skpDprtId], references: [dprtId])
 
   @@index([skpPrdId], map: "skpJbId")
   @@index([skpStatus], map: "skpStatus")

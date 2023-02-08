@@ -92,8 +92,6 @@ export class ExaminerSK {
           skpTaId: body.thesisID,
           skpNomor: body.SKNumber,
           skpTglSurat: new Date(),
-          skpPrdId: majorID === null ? 0 : majorID,
-          skpDprtId: 1,
           statusPermohonan: "Belum_Diproses",
         },
       });
