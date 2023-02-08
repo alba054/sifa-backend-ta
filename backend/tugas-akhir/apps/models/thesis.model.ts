@@ -487,7 +487,6 @@ export class Thesis {
           taLabId2: Number(thesis.labID2) || undefined,
           taCatatan: thesis.note,
           taCatatanMhs: thesis.studentNote,
-          taDosenPengusul: Number(thesis.lecturerPropose) || undefined,
           taKHS: thesis.KHSPath,
           taKRS: thesis.KRSPath,
           proposalGroupID: thesis.proposalGroupID,

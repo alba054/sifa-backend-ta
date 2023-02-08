@@ -432,14 +432,16 @@ export class StudentHandler {
         typeof body.khs === "undefined"
       ) {
         throw new BadRequestError(
-          "provide title_1st, title_2nd, labID_1st, labID_2nd, KRS, KHS"
+          "provide title_1st, title_2nd, labID_1st, labID_2nd, krs, khs"
         );
       }
 
-      body.lecturerPropose_1st = Number(body.lecturerPropose_1st);
-      body.coLecturerPropose_1st = Number(body.coLecturerPropose_1st);
-      body.lecturerPropose_2nd = Number(body.lecturerPropose_2nd);
-      body.coLecturerPropose_2nd = Number(body.coLecturerPropose_2nd);
+      body.lecturerPropose_1st = Number(body.lecturerPropose_1st) || undefined;
+      body.coLecturerPropose_1st =
+        Number(body.coLecturerPropose_1st) || undefined;
+      body.lecturerPropose_2nd = Number(body.lecturerPropose_2nd) || undefined;
+      body.coLecturerPropose_2nd =
+        Number(body.coLecturerPropose_2nd) || undefined;
 
       const proposalGroupID = uuidv4();
       const path = `${constants.KRS_AND_KHS_PATH}/${nim}`; // * path to save krs and khs
@@ -469,8 +471,8 @@ export class StudentHandler {
           KRSPath: KRSPath,
           labID: body.labID_1st,
           labID2: body.labID2_1st,
-          lecturerPropose: body.lecturerPropose_1st,
-          coLecturerPropose: body.coLecturerPropose_1st,
+          lecturerPropose: Number(body.lecturerPropose_1st) || undefined,
+          coLecturerPropose: Number(body.coLecturerPropose_1st) || undefined,
           proposalGroupID,
         } as IThesis,
         {
@@ -480,8 +482,8 @@ export class StudentHandler {
           KRSPath: KRSPath,
           labID: body.labID_2nd,
           labID2: body.labID2_2nd,
-          lecturerPropose: body.lecturerPropose_2nd,
-          coLecturerPropose: body.coLecturerPropose_2nd,
+          lecturerPropose: Number(body.lecturerPropose_2nd) || undefined,
+          coLecturerPropose: Number(body.coLecturerPropose_2nd) || undefined,
           proposalGroupID,
         } as IThesis,
       ];

@@ -183,6 +183,8 @@ export class ThesisService {
   }
 
   static async insertNewThesis(thesis: IThesis) {
+    console.log(thesis);
+
     const inProcessThesis = await this.getInProcessThesis(thesis.studentNIM);
 
     if (inProcessThesis.length === 2) {
