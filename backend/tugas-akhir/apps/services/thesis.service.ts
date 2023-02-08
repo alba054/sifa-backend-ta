@@ -69,7 +69,7 @@ export class ThesisService {
     let approvedThesis = await Thesis.getApprovedThesisByVocation(vocationID);
 
     approvedThesis = approvedThesis.filter((t) => {
-      return t.disposisi_kaprodi.length < 1;
+      return t.disposisi_kaprodi.length > 1;
     });
 
     return approvedThesis;
