@@ -6,11 +6,15 @@ import { ILecturer } from "../utils/interfaces/lecturer.interface";
 
 export class Lecturer {
   static async deleteLecturerByNIP(nip: string) {
-    return await prismaDB.dosen.delete({
-      where: {
-        dsnNip: nip,
-      },
-    });
+    try {
+      return await prismaDB.dosen.delete({
+        where: {
+          dsnNip: nip,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   static async getAllLecturers(departmentID: number) {

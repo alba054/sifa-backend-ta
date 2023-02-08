@@ -36,7 +36,7 @@ export class HeadMajorService {
 
     if (status === "unresolved") {
       examiners = examiners.filter((e) => {
-        return e.penguji.length < 1;
+        return e.penguji.length < 1 && e.pembimbing.length > 1;
       });
     } else {
       examiners = examiners.filter((e) => {

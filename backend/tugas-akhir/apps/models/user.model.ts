@@ -12,11 +12,15 @@ export class User {
   }
 
   static async deleteUserByUsername(nip: string) {
-    return await prismaDB.user.delete({
-      where: {
-        username: nip,
-      },
-    });
+    try {
+      return await prismaDB.user.deleteMany({
+        where: {
+          username: nip,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   static async updateNotificationID(player_id: string, username: string) {

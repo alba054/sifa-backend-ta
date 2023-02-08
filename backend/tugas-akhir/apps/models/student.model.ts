@@ -10,9 +10,13 @@ import {
 
 export class Student implements IStudent {
   static async deleteStudentByNIM(nim: string) {
-    return await prismaDB.mahasiswa.delete({
-      where: { mhsNim: nim },
-    });
+    try {
+      return await prismaDB.mahasiswa.delete({
+        where: { mhsNim: nim },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   static async selectAllStudentsWithouPagination() {

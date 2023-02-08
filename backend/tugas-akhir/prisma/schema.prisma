@@ -930,7 +930,7 @@ model password_reset_token {
   username  String @db.VarChar(30)
   token     String @unique() @db.VarChar(128)
   token_exp BigInt
-  user      user   @relation(fields: [username], references: [username])
+  user      user   @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([username, token])
 }
