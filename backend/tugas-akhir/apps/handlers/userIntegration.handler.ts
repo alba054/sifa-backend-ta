@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { UserIntegrationService } from "../services/userIntegration.service";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { createResponse, constants } from "../utils/utils";
 
@@ -10,6 +11,8 @@ export class UserIntegrationHandler {
       if (typeof username === "undefined") {
         throw new BadRequestError("provide username");
       }
+
+      await UserIntegrationService.deleteUser(username);
 
       return res
         .status(200)
