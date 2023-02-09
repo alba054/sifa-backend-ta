@@ -12,6 +12,10 @@ import { ILecturer } from "../utils/interfaces/lecturer.interface";
 import { notifService } from "../utils/notification";
 
 export class LecturerService {
+  static async getApprentices(nim: string) {
+    return await Thesis.getThesisBySupervisor(nim);
+  }
+
   static async confirmProposedThesis(
     nim: string,
     thesisID: number,

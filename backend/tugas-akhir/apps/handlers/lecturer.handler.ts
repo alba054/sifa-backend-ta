@@ -11,6 +11,26 @@ import { NotFoundError } from "../utils/error/notFoundError";
 dotenv.config();
 
 export class LecturerHandler {
+  static async getAllApprentices(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim } = req.params;
+
+    const thesis = await LecturerService.getApprentices(nim);
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get confirm proposed thesis",
+          thesis
+        )
+      );
+  }
+
   static async confirmProposedThesis(
     req: Request,
     res: Response,

@@ -16,6 +16,17 @@ interface IBody {
 }
 
 export class Thesis {
+  static async getThesisBySupervisor(nim: string) {
+    return await prismaDB.tugas_akhir.findMany({
+      where: {
+        pembimbing: { some: { dosen: { dsnNip: nim } } },
+      },
+      include: {
+        mahasiswa: true,
+      },
+    });
+  }
+
   static async confirmProposedThesisByLecturer(
     nim: string,
     thesisID: number,
