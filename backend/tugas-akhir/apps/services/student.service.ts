@@ -47,7 +47,11 @@ export class StudentService {
     return exam;
   }
 
-  static async requestExam(nim: string, body: IRequestExamDocumentPost) {
+  static async requestExam(
+    nim: string,
+    body: IRequestExamDocumentPost,
+    username: any
+  ) {
     const thesis = await Thesis.getApprovedThesis(nim);
 
     if (thesis.length < 1) {
@@ -65,7 +69,7 @@ export class StudentService {
     }
 
     body.doc.forEach(async (d) => {
-      d.path = await FileService.uploadExamProposalDoc(d.path, "");
+      d.path = await FileService.uploadExamProposalDoc(d.path, username);
     });
 
     return await ExamProposal.createExamProposal(body, Number(thesis[0].taId));

@@ -852,6 +852,7 @@ model permohonan_ujian_sidang {
   catatanKTU             String?
   statusTTD              Boolean                           @default(false)
   tanggalSK              DateTime?                         @db.Date
+  created_at             DateTime                          @default(now())
   dokumen_ujian_sidang   dokumen_permohonan_ujian_sidang[]
   tugas_akhir            tugas_akhir                       @relation(fields: [tugas_akhirTaId], references: [taId])
 }

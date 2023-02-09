@@ -87,6 +87,7 @@ export class StudentHandler {
   static async requestExam(req: Request, res: Response, next: NextFunction) {
     const { nim } = req.params;
     const body = req.body as IRequestExamDocumentPost;
+    const { username } = res.locals.user;
 
     try {
       if (typeof body.doc === "undefined") {
@@ -97,7 +98,7 @@ export class StudentHandler {
         throw new BadRequestError("provide documents at least 1");
       }
 
-      await StudentService.requestExam(nim, body);
+      await StudentService.requestExam(nim, body, username);
 
       return res
         .status(201)
