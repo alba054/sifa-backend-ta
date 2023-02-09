@@ -273,6 +273,9 @@ export class ExamProposal {
   static async getExamProposalByNIM(nim: string) {
     return await prismaDB.permohonan_ujian_sidang.findFirst({
       where: { tugas_akhir: { mahasiswa: { mhsNim: nim } } },
+      include: {
+        dokumen_ujian_sidang: true,
+      },
     });
   }
 
