@@ -53,5 +53,5 @@ setInterval(() => {
 
 setInterval(() => {
   fetchNewUserData();
-  console.log("hai");
+  // console.log("hai");
 }, 7000);
