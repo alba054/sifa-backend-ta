@@ -33,6 +33,13 @@ lecturerRouter.get(
 );
 
 lecturerRouter
+  .route("/:nim/thesis/supervisors")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getAllApprentices
+  );
+
+lecturerRouter
   .route("/:nim/thesis")
   .get(
     AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
@@ -171,13 +178,6 @@ lecturerRouter
   .put(
     AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
     LecturerHandler.acceptOrRejectSeminarRequest
-  );
-
-lecturerRouter
-  .route("/:nim/thesis/supervisors")
-  .get(
-    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
-    LecturerHandler.getAllApprentices
   );
 
 // lecturerRouter.route("/:nim/")
