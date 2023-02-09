@@ -117,10 +117,10 @@ export class LecturerService {
     if (seminarScores.length > 3) {
       const scores = seminarScores.map((s) => s.snilaiNilai);
       if (scores.every((s) => s !== null)) {
-        console.log(scores);
+        // console.log(scores);
 
         let finalScore = scores.reduce((total, s) => (total ?? 0) + (s ?? 0));
-        console.log(finalScore);
+        // console.log(finalScore);
 
         finalScore = (finalScore ?? 0) / seminarScores.length;
 

@@ -27,7 +27,7 @@ export class GroupUnit {
       });
 
       if (group === null) {
-        console.log(group);
+        // console.log(group);
 
         throw new NotFoundError("group is not defined");
       }

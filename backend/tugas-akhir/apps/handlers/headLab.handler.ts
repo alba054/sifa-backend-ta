@@ -482,7 +482,7 @@ export class HeadLabHandler {
     const { title } = req.query;
     let approvedThesis = await HeadLabService.getApprovedThesis(labID, title);
 
-    console.log(labID);
+    // console.log(labID);
 
     approvedThesis = approvedThesis.filter(
       (thesis) => thesis.taLabId === labID || thesis.taLabId2 === labID
@@ -507,7 +507,7 @@ export class HeadLabHandler {
     const { labID } = res.locals.user;
     const { thesisID } = req.params;
     const thesis = await HeadLabService.getThesisDetail(Number(thesisID));
-    console.log(thesis);
+    // console.log(thesis);
 
     if (
       typeof thesis === "undefined" ||

@@ -72,7 +72,7 @@ export class AuthorizationMiddleware {
           return next(new UnathorizedError("You are not an active user"));
         }
 
-        console.log(tokenPayload.badges);
+        // console.log(tokenPayload.badges);
         if (
           !roles.includes(tokenPayload.groupAccess.aksesNama) &&
           !tokenPayload.badges.some((e) => roles.includes(e.badge.name))
@@ -81,7 +81,7 @@ export class AuthorizationMiddleware {
         }
 
         res.locals.user = tokenPayload;
-        console.log(res.locals.user);
+        // console.log(res.locals.user);
 
         next();
       } catch (error: any) {

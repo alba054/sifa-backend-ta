@@ -128,7 +128,7 @@ export class HeadFacultyService {
     ) {
       throw new NotFoundError("thesis doesn't have examiners");
     }
-    console.log(thesis.mahasiswa.mhsPrdId);
+    // console.log(thesis.mahasiswa.mhsPrdId);
 
     return await ExaminerSK.createNewSK(body, thesis.mahasiswa.mhsPrdId);
   }

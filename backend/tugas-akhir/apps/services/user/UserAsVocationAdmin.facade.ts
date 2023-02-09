@@ -25,7 +25,7 @@ export class UserAsVocationAdmin {
       userData.departmentID
     );
 
-    console.log(vocation);
+    // console.log(vocation);
 
     if (!vocation.some((voc) => voc.prdId === userData.vocationID)) {
       throw new BadRequestError("vocation's not found");

@@ -202,7 +202,7 @@ export class ThesisService {
   }
 
   static async insertNewThesis(thesis: IThesis) {
-    console.log(thesis);
+    // console.log(thesis);
 
     const inProcessThesis = await this.getInProcessThesis(thesis.studentNIM);
 

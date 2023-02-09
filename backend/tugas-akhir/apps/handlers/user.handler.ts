@@ -159,11 +159,11 @@ export class UserHandler {
     }
 
     const { playerID } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
 
     try {
       if (typeof playerID !== "undefined") {
-        console.log(res.locals.user.username);
+        // console.log(res.locals.user.username);
         await UserService.updateNotificationID(
           playerID,
           res.locals.user.username
@@ -345,7 +345,7 @@ export class UserHandler {
         token
       );
 
-      console.log(resetPasswordToken);
+      // console.log(resetPasswordToken);
 
       if (resetPasswordToken?.username !== username) {
         throw new UnathorizedError("credential doesn't match");

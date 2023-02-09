@@ -54,7 +54,7 @@ export class HeadMajorMiddleware {
     );
 
     supervisors = supervisors.filter((s) => s.statusTerima === "Diterima");
-    console.log(supervisors);
+    // console.log(supervisors);
 
     if (supervisors.length < 2) {
       return next(new BadRequestError("supervisors hasn't been set"));
