@@ -8,7 +8,7 @@ const chatRouter = express.Router();
 // * get all chats (query : media or text)
 // * send new message
 chatRouter
-  .route("/:nim")
+  .route("/")
   .get(
     AuthorizationMiddleware.authorize([
       constants.STUDENT_GROUP_ACCESS,

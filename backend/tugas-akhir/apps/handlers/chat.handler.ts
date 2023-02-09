@@ -56,8 +56,7 @@ export class ChatHandler {
     res: Response,
     next: NextFunction
   ) {
-    const { nim } = req.params;
-    const { type } = req.query;
+    const { nim, type } = req.query;
 
     try {
       const chats = await ChatService.getAllChatOfThesis(

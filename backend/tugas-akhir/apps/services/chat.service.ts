@@ -76,7 +76,7 @@ export class ChatService {
   }
 
   static async getAllChatOfThesis(
-    nim: string,
+    nim: any,
     type: any | undefined,
     username: string | undefined
   ) {
