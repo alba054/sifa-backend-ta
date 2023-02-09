@@ -90,7 +90,7 @@ export class ExaminerSK {
       return await prismaDB.sk_penguji.create({
         data: {
           skpTaId: body.thesisID,
-          skpNomor: body.SKNumber,
+          skpNomor: body.SKNumber || "xxxx/yyyy/zzzz",
           skpTglSurat: new Date(),
           statusPermohonan: "Belum_Diproses",
         },

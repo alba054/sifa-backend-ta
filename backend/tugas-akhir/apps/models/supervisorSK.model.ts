@@ -89,7 +89,7 @@ export class SupervisorSK {
       return await prismaDB.sk_pembimbing.create({
         data: {
           skbTaId: body.thesisID,
-          skbNomor: body.SKNumber,
+          skbNomor: body.SKNumber || "xxxx/yyyy/zzzz",
           skbTglSurat: new Date(),
           skbDprtId: 1,
           statusPermohonan: "Belum_Diproses",
