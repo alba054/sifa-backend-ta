@@ -107,7 +107,8 @@ export class HeadFacultyHandler {
     res: Response,
     next: NextFunction
   ) {
-    const thesisWithSK = await HeadFacultyService.getThesisWithSK();
+    const { status } = req.query;
+    const thesisWithSK = await HeadFacultyService.getThesisWithSK(status);
 
     return res
       .status(200)

@@ -44,12 +44,18 @@ export class HeadFacultyService {
     return await ExamProposal.getUnverifiedExamProposals();
   }
 
-  static async getThesisWithSK() {
+  static async getThesisWithSK(status: any) {
     let thesis = await Thesis.getApprovedThesis();
 
-    thesis = thesis.filter((t) => {
-      return t.sk_pembimbing.length > 0 && t.sk_penguji.length > 0;
-    });
+    if (status === "unresolved") {
+      thesis = thesis.filter((t) => {
+        return !t.sk_pembimbing.length || !t.sk_penguji.length;
+      });
+    } else {
+      thesis = thesis.filter((t) => {
+        return t.sk_pembimbing.length > 0 && t.sk_penguji.length > 0;
+      });
+    }
 
     return thesis;
   }
