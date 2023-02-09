@@ -16,6 +16,16 @@ export class DocumentHandler {
         nim,
         Number(examID)
       );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get seminar score data",
+            data
+          )
+        );
     } catch (error) {
       return next(error);
     }
