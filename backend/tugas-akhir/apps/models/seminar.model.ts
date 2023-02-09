@@ -491,33 +491,35 @@ export class Seminar {
       },
     });
 
-    await prismaDB.seminar_persetujuan.create({
-      data: {
-        ssetujuSmrId: seminarID,
-        ssetujuDsnId: seminar.tugas_akhir.pembimbing[0].pmbDsnId,
-      },
-    });
+    try {
+      await prismaDB.seminar_persetujuan.create({
+        data: {
+          ssetujuSmrId: seminarID,
+          ssetujuDsnId: seminar.tugas_akhir.pembimbing[0].pmbDsnId,
+        },
+      });
 
-    await prismaDB.seminar_persetujuan.create({
-      data: {
-        ssetujuSmrId: seminarID,
-        ssetujuDsnId: seminar.tugas_akhir.pembimbing[1].pmbDsnId,
-      },
-    });
+      await prismaDB.seminar_persetujuan.create({
+        data: {
+          ssetujuSmrId: seminarID,
+          ssetujuDsnId: seminar.tugas_akhir.pembimbing[1].pmbDsnId,
+        },
+      });
 
-    await prismaDB.seminar_persetujuan.create({
-      data: {
-        ssetujuSmrId: seminarID,
-        ssetujuDsnId: seminar.tugas_akhir.penguji[0].ujiDsnId,
-      },
-    });
+      await prismaDB.seminar_persetujuan.create({
+        data: {
+          ssetujuSmrId: seminarID,
+          ssetujuDsnId: seminar.tugas_akhir.penguji[0].ujiDsnId,
+        },
+      });
 
-    await prismaDB.seminar_persetujuan.create({
-      data: {
-        ssetujuSmrId: seminarID,
-        ssetujuDsnId: seminar.tugas_akhir.penguji[1].ujiDsnId,
-      },
-    });
+      await prismaDB.seminar_persetujuan.create({
+        data: {
+          ssetujuSmrId: seminarID,
+          ssetujuDsnId: seminar.tugas_akhir.penguji[1].ujiDsnId,
+        },
+      });
+    } catch (error) {}
 
     return seminar;
   }
