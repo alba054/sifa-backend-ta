@@ -23,6 +23,8 @@ export class Thesis {
       },
       include: {
         mahasiswa: true,
+        pembimbing: {include: {dosen: true}},
+        penguji: {include: {dosen: true}}
       },
     });
   }
