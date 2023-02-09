@@ -65,12 +65,18 @@ export class ThesisService {
     return proposedThesis;
   }
 
-  static async getApprovedThesisByHeadMajor(vocationID: number) {
+  static async getApprovedThesisByHeadMajor(vocationID: number, status: any) {
     let approvedThesis = await Thesis.getApprovedThesisByVocation(vocationID);
 
-    approvedThesis = approvedThesis.filter((t) => {
-      return t.disposisi_kaprodi.length > 0;
-    });
+    if (status === "unresolved") {
+      approvedThesis = approvedThesis.filter(
+        (t) => !t.disposisi_kaprodi.length
+      );
+    } else {
+      approvedThesis = approvedThesis.filter((t) => {
+        return t.disposisi_kaprodi.length > 0;
+      });
+    }
 
     return approvedThesis;
   }

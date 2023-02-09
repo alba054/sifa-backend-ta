@@ -336,9 +336,11 @@ export class HeadMajorHandler {
   ) {
     try {
       const { vocationID } = res.locals.user;
+      const { status } = req.query;
 
       const approvedThesis = await ThesisService.getApprovedThesisByHeadMajor(
-        vocationID
+        vocationID,
+        status
       );
 
       const uniqueNIM: string[] = [];
