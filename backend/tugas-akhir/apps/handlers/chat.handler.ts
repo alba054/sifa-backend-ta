@@ -9,7 +9,7 @@ export class ChatHandler {
     res: Response,
     next: NextFunction
   ) {
-    const { nim } = req.params;
+    const { nim } = req.query;
     const { type, message, extension } = req.body;
 
     try {

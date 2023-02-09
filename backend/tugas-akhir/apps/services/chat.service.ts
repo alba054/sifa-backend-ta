@@ -7,11 +7,7 @@ import { ThesisService } from "./thesis.service";
 import { v4 as uuidv4 } from "uuid";
 
 export class ChatService {
-  static async createNewTextMessage(
-    nim: string,
-    message: any,
-    username: string
-  ) {
+  static async createNewTextMessage(nim: any, message: any, username: string) {
     const thesis = await ThesisService.getApprovedThesisByNIM(nim);
 
     if (typeof thesis[0] === "undefined") {
@@ -37,7 +33,7 @@ export class ChatService {
   }
 
   static async createNewImageMessage(
-    nim: string,
+    nim: any,
     message: any,
     type: number,
     extension: string,
