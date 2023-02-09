@@ -406,7 +406,7 @@ export class HeadMajorHandler {
         const studentThesis = proposedThesis.filter(
           (thesis) => thesis.taMhsNim === nim
         );
-        if (studentThesis.length > 1) {
+        if (studentThesis.length < 2) {
           continue;
         }
         response.push({
