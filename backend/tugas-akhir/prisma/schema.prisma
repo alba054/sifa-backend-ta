@@ -189,7 +189,7 @@ model penguji {
   catatan        String?
   statusTerima   StatusPermohonan @default(Belum_Diproses)
   tugas_akhir    tugas_akhir      @relation(fields: [ujiTaId], references: [taId], onDelete: Cascade, map: "penguji_ibfk_1")
-  dosen          dosen            @relation(fields: [ujiDsnId], references: [dsnId], onDelete: NoAction, map: "penguji_ibfk_4")
+  dosen          dosen            @relation(fields: [ujiDsnId], references: [dsnId], onDelete: Cascade, map: "penguji_ibfk_4")
   revisi_penguji revisi_penguji[]
 
   @@index([ujiDsnId], map: "ujiDsnNip")
@@ -451,8 +451,8 @@ model revisi_pembimbing {
   rpmbUser                                     String?     @db.VarChar(30)
   rpmbTglUpdate                                DateTime?   @default(now()) @db.Timestamp(0)
   pembimbing                                   pembimbing? @relation(fields: [rpmbPmbId], references: [pmbId], onDelete: Restrict, onUpdate: Restrict, map: "revisi_pembimbing_ibfk_1")
-  dosen_dosenTorevisi_pembimbing_rpmbBaruDsnId dosen?      @relation("dosenTorevisi_pembimbing_rpmbBaruDsnId", fields: [rpmbBaruDsnId], references: [dsnId], onDelete: Restrict, onUpdate: Restrict, map: "revisi_pembimbing_ibfk_2")
-  dosen_dosenTorevisi_pembimbing_rpmbLamaDsnId dosen?      @relation("dosenTorevisi_pembimbing_rpmbLamaDsnId", fields: [rpmbLamaDsnId], references: [dsnId], onDelete: Restrict, onUpdate: Restrict, map: "revisi_pembimbing_ibfk_3")
+  dosen_dosenTorevisi_pembimbing_rpmbBaruDsnId dosen?      @relation("dosenTorevisi_pembimbing_rpmbBaruDsnId", fields: [rpmbBaruDsnId], references: [dsnId], onDelete: Cascade, onUpdate: Restrict, map: "revisi_pembimbing_ibfk_2")
+  dosen_dosenTorevisi_pembimbing_rpmbLamaDsnId dosen?      @relation("dosenTorevisi_pembimbing_rpmbLamaDsnId", fields: [rpmbLamaDsnId], references: [dsnId], onDelete: Cascade, onUpdate: Restrict, map: "revisi_pembimbing_ibfk_3")
 
   @@index([rpmbPmbId], map: "revisi_pembimbing_ibfk_1")
   @@index([rpmbBaruDsnId], map: "rpmbBaruDsnId")
@@ -516,7 +516,7 @@ model seminar_catatan {
   catatKomentar String?   @db.Text
   catatDate     DateTime? @db.Date
   seminar       seminar   @relation(fields: [catatSmrId], references: [smrId], onDelete: Cascade, map: "seminar_catatan_ibfk_1")
-  dosen         dosen     @relation(fields: [catatDsnId], references: [dsnId], map: "seminar_catatan_ibfk_2")
+  dosen         dosen     @relation(fields: [catatDsnId], references: [dsnId], map: "seminar_catatan_ibfk_2", onDelete: Cascade)
 
   @@index([catatDsnId], map: "catatDsnId")
   @@index([catatSmrId], map: "catatSmrId")
@@ -545,7 +545,7 @@ model seminar_nilai {
   snilaiDate          DateTime?      @db.DateTime(0)
   snilaiUser          String?        @db.VarChar(30)
   seminar             seminar?       @relation(fields: [snilaiSmrId], references: [smrId], onDelete: Restrict, map: "seminar_nilai_ibfk_1")
-  dosen               dosen?         @relation(fields: [snilaiDsnId], references: [dsnId], onDelete: Restrict, map: "seminar_nilai_ibfk_2")
+  dosen               dosen?         @relation(fields: [snilaiDsnId], references: [dsnId], onDelete: Cascade, map: "seminar_nilai_ibfk_2")
   ref_itemnilai       ref_itemnilai? @relation(fields: [ref_itemnilaiItemId], references: [itemId])
   ref_itemnilaiItemId Int?           @db.UnsignedInt
 
