@@ -12,6 +12,7 @@ import {
   IStudentUpdate,
 } from "../utils/interfaces/student.interface";
 import { writeToFile } from "../utils/storage";
+import { FileService } from "./file.service";
 
 export class StudentService {
   static async deleteByNIM(username: string) {
@@ -62,6 +63,10 @@ export class StudentService {
         "can't request exam if the previous is already accepted"
       );
     }
+
+    body.doc.forEach(async (d) => {
+      d.path = await FileService.uploadExamProposalDoc(d.path, "");
+    });
 
     return await ExamProposal.createExamProposal(body, Number(thesis[0].taId));
   }
