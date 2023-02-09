@@ -51,6 +51,8 @@ export class ThesisHeadMajorDisposition {
           include: {
             ref_laboratorium: true,
             ref_laboratorium2: true,
+            pembimbing: { include: { dosen: true } },
+            penguji: { include: { dosen: true } },
           },
         },
       },
