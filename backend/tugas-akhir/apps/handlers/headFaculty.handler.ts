@@ -181,7 +181,7 @@ export class HeadFacultyHandler {
 
     try {
       if (
-        typeof body.SKNumber === "undefined" ||
+        // typeof body.SKNumber === "undefined" ||
         typeof body.thesisID === "undefined"
       ) {
         throw new BadRequestError("provide SKNumber and thesisID");
@@ -290,7 +290,7 @@ export class HeadFacultyHandler {
 
     try {
       if (
-        typeof body.SKNumber === "undefined" ||
+        // typeof body.SKNumber === "undefined" ||
         typeof body.thesisID === "undefined"
       ) {
         throw new BadRequestError("provide SKNumber and thesisID");

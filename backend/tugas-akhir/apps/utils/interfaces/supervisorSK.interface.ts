@@ -1,4 +1,4 @@
 export interface ISupervisorSKPost {
-  SKNumber: string;
+  SKNumber?: string;
   thesisID: number;
 }
