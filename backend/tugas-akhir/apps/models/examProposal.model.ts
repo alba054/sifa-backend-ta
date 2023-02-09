@@ -60,7 +60,13 @@ export class ExamProposal {
 
   static async getInProcessExamProposals() {
     return await prismaDB.permohonan_ujian_sidang.findMany({
-      where: { statusPermohonan: "Belum_Diproses" },
+      where: {
+        AND: [
+          { statusPermohonan: "Belum_Diproses" },
+          { statusValidasiBerkas: "Diterima" },
+          { statusVerifikasiBerkas: "Diterima" },
+        ],
+      },
       include: {
         tugas_akhir: {
           include: {
@@ -118,7 +124,12 @@ export class ExamProposal {
 
   static async getUnvalidatedExamProposals() {
     return await prismaDB.permohonan_ujian_sidang.findMany({
-      where: { statusValidasiBerkas: "Belum_Diproses" },
+      where: {
+        AND: [
+          { statusValidasiBerkas: "Belum_Diproses" },
+          { statusVerifikasiBerkas: "Diterima" },
+        ],
+      },
       include: {
         tugas_akhir: {
           include: {

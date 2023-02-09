@@ -1,8 +1,10 @@
 import { NotFoundError } from "@prisma/client/runtime";
 import { Thesis } from "../models/thesis.model";
+import { User } from "../models/user.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { InternalServerError } from "../utils/error/internalError";
 import { IThesis, IThesisPost } from "../utils/interfaces/thesis.interface";
+import { notifService } from "../utils/notification";
 import { deleteFile, writeToFile } from "../utils/storage";
 import { constants } from "../utils/utils";
 
@@ -55,6 +57,17 @@ export class ThesisService {
       proposalGroupID,
       body
     );
+
+    const user = await User.getUserByUsername(thesis[0].taMhsNim);
+
+    if (user !== null) {
+      const message = `judul tugas akhir ${thesis[0].taJudul} telah disetujui`;
+      notifService.sendNotification(
+        message,
+        [user.notificationID],
+        user.username
+      );
+    }
 
     return approveThesis;
   }
