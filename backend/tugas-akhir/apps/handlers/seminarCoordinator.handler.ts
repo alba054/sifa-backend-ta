@@ -205,25 +205,29 @@ export class SeminarCoordinatorHandler {
         );
       }
 
-      const datePattern = /[\d][\d]-[\d][\d]-[\d][\d][\d][\d]/;
-      const timePattern = /[\d][\d]:[\d][\d]/;
+      body.endTime = Number(body.endTime);
+      body.seminarDate = Number(body.seminarDate);
+      body.startTime = Number(body.startTime);
 
-      if (!datePattern.test(body.seminarDate)) {
-        throw new BadRequestError("seminarDate format should be dd-mm-yyyy");
-      }
+      // const datePattern = /[\d][\d]-[\d][\d]-[\d][\d][\d][\d]/;
+      // const timePattern = /[\d][\d]:[\d][\d]/;
 
-      // const date = body.seminarDate.split("-");
-      // const startTime = body.startTime.split(":");
-      // const endTime = body.endTime.split(":");
+      // if (!datePattern.test(body.seminarDate)) {
+      //   throw new BadRequestError("seminarDate format should be dd-mm-yyyy");
+      // }
 
-      if (
-        !timePattern.test(body.startTime) ||
-        !timePattern.test(body.endTime)
-      ) {
-        throw new BadRequestError(
-          "startTime and endTime format should be hh:mm"
-        );
-      }
+      // // const date = body.seminarDate.split("-");
+      // // const startTime = body.startTime.split(":");
+      // // const endTime = body.endTime.split(":");
+
+      // if (
+      //   !timePattern.test(body.startTime) ||
+      //   !timePattern.test(body.endTime)
+      // ) {
+      //   throw new BadRequestError(
+      //     "startTime and endTime format should be hh:mm"
+      //   );
+      // }
 
       await SeminarCoordinatorService.updateSeminarSchedule(
         Number(seminarID),
@@ -285,25 +289,28 @@ export class SeminarCoordinatorHandler {
         );
       }
 
-      const datePattern = /[\d][\d]-[\d][\d]-[\d][\d][\d][\d]/;
-      const timePattern = /[\d][\d]:[\d][\d]/;
+      body.endTime = Number(body.endTime);
+      body.seminarDate = Number(body.seminarDate);
+      body.startTime = Number(body.startTime);
+      // const datePattern = /[\d][\d]-[\d][\d]-[\d][\d][\d][\d]/;
+      // const timePattern = /[\d][\d]:[\d][\d]/;
 
-      if (!datePattern.test(body.seminarDate)) {
-        throw new BadRequestError("seminarDate format should be dd-mm-yyyy");
-      }
+      // if (!datePattern.test(body.seminarDate)) {
+      //   throw new BadRequestError("seminarDate format should be dd-mm-yyyy");
+      // }
 
-      // const date = body.seminarDate.split("-");
-      // const startTime = body.startTime.split(":");
-      // const endTime = body.endTime.split(":");
+      // // const date = body.seminarDate.split("-");
+      // // const startTime = body.startTime.split(":");
+      // // const endTime = body.endTime.split(":");
 
-      if (
-        !timePattern.test(body.startTime) ||
-        !timePattern.test(body.endTime)
-      ) {
-        throw new BadRequestError(
-          "startTime and endTime format should be hh:mm"
-        );
-      }
+      // if (
+      //   !timePattern.test(body.startTime) ||
+      //   !timePattern.test(body.endTime)
+      // ) {
+      //   throw new BadRequestError(
+      //     "startTime and endTime format should be hh:mm"
+      //   );
+      // }
 
       await SeminarCoordinatorService.createSeminarSchedule(
         Number(seminarID),

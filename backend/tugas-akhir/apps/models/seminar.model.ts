@@ -411,11 +411,12 @@ export class Seminar {
     seminarID: number,
     body: ISeminarSchedulePost
   ) {
-    const seminarDate = new Date(
-      Number(body.seminarDate.split("-")[2]),
-      Number(body.seminarDate.split("-")[1]),
-      Number(body.seminarDate.split("-")[0])
-    );
+    const seminarDate = new Date(body.seminarDate);
+    const startTime = new Date(body.startTime);
+    const endTime = new Date(body.endTime);
+    // Number(body.seminarDate.split("-")[2]),
+    // Number(body.seminarDate.split("-")[1]),
+    // Number(body.seminarDate.split("-")[0])
 
     const seminar = await prismaDB.seminar.update({
       where: {
@@ -423,8 +424,8 @@ export class Seminar {
       },
       data: {
         smrLink: body.note,
-        smrJamMulai: body.startTime,
-        smrJamSelesai: body.endTime,
+        smrJamMulai: `${startTime.getHours()}:${startTime.getMinutes()}`,
+        smrJamSelesai: `${endTime.getHours()}:${endTime.getMinutes()}`,
         smrTempat: body.place,
         smrTglSeminar: seminarDate,
         smrFileKesediaan: null,
@@ -465,11 +466,9 @@ export class Seminar {
     seminarID: number,
     body: ISeminarSchedulePost
   ) {
-    const seminarDate = new Date(
-      Number(body.seminarDate.split("-")[2]),
-      Number(body.seminarDate.split("-")[1]),
-      Number(body.seminarDate.split("-")[0])
-    );
+    const seminarDate = new Date(body.seminarDate);
+    const startTime = new Date(body.startTime);
+    const endTime = new Date(body.endTime);
 
     const seminar = await prismaDB.seminar.update({
       where: {
@@ -477,8 +476,8 @@ export class Seminar {
       },
       data: {
         smrLink: body.note,
-        smrJamMulai: body.startTime,
-        smrJamSelesai: body.endTime,
+        smrJamMulai: `${startTime.getHours()}:${startTime.getMinutes()}`,
+        smrJamSelesai: `${endTime.getHours()}:${endTime.getMinutes()}`,
         smrTempat: body.place,
         smrTglSeminar: seminarDate,
       },

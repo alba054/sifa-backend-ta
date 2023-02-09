@@ -21,7 +21,7 @@ export class ChatHandler {
         await ChatService.createNewTextMessage(
           nim,
           message,
-          res.locals.user.username
+          res.locals.user.name
         );
       } else if (Number(type) === 1 || Number(type) === 2) {
         if (typeof extension === "undefined") {
@@ -32,7 +32,7 @@ export class ChatHandler {
           message,
           type,
           extension,
-          res.locals.user.username
+          res.locals.user.name
         );
       } else {
         throw new BadRequestError("type is unknown");
@@ -62,7 +62,7 @@ export class ChatHandler {
       const chats = await ChatService.getAllChatOfThesis(
         nim,
         type,
-        res.locals.user.username
+        res.locals.user.name
       );
 
       return res

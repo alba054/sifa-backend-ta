@@ -8,9 +8,9 @@ interface IDocumentPost {
 }
 
 export interface ISeminarSchedulePost {
-  seminarDate: string;
-  startTime: string;
-  endTime: string;
+  seminarDate: number;
+  startTime: number;
+  endTime: number;
   place: string;
   note?: string;
 }
