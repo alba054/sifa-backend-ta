@@ -15,6 +15,24 @@ import { writeToFile } from "../utils/storage";
 import { FileService } from "./file.service";
 
 export class StudentService {
+  static async deleteSeminar(nim: string, seminarID: number) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null || seminar.tugas_akhir.taMhsNim !== nim) {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    if (
+      seminar.seminar_persetujuan.filter(
+        (s) => s.statusPermohonan === "Diterima"
+      ).length > 2
+    ) {
+      throw new BadRequestError("cannot delete seminar, has been approved");
+    }
+
+    return await Seminar.deleteSeminarByID(seminarID);
+  }
+
   static async deleteByNIM(username: string) {
     return await Student.deleteStudentByNIM(username);
   }
