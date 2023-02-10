@@ -36,9 +36,10 @@ interface ICredential {
 
 export class UserHandler {
   static async logoutHandler(req: Request, res: Response, next: NextFunction) {
+    const { nim } = req.params;
     const { username } = res.locals.user;
 
-    await UserService.removeNotificationID(username);
+    await UserService.removeNotificationID(username, nim);
 
     return res
       .status(200)

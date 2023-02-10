@@ -56,7 +56,7 @@ userRouter.post(
 
 // * logout
 userRouter.get(
-  "/logout",
+  "/logout/:nim",
   AuthorizationMiddleware.authorize([
     constants.SUPERUSER_GROUP_ACCESS,
     constants.ADMINHEAD_GROUP_ACCCESS,
