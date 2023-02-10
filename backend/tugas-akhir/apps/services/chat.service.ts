@@ -7,7 +7,12 @@ import { ThesisService } from "./thesis.service";
 import { v4 as uuidv4 } from "uuid";
 
 export class ChatService {
-  static async createNewTextMessage(nim: any, message: any, username: string) {
+  static async createNewTextMessage(
+    nim: any,
+    message: any,
+    username: string,
+    name: string
+  ) {
     const thesis = await ThesisService.getApprovedThesisByNIM(nim);
 
     if (typeof thesis[0] === "undefined") {
@@ -29,7 +34,7 @@ export class ChatService {
     ) {
       throw new NotFoundError("you are not eligible to view chats");
     }
-    return await Chat.createNewMessage(thesis[0].taId, message, 0, username);
+    return await Chat.createNewMessage(thesis[0].taId, message, 0, name);
   }
 
   static async createNewImageMessage(
@@ -37,7 +42,8 @@ export class ChatService {
     message: any,
     type: number,
     extension: string,
-    username: string
+    username: string,
+    name: string
   ) {
     const thesis = await ThesisService.getApprovedThesisByNIM(nim);
 
@@ -68,7 +74,7 @@ export class ChatService {
       file
     );
 
-    return await Chat.createNewMessage(thesis[0].taId, path, type, username);
+    return await Chat.createNewMessage(thesis[0].taId, path, type, name);
   }
 
   static async getAllChatOfThesis(

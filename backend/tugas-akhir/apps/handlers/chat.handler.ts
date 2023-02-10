@@ -21,6 +21,7 @@ export class ChatHandler {
         await ChatService.createNewTextMessage(
           nim,
           message,
+          res.locals.user.username,
           res.locals.user.name
         );
       } else if (Number(type) === 1 || Number(type) === 2) {
@@ -32,6 +33,7 @@ export class ChatHandler {
           message,
           type,
           extension,
+          res.locals.user.username,
           res.locals.user.name
         );
       } else {
