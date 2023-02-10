@@ -62,7 +62,7 @@ export class ChatHandler {
       const chats = await ChatService.getAllChatOfThesis(
         nim,
         type,
-        res.locals.user.name
+        res.locals.user.username
       );
 
       return res
