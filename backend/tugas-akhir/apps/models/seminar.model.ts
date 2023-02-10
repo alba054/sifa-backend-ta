@@ -28,6 +28,9 @@ export class Seminar {
           },
         },
         seminar_dokumen: true,
+        seminar_status_pembimbing: {
+          include: { pembimbing: { include: { dosen: true } } },
+        },
         seminar_nilai: {
           include: {
             dosen: true,
@@ -631,7 +634,11 @@ export class Seminar {
           dokFile: d.path,
         };
       });
-      return prismaDB.seminar_dokumen.createMany({
+
+      await prismaDB.seminar_dokumen.deleteMany({
+        where: { dokSmrId: seminarID },
+      });
+      return await prismaDB.seminar_dokumen.createMany({
         data,
       });
     } catch (error) {
