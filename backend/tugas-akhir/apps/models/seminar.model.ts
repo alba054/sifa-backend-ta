@@ -648,9 +648,9 @@ export class Seminar {
         };
       });
 
-      await prismaDB.seminar_dokumen.deleteMany({
-        where: { dokSmrId: seminarID },
-      });
+      // await prismaDB.seminar_dokumen.deleteMany({
+      //   where: { dokSmrId: seminarID },
+      // });
       return await prismaDB.seminar_dokumen.createMany({
         data,
       });
