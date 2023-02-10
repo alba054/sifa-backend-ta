@@ -19,7 +19,7 @@ export class Seminar {
           taMhsNim: nim,
         },
       },
-      orderBy: { smrId: "desc" },
+      // orderBy: { smrId: "desc" },
       include: {
         tugas_akhir: {
           include: {
