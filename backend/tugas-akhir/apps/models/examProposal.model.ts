@@ -19,6 +19,7 @@ export class ExamProposal {
           },
         },
       },
+      orderBy: { id: "desc" },
     });
   }
 
@@ -55,6 +56,7 @@ export class ExamProposal {
           },
         },
       },
+      orderBy: { id: "desc" },
     });
   }
 
@@ -78,6 +80,7 @@ export class ExamProposal {
           },
         },
       },
+      orderBy: { id: "desc" },
     });
   }
 
@@ -119,6 +122,7 @@ export class ExamProposal {
           },
         },
       },
+      orderBy: { id: "desc" },
     });
   }
 
@@ -141,6 +145,7 @@ export class ExamProposal {
           },
         },
       },
+      orderBy: { id: "desc" },
     });
   }
 
@@ -183,6 +188,7 @@ export class ExamProposal {
           },
         },
       },
+      orderBy: { id: "desc" },
     });
   }
 
@@ -200,6 +206,7 @@ export class ExamProposal {
           },
         },
       },
+      orderBy: { id: "desc" },
     });
   }
 
@@ -261,6 +268,7 @@ export class ExamProposal {
           },
         },
       },
+      orderBy: { id: "desc" },
     });
   }
 

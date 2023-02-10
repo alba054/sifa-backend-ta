@@ -126,7 +126,9 @@ studentRouter
   .get(
     AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
     StudentHandler.getSeminarDetail
-  );
+  )
+  .delete(AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+  StudentHandler.deleteSeminar);
 
 studentRouter
   .route("/:nim/exams")

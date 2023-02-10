@@ -23,9 +23,10 @@ export class Thesis {
       },
       include: {
         mahasiswa: true,
-        pembimbing: {include: {dosen: true}},
-        penguji: {include: {dosen: true}}
+        pembimbing: { include: { dosen: true } },
+        penguji: { include: { dosen: true } },
       },
+      orderBy: { taId: "desc" },
     });
   }
 
@@ -56,6 +57,7 @@ export class Thesis {
         ref_laboratorium: true,
         ref_laboratorium2: true,
       },
+      orderBy: { taId: "desc" },
     });
   }
 
@@ -77,6 +79,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
+      orderBy: { taId: "desc" },
     });
     // }
 
@@ -127,6 +130,7 @@ export class Thesis {
         sk_penguji: true,
         seminar: true,
       },
+      orderBy: { taId: "desc" },
     });
   }
 
@@ -207,6 +211,7 @@ export class Thesis {
           sk_pembimbing: true,
           sk_penguji: true,
         },
+        orderBy: { taId: "desc" },
       });
     }
 
@@ -227,6 +232,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
+      orderBy: { taId: "desc" },
     });
   }
 
@@ -243,6 +249,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
+      orderBy: { taId: "desc" },
     });
   }
 
@@ -265,6 +272,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
+      orderBy: { taId: "desc" },
     });
 
     return approvedThesis;
@@ -285,6 +293,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
+      orderBy: { taId: "desc" },
     });
 
     return approvedThesis[0];
@@ -364,6 +373,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
+      orderBy: { taId: "desc" },
     });
 
     return approvedThesis;
@@ -386,6 +396,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
+      orderBy: { taId: "desc" },
     });
 
     return proposedThesis;
@@ -449,6 +460,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
+      orderBy: { taId: "desc" },
     });
 
     return thesis;
@@ -485,6 +497,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
+      orderBy: { taId: "desc" },
     });
 
     return thesis;
