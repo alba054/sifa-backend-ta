@@ -1,5 +1,6 @@
 import jwt, {
   GetPublicKeyOrSecret,
+  JwtPayload,
   Secret,
   SignOptions,
   VerifyOptions,
@@ -52,6 +53,9 @@ class TokenGenerator {
         }
       });
     });
+  }
+  decode(token: string): string | JwtPayload | null {
+    return jwt.decode(token);
   }
 }
 

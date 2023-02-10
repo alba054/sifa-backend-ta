@@ -8,8 +8,8 @@ import { IUser } from "../utils/interfaces/user.interface";
 import { constants } from "../utils/utils";
 
 export class UserService {
-  static async removeNotificationID(username: any, nim: string) {
-    return await User.removeUserNotificationID(nim);
+  static async removeNotificationID(username: any) {
+    return await User.removeUserNotificationID(username);
   }
 
   static async deleteByUsername(username: string) {

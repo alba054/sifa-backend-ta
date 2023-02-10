@@ -86,7 +86,8 @@ export class AuthorizationMiddleware {
         next();
       } catch (error: any) {
         if (error instanceof TokenExpiredError) {
-          next(new BadRequestError(error.message));
+          console.log(tokenGenerator.decode(token));
+          return next(new BadRequestError(error.message));
         } else if (error instanceof JsonWebTokenError) {
           if (error.message === "invalid token") {
             // todo: BadRequestError with custom invalid token message
