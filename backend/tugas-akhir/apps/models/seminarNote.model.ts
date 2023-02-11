@@ -7,7 +7,7 @@ export class SeminarNote {
   static async noteSeminar(seminarID: number, dsnId: number, note: string) {
     try {
       const seminarNote = await prismaDB.seminar_catatan.findFirst({
-        where: { dosen: { dsnId } },
+        where: { AND: [{ dosen: { dsnId } }, { catatSmrId: seminarID }] },
       });
 
       if (seminarNote === null) {
