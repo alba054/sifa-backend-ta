@@ -198,6 +198,7 @@ export class DocumentService {
       seminarStartTime: seminar.smrJamMulai,
       studentName: seminar.tugas_akhir.mahasiswa.mhsNama,
       studentNIM: seminar.tugas_akhir.taMhsNim,
+      link: seminar.smrLink,
     } as ISeminarInvitationDoc;
   }
   static async getSeminarLetterEventData(nim: any, seminarID: number) {
