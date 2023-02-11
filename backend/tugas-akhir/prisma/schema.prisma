@@ -913,7 +913,7 @@ model user {
 }
 
 model user_badge {
-  user    user  @relation(fields: [userId], references: [id])
+  user    user  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId  Int
   badge   badge @relation(fields: [badgeId], references: [id])
   badgeId Int
