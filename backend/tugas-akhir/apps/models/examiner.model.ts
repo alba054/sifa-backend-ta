@@ -165,6 +165,7 @@ export class Examiner {
           ujiUrutan: body.position,
           ujiDsnId: body.lecturerID,
           ujiTaId: thesisID,
+          statusTerima: "Belum_Diproses",
         },
       });
     } catch (error) {
