@@ -37,11 +37,9 @@ export class HeadMajorService {
     if (status === "unresolved") {
       examiners = examiners.filter((e) => {
         return (
-          e.penguji.filter(
-            (e) =>
-              e.statusTerima === "Ditolak" ||
-              e.statusTerima === "Belum_Diproses"
-          ).length > 0 && e.pembimbing.length > 1
+          (e.penguji.filter((e) => e.statusTerima === "Ditolak").length > 0 ||
+            e.penguji.length < 1) &&
+          e.pembimbing.length > 1
         );
       });
     } else {
