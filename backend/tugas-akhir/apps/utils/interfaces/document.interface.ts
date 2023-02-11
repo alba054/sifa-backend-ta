@@ -99,6 +99,7 @@ export interface ISeminarInvitationDoc {
   letterNumber: string;
   department: string;
   coordinatorSeminarNote: string;
+  link?: string;
 }
 
 export interface ISeminarScoreDoc {
