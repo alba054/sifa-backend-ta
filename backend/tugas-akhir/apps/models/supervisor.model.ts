@@ -172,6 +172,13 @@ export class Supervisor {
     body: ISupervisorBodyPost
   ) {
     try {
+      await prismaDB.pembimbing.deleteMany({
+        where: {
+          pmbTaId: thesisID,
+          ref_posisipmb: body.position,
+        },
+      });
+
       const assignedSupervisor = await prismaDB.pembimbing.create({
         data: {
           asal_usulan_labID: labID,

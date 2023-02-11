@@ -153,6 +153,13 @@ export class Examiner {
 
   static async createExaminer(thesisID: number, body: IAssignedExaminer) {
     try {
+      await prismaDB.penguji.deleteMany({
+        where: {
+          ujiTaId: thesisID,
+          ujiUrutan: body.position,
+        },
+      });
+
       return await prismaDB.penguji.create({
         data: {
           ujiUrutan: body.position,
