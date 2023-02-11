@@ -13,7 +13,7 @@ export class SeminarScore {
   static async scoreSeminar(seminarID: number, dsnId: number, score: number) {
     try {
       const seminarScore = await prismaDB.seminar_nilai.findFirst({
-        where: { dosen: { dsnId } },
+        where: { AND: [{ dosen: { dsnId } }, { snilaiSmrId: seminarID }] },
       });
 
       if (seminarScore === null) {
