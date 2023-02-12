@@ -7,6 +7,7 @@ import { BadRequestError } from "../utils/error/badrequestError";
 import { ThesisHeadMajorDispositionService } from "../services/thesisHeadMajorDisposition.service";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { HeadMajorService } from "../services/headMajor.service";
+import { User } from "../models/user.model";
 
 dotenv.config();
 
@@ -358,8 +359,13 @@ export class HeadMajorHandler {
           (thesis) => thesis.taMhsNim === nim
         );
 
+        const headDepartment = await User.getUserByBadge(
+          constants.DEPARTMENT_ADMIN_GROUP_ACCESS
+        );
         response.push({
           NIM: nim,
+          headDepartmentName: headDepartment?.name,
+          headDepartmentNIP: headDepartment?.username,
           data: studentThesis,
         });
       }

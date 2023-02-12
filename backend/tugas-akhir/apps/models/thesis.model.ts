@@ -372,6 +372,8 @@ export class Thesis {
         disposisi_kaprodi: true,
         sk_pembimbing: true,
         sk_penguji: true,
+        pembimbing: { include: { dosen: true } },
+        penguji: { include: { dosen: true } },
       },
       orderBy: { taId: "desc" },
     });
