@@ -89,4 +89,13 @@ seminarCoordinatorRouter
     SeminarCoordinatorHandler.updateSeminarSchedule
   );
 
+seminarCoordinatorRouter
+  .route("/seminars/:seminarID/scoring")
+  .post(
+    AuthorizationMiddleware.authorize([
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+    ]),
+    SeminarCoordinatorHandler.scoreSeminar
+  );
+
 export default seminarCoordinatorRouter;

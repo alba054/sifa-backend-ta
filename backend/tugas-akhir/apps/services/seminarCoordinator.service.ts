@@ -1,4 +1,5 @@
 import { Seminar } from "../models/seminar.model";
+import { SeminarScore } from "../models/seminarScore.model";
 import { Thesis } from "../models/thesis.model";
 import { User } from "../models/user.model";
 import { BadRequestError } from "../utils/error/badrequestError";
@@ -51,6 +52,59 @@ import { notifService } from "../utils/notification";
 //  />
 
 export class SeminarCoordinatorService {
+  static async scoreSeminar(
+    lecturerID: number,
+    seminarID: number,
+    score: number
+  ) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null) {
+      throw new NotFoundError("seminar's not found");
+    }
+    const lecturer = seminar.seminar_persetujuan.find(
+      (s) => s.ssetujuDsnId === lecturerID
+    );
+
+    if (typeof lecturer === "undefined") {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    if (seminar.smrFileKesediaan === null && seminar.smrFileUndangan === null) {
+      throw new BadRequestError("cannot scores yet");
+    }
+
+    if (seminar.smrFileBeritaAcara !== null) {
+      throw new BadRequestError("has been blocked");
+    }
+
+    const seminarScore = await SeminarScore.scoreSeminar(
+      seminarID,
+      lecturer.dosen.dsnId,
+      score
+    );
+
+    const seminarScores = await SeminarScore.getSeminarScoresBySeminarID(
+      seminarID
+    );
+
+    if (seminarScores.length > 3) {
+      const scores = seminarScores.map((s) => s.snilaiNilai);
+      if (scores.every((s) => s !== null)) {
+        // console.log(scores);
+
+        let finalScore = scores.reduce((total, s) => (total ?? 0) + (s ?? 0));
+        // console.log(finalScore);
+
+        finalScore = (finalScore ?? 0) / seminarScores.length;
+
+        await Seminar.updateAvgScore(seminarID, finalScore);
+      }
+    }
+
+    return seminarScore;
+  }
+
   static async deleteSeminarScoringAndEventLetter(seminarID: number) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 

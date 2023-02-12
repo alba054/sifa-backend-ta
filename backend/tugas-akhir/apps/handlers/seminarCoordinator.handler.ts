@@ -5,6 +5,34 @@ import { ISeminarSchedulePost } from "../utils/interfaces/seminar.interface";
 import { constants, createResponse } from "../utils/utils";
 
 export class SeminarCoordinatorHandler {
+  static async scoreSeminar(req: Request, res: Response, next: NextFunction) {
+    const { seminarID } = req.params;
+    const { score, lecturerID } = req.body;
+
+    try {
+      if (typeof score === "undefined") {
+        throw new BadRequestError("provide score");
+      }
+
+      await SeminarCoordinatorService.scoreSeminar(
+        Number(lecturerID),
+        Number(seminarID),
+        Number(score)
+      );
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully give score to seminar"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async deleteSeminarScoringAndEventLetter(
     req: Request,
     res: Response,
