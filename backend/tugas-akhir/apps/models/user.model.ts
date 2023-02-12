@@ -14,7 +14,7 @@ export class User {
     return await prismaDB.user.findFirst({
       where: {
         AND: [
-          { badges: { some: { name: badge } } },
+          { user_badge: { some: { badge: { name: badge } } } },
           { labID: options?.lab },
           { prodiID: options?.major },
         ],
