@@ -240,7 +240,7 @@ export function fetchNewUserData() {
                   });
                 }
               } else {
-                await User.resetPassword(
+                const updatedUser = await User.resetPassword(
                   username,
                   password,
                   role,
@@ -250,6 +250,12 @@ export function fetchNewUserData() {
                   name,
                   lab
                 );
+
+                await prismaDB.user_badge.deleteMany({
+                  where: {
+                    userId: updatedUser.id,
+                  },
+                });
               }
             } catch (error) {
               console.error(error);
