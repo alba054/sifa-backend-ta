@@ -19,6 +19,8 @@ export class UserAsStudent {
       await StudentService.insertUserIntoStudent({
         name: userData.name || "",
         nim: userData.username,
+        vocation: userData.vocationID,
+        email: userData.email,
       });
     }
 

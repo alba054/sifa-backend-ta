@@ -29,6 +29,7 @@ export class UserAsLecturer {
         email: userData.email || "",
         name: userData.name || "",
         nip: userData.username,
+        departmentID: userData.departmentID,
       });
     }
 
