@@ -174,11 +174,12 @@ export class StudentService {
 
     if (
       thesis === null ||
-      thesis.taMhsNim !== nim ||
-      thesis.statusPermohonan === "Ditolak"
+      thesis.taMhsNim !== nim
     ) {
       throw new NotFoundError("thesis's not found");
     }
+
+
 
     await Thesis.updateKRSAndKHSPath(KHSPath, KRSPath, thesisID);
 

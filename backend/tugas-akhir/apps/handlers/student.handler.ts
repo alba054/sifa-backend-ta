@@ -421,6 +421,10 @@ export class StudentHandler {
       thesis = thesis.filter((th) => th.statusPermohonan === proposalStatus);
     }
 
+    const temp = thesis[0];
+    thesis[0] = thesis[1];
+    thesis[1] = temp;
+
     return res
       .status(200)
       .json(

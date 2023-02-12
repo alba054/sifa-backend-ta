@@ -142,7 +142,7 @@ export class Thesis {
     try {
       return await prismaDB.tugas_akhir.update({
         where: { taId: thesisID },
-        data: { taKRS: KRSPath, taKHS: KHSPath },
+        data: { taKRS: KRSPath, taKHS: KHSPath, taKRSKHSStatus: "Belum_Diproses" },
       });
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
