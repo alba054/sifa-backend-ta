@@ -3,6 +3,7 @@ import { ExamProposal } from "../models/examProposal.model";
 import { LabFree } from "../models/labFree.model";
 import { Seminar } from "../models/seminar.model";
 import { SupervisorSK } from "../models/supervisorSK.model";
+import { User } from "../models/user.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import {
@@ -15,6 +16,7 @@ import {
   ISeminarScoreDoc,
   ISupervisorSKDoc,
 } from "../utils/interfaces/document.interface";
+import { constants } from "../utils/utils";
 import { LabFreeService } from "./labFree.service";
 
 export class DocumentService {
@@ -97,13 +99,17 @@ export class DocumentService {
     );
     const sk = examinerSK && supervisoerSK;
 
+    const viceDean = await User.getUserByBadge(
+      constants.VICE_DEAN_GROUP_ACCESS
+    );
+
     return {
       name: exam.tugas_akhir.mahasiswa.mhsNama,
       nim: exam.tugas_akhir.taMhsNim,
       department: "Farmasi",
       faculty: "Farmasi",
-      firstViceDean: "",
-      firstViceDeanNIP: "",
+      firstViceDean: viceDean?.name || "",
+      firstViceDeanNIP: viceDean?.username || "",
       checkList: [
         krs,
         true,
@@ -173,9 +179,15 @@ export class DocumentService {
     const secondExaminer = seminar.tugas_akhir.penguji.find(
       (s) => s.ujiUrutan === 2
     )?.dosen;
+
+    const dean = await User.getUserByBadge(constants.DEAN_GROUP_ACCESS);
+    const seminarCoord = await User.getUserByBadge(
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS
+    );
+
     return {
-      deanName: "",
-      deanNIP: "",
+      deanName: dean?.name || "",
+      deanNIP: dean?.username || "",
       mainMentorNIP: mainMentor?.dsnNip,
       sideMentorNIP: sideMentor?.dsnNip,
       coordinatorSeminarNote: seminar.smrCatatan,
@@ -185,8 +197,8 @@ export class DocumentService {
       letterNumber: "",
       secondExaminer: secondExaminer?.dsnNama,
       secondExaminerNIP: secondExaminer?.dsnNip,
-      seminarCoordinatorName: "",
-      seminarCoordinatorNIP: "",
+      seminarCoordinatorName: seminarCoord?.name || "",
+      seminarCoordinatorNIP: seminarCoord?.username || "",
       letterDate: seminar.smrTglUndangan || "",
       mainMentor: mainMentor?.dsnNama,
       sideMentor: sideMentor?.dsnNama,
@@ -238,9 +250,11 @@ export class DocumentService {
       (e) => e.dosen?.dsnNama === forthExaminer
     )?.snilaiNilai;
 
+    const dean = await User.getUserByBadge(constants.DEAN_GROUP_ACCESS);
+
     return {
-      deanName: "",
-      deanNIP: "",
+      deanName: dean?.name || "",
+      deanNIP: dean?.username || "",
       firstExaminer,
       secondExaminer,
       thirdExaminer,
@@ -311,9 +325,10 @@ export class DocumentService {
       throw new BadRequestError("data's not for this student");
     }
 
+    const dean = await User.getUserByBadge(constants.DEAN_GROUP_ACCESS);
     return {
-      deanName: "",
-      deanNIP: "",
+      deanName: dean?.name || "",
+      deanNIP: dean?.username || "",
       department: "Farmasi",
       letterDate: sk.skpTglSurat,
       letterNumber: sk.skpNomor,
@@ -345,9 +360,11 @@ export class DocumentService {
       throw new BadRequestError("data's not for this student");
     }
 
+    const dean = await User.getUserByBadge(constants.DEAN_GROUP_ACCESS);
+
     return {
-      deanName: "",
-      deanNIP: "",
+      deanName: dean?.name || "",
+      deanNIP: dean?.username || "",
       department: "Farmasi",
       letterDate: sk.skbTglSurat,
       letterNumber: sk.skbNomor,
@@ -374,10 +391,15 @@ export class DocumentService {
       throw new BadRequestError("data's not for this student");
     }
 
+    const headLab = await User.getUserByBadge(
+      constants.LAB_ADMIN_GROUP_ACCESS,
+      { lab: freeLab.blLabId }
+    );
+
     return {
       faculty: "Farmasi",
-      headLabName: freeLab.ref_laboratorium.labKepalaNama,
-      headLabNIP: freeLab.ref_laboratorium.labKepalaNip,
+      headLabName: headLab?.name || "",
+      headLabNIP: headLab?.username || "",
       letterDate: freeLab.blTglSurat ?? "",
       letterNumber: "",
       studentName: freeLab.mahasiswa.mhsNama,

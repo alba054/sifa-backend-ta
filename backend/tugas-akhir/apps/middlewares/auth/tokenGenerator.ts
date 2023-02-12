@@ -54,7 +54,7 @@ class TokenGenerator {
       });
     });
   }
-  decode(token: string): string | JwtPayload | null {
+  decode(token: string): TokenPayload | string | JwtPayload | null {
     return jwt.decode(token);
   }
 }

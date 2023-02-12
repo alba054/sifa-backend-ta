@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { TokenExpiredError, JsonWebTokenError } from "jsonwebtoken";
+import { UserService } from "../../services/user.service";
 import { UnathorizedError } from "../../utils/error/authError";
 import { BadRequestError } from "../../utils/error/badrequestError";
 import { InternalServerError } from "../../utils/error/internalError";
@@ -85,8 +86,19 @@ export class AuthorizationMiddleware {
 
         next();
       } catch (error: any) {
+        // * if token is expired, just decode it without verifying
+        // * and remove notificationID
         if (error instanceof TokenExpiredError) {
-          console.log(tokenGenerator.decode(token));
+          // console.log(tokenGenerator.decode(token));
+          const unverifiedDecodedToken = tokenGenerator.decode(token);
+          if (
+            unverifiedDecodedToken !== null &&
+            typeof unverifiedDecodedToken === "object"
+          ) {
+            await UserService.removeNotificationID(
+              unverifiedDecodedToken.username
+            );
+          }
           return next(new BadRequestError(error.message));
         } else if (error instanceof JsonWebTokenError) {
           if (error.message === "invalid token") {

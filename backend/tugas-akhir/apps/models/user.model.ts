@@ -7,6 +7,21 @@ import { IUser } from "../utils/interfaces/user.interface";
 import { constants } from "../utils/utils";
 
 export class User {
+  static async getUserByBadge(
+    badge: string,
+    options?: { lab?: number; major?: number }
+  ) {
+    return await prismaDB.user.findFirst({
+      where: {
+        AND: [
+          { badges: { some: { name: badge } } },
+          { labID: options?.lab },
+          { prodiID: options?.major },
+        ],
+      },
+    });
+  }
+
   static async removeUserNotificationID(username: any) {
     return await prismaDB.user.update({
       where: {
