@@ -251,11 +251,11 @@ export function fetchNewUserData() {
                   lab
                 );
 
-                await prismaDB.user_badge.deleteMany({
-                  where: {
-                    userId: updatedUser.id,
-                  },
-                });
+                // await prismaDB.user_badge.deleteMany({
+                //   where: {
+                //     userId: updatedUser.id,
+                //   },
+                // });
               }
             } catch (error) {
               console.error(error);
