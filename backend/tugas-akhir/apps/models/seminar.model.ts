@@ -408,6 +408,7 @@ export class Seminar {
       },
       orderBy: { smrId: "desc" },
       include: {
+        seminar_dokumen: true,
         tugas_akhir: {
           include: {
             mahasiswa: true,
