@@ -252,8 +252,8 @@ export class StudentHandler {
         throw new BadRequestError("provide krs and khs");
       }
 
-      let title1 = uuidv4();
-      let title2 = uuidv4();
+      let title1 = uuidv4() + ".pdf";
+      let title2 = uuidv4() + ".pdf";
       const path = `${constants.KRS_AND_KHS_PATH}/${nim}`; // * path to save krs and khs
 
       const krsBuffer = decodeBase64(krs);
