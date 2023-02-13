@@ -131,7 +131,7 @@ export class Thesis {
         ref_laboratorium2: true,
         sk_pembimbing: true,
         sk_penguji: true,
-        seminar: true,
+        seminar: { where: { smrTglSeminar: null } },
       },
       orderBy: { updated_at: "desc" },
     });
