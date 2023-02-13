@@ -427,6 +427,11 @@ export class StudentHandler {
       thesis = thesis.filter((th) => th.statusPermohonan === proposalStatus);
     }
 
+    if (thesis.length > 1) {
+      const temp = thesis[0];
+      thesis[0] = thesis[1];
+      thesis[1] = temp;
+    }
     // const temp = thesis[0];
     // thesis[0] = thesis[1];
     // thesis[1] = temp;
