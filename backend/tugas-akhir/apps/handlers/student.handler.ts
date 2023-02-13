@@ -161,6 +161,7 @@ export class StudentHandler {
     res: Response,
     next: NextFunction
   ) {
+    const { username } = res.locals.user;
     const { nim, seminarID } = req.params;
     const body = req.body as ISeminarDocumentPost;
 
@@ -173,7 +174,12 @@ export class StudentHandler {
         throw new BadRequestError("provide documents at least 1");
       }
 
-      await StudentService.provideSeminarDocument(nim, Number(seminarID), body);
+      await StudentService.provideSeminarDocument(
+        nim,
+        Number(seminarID),
+        body,
+        username
+      );
 
       return res
         .status(201)

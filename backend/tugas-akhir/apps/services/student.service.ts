@@ -106,13 +106,18 @@ export class StudentService {
   static async provideSeminarDocument(
     nim: string,
     seminarID: number,
-    body: ISeminarDocumentPost
+    body: ISeminarDocumentPost,
+    username: string
   ) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 
     if (seminar === null || seminar.tugas_akhir.taMhsNim !== nim) {
       throw new NotFoundError("seminar's not found");
     }
+
+    body.doc.forEach(async (d) => {
+      d.path = await FileService.uploadFileSeminarDoc(d.path, username);
+    });
 
     return await Seminar.provideSeminarDocument(seminarID, body);
   }
@@ -172,14 +177,15 @@ export class StudentService {
   ) {
     const thesis = await Thesis.getThesisByID(thesisID);
 
-    if (
-      thesis === null ||
-      thesis.taMhsNim !== nim
-    ) {
+    if (thesis === null || thesis.taMhsNim !== nim) {
       throw new NotFoundError("thesis's not found");
     }
 
-
+    if (thesis.taKRSKHSStatus !== "Ditolak") {
+      throw new BadRequestError(
+        "hanya dapat mengupload ulang krs dan khs ketika status berkas ditolak"
+      );
+    }
 
     await Thesis.updateKRSAndKHSPath(KHSPath, KRSPath, thesisID);
 
