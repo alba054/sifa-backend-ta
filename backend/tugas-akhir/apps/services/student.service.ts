@@ -49,7 +49,7 @@ export class StudentService {
     }
 
     if (examProposal?.statusVerifikasiBerkas === "Diterima") {
-      throw new BadRequestError("can't accepted exam proposal");
+      throw new BadRequestError("can't delete verified accepted exam proposal");
     }
 
     return await ExamProposal.deleteExamProposalByStudentNIM(nim);

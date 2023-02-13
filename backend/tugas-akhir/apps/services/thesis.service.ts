@@ -73,7 +73,13 @@ export class ThesisService {
   }
 
   static async getProposedThesisByHeadMajor(vocationID: number) {
-    const proposedThesis = await Thesis.getProposedThesisByVocation(vocationID);
+    let proposedThesis = await Thesis.getProposedThesisByVocation(vocationID);
+
+    if (proposedThesis.length > 1) {
+      const temp = proposedThesis[0];
+      proposedThesis[0] = proposedThesis[1];
+      proposedThesis[1] = temp;
+    }
 
     return proposedThesis;
   }
