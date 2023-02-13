@@ -170,6 +170,16 @@ export class User {
     lab?: number
   ) {
     try {
+      if (lab !== null) {
+        await prismaDB.ref_laboratorium.update({
+          where: {labId: lab},
+          data: {
+            labKepalaNama: name,
+            labKepalaNip: username
+          }
+        })
+      }
+
       const updatedUser = await prismaDB.user.update({
         where: { username },
         data: {
