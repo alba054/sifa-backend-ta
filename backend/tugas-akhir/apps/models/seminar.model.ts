@@ -639,10 +639,10 @@ export class Seminar {
 
   static async provideSeminarDocument(
     seminarID: number,
-    body: ISeminarDocumentPost
+    body: ISeminarDocumentPost | any
   ) {
     try {
-      const data = body.doc.map((d) => {
+      const data = body.map((d: any) => {
         return {
           namaDokumenSeminar: d.name,
           dokSmrId: seminarID,

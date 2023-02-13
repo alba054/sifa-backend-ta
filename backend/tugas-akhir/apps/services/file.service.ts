@@ -4,7 +4,7 @@ import { writeToFile } from "../utils/storage";
 import { constants } from "../utils/utils";
 
 export class FileService {
-  static async uploadExamProposalDoc(doc: any, username: any) {
+  static uploadExamProposalDoc(doc: any, username: any) {
     const docBuffer = decodeBase64(doc);
     const title = `${uuidv4()}_${username}`;
     const path = `${constants.EXAM_FILE_PATH}`;
@@ -12,7 +12,7 @@ export class FileService {
     return writeToFile(path, title, docBuffer);
   }
 
-  static async uploadFileSeminarDocFromCoord(doc: string) {
+  static uploadFileSeminarDocFromCoord(doc: string) {
     const docBuffer = decodeBase64(doc);
 
     const title = `${uuidv4()}_${constants.SEMINAR_COORDINATOR_DOC_POSTFIX}`;
@@ -21,7 +21,7 @@ export class FileService {
     return writeToFile(path, title, docBuffer);
   }
 
-  static async uploadFileSeminarDoc(doc: any, username: any) {
+  static uploadFileSeminarDoc(doc: any, username: any) {
     const docBuffer = decodeBase64(doc);
     const title = `${uuidv4()}_${username}.pdf`;
     const path = `${constants.SEMINAR_FILE_PATH}`;
@@ -29,7 +29,7 @@ export class FileService {
     return writeToFile(path, title, docBuffer);
   }
 
-  static async uploadFileSign(sign: string, username: string) {
+  static uploadFileSign(sign: string, username: string) {
     const signBuffer = decodeBase64(sign);
     const title = username;
     const path = `${constants.SIGN_FILE_PATH}`;

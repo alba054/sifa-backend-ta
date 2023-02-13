@@ -86,10 +86,10 @@ export class StudentService {
       );
     }
 
-    const newBody: any = [];
+    // const newBody: any = [];
     body.doc.forEach(async (d) => {
-      d.path = await FileService.uploadExamProposalDoc(d.path, username);
-      newBody.push({ name: d.name, path: d.path });
+      d.path = FileService.uploadExamProposalDoc(d.path, username);
+      // newBody.push({ name: d.name, path: d.path });
     });
 
     return await ExamProposal.createExamProposal(body, Number(thesis[0].taId));
@@ -120,7 +120,7 @@ export class StudentService {
     const newBody: any = [];
 
     body.doc.forEach(async (d) => {
-      d.path = await FileService.uploadFileSeminarDoc(d.path, username);
+      d.path = FileService.uploadFileSeminarDoc(d.path, username);
       newBody.push({ name: d.name, path: d.path });
     });
 
