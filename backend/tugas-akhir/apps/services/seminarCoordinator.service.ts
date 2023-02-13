@@ -296,11 +296,14 @@ export class SeminarCoordinatorService {
     const response: any[] = [];
     for (const nim of uniqueNIM) {
       const studentThesis = thesis.filter((t) => t.taMhsNim === nim);
-      response.push({
-        NIM: nim,
-        name: studentThesis[0].mahasiswa.mhsNama,
-        data: studentThesis,
-      });
+      if (studentThesis[0].seminar.every((s) => !s.smrTglSeminar)) {
+        response.push({
+          NIM: nim,
+          name: studentThesis[0].mahasiswa.mhsNama,
+          types: studentThesis[0].seminar.filter((s) => !s.smrTglSeminar),
+          data: studentThesis,
+        });
+      }
     }
 
     return response;

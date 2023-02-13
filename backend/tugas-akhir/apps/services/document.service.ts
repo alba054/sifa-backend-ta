@@ -147,7 +147,7 @@ export class DocumentService {
 
     return {
       department: "Farmasi",
-      letterDate: "",
+      letterDate: seminar.smrTglBeritaAcara,
       proposalTitle: seminar.tugas_akhir.taJudul,
       score: seminar.smrNilaiAngka,
       season: "",
@@ -263,7 +263,7 @@ export class DocumentService {
       secondExaminerScore,
       thirdExaminerScore,
       forthExaminerScore,
-      letterDate: "",
+      letterDate: seminar.smrTglBeritaAcara,
       mainMentor: firstExaminer,
       sideMentor: secondExaminer,
       major: seminar.tugas_akhir.mahasiswa.ref_prodi?.prdNama,
