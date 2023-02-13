@@ -646,6 +646,8 @@ model sk_pembimbing {
   skbTglSurat      DateTime         @db.Date
   skbStatus        Int?
   note             String?
+  deanName         String?
+  deanNIP          String?
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
   skbStatusAkses   Int?
   tugas_akhir      tugas_akhir      @relation(fields: [skbTaId], references: [taId], onDelete: Cascade, map: "sk_pembimbing_ibfk_1")
@@ -715,6 +717,8 @@ model sk_penguji {
   skpTglSurat      DateTime         @db.Date
   skpStatus        Int?
   note             String?
+  deanName         String?
+  deanNIP          String?
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
   tugas_akhir      tugas_akhir      @relation(fields: [skpTaId], references: [taId], onDelete: Cascade, map: "sk_penguji_ibfk_1")
   ref_prodi        ref_prodi?       @relation(fields: [skpPrdId], references: [prdId], map: "sk_penguji_ibfk_2")
@@ -853,6 +857,8 @@ model permohonan_ujian_sidang {
   statusTTD              Boolean                           @default(false)
   tanggalSK              DateTime?                         @db.Date
   created_at             DateTime                          @default(now())
+  viceDeanNIP            String?
+  viceDeanName           String?
   dokumen_ujian_sidang   dokumen_permohonan_ujian_sidang[]
   tugas_akhir            tugas_akhir                       @relation(fields: [tugas_akhirTaId], references: [taId])
 }

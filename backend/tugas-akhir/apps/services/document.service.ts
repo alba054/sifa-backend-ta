@@ -99,17 +99,17 @@ export class DocumentService {
     );
     const sk = examinerSK && supervisoerSK;
 
-    const viceDean = await User.getUserByBadge(
-      constants.VICE_DEAN_GROUP_ACCESS
-    );
+    // const viceDean = await User.getUserByBadge(
+    //   constants.VICE_DEAN_GROUP_ACCESS
+    // );
 
     return {
       name: exam.tugas_akhir.mahasiswa.mhsNama,
       nim: exam.tugas_akhir.taMhsNim,
       department: "Farmasi",
       faculty: "Farmasi",
-      firstViceDean: viceDean?.name || "",
-      firstViceDeanNIP: viceDean?.username || "",
+      firstViceDean: exam.viceDeanName || "",
+      firstViceDeanNIP: exam.viceDeanNIP || "",
       checkList: [
         krs,
         true,
@@ -315,8 +315,8 @@ export class DocumentService {
 
     if (
       sk === null ||
-      sk.statusPermohonan !== "Diterima" ||
-      sk.skpStatus !== 1
+      sk.statusPermohonan !== "Diterima"
+      // sk.skpStatus !== 1
     ) {
       throw new NotFoundError("sk hasn't been provided");
     }
@@ -325,10 +325,10 @@ export class DocumentService {
       throw new BadRequestError("data's not for this student");
     }
 
-    const dean = await User.getUserByBadge(constants.DEAN_GROUP_ACCESS);
+    // const dean = await User.getUserByBadge(constants.DEAN_GROUP_ACCESS);
     return {
-      deanName: dean?.name || "",
-      deanNIP: dean?.username || "",
+      deanName: sk.deanName || "",
+      deanNIP: sk.deanNIP || "",
       department: "Farmasi",
       letterDate: sk.skpTglSurat,
       letterNumber: sk.skpNomor,
@@ -350,8 +350,8 @@ export class DocumentService {
 
     if (
       sk === null ||
-      sk.statusPermohonan !== "Diterima" ||
-      sk.skbStatus !== 1
+      sk.statusPermohonan !== "Diterima"
+      // sk.skbStatus !== 1
     ) {
       throw new NotFoundError("sk hasn't been provided");
     }
@@ -360,11 +360,11 @@ export class DocumentService {
       throw new BadRequestError("data's not for this student");
     }
 
-    const dean = await User.getUserByBadge(constants.DEAN_GROUP_ACCESS);
+    // const dean = await User.getUserByBadge(constants.DEAN_GROUP_ACCESS);
 
     return {
-      deanName: dean?.name || "",
-      deanNIP: dean?.username || "",
+      deanName: sk.deanName || "",
+      deanNIP: sk.deanNIP || "",
       department: "Farmasi",
       letterDate: sk.skbTglSurat,
       letterNumber: sk.skbNomor,

@@ -342,7 +342,8 @@ export class LecturerService {
   static async acceptOrRejectOffer(
     nim: string,
     supervisorID: number,
-    isAccepted: boolean
+    isAccepted: boolean,
+    note?: string
   ) {
     const lecturer = await LecturerService.getLecturerProfile(nim);
 
@@ -363,7 +364,8 @@ export class LecturerService {
     const supervisorOffer = await Supervisor.acceptOrRejectSupervisorOffer(
       lecturer.dsnId,
       supervisorID,
-      isAccepted
+      isAccepted,
+      note
     );
 
     return supervisorOffer;

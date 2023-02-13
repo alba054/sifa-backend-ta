@@ -37,11 +37,15 @@ export class Supervisor {
   static async acceptOrRejectSupervisorOffer(
     lecturerID: number,
     supervisorID: number,
-    isAccepted: boolean
+    isAccepted: boolean,
+    note?: string
   ) {
     try {
       return await prismaDB.pembimbing.updateMany({
-        data: { statusTerima: isAccepted ? "Diterima" : "Ditolak" },
+        data: {
+          statusTerima: isAccepted ? "Diterima" : "Ditolak",
+          catatan: note,
+        },
         where: {
           AND: [
             { pmbDsnId: lecturerID },

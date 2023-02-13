@@ -9,21 +9,31 @@ export class ViceDeanService {
       throw new NotFoundError("proposal's not found");
     }
 
-    return await ExamProposal.signExamProposal(examID, false);
+    return await ExamProposal.signExamProposal(examID, false, "", "");
   }
 
   static async getHistoryOfSignedProposals() {
     return await ExamProposal.getSignedProposals();
   }
 
-  static async signExamProposal(examID: number, isAccepted: boolean) {
+  static async signExamProposal(
+    examID: number,
+    isAccepted: boolean,
+    username: string,
+    name: string
+  ) {
     const proposal = await ExamProposal.getExamProposalByID(examID);
 
     if (proposal === null) {
       throw new NotFoundError("proposal's not found");
     }
 
-    return await ExamProposal.signExamProposal(examID, isAccepted);
+    return await ExamProposal.signExamProposal(
+      examID,
+      isAccepted,
+      username,
+      name
+    );
   }
 
   static async getExamProposalDetail(examID: number) {

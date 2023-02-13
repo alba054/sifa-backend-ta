@@ -23,12 +23,19 @@ export class ExamProposal {
     });
   }
 
-  static async signExamProposal(examID: number, isAccepted: boolean) {
+  static async signExamProposal(
+    examID: number,
+    isAccepted: boolean,
+    username: string,
+    name: string
+  ) {
     try {
       return await prismaDB.permohonan_ujian_sidang.update({
         where: { id: examID },
         data: {
           statusTTD: isAccepted,
+          viceDeanName: name,
+          viceDeanNIP: username,
         },
       });
     } catch (error) {

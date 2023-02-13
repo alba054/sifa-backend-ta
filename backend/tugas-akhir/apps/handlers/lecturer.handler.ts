@@ -502,7 +502,7 @@ export class LecturerHandler {
     next: NextFunction
   ) {
     const { nim, supervisorID } = req.params;
-    const { isAccepted } = req.body;
+    const { isAccepted, note } = req.body;
 
     try {
       if (typeof isAccepted === "undefined") {
@@ -512,7 +512,8 @@ export class LecturerHandler {
       const supervisorOffer = await LecturerService.acceptOrRejectOffer(
         nim,
         Number(supervisorID),
-        Boolean(isAccepted)
+        Boolean(isAccepted),
+        note
       );
 
       if (supervisorOffer === null) {

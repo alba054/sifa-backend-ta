@@ -58,13 +58,19 @@ export class DeanHandler {
   static async signExaminerSK(req: Request, res: Response, next: NextFunction) {
     const { SKID } = req.params;
     const { signed } = req.body;
+    const { username, name } = res.locals.user;
 
     try {
       if (typeof signed === "undefined") {
         throw new BadRequestError("provide signed");
       }
 
-      await DeanService.signExaminerSK(Number(SKID), Boolean(signed));
+      await DeanService.signExaminerSK(
+        Number(SKID),
+        Boolean(signed),
+        username,
+        name
+      );
 
       return res
         .status(200)

@@ -52,6 +52,7 @@ export class ViceDeanHandler {
   ) {
     const { examID } = req.params;
     const { isAccepted } = req.body;
+    const { username, name } = res.locals.user;
 
     try {
       if (typeof isAccepted === "undefined") {
@@ -59,7 +60,9 @@ export class ViceDeanHandler {
       }
       await ViceDeanService.signExamProposal(
         Number(examID),
-        Boolean(isAccepted)
+        Boolean(isAccepted),
+        username,
+        name
       );
 
       return res

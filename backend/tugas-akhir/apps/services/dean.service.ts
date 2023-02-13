@@ -29,7 +29,12 @@ export class DeanService {
     return await SupervisorSK.signSK(SKID, signed);
   }
 
-  static async signExaminerSK(SKID: number, signed: boolean) {
+  static async signExaminerSK(
+    SKID: number,
+    signed: boolean,
+    username: string,
+    name: string
+  ) {
     const examinerSK = await ExaminerSK.getSKByID(SKID);
 
     if (examinerSK === null || examinerSK.statusPermohonan !== "Diterima") {
@@ -40,7 +45,7 @@ export class DeanService {
       throw new BadRequestError("cannot sign anymore");
     }
 
-    return await ExaminerSK.signSK(SKID, signed);
+    return await ExaminerSK.signSK(SKID, signed, username, name);
   }
 
   static async getApprovedThesisWithSK(nim: any) {
