@@ -7,7 +7,7 @@ export class Notification {
   static async getNotificationByUsername(username: string) {
     return await prismaDB.notifikasi.findMany({
       where: { username },
-      orderBy: { updated_at: "desc" },
+      orderBy: { created_at: "desc" },
     });
   }
 
