@@ -314,8 +314,8 @@ export class DocumentService {
     const sk = await ExaminerSK.getSKByID(SKID);
 
     if (
-      sk === null ||
-      sk.statusPermohonan !== "Diterima"
+      sk === null
+      // sk.statusPermohonan !== "Diterima"
       // sk.skpStatus !== 1
     ) {
       throw new NotFoundError("sk hasn't been provided");
@@ -349,8 +349,8 @@ export class DocumentService {
     const sk = await SupervisorSK.getSKByID(SKID);
 
     if (
-      sk === null ||
-      sk.statusPermohonan !== "Diterima"
+      sk === null
+      // sk.statusPermohonan !== "Diterima"
       // sk.skbStatus !== 1
     ) {
       throw new NotFoundError("sk hasn't been provided");
