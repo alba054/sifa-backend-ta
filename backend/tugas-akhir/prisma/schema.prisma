@@ -30,8 +30,8 @@ model bebas_lab {
   blMhsNim         String           @db.Char(12)
   blLabId          Int
   blTglSurat       DateTime?        @db.Date
-  created_at       DateTime         @default(now())
-  updated_at       DateTime?        @default(now())
+  created_at       DateTime?        @default(now())
+  updated_at       DateTime?        @updatedAt
   // blStatus         Int?
   blTahun          Int?
   ref_permohonan   StatusPermohonan @default(Belum_Diproses)
@@ -117,14 +117,15 @@ model mahasiswa {
 }
 
 model notifikasi {
-  notifid       Int      @id @default(autoincrement()) @db.UnsignedInt
-  notifKode     String?  @db.VarChar(10)
-  notifPengirim String?  @db.VarChar(30)
-  notifPenerima String?  @db.VarChar(30)
-  notifStatus   Int      @default(0)
+  notifid       Int       @id @default(autoincrement()) @db.UnsignedInt
+  notifKode     String?   @db.VarChar(10)
+  notifPengirim String?   @db.VarChar(30)
+  notifPenerima String?   @db.VarChar(30)
+  notifStatus   Int       @default(0)
   message       String?
   username      String?
-  created_at    DateTime @default(now())
+  created_at    DateTime? @default(now())
+  updated_at    DateTime? @updatedAt
 }
 
 // model notifikasi_dosen {
@@ -140,6 +141,8 @@ model pembimbing {
   statusTerima              StatusPermohonan            @default(Belum_Diproses)
   catatan                   String?
   asal_usulan_labID         Int?
+  created_at                DateTime?                   @default(now())
+  updated_at                DateTime?                   @updatedAt
   asal_usulan               ref_laboratorium?           @relation(fields: [asal_usulan_labID], references: [labId])
   // pmbPosisi                 Int?
   // ref_posisipmb             ref_posisipmb?              @relation(fields: [pmbPosisi], references: [posisipmbId], onDelete: Cascade, map: "Pembimbing_ibfk_2")
@@ -162,6 +165,8 @@ model pembimbingan {
   bimPesanType Int? // pesantype 0:plain text, 1:file, 2:image
   bimPesan     String?      @db.Text
   bimUserNama  String?      @db.VarChar(100)
+  created_at   DateTime?    @default(now())
+  updated_at   DateTime?    @updatedAt
   tugas_akhir  tugas_akhir? @relation(fields: [bimTaId], references: [taId], onDelete: Cascade, map: "pembimbingan_ibfk_1")
 
   @@index([bimTaId], map: "pembimbingan_ibfk_1")
@@ -187,6 +192,8 @@ model penguji {
   ujiUrutan      Int
   ujiDsnId       Int
   catatan        String?
+  created_at     DateTime?        @default(now())
+  updated_at     DateTime?        @updatedAt
   statusTerima   StatusPermohonan @default(Belum_Diproses)
   tugas_akhir    tugas_akhir      @relation(fields: [ujiTaId], references: [taId], onDelete: Cascade, map: "penguji_ibfk_1")
   dosen          dosen            @relation(fields: [ujiDsnId], references: [dsnId], onDelete: Cascade, map: "penguji_ibfk_4")
@@ -225,6 +232,8 @@ model ref_dokumenseminar {
   sdokJenisUjianId Int?
   sdokNama         String?           @db.VarChar(50)
   sdokPrdId        Int?              @default(0)
+  created_at       DateTime?         @default(now())
+  updated_at       DateTime?         @updatedAt
   // ref_jenisujian   ref_jenisujian?   @relation(fields: [sdokJenisUjianId], references: [jenisId], onDelete: Restrict, onUpdate: Restrict, map: "ref_dokumenseminar_ibfk_1")
   ref_jenisujian   JenisUjian?
   seminar_dokumen  seminar_dokumen[]
@@ -495,6 +504,8 @@ model seminar {
   smrTglUndangan            DateTime?                   @db.Date
   smrNilaiAngka             Float?                      @db.Float
   smrNilaiHuruf             String?                     @db.VarChar(2)
+  created_at                DateTime?                   @default(now())
+  updated_at                DateTime?                   @updatedAt
   ref_jenisujian            JenisUjian
   tugas_akhir               tugas_akhir                 @relation(fields: [smrTaId], references: [taId], onDelete: Cascade, map: "seminar_ibfk_2")
   // ref_jenisujian            ref_jenisujian              @relation(fields: [smrJenisUjian], references: [jenisId], onUpdate: Restrict, map: "seminar_ibfk_3")
@@ -515,6 +526,8 @@ model seminar_catatan {
   catatDsnId    Int
   catatKomentar String?   @db.Text
   catatDate     DateTime? @db.Date
+  created_at    DateTime? @default(now())
+  updated_at    DateTime? @updatedAt
   seminar       seminar   @relation(fields: [catatSmrId], references: [smrId], onDelete: Cascade, map: "seminar_catatan_ibfk_1")
   dosen         dosen     @relation(fields: [catatDsnId], references: [dsnId], map: "seminar_catatan_ibfk_2", onDelete: Cascade)
 
@@ -528,6 +541,8 @@ model seminar_dokumen {
   // dokSdokId          Int                @db.UnsignedInt
   namaDokumenSeminar       String
   dokFile                  String?             @db.VarChar(200)
+  created_at               DateTime?           @default(now())
+  updated_at               DateTime?           @updatedAt
   seminar                  seminar?            @relation(fields: [dokSmrId], references: [smrId], onDelete: Cascade, map: "seminar_dokumen_FK")
   // ref_dokumenseminar ref_dokumenseminar @relation(fields: [dokSdokId], references: [sdokId], onUpdate: Restrict, map: "seminar_dokumen_ibfk_2")
   ref_dokumenseminar       ref_dokumenseminar? @relation(fields: [ref_dokumenseminarSdokId], references: [sdokId])
@@ -544,6 +559,8 @@ model seminar_nilai {
   snilaiNilai         Float?         @db.Float
   snilaiDate          DateTime?      @db.DateTime(0)
   snilaiUser          String?        @db.VarChar(30)
+  created_at          DateTime?      @default(now())
+  updated_at          DateTime?      @updatedAt
   seminar             seminar?       @relation(fields: [snilaiSmrId], references: [smrId], onDelete: Restrict, map: "seminar_nilai_ibfk_1")
   dosen               dosen?         @relation(fields: [snilaiDsnId], references: [dsnId], onDelete: Cascade, map: "seminar_nilai_ibfk_2")
   ref_itemnilai       ref_itemnilai? @relation(fields: [ref_itemnilaiItemId], references: [itemId])
@@ -561,6 +578,8 @@ model seminar_persetujuan {
   ssetujuStatus    Int?
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
   ssetujuCatatan   String?          @db.Text
+  created_at       DateTime?        @default(now())
+  updated_at       DateTime?        @updatedAt
   dosen            dosen            @relation(fields: [ssetujuDsnId], references: [dsnId], onDelete: Cascade, map: "seminar_persetujuan_ibfk_1")
   seminar          seminar          @relation(fields: [ssetujuSmrId], references: [smrId], onDelete: Cascade, map: "seminar_persetujuan_ibfk_2")
 
@@ -575,6 +594,8 @@ model seminar_status_pembimbing {
   // setujuStatusId    Int               @db.UnsignedInt
   setujuDate       DateTime?        @db.Date
   setujuCatatan    String?          @db.Text
+  created_at       DateTime?        @default(now())
+  updated_at       DateTime?        @updatedAt
   seminar          seminar          @relation(fields: [setujuSmrId], references: [smrId], onDelete: Cascade, map: "seminar_status_pembimbing_ibfk_1")
   pembimbing       pembimbing       @relation(fields: [setujuPmbId], references: [pmbId], onDelete: Cascade, map: "seminar_status_pembimbing_ibfk_2")
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
@@ -650,6 +671,8 @@ model sk_pembimbing {
   deanNIP          String?
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
   skbStatusAkses   Int?
+  created_at       DateTime?        @default(now())
+  updated_at       DateTime?        @updatedAt
   tugas_akhir      tugas_akhir      @relation(fields: [skbTaId], references: [taId], onDelete: Cascade, map: "sk_pembimbing_ibfk_1")
   ref_departemen   ref_departemen   @relation(fields: [skbDprtId], references: [dprtId])
 
@@ -719,6 +742,8 @@ model sk_penguji {
   note             String?
   deanName         String?
   deanNIP          String?
+  created_at       DateTime?        @default(now())
+  updated_at       DateTime?        @updatedAt
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
   tugas_akhir      tugas_akhir      @relation(fields: [skpTaId], references: [taId], onDelete: Cascade, map: "sk_penguji_ibfk_1")
   ref_prodi        ref_prodi?       @relation(fields: [skpPrdId], references: [prdId], map: "sk_penguji_ibfk_2")
@@ -791,6 +816,8 @@ model sk_penguji_fakultas {
 model pengusul {
   id               Int              @id @default(autoincrement())
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
+  created_at       DateTime?        @default(now())
+  updated_at       DateTime?        @updatedAt
   dosen            dosen?           @relation(fields: [dosenDsnId], references: [dsnId], onDelete: Cascade, onUpdate: Cascade)
   tugas_akhir      tugas_akhir      @relation(fields: [tugas_akhirTaId], references: [taId], onDelete: Cascade, onUpdate: Cascade)
   dosenDsnId       Int?
@@ -816,6 +843,8 @@ model tugas_akhir {
   taDosenPengusul                                        Int?
   proposalGroupID                                        String
   tanggalMasuk                                           DateTime                  @default(now())
+  created_at                                             DateTime?                 @default(now())
+  updated_at                                             DateTime?                 @updatedAt
   tanggalPenyelesaian                                    DateTime?
   ref_permohonan_ref_permohonanTotugas_akhir_taStatusPmb StatusPermohonan          @default(Belum_Diproses)
   ref_permohonan_ref_permohonanTotugas_akhir_taStatusKep StatusPermohonan          @default(Belum_Diproses)
@@ -859,6 +888,7 @@ model permohonan_ujian_sidang {
   created_at             DateTime                          @default(now())
   viceDeanNIP            String?
   viceDeanName           String?
+  updated_at             DateTime?                         @updatedAt
   dokumen_ujian_sidang   dokumen_permohonan_ujian_sidang[]
   tugas_akhir            tugas_akhir                       @relation(fields: [tugas_akhirTaId], references: [taId])
 }
@@ -875,6 +905,8 @@ model dokumen_permohonan_ujian_sidang {
   permohonan_ujian_sidang    permohonan_ujian_sidang?  @relation(fields: [permohonan_ujian_sidangId], references: [id])
   permohonan_ujian_sidangId  Int?
   namaDokumen                String?
+  created_at                 DateTime?                 @default(now())
+  updated_at                 DateTime?                 @updatedAt
   jenis_dokumen              ref_dokumen_ujian_sidang? @relation(fields: [ref_dokumen_ujian_sidangId], references: [id])
   ref_dokumen_ujian_sidangId Int?
 }
@@ -883,6 +915,8 @@ model disposisi_kaprodi {
   id              Int         @id @default(autoincrement())
   tugas_akhirTaId Int         @unique
   departmentName  String
+  created_at      DateTime?   @default(now())
+  updated_at      DateTime?   @updatedAt
   tugas_akhir     tugas_akhir @relation(fields: [tugas_akhirTaId], references: [taId], onDelete: Cascade)
 }
 
