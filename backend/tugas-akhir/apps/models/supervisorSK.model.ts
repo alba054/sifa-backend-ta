@@ -5,11 +5,20 @@ import { InternalServerError } from "../utils/error/internalError";
 import { ISupervisorSKPost } from "../utils/interfaces/supervisorSK.interface";
 
 export class SupervisorSK {
-  static async signSK(SKID: number, signed: boolean) {
+  static async signSK(
+    SKID: number,
+    signed: boolean,
+    username: string,
+    name: string
+  ) {
     try {
       return await prismaDB.sk_pembimbing.update({
         where: { skbId: SKID },
-        data: { skbStatus: signed ? 1 : null },
+        data: {
+          skbStatus: signed ? 1 : null,
+          deanName: name,
+          deanNIP: username,
+        },
       });
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
