@@ -86,8 +86,10 @@ export class StudentService {
       );
     }
 
+    const newBody: any = [];
     body.doc.forEach(async (d) => {
       d.path = await FileService.uploadExamProposalDoc(d.path, username);
+      newBody.push({ name: d.name, path: d.path });
     });
 
     return await ExamProposal.createExamProposal(body, Number(thesis[0].taId));
@@ -115,11 +117,14 @@ export class StudentService {
       throw new NotFoundError("seminar's not found");
     }
 
+    const newBody: any = [];
+
     body.doc.forEach(async (d) => {
       d.path = await FileService.uploadFileSeminarDoc(d.path, username);
+      newBody.push({ name: d.name, path: d.path });
     });
 
-    return await Seminar.provideSeminarDocument(seminarID, body);
+    return await Seminar.provideSeminarDocument(seminarID, newBody);
   }
 
   static async requestSeminar(nim: string, seminarType: string) {
