@@ -49,13 +49,18 @@ export class HeadFacultyService {
 
     if (status === "unresolved") {
       thesis = thesis.filter((t) => {
-        return (
-          ((!t.sk_pembimbing.length || !t.sk_penguji.length) &&
-            t.pembimbing.length > 1 &&
-            t.penguji.length > 1) ||
-          t.sk_pembimbing.at(-1)?.statusPermohonan !== "Diterima" ||
-          t.sk_penguji.at(-1)?.statusPermohonan !== "Diterima"
-        );
+        const noSK =
+          (!t.sk_pembimbing.length || !t.sk_penguji.length) &&
+          t.pembimbing.length > 1 &&
+          t.penguji.length > 1;
+
+        const withSK =
+          (t.sk_pembimbing.at(-1)?.statusPermohonan !== "Diterima" ||
+            t.sk_penguji.at(-1)?.statusPermohonan !== "Diterima") &&
+          t.pembimbing.length > 1 &&
+          t.penguji.length > 1;
+
+        return noSK || withSK;
       });
     } else {
       thesis = thesis.filter((t) => {
