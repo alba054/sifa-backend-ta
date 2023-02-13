@@ -22,6 +22,7 @@ export class Supervisor {
           dosen: true,
           tugas_akhir: true,
         },
+        orderBy: { updated_at: "desc" },
       });
     }
 
@@ -31,6 +32,7 @@ export class Supervisor {
         dosen: true,
         tugas_akhir: true,
       },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -87,6 +89,7 @@ export class Supervisor {
           },
           asal_usulan: true,
         },
+        orderBy: { updated_at: "desc" },
       });
     }
     return await prismaDB.pembimbing.findMany({
@@ -106,6 +109,7 @@ export class Supervisor {
         },
         asal_usulan: true,
       },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -142,6 +146,7 @@ export class Supervisor {
       include: {
         dosen: true,
       },
+      orderBy: { updated_at: "desc" },
     });
 
     return supervisors;

@@ -22,6 +22,7 @@ export class Examiner {
           dosen: true,
           tugas_akhir: true,
         },
+        orderBy: { updated_at: "desc" },
       });
     }
 
@@ -31,6 +32,7 @@ export class Examiner {
         dosen: true,
         tugas_akhir: true,
       },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -109,6 +111,7 @@ export class Examiner {
             },
           },
         },
+        orderBy: { updated_at: "desc" },
       });
     }
 
@@ -128,6 +131,7 @@ export class Examiner {
           },
         },
       },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -136,6 +140,7 @@ export class Examiner {
       where: {
         ujiTaId: thesisID,
       },
+      orderBy: { updated_at: "desc" },
     });
 
     return examiners;
@@ -146,6 +151,7 @@ export class Examiner {
       where: {
         ujiTaId: thesisID,
       },
+      orderBy: { updated_at: "desc" },
     });
 
     return examiners;
