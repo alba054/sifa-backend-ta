@@ -505,6 +505,7 @@ export class Thesis {
         // _count: true,
         pengusul: { include: { dosen: true } },
         pembimbing: { include: { dosen: true } },
+        penguji: { include: { dosen: true } },
         sk_pembimbing: true,
         sk_penguji: true,
       },
