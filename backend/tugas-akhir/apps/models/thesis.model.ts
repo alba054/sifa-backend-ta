@@ -25,8 +25,11 @@ export class Thesis {
         mahasiswa: true,
         pembimbing: { include: { dosen: true } },
         penguji: { include: { dosen: true } },
+        pengusul: { include: { dosen: true } },
+        ref_laboratorium: true,
+        ref_laboratorium2: true,
       },
-      orderBy: { taId: "desc" },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -57,7 +60,7 @@ export class Thesis {
         ref_laboratorium: true,
         ref_laboratorium2: true,
       },
-      orderBy: { taId: "desc" },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -79,7 +82,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
-      orderBy: { taId: "desc" },
+      orderBy: { updated_at: "desc" },
     });
     // }
 
@@ -130,7 +133,7 @@ export class Thesis {
         sk_penguji: true,
         seminar: true,
       },
-      orderBy: { taId: "desc" },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -142,7 +145,11 @@ export class Thesis {
     try {
       return await prismaDB.tugas_akhir.update({
         where: { taId: thesisID },
-        data: { taKRS: KRSPath, taKHS: KHSPath, taKRSKHSStatus: "Belum_Diproses" },
+        data: {
+          taKRS: KRSPath,
+          taKHS: KHSPath,
+          taKRSKHSStatus: "Belum_Diproses",
+        },
       });
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
@@ -211,7 +218,7 @@ export class Thesis {
           sk_pembimbing: true,
           sk_penguji: true,
         },
-        orderBy: { taId: "desc" },
+        orderBy: { updated_at: "desc" },
       });
     }
 
@@ -232,7 +239,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
-      orderBy: { taId: "desc" },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -249,7 +256,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
-      orderBy: { taId: "desc" },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -272,7 +279,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
-      orderBy: { taId: "desc" },
+      orderBy: { updated_at: "desc" },
     });
 
     return approvedThesis;
@@ -293,7 +300,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
-      orderBy: { taId: "desc" },
+      orderBy: { updated_at: "desc" },
     });
 
     return approvedThesis[0];
@@ -375,7 +382,7 @@ export class Thesis {
         pembimbing: { include: { dosen: true } },
         penguji: { include: { dosen: true } },
       },
-      orderBy: { taId: "desc" },
+      orderBy: { updated_at: "desc" },
     });
 
     return approvedThesis;
@@ -398,7 +405,7 @@ export class Thesis {
         sk_pembimbing: true,
         sk_penguji: true,
       },
-      orderBy: { taId: "desc" },
+      orderBy: { updated_at: "desc" },
     });
 
     return proposedThesis;
@@ -459,10 +466,11 @@ export class Thesis {
         mahasiswa: true,
         pengusul: { include: { dosen: true } },
         ref_laboratorium: true,
+        ref_laboratorium2: true,
         sk_pembimbing: true,
         sk_penguji: true,
       },
-      orderBy: { taId: "desc" },
+      orderBy: { updated_at: "desc" },
     });
 
     return thesis;
@@ -493,13 +501,14 @@ export class Thesis {
       include: {
         mahasiswa: true,
         ref_laboratorium: true,
+        ref_laboratorium2: true,
         // _count: true,
         pengusul: { include: { dosen: true } },
         pembimbing: { include: { dosen: true } },
         sk_pembimbing: true,
         sk_penguji: true,
       },
-      orderBy: { taId: "desc" },
+      orderBy: { updated_at: "desc" },
     });
 
     return thesis;

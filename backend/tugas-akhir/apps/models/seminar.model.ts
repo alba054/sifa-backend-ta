@@ -19,7 +19,7 @@ export class Seminar {
           taMhsNim: nim,
         },
       },
-      // orderBy: { smrId: "desc" },
+      // orderBy: {updated_at: "desc"},
       include: {
         tugas_akhir: {
           include: {
@@ -132,7 +132,7 @@ export class Seminar {
             { NOT: { smrNilaiAngka: null } },
           ],
         },
-        orderBy: { smrId: "desc" },
+        orderBy: {updated_at: "desc"},
         include: {
           tugas_akhir: { include: { mahasiswa: true } },
         },
@@ -147,7 +147,7 @@ export class Seminar {
           { smrNilaiAngka: null },
         ],
       },
-      orderBy: { smrId: "desc" },
+      orderBy: {updated_at: "desc"},
       include: {
         tugas_akhir: { include: { mahasiswa: true } },
       },
@@ -171,7 +171,7 @@ export class Seminar {
           { NOT: { smrFileKesediaan: null } },
         ],
       },
-      orderBy: { smrId: "desc" },
+      orderBy: {updated_at: "desc"},
       include: {
         seminar_dokumen: true,
         tugas_akhir: {
@@ -260,7 +260,7 @@ export class Seminar {
         //   ],
         // },
       },
-      orderBy: { smrId: "desc" },
+      orderBy: {updated_at: "desc"},
       include: {
         tugas_akhir: {
           include: {
@@ -323,7 +323,7 @@ export class Seminar {
         //   ],
         // },
       },
-      orderBy: { smrId: "desc" },
+      orderBy: {updated_at: "desc"},
       include: {
         tugas_akhir: {
           include: {
@@ -406,7 +406,7 @@ export class Seminar {
         //   ],
         // },
       },
-      orderBy: { smrId: "desc" },
+      orderBy: {updated_at: "desc"},
       include: {
         seminar_dokumen: true,
         tugas_akhir: {
@@ -546,7 +546,7 @@ export class Seminar {
           include: { mahasiswa: true },
         },
       },
-      orderBy: { smrId: "desc" },
+      orderBy: {updated_at: "desc"},
     });
   }
 
@@ -622,7 +622,7 @@ export class Seminar {
           pembimbing: { some: { dosen: { dsnNip: nim } } },
         },
       },
-      orderBy: { smrId: "desc" },
+      orderBy: {updated_at: "desc"},
       include: {
         seminar_dokumen: true,
         tugas_akhir: {

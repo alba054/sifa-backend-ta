@@ -19,7 +19,7 @@ export class ExamProposal {
           },
         },
       },
-      orderBy: { id: "desc" },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -63,7 +63,7 @@ export class ExamProposal {
           },
         },
       },
-      orderBy: { id: "desc" },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -87,7 +87,7 @@ export class ExamProposal {
           },
         },
       },
-      orderBy: { id: "desc" },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -129,7 +129,7 @@ export class ExamProposal {
           },
         },
       },
-      orderBy: { id: "desc" },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -152,7 +152,7 @@ export class ExamProposal {
           },
         },
       },
-      orderBy: { id: "desc" },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -195,7 +195,7 @@ export class ExamProposal {
           },
         },
       },
-      orderBy: { id: "desc" },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -213,7 +213,7 @@ export class ExamProposal {
           },
         },
       },
-      orderBy: { id: "desc" },
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -275,7 +275,7 @@ export class ExamProposal {
           },
         },
       },
-      orderBy: { id: "desc" },
+      orderBy: { updated_at: "desc" },
     });
   }
 
