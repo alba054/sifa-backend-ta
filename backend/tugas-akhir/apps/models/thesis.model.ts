@@ -345,7 +345,7 @@ export class Thesis {
         },
         data: {
           statusPermohonan: thesisTwoStatus,
-          taCatatanMhs: noteThesisTwo,
+          taCatatan: noteThesisTwo,
           tanggalPenyelesaian: resolveDateTwo,
         },
       });

@@ -172,7 +172,7 @@ export class ThesisService {
       throw new NotFoundError("thesis is not found");
     }
 
-    if (thesis[0].statusPermohonan !== "Belum_Diproses") {
+    if (thesis[0].statusPermohonan === "Diterima") {
       throw new BadRequestError("thesis has been accepted or rejected");
     }
 
