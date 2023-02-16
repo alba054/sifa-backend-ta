@@ -10,6 +10,7 @@ import {
   fetchNewBadges,
   fetchNewDepartment,
   fetchNewLabs,
+  fetchNewMajor,
   fetchNewRoles,
   fetchNewUserData,
 } from "./remoteDB";
@@ -48,10 +49,17 @@ setInterval(() => {
 }, 5000);
 
 setInterval(() => {
+  fetchNewMajor();
+}, 6000);
+
+setInterval(() => {
   fetchNewLabs();
 }, 5000);
 
 setInterval(() => {
-  fetchNewUserData();
+  const today = new Date();
+  fetchNewUserData(
+    `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate() - 1}`
+  );
   // console.log("hai");
-}, 7000);
+}, 10000);

@@ -108,163 +108,169 @@ export function fetchNewDepartment() {
           },
         });
       } catch (error) {}
-      connection.query(
-        `select * from major where department_id = '${d.id}'`,
-        (err, res, fields) => {
-          if (err) {
-            console.error(err);
-            return;
-          }
-          res.forEach(async (m: { code: string; name: string }) => {
-            const oldMajor = await prismaDB.ref_prodi.findFirst({
-              where: { prdKode: m.code },
-            });
-
-            if (oldMajor !== null) {
-              await prismaDB.ref_prodi.updateMany({
-                where: { prdKode: oldMajor.prdKode },
-                data: { prdNama: m.name },
-              });
-            } else {
-              await prismaDB.ref_prodi.create({
-                data: { prdNama: m.name, prdKode: m.code },
-              });
-            }
-          });
-        }
-      );
     });
   });
 }
 
-export function fetchNewUserData() {
-  connection.query(`select * from user`, (err, res, fields) => {
+export function fetchNewMajor() {
+  connection.query(`select * from major`, (err, res, fields) => {
     if (err) {
       console.error(err);
       return;
     }
+    res.forEach(async (m: { id: number; code: string; name: string }) => {
+      // const oldMajor = await prismaDB.ref_prodi.findFirst({
+      //   where: { prdKode: m.code },
+      // });
 
-    res.forEach(
-      async (u: {
-        id: number;
-        username: string;
-        password: string;
-        department: number;
-        email: string;
-        name: string;
-        user_role_id: number;
-        major: number;
-        is_enable: number;
-        lab_id: number;
-        signature_path: number;
-      }) => {
-        const id = u.id;
-        const username = u.username;
-        const password = u.password.replace("{bcrypt}", "");
-        const department = Number(u.department);
-        const email = u.email;
-        const name = u.name;
-        const major = Number(u.major);
-        const role = Number(u.user_role_id);
-        const status = Number(u.is_enable);
-        const lab = u.lab_id;
-
-        const user = await User.getUserByUsername(username);
-        connection.query(
-          `select * from user_role where id = '${role}'`,
-          async (err, res, fields) => {
-            try {
-              if (user === null) {
-                if (res[0].name === constants.STUDENT_GROUP_ACCESS) {
-                  // todo: insert into mahasiswa table
-                  // const insertedNewStudent = await StudentService.insertUserIntoStudent({
-                  //   nim: newUser.username,
-                  //   name: newUser.name || "",
-                  //   email: newUser.email,
-                  // });
-                  await UserAsStudent.insertUserAsStudent({
-                    id,
-                    groupAccess: role,
-                    username,
-                    email,
-                    name,
-                    password,
-                    vocationID: major,
-                    departmentID: department,
-                    status,
-                  });
-                } else if (res[0].name === constants.LECTURER_GROUP_ACCESS) {
-                  // todo: lecturer departmentID is undefined so create a default value
-                  await UserAsLecturer.insertUserAsLecturer({
-                    id,
-                    groupAccess: role,
-                    username,
-                    email,
-                    name,
-                    password,
-                    departmentID: department,
-                    vocationID: major,
-                    labID: lab ?? null,
-                    status,
-                  });
-                  // } else if (
-                  //   Number(role) === constants.LAB_ADMIN_GROUP_ACCESS
-                  // ) {
-                  //   insertedUser = await UserAsLabAdmin.insertUserAsLabAdmin(
-                  //     newUser
-                  //   );
-                  // } else if (
-                  //   res[0].name === constants.VOCATION_ADMIN_GROUP_ACCESS
-                  // ) {
-                  //   await UserAsVocationAdmin.insertUserAsVocationAdmin({
-                  //     groupAccess: role,
-                  //     username,
-                  //     password,
-                  //     email,
-                  //     name,
-                  //     vocationID: major ?? 1,
-                  //     departmentID: department ?? 1,
-                  //   });
-                } else {
-                  await UserFacade.insertUser({
-                    id,
-                    username,
-                    groupAccess: role,
-                    password,
-                    email,
-                    name,
-                    vocationID: major,
-                    departmentID: department,
-                    status,
-                    labID: lab ?? null,
-                  });
-                }
-              } else {
-                const updatedUser = await User.resetPassword(
-                  username,
-                  password,
-                  role,
-                  department,
-                  major,
-                  email,
-                  name,
-                  lab
-                );
-
-                // await prismaDB.user_badge.deleteMany({
-                //   where: {
-                //     userId: updatedUser.id,
-                //   },
-                // });
-              }
-            } catch (error) {
-              console.error(error);
-            }
-          }
-        );
-      }
-    );
+      // if (oldMajor !== null) {
+      //   await prismaDB.ref_prodi.updateMany({
+      //     where: { prdKode: oldMajor.prdKode },
+      //     data: { prdNama: m.name },
+      //   });
+      // } else {
+      //   // await prismaDB.ref_prodi.create({
+      //   //   data: { prdNama: m.name, prdKode: m.code },
+      //   // });
+      // }
+      try {
+        await prismaDB.ref_prodi.create({
+          data: { prdId: m.id, prdNama: m.name, prdKode: m.code },
+        });
+      } catch (error) {}
+    });
   });
+}
+
+export function fetchNewUserData(time?: Date | string) {
+  let count = 0;
+  connection.query(
+    `select * from user where updated_at >= ${time || "2001-01-01"}`,
+    (err, res, fields) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
+      res.forEach(
+        async (u: {
+          id: number;
+          username: string;
+          password: string;
+          department: number;
+          email: string;
+          name: string;
+          user_role_id: number;
+          major: number;
+          is_enable: number;
+          lab_id: number;
+          signature_path: number;
+        }) => {
+          count++;
+          console.log(count);
+
+          const id = u.id;
+          const username = u.username;
+          const password = u.password.replace("{bcrypt}", "");
+          const department = Number(u.department);
+          const email = u.email;
+          const name = u.name;
+          const major = Number(u.major);
+          const role = Number(u.user_role_id);
+          const status = Number(u.is_enable);
+          const lab = u.lab_id;
+
+          const user = await User.getUserByUsername(username);
+          connection.query(
+            `select * from user_role where id = '${role}'`,
+            async (err, res, fields) => {
+              try {
+                if (user === null) {
+                  if (res[0].name === constants.STUDENT_GROUP_ACCESS) {
+                    // todo: insert into mahasiswa table
+                    // const insertedNewStudent = await StudentService.insertUserIntoStudent({
+                    //   nim: newUser.username,
+                    //   name: newUser.name || "",
+                    //   email: newUser.email,
+                    // });
+                    await UserAsStudent.insertUserAsStudent({
+                      id,
+                      groupAccess: role,
+                      username,
+                      email,
+                      name,
+                      password,
+                      vocationID: major,
+                      departmentID: department,
+                      status,
+                    });
+                  } else if (res[0].name === constants.LECTURER_GROUP_ACCESS) {
+                    // todo: lecturer departmentID is undefined so create a default value
+                    await UserAsLecturer.insertUserAsLecturer({
+                      id,
+                      groupAccess: role,
+                      username,
+                      email,
+                      name,
+                      password,
+                      departmentID: department,
+                      vocationID: major,
+                      labID: lab ?? null,
+                      status,
+                    });
+                    // } else if (
+                    //   Number(role) === constants.LAB_ADMIN_GROUP_ACCESS
+                    // ) {
+                    //   insertedUser = await UserAsLabAdmin.insertUserAsLabAdmin(
+                    //     newUser
+                    //   );
+                    // } else if (
+                    //   res[0].name === constants.VOCATION_ADMIN_GROUP_ACCESS
+                    // ) {
+                    //   await UserAsVocationAdmin.insertUserAsVocationAdmin({
+                    //     groupAccess: role,
+                    //     username,
+                    //     password,
+                    //     email,
+                    //     name,
+                    //     vocationID: major ?? 1,
+                    //     departmentID: department ?? 1,
+                    //   });
+                  } else {
+                    await UserFacade.insertUser({
+                      id,
+                      username,
+                      groupAccess: role,
+                      password,
+                      email,
+                      name,
+                      vocationID: major,
+                      departmentID: department,
+                      status,
+                      labID: lab ?? null,
+                    });
+                  }
+                } else {
+                  const updatedUser = await User.resetPassword(
+                    username,
+                    password,
+                    role,
+                    department,
+                    major,
+                    email,
+                    name,
+                    lab
+                  );
+                }
+              } catch (error) {
+                console.error(error);
+              }
+            }
+          );
+        }
+      );
+    }
+  );
 
   connection.query("select * from user_badges", (err, res, fields) => {
     if (err) {
