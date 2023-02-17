@@ -92,7 +92,7 @@ model dosen {
 
 model mahasiswa {
   mhsNim             String               @id @db.Char(12)
-  mhsNama            String               @db.VarChar(60)
+  mhsNama            String               @db.VarChar(255)
   mhsAlamat          String?              @db.VarChar(100)
   mhsTempatLahir     String?              @db.VarChar(30)
   mhsTglLahir        DateTime?            @db.Date
