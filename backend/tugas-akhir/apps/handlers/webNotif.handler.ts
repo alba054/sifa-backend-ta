@@ -3,6 +3,29 @@ import { WebNotifService } from "../services/webNotif.service";
 import { constants, createResponse } from "../utils/utils";
 
 export class WebNotifHandler {
+  static async clearNotification(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { role } = req.query;
+    const { username } = res.locals.user;
+
+    try {
+      await WebNotifService.clearNotification(username, role);
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully clear notification"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
   // todo: get notification based on token payload
   static async getNotification(
     req: Request,
@@ -13,9 +36,10 @@ export class WebNotifHandler {
     const { username } = res.locals.user;
 
     try {
-      const data = await WebNotifService.getNotificationByUsername(username, {
-        role,
-      });
+      const data = await WebNotifService.getNotificationByUsername(
+        username,
+        role
+      );
 
       return res
         .status(200)
