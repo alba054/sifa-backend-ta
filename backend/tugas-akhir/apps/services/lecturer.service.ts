@@ -9,7 +9,10 @@ import { User } from "../models/user.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { ILecturer } from "../utils/interfaces/lecturer.interface";
+import { IWebNotif } from "../utils/interfaces/webNotif.interface";
 import { notifService } from "../utils/notification";
+import { constants } from "../utils/utils";
+import { WebNotifService } from "./webNotif.service";
 
 export class LecturerService {
   static async getApprentices(nim: string) {
@@ -30,11 +33,44 @@ export class LecturerService {
       throw new NotFoundError("thesis's not found");
     }
 
-    return await Thesis.confirmProposedThesisByLecturer(
+    const inserted = await Thesis.confirmProposedThesisByLecturer(
       nim,
       thesisID,
       isAccepted
     );
+
+    if (thesis.pengusul.every((p) => p.statusPermohonan === "Diterima")) {
+      const userVocationAdmin = await User.getUsersByBadge(
+        constants.VOCATION_ADMIN_GROUP_ACCESS
+      );
+      const userHeadMajor = await User.getUsersByBadge(
+        constants.HEAD_MAJOR_GROUP_ACCESS
+      );
+
+      userHeadMajor.forEach(async (u) => {
+        const data = {
+          userID: u.id,
+          role: constants.HEAD_MAJOR_GROUP_ACCESS,
+          title: "Persetujuan Judul Tugas Akhir",
+          description: `tugas akhir dengan judul ${thesis.taJudul} siap direview`,
+          link: "/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian",
+        } as IWebNotif;
+        await WebNotifService.createNotification(data);
+      });
+
+      userVocationAdmin.forEach(async (u) => {
+        const data = {
+          userID: u.id,
+          role: constants.VOCATION_ADMIN_GROUP_ACCESS,
+          title: "Persetujuan Judul Tugas Akhir",
+          description: `tugas akhir dengan judul ${thesis.taJudul} siap direview`,
+          link: "/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian",
+        } as IWebNotif;
+        await WebNotifService.createNotification(data);
+      });
+    }
+
+    return inserted;
   }
 
   static async getUncorfimedProposedThesisDetail(
@@ -367,6 +403,62 @@ export class LecturerService {
       isAccepted,
       note
     );
+
+    const user = await User.getUsersByBadge(
+      constants.FACULTY_ADMIN_GROUP_ACCESS
+    );
+
+    if (
+      supervisor.tugas_akhir.pembimbing.every(
+        (p) => p.statusTerima === "Diterima"
+      )
+    ) {
+      const vocationAdminUser = await User.getUsersByBadge(
+        constants.VOCATION_ADMIN_GROUP_ACCESS
+      );
+      const headMajorUser = await User.getUsersByBadge(
+        constants.HEAD_MAJOR_GROUP_ACCESS
+      );
+
+      vocationAdminUser.forEach(async (u) => {
+        const data = {
+          userID: u.id,
+          role: constants.VOCATION_ADMIN_GROUP_ACCESS,
+          title: "Penyusunan Tim Penguji",
+          description: `tugas akhir dengan judul ${supervisor.tugas_akhir.taJudul} siap diajukan penguji`,
+          link: "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji",
+        } as IWebNotif;
+
+        await WebNotifService.createNotification(data);
+      });
+
+      headMajorUser.forEach(async (u) => {
+        const data = {
+          userID: u.id,
+          role: constants.VOCATION_ADMIN_GROUP_ACCESS,
+          title: "Penyusunan Tim Penguji",
+          description: `tugas akhir dengan judul ${supervisor.tugas_akhir.taJudul} siap diajukan penguji`,
+          link: "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji",
+        } as IWebNotif;
+
+        await WebNotifService.createNotification(data);
+      });
+    }
+
+    if (user) {
+      user.forEach(async (u) => {
+        const data = {
+          userID: u.id,
+          role: constants.FACULTY_ADMIN_GROUP_ACCESS,
+          title:
+            "Daftar Tugas Akhir Yang Perlu Dibuatkan SK Pembimbing dan Penguji",
+          description: `tugas akhir baru siap dibuatkan SK pembimbing dan penguji`,
+          link: "/admin-fakultas/persetujuan/sk-pembimbing-dan-penguji/pembuatan",
+        } as IWebNotif;
+
+        await WebNotifService.createNotification(data);
+      });
+    }
 
     return supervisorOffer;
   }

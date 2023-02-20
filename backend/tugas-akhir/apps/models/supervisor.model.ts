@@ -136,6 +136,11 @@ export class Supervisor {
       where: { pmbId: supervisorID },
       include: {
         dosen: true,
+        tugas_akhir: {
+          include: {
+            pembimbing: true,
+          },
+        },
       },
     });
 

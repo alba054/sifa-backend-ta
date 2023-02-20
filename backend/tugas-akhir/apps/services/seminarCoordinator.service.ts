@@ -5,7 +5,10 @@ import { User } from "../models/user.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { ISeminarSchedulePost } from "../utils/interfaces/seminar.interface";
+import { IWebNotif } from "../utils/interfaces/webNotif.interface";
 import { notifService } from "../utils/notification";
+import { constants } from "../utils/utils";
+import { WebNotifService } from "./webNotif.service";
 
 /* <PDFSuratKesediaan
         name={"Muh. Yusuf Syam"}
@@ -195,11 +198,63 @@ export class SeminarCoordinatorService {
       );
     }
 
-    return await Seminar.provideInvitationAndApprovalLetter(
+    const inserted = await Seminar.provideInvitationAndApprovalLetter(
       seminarID,
       invitationPath,
       approvalPath
     );
+
+    const userSupervisor0 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[0].dosen.dsnNip
+    );
+    const userSupervisor1 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[1].dosen.dsnNip
+    );
+    const userExaminer0 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[2].dosen.dsnNip
+    );
+    const userExaminer1 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[3].dosen.dsnNip
+    );
+
+    const dataSupervisor0 = {
+      userID: userSupervisor0?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Daftar Pelaksanaan Seminar/Ujian Mahasiswa Yang Akan Datang",
+      description: `akan ada seminar dengan judul tugas akhir ${seminar.tugas_akhir.taJudul}`,
+      link: "/dosen/seminar",
+    } as IWebNotif;
+
+    const dataSupervisor1 = {
+      userID: userSupervisor1?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Daftar Pelaksanaan Seminar/Ujian Mahasiswa Yang Akan Datang",
+      description: `akan ada seminar dengan judul tugas akhir ${seminar.tugas_akhir.taJudul}`,
+      link: "/dosen/seminar",
+    } as IWebNotif;
+
+    const dataExaminer0 = {
+      userID: userExaminer0?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Daftar Pelaksanaan Seminar/Ujian Mahasiswa Yang Akan Datang",
+      description: `akan ada seminar dengan judul tugas akhir ${seminar.tugas_akhir.taJudul}`,
+      link: "/dosen/seminar",
+    } as IWebNotif;
+
+    const dataExaminer1 = {
+      userID: userExaminer1?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Daftar Pelaksanaan Seminar/Ujian Mahasiswa Yang Akan Datang",
+      description: `akan ada seminar dengan judul tugas akhir ${seminar.tugas_akhir.taJudul}`,
+      link: "/dosen/seminar",
+    } as IWebNotif;
+
+    await WebNotifService.createNotification(dataSupervisor0);
+    await WebNotifService.createNotification(dataSupervisor1);
+    await WebNotifService.createNotification(dataExaminer0);
+    await WebNotifService.createNotification(dataExaminer1);
+
+    return inserted;
   }
 
   static async getScheduledSeminarDetail(seminarID: number) {
@@ -231,6 +286,56 @@ export class SeminarCoordinatorService {
     if (seminar.smrNilaiAngka !== null || seminar.smrNilaiHuruf !== null) {
       throw new NotFoundError("seminar has been scored");
     }
+
+    const userSupervisor0 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[0].dosen.dsnNip
+    );
+    const userSupervisor1 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[1].dosen.dsnNip
+    );
+    const userExaminer0 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[2].dosen.dsnNip
+    );
+    const userExaminer1 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[3].dosen.dsnNip
+    );
+
+    const dataSupervisor0 = {
+      userID: userSupervisor0?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Jadwal Seminar",
+      description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+      link: "/dosen/persetujuan/waktu-seminar",
+    } as IWebNotif;
+
+    const dataSupervisor1 = {
+      userID: userSupervisor1?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Jadwal Seminar",
+      description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+      link: "/dosen/persetujuan/waktu-seminar",
+    } as IWebNotif;
+
+    const dataExaminer0 = {
+      userID: userExaminer0?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Jadwal Seminar",
+      description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+      link: "/dosen/persetujuan/waktu-seminar",
+    } as IWebNotif;
+
+    const dataExaminer1 = {
+      userID: userExaminer1?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Jadwal Seminar",
+      description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+      link: "/dosen/persetujuan/waktu-seminar",
+    } as IWebNotif;
+
+    await WebNotifService.createNotification(dataSupervisor0);
+    await WebNotifService.createNotification(dataSupervisor1);
+    await WebNotifService.createNotification(dataExaminer0);
+    await WebNotifService.createNotification(dataExaminer1);
 
     return await Seminar.editSeminarSchedule(seminarID, body);
   }
@@ -274,6 +379,56 @@ export class SeminarCoordinatorService {
         seminar.tugas_akhir.mahasiswa.mhsNim
       );
     }
+
+    const userSupervisor0 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[0].dosen.dsnNip
+    );
+    const userSupervisor1 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[1].dosen.dsnNip
+    );
+    const userExaminer0 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[2].dosen.dsnNip
+    );
+    const userExaminer1 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[3].dosen.dsnNip
+    );
+
+    const dataSupervisor0 = {
+      userID: userSupervisor0?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Jadwal Seminar",
+      description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+      link: "/dosen/persetujuan/waktu-seminar",
+    } as IWebNotif;
+
+    const dataSupervisor1 = {
+      userID: userSupervisor1?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Jadwal Seminar",
+      description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+      link: "/dosen/persetujuan/waktu-seminar",
+    } as IWebNotif;
+
+    const dataExaminer0 = {
+      userID: userExaminer0?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Jadwal Seminar",
+      description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+      link: "/dosen/persetujuan/waktu-seminar",
+    } as IWebNotif;
+
+    const dataExaminer1 = {
+      userID: userExaminer1?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Jadwal Seminar",
+      description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+      link: "/dosen/persetujuan/waktu-seminar",
+    } as IWebNotif;
+
+    await WebNotifService.createNotification(dataSupervisor0);
+    await WebNotifService.createNotification(dataSupervisor1);
+    await WebNotifService.createNotification(dataExaminer0);
+    await WebNotifService.createNotification(dataExaminer1);
 
     return await Seminar.updateSeminarSchedule(seminarID, body);
   }

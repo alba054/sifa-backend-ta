@@ -1,12 +1,17 @@
 import { LabFree } from "../models/labFree.model";
 import { LabLetter } from "../models/labLetter.model";
+import { Lecturer } from "../models/lecturer.model";
 import { Supervisor } from "../models/supervisor.model";
 import { Thesis } from "../models/thesis.model";
 import { ThesisHeadMajorDisposition } from "../models/thesisHeadMajorDisposition.model";
+import { User } from "../models/user.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { ILabLetterPost } from "../utils/interfaces/labLetter.interface";
+import { IWebNotif } from "../utils/interfaces/webNotif.interface";
+import { constants } from "../utils/utils";
 import { LabFreeService } from "./labFree.service";
+import { WebNotifService } from "./webNotif.service";
 
 interface ISupervisorBodyPost {
   lecturerID: number;
@@ -171,6 +176,23 @@ export class HeadLabService {
       thesisID,
       body
     );
+
+    const lecturer = await Lecturer.getLecturerByID(body.lecturerID);
+    if (!lecturer) {
+      throw new NotFoundError("user's not found");
+    }
+    const user = await User.getUserByUsername(lecturer.dsnNip);
+    const thesis = await Thesis.getThesisByID(thesisID);
+
+    const data = {
+      userID: user?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Usulan Sebagai Pembimbing",
+      description: `Anda ditunjuk sebagai pembimbing mahasiswa ${thesis?.mahasiswa.mhsNama} dengan judul tugas akhir ${thesis?.taJudul}`,
+      link: "/dosen/usulan/pembimbing",
+    } as IWebNotif;
+
+    await WebNotifService.createNotification(data);
 
     return assignedSupervisor;
   }

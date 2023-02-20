@@ -2,6 +2,7 @@ import { ExamProposal } from "../models/examProposal.model";
 import { Seminar } from "../models/seminar.model";
 import { Student } from "../models/student.model";
 import { Thesis } from "../models/thesis.model";
+import { User } from "../models/user.model";
 import { StudentBuilder } from "../utils/builder/student.builder";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
@@ -11,8 +12,11 @@ import {
   IStudent,
   IStudentUpdate,
 } from "../utils/interfaces/student.interface";
+import { IWebNotif } from "../utils/interfaces/webNotif.interface";
 import { writeToFile } from "../utils/storage";
+import { constants } from "../utils/utils";
 import { FileService } from "./file.service";
+import { WebNotifService } from "./webNotif.service";
 
 export class StudentService {
   static async deleteSeminar(nim: string, seminarID: number) {
@@ -92,7 +96,30 @@ export class StudentService {
       // newBody.push({ name: d.name, path: d.path });
     });
 
-    return await ExamProposal.createExamProposal(body, Number(thesis[0].taId));
+    const inserted = await ExamProposal.createExamProposal(
+      body,
+      Number(thesis[0].taId)
+    );
+
+    const user = await User.getUsersByBadge(
+      constants.FACULTY_ADMIN_GROUP_ACCESS
+    );
+
+    if (user) {
+      user.forEach(async (u) => {
+        const data = {
+          userID: u.id,
+          role: constants.FACULTY_ADMIN_GROUP_ACCESS,
+          title: "Permohonan Ujian Sidang",
+          description: `mahasiswa dengan judul tugas akhir ${thesis[0].taJudul} mengajukan permohonan ujian sidang`,
+          link: "/admin-fakultas/persetujuan/izin-ujian-sidang",
+        } as IWebNotif;
+
+        await WebNotifService.createNotification(data);
+      });
+    }
+
+    return inserted;
   }
 
   static async getSeminarDetail(nim: string, seminarID: number) {
@@ -160,11 +187,39 @@ export class StudentService {
       thesis[0].pembimbing[1].pmbId,
     ];
 
-    return await Seminar.createRequestSeminar(
+    const seminar = await Seminar.createRequestSeminar(
       thesis[0].taId,
       supervisorsID,
       seminarType
     );
+
+    const userSupervisor0 = await User.getUserByUsername(
+      thesis[0].pembimbing[0].dosen.dsnNip
+    );
+    const userSupervisor1 = await User.getUserByUsername(
+      thesis[0].pembimbing[1].dosen.dsnNip
+    );
+
+    const dataSupervisor0 = {
+      userID: userSupervisor0?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Seminar Oleh Pembimbing",
+      description: `mahasiswa ${thesis[0].mahasiswa.mhsNama} mengajukan permohonan seminar dengan judul tugas akhir ${thesis[0].taJudul}`,
+      link: "/dosen/persetujuan/pembimbing ",
+    } as IWebNotif;
+
+    const dataSupervisor1 = {
+      userID: userSupervisor1?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Seminar Oleh Pembimbing",
+      description: `mahasiswa ${thesis[0].mahasiswa.mhsNama} mengajukan permohonan seminar dengan judul tugas akhir ${thesis[0].taJudul}`,
+      link: "/dosen/persetujuan/pembimbing ",
+    } as IWebNotif;
+
+    await WebNotifService.createNotification(dataSupervisor0);
+    await WebNotifService.createNotification(dataSupervisor1);
+
+    return seminar;
   }
 
   static async getAllStudents() {

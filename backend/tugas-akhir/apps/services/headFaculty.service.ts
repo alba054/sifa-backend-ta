@@ -2,10 +2,14 @@ import { ExaminerSK } from "../models/examinerSK.model";
 import { ExamProposal } from "../models/examProposal.model";
 import { SupervisorSK } from "../models/supervisorSK.model";
 import { Thesis } from "../models/thesis.model";
+import { User } from "../models/user.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { IExaminerSKPost } from "../utils/interfaces/examinerSK.interface";
 import { ISupervisorSKPost } from "../utils/interfaces/supervisorSK.interface";
+import { IWebNotif } from "../utils/interfaces/webNotif.interface";
+import { constants } from "../utils/utils";
+import { WebNotifService } from "./webNotif.service";
 
 export class HeadFacultyService {
   static async getHistoryOfExamProposal() {
@@ -23,11 +27,29 @@ export class HeadFacultyService {
       throw new NotFoundError("proposal's not found");
     }
 
-    return await ExamProposal.updateVerificationStatus(
+    const inserted = await ExamProposal.updateVerificationStatus(
       examID,
       isAccepted,
       note
     );
+
+    const userSubsection = await User.getUsersByBadge(
+      constants.SUBSECTIONHEAD_GROUP_ACCESS
+    );
+
+    userSubsection.forEach(async (u) => {
+      const data = {
+        userID: u.id,
+        role: constants.SUBSECTIONHEAD_GROUP_ACCESS,
+        title: "Surat Permohonan Izin Ujian Sidang",
+        description: `permohonan ujian sidang tugas akhir dengan judul ${proposal.tugas_akhir.taJudul} siap divalidasi`,
+        link: "/kasubag/persetujuan/izin-ujian-sidang",
+      } as IWebNotif;
+
+      await WebNotifService.createNotification(data);
+    });
+
+    return inserted;
   }
 
   static async getExamProposalDetail(examID: number) {
@@ -108,7 +130,25 @@ export class HeadFacultyService {
       throw new NotFoundError("thesis doesn't have supervisors");
     }
 
-    return SupervisorSK.createNewSK(body);
+    const supervisorSK = await SupervisorSK.createNewSK(body);
+
+    const userSubsection = await User.getUsersByBadge(
+      constants.SUBSECTIONHEAD_GROUP_ACCESS
+    );
+
+    userSubsection.forEach(async (u) => {
+      const data = {
+        userID: u.id,
+        role: constants.SUBSECTIONHEAD_GROUP_ACCESS,
+        title: "SK Pembimbing dan Penguji",
+        description: `SK pembimbing tugas akhir dengan judul ${thesis.taJudul} siap direview`,
+        link: "/kasubag/persetujuan/sk-pembimbing-dan-penguji",
+      } as IWebNotif;
+
+      await WebNotifService.createNotification(data);
+    });
+
+    return supervisorSK;
   }
 
   static async deleteExaminerSK(SKID: number) {
@@ -139,9 +179,29 @@ export class HeadFacultyService {
     ) {
       throw new NotFoundError("thesis doesn't have examiners");
     }
-    // console.log(thesis.mahasiswa.mhsPrdId);
 
-    return await ExaminerSK.createNewSK(body, thesis.mahasiswa.mhsPrdId);
+    const examinerSK = await ExaminerSK.createNewSK(
+      body,
+      thesis.mahasiswa.mhsPrdId
+    );
+
+    const userSubsection = await User.getUsersByBadge(
+      constants.SUBSECTIONHEAD_GROUP_ACCESS
+    );
+
+    userSubsection.forEach(async (u) => {
+      const data = {
+        userID: u.id,
+        role: constants.SUBSECTIONHEAD_GROUP_ACCESS,
+        title: "SK Pembimbing dan Penguji",
+        description: `SK penguji tugas akhir dengan judul ${thesis.taJudul} siap direview`,
+        link: "/kasubag/persetujuan/sk-pembimbing-dan-penguji",
+      } as IWebNotif;
+
+      await WebNotifService.createNotification(data);
+    });
+
+    return examinerSK;
   }
 
   static async approveOrRejectProposedThesis(

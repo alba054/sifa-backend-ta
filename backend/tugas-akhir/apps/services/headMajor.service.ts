@@ -1,7 +1,12 @@
 import { Examiner } from "../models/examiner.model";
+import { Lecturer } from "../models/lecturer.model";
 import { Thesis } from "../models/thesis.model";
+import { User } from "../models/user.model";
 import { NotFoundError } from "../utils/error/notFoundError";
+import { IWebNotif } from "../utils/interfaces/webNotif.interface";
+import { constants } from "../utils/utils";
 import { ThesisHeadMajorDispositionService } from "./thesisHeadMajorDisposition.service";
+import { WebNotifService } from "./webNotif.service";
 
 interface IAssignedExaminer {
   position: number;
@@ -58,6 +63,23 @@ export class HeadMajorService {
   }
 
   static async assignExaminer(thesisID: number, body: IAssignedExaminer) {
-    return await Examiner.createExaminer(thesisID, body);
+    const lecturer = await Lecturer.getLecturerByID(body.lecturerID);
+    if (!lecturer) {
+      throw new NotFoundError("user's not found");
+    }
+    const user = await User.getUserByUsername(lecturer.dsnNip);
+    const thesis = await Thesis.getThesisByID(thesisID);
+
+    const data = {
+      userID: user?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Usulan Sebagai Penguji",
+      description: `Anda ditunjuk sebagai penguji mahasiswa ${thesis?.mahasiswa.mhsNama} dengan judul tugas akhir ${thesis?.taJudul}`,
+      link: "/dosen/usulan/penguji",
+    } as IWebNotif;
+
+    const examiner = await Examiner.createExaminer(thesisID, body);
+    await WebNotifService.createNotification(data);
+    return examiner;
   }
 }

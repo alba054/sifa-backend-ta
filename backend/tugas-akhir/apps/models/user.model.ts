@@ -14,7 +14,32 @@ export class User {
     return await prismaDB.user.findFirst({
       where: {
         AND: [
-          { user_badge: { some: { badge: { name: badge } } } },
+          {
+            OR: [
+              { user_badge: { some: { badge: { name: badge } } } },
+              { adm_group_unit: { aksesNama: badge } },
+            ],
+          },
+          { labID: options?.lab },
+          { prodiID: options?.major },
+        ],
+      },
+    });
+  }
+
+  static async getUsersByBadge(
+    badge: string,
+    options?: { lab?: number; major?: number }
+  ) {
+    return await prismaDB.user.findMany({
+      where: {
+        AND: [
+          {
+            OR: [
+              { user_badge: { some: { badge: { name: badge } } } },
+              { adm_group_unit: { aksesNama: badge } },
+            ],
+          },
           { labID: options?.lab },
           { prodiID: options?.major },
         ],
@@ -172,12 +197,12 @@ export class User {
     try {
       if (lab !== null) {
         await prismaDB.ref_laboratorium.update({
-          where: {labId: lab},
+          where: { labId: lab },
           data: {
             labKepalaNama: name,
-            labKepalaNip: username
-          }
-        })
+            labKepalaNip: username,
+          },
+        });
       }
 
       const updatedUser = await prismaDB.user.update({

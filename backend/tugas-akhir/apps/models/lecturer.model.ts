@@ -5,6 +5,12 @@ import { InternalServerError } from "../utils/error/internalError";
 import { ILecturer } from "../utils/interfaces/lecturer.interface";
 
 export class Lecturer {
+  static async getLecturerByID(lecturerID: number) {
+    return await prismaDB.dosen.findUnique({
+      where: { dsnId: lecturerID },
+    });
+  }
+
   static async deleteLecturerByNIP(nip: string) {
     try {
       return await prismaDB.dosen.delete({
