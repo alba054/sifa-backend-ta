@@ -9,6 +9,6 @@ export class UserFacade {
   static async insertUser(userData: IUser) {
     const user = await UserService.insertNewUserBySuperUser(userData);
 
-    return user;
+    if (userData.groupAccess) return user;
   }
 }
