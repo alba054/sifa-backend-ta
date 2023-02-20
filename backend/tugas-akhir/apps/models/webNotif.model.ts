@@ -5,6 +5,10 @@ import { InternalServerError } from "../utils/error/internalError";
 import { IWebNotif } from "../utils/interfaces/webNotif.interface";
 
 export class WebNotif {
+  static async deleteNotificationByID(id: number) {
+    return await prismaDB.web_notifikasi.delete({ where: { id } });
+  }
+
   static async clearNotification(userID: number, role?: any) {
     return await prismaDB.web_notifikasi.deleteMany({
       where: { AND: [{ userId: userID }, { role }] },

@@ -253,103 +253,103 @@ export class ThesisService {
 
     const newThesis = await Thesis.insertNewThesis(thesis);
 
-    // if (thesis.labID) {
-    //   const user = await User.getUserByBadge(constants.LAB_ADMIN_GROUP_ACCESS, {
-    //     lab: thesis.labID,
-    //   });
+    if (thesis.labID) {
+      const user = await User.getUserByBadge(constants.LAB_ADMIN_GROUP_ACCESS, {
+        lab: Number(thesis.labID),
+      });
 
-    //   if (user) {
-    //     const data = {
-    //       userID: user?.id,
-    //       role: constants.LAB_ADMIN_GROUP_ACCESS,
-    //       title: "Tugas Akhir Mahasiswa Pada Lab",
-    //       description: `mahasiswa dengan judul tugas akhir ${thesis.title}`,
-    //       link: "/kepala-lab/tugas-akhir",
-    //     } as IWebNotif;
+      if (user) {
+        const data = {
+          userID: user?.id,
+          role: constants.LAB_ADMIN_GROUP_ACCESS,
+          title: "Tugas Akhir Mahasiswa Pada Lab",
+          description: `mahasiswa dengan judul tugas akhir ${thesis.title}`,
+          link: "/kepala-lab/tugas-akhir",
+        } as IWebNotif;
 
-    //     await WebNotifService.createNotification(data);
-    //   }
-    // }
-    // if (thesis.labID2) {
-    //   const user = await User.getUserByBadge(constants.LAB_ADMIN_GROUP_ACCESS, {
-    //     lab: thesis.labID2,
-    //   });
+        await WebNotifService.createNotification(data);
+      }
+    }
+    if (thesis.labID2) {
+      const user = await User.getUserByBadge(constants.LAB_ADMIN_GROUP_ACCESS, {
+        lab: Number(thesis.labID2),
+      });
 
-    //   if (user) {
-    //     const data = {
-    //       userID: user?.id,
-    //       role: constants.LAB_ADMIN_GROUP_ACCESS,
-    //       title: "Tugas Akhir Mahasiswa Pada Lab",
-    //       description: `mahasiswa dengan judul tugas akhir ${thesis.title}`,
-    //       link: "/kepala-lab/tugas-akhir",
-    //     } as IWebNotif;
+      if (user) {
+        const data = {
+          userID: user?.id,
+          role: constants.LAB_ADMIN_GROUP_ACCESS,
+          title: "Tugas Akhir Mahasiswa Pada Lab",
+          description: `mahasiswa dengan judul tugas akhir ${thesis.title}`,
+          link: "/kepala-lab/tugas-akhir",
+        } as IWebNotif;
 
-    //     await WebNotifService.createNotification(data);
-    //   }
-    // }
+        await WebNotifService.createNotification(data);
+      }
+    }
 
-    // if (thesis.lecturerPropose) {
-    //   const lecturer0 = await Lecturer.getLecturerByID(thesis.lecturerPropose);
-    //   if (lecturer0) {
-    //     const userLecturer0 = await User.getUserByUsername(lecturer0?.dsnNip);
-    //     const data = {
-    //       userID: userLecturer0?.id,
-    //       role: constants.LECTURER_GROUP_ACCESS,
-    //       title: "Konfirmasi Sebagai Pengusul Tugas Akhir",
-    //       description: `mahasiswa ${thesis.studentNIM} menunjuk anda sebagai pengusul untuk tugas akhir dengan judul ${thesis.title}`,
-    //       link: "/dosen/konfirmasi-pengusul ",
-    //     } as IWebNotif;
-    //     await WebNotifService.createNotification(data);
-    //   }
-    // }
+    if (thesis.lecturerPropose) {
+      const lecturer0 = await Lecturer.getLecturerByID(thesis.lecturerPropose);
+      if (lecturer0) {
+        const userLecturer0 = await User.getUserByUsername(lecturer0?.dsnNip);
+        const data = {
+          userID: userLecturer0?.id,
+          role: constants.LECTURER_GROUP_ACCESS,
+          title: "Konfirmasi Sebagai Pengusul Tugas Akhir",
+          description: `mahasiswa ${thesis.studentNIM} menunjuk anda sebagai pengusul untuk tugas akhir dengan judul ${thesis.title}`,
+          link: "/dosen/konfirmasi-pengusul ",
+        } as IWebNotif;
+        await WebNotifService.createNotification(data);
+      }
+    }
 
-    // if (thesis.coLecturerPropose) {
-    //   const lecturer0 = await Lecturer.getLecturerByID(
-    //     thesis.coLecturerPropose
-    //   );
-    //   if (lecturer0) {
-    //     const userLecturer0 = await User.getUserByUsername(lecturer0?.dsnNip);
-    //     const data = {
-    //       userID: userLecturer0?.id,
-    //       role: constants.LECTURER_GROUP_ACCESS,
-    //       title: "Konfirmasi Sebagai Pengusul Tugas Akhir",
-    //       description: `mahasiswa ${thesis.studentNIM} menunjuk anda sebagai pengusul untuk tugas akhir dengan judul ${thesis.title}`,
-    //       link: "/dosen/konfirmasi-pengusul",
-    //     } as IWebNotif;
-    //     await WebNotifService.createNotification(data);
-    //   }
-    // }
+    if (thesis.coLecturerPropose) {
+      const lecturer0 = await Lecturer.getLecturerByID(
+        thesis.coLecturerPropose
+      );
+      if (lecturer0) {
+        const userLecturer0 = await User.getUserByUsername(lecturer0?.dsnNip);
+        const data = {
+          userID: userLecturer0?.id,
+          role: constants.LECTURER_GROUP_ACCESS,
+          title: "Konfirmasi Sebagai Pengusul Tugas Akhir",
+          description: `mahasiswa ${thesis.studentNIM} menunjuk anda sebagai pengusul untuk tugas akhir dengan judul ${thesis.title}`,
+          link: "/dosen/konfirmasi-pengusul",
+        } as IWebNotif;
+        await WebNotifService.createNotification(data);
+      }
+    }
 
-    // if (!thesis.lecturerPropose && !thesis.coLecturerPropose) {
-    //   const userVocationAdmin = await User.getUsersByBadge(
-    //     constants.VOCATION_ADMIN_GROUP_ACCESS
-    //   );
-    //   const userHeadMajor = await User.getUsersByBadge(
-    //     constants.HEAD_MAJOR_GROUP_ACCESS
-    //   );
+    if (!thesis.lecturerPropose && !thesis.coLecturerPropose) {
+      const userVocationAdmin = await User.getUsersByBadge(
+        constants.VOCATION_ADMIN_GROUP_ACCESS
+      );
+      const userHeadMajor = await User.getUsersByBadge(
+        constants.HEAD_MAJOR_GROUP_ACCESS
+      );
 
-    //   userHeadMajor.forEach(async (u) => {
-    //     const data = {
-    //       userID: u.id,
-    //       role: constants.HEAD_MAJOR_GROUP_ACCESS,
-    //       title: "Persetujuan Judul Tugas Akhir",
-    //       description: `tugas akhir dengan judul ${thesis.title} siap direview`,
-    //       link: "/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian",
-    //     } as IWebNotif;
-    //     await WebNotifService.createNotification(data);
-    //   });
+      userHeadMajor.forEach(async (u) => {
+        const data = {
+          userID: u.id,
+          role: constants.HEAD_MAJOR_GROUP_ACCESS,
+          title: "Persetujuan Judul Tugas Akhir",
+          description: `tugas akhir dengan judul ${thesis.title} siap direview`,
+          link: "/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian",
+        } as IWebNotif;
+        await WebNotifService.createNotification(data);
+      });
 
-    //   userVocationAdmin.forEach(async (u) => {
-    //     const data = {
-    //       userID: u.id,
-    //       role: constants.VOCATION_ADMIN_GROUP_ACCESS,
-    //       title: "Persetujuan Judul Tugas Akhir",
-    //       description: `tugas akhir dengan judul ${thesis.title} siap direview`,
-    //       link: "/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian",
-    //     } as IWebNotif;
-    //     await WebNotifService.createNotification(data);
-    //   });
-    // }
+      userVocationAdmin.forEach(async (u) => {
+        const data = {
+          userID: u.id,
+          role: constants.VOCATION_ADMIN_GROUP_ACCESS,
+          title: "Persetujuan Judul Tugas Akhir",
+          description: `tugas akhir dengan judul ${thesis.title} siap direview`,
+          link: "/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian",
+        } as IWebNotif;
+        await WebNotifService.createNotification(data);
+      });
+    }
 
     return newThesis;
   }

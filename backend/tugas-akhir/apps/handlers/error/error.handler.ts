@@ -10,7 +10,7 @@ export const ErrorHandler = async (
 ) => {
   const ERROR_CODE = !(err instanceof WebError) ? 500 : err.statusCode;
 
-  // console.error(err);
+  console.error(err);
 
   return res
     .status(ERROR_CODE)
