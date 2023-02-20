@@ -47,7 +47,7 @@ router.use("/chat", chatRouter);
 router.use("/files", fileRouter);
 router.use("/docs", docRouter);
 router.use("/notifications", notifRouter);
-router.use("web-notif", webNotifRouter);
+router.use("/web-notif", webNotifRouter);
 router.use("/user-integration", userIntegrationRouter);
 
 export default router;
