@@ -287,6 +287,8 @@ export class SeminarCoordinatorService {
       throw new NotFoundError("seminar has been scored");
     }
 
+    const inserted = await Seminar.editSeminarSchedule(seminarID, body);
+
     const userSupervisor0 = await User.getUserByUsername(
       seminar.seminar_persetujuan[0].dosen.dsnNip
     );
@@ -337,7 +339,7 @@ export class SeminarCoordinatorService {
     await WebNotifService.createNotification(dataExaminer0);
     await WebNotifService.createNotification(dataExaminer1);
 
-    return await Seminar.editSeminarSchedule(seminarID, body);
+    return inserted;
   }
 
   static async deleteSeminarSchedule(seminarID: number) {
@@ -379,6 +381,7 @@ export class SeminarCoordinatorService {
         seminar.tugas_akhir.mahasiswa.mhsNim
       );
     }
+    const inserted = await Seminar.updateSeminarSchedule(seminarID, body);
 
     const userSupervisor0 = await User.getUserByUsername(
       seminar.seminar_persetujuan[0].dosen.dsnNip
@@ -430,7 +433,7 @@ export class SeminarCoordinatorService {
     await WebNotifService.createNotification(dataExaminer0);
     await WebNotifService.createNotification(dataExaminer1);
 
-    return await Seminar.updateSeminarSchedule(seminarID, body);
+    return inserted;
   }
 
   static async getSeminarRequests() {
