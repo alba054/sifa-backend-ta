@@ -2,6 +2,7 @@ import { Examiner } from "../models/examiner.model";
 import { Lecturer } from "../models/lecturer.model";
 import { Thesis } from "../models/thesis.model";
 import { User } from "../models/user.model";
+import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { IWebNotif } from "../utils/interfaces/webNotif.interface";
 import { constants } from "../utils/utils";
@@ -14,6 +15,47 @@ interface IAssignedExaminer {
 }
 
 export class HeadMajorService {
+  static async assignThesisToDepartmentHead(
+    thesisID: number,
+    departmentHead: number
+  ) {
+    const thesis = await Thesis.getThesisByID(thesisID);
+
+    if (thesis === null) {
+      throw new NotFoundError("thesis's not found");
+    }
+
+    const lecturer = await Lecturer.getLecturerByID(departmentHead);
+    if (lecturer === null) {
+      throw new NotFoundError("lecturer's not found");
+    }
+
+    const userDepartmentHead = await User.getUserByUsername(lecturer.dsnNip);
+    if (
+      !userDepartmentHead?.badges.some(
+        (b) => b.name === constants.DEPARTMENT_ADMIN_GROUP_ACCESS
+      )
+    ) {
+      throw new BadRequestError("lecturer's not department head");
+    }
+
+    const inserted = await Thesis.assignDepartmentHead(
+      thesisID,
+      departmentHead
+    );
+
+    const data = {
+      userID: userDepartmentHead.id,
+      role: constants.DEPARTMENT_ADMIN_GROUP_ACCESS,
+      title: "Permohonan Tugas Akhir",
+      description: `mahasiswa dengan judul tugas akhir ${thesis.taJudul}`,
+      link: "/admin-fakultas/persetujuan/izin-ujian-sidang", // todo: change based on FE
+    } as IWebNotif;
+
+    await WebNotifService.createNotification(data);
+    return inserted;
+  }
+
   static async deleteThesisByID(thesisID: number) {
     const thesis = await Thesis.getThesisByID(thesisID);
 

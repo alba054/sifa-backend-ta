@@ -47,6 +47,13 @@ headMajorRouter
       constants.HEAD_MAJOR_GROUP_ACCESS,
     ]),
     HeadMajorHandler.deleteThesisByID
+  )
+  .put(
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
+    HeadMajorHandler.assignThesisToDepartmentHead
   );
 
 // * approve or reject proposed thesis

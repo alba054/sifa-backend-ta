@@ -22,6 +22,7 @@ import docRouter from "./doc.route";
 import notifRouter from "./notification.route";
 import userIntegrationRouter from "./userIntegration.route";
 import webNotifRouter from "./webNotif.route";
+import headDepartmentRouter from "./headDepartment.route";
 
 const router = express.Router();
 
@@ -34,6 +35,7 @@ router.use("/departments", departmentRouter);
 router.use("/vocations", vocationRouter);
 router.use("/laboratories", laboratoryRouter);
 router.use("/head-majors", headMajorRouter);
+router.use("/head-departments", headDepartmentRouter);
 router.use("/head-labs", headLabRouter);
 router.use("/head-faculties", headFacultyRouter);
 router.use("/ref-letters", refLetterRouter);

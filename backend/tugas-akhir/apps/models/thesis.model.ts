@@ -16,6 +16,52 @@ interface IBody {
 }
 
 export class Thesis {
+  static async updateLab(
+    thesisID: number,
+    isAccepted: boolean,
+    lab1?: number,
+    lab2?: number
+  ) {
+    try {
+      return await prismaDB.tugas_akhir.update({
+        where: { taId: thesisID },
+        data: {
+          statusPermohonan: isAccepted ? "Diterima" : "Ditolak",
+          taLabId: lab1,
+          taLabId2: lab2,
+          statusDepartemen: isAccepted ? "Diterima" : "Ditolak",
+        },
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
+  static async assignDepartmentHead(thesisID: number, departmentHead: number) {
+    try {
+      return await prismaDB.tugas_akhir.update({
+        where: { taId: thesisID },
+        data: {
+          taKepalaDepartemen: departmentHead,
+        },
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
   static async getThesisBySupervisor(nim: string) {
     return await prismaDB.tugas_akhir.findMany({
       where: {
@@ -217,6 +263,7 @@ export class Thesis {
           mahasiswa: true,
           sk_pembimbing: true,
           sk_penguji: true,
+          kepalaDepartemen: true,
         },
         orderBy: { updated_at: "desc" },
       });
@@ -238,6 +285,7 @@ export class Thesis {
         mahasiswa: true,
         sk_pembimbing: true,
         sk_penguji: true,
+        kepalaDepartemen: true,
       },
       orderBy: { updated_at: "desc" },
     });
@@ -267,6 +315,7 @@ export class Thesis {
           { statusPermohonan: "Diterima" },
           // { OR: [{ taLabId: labID }, { taLabId2: labID }] },
           { taJudul: { contains: title } },
+          { statusDepartemen: "Diterima" },
         ],
       },
       include: {

@@ -85,6 +85,7 @@ model dosen {
   // @@index([dsnJenisKelamin], map: "dsnJenisKelamin")
   koordinator_seminar                                      koordinator_seminar[]
   pengusul                                                 pengusul[]
+  tugas_akhir                                              tugas_akhir[]
 
   @@index([dsnBidangKeahlian], map: "dsnBidangKeahlian")
   @@index([dsnDprtId], map: "dsnDprtId")
@@ -855,7 +856,10 @@ model tugas_akhir {
   taCatatanMhs                                           String?                   @db.Text
   taStatusSk                                             Int?
   taDosenPengusul                                        Int?
+  taKepalaDepartemen                                     Int?
+  kepalaDepartemen                                       dosen?                    @relation(fields: [taKepalaDepartemen], references: [dsnId], onDelete: Cascade, onUpdate: Cascade)
   proposalGroupID                                        String
+  statusDepartemen                                       StatusPermohonan          @default(Belum_Diproses)
   tanggalMasuk                                           DateTime                  @default(now())
   created_at                                             DateTime?                 @default(now())
   updated_at                                             DateTime?                 @updatedAt

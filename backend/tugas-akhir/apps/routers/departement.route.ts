@@ -12,4 +12,11 @@ departmentRouter
     DepartmentHandler.getAllDepartments
   );
 
+departmentRouter
+  .route("/heads")
+  .get(
+    AuthenticationMiddleware.authenticate("admin"),
+    DepartmentHandler.getAllDepartmentHeads
+  );
+
 export default departmentRouter;

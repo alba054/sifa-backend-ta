@@ -33,6 +33,33 @@ interface IAssignedExaminer {
 }
 
 export class HeadMajorHandler {
+  static async assignThesisToDepartmentHead(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { thesisID } = req.params;
+    const { departmentHead } = req.body;
+
+    try {
+      await HeadMajorService.assignThesisToDepartmentHead(
+        Number(thesisID),
+        Number(departmentHead)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully assign department head"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async deleteThesisByID(
     req: Request,
     res: Response,
