@@ -44,7 +44,7 @@ export class HeadMajorHandler {
     try {
       await HeadMajorService.assignThesisToDepartmentHead(
         Number(thesisID),
-        Number(departmentHead)
+        departmentHead
       );
 
       return res

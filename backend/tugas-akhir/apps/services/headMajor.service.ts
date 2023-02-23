@@ -17,7 +17,7 @@ interface IAssignedExaminer {
 export class HeadMajorService {
   static async assignThesisToDepartmentHead(
     thesisID: number,
-    departmentHead: number
+    departmentHead: string
   ) {
     const thesis = await Thesis.getThesisByID(thesisID);
 
@@ -25,7 +25,7 @@ export class HeadMajorService {
       throw new NotFoundError("thesis's not found");
     }
 
-    const lecturer = await Lecturer.getLecturerByID(departmentHead);
+    const lecturer = await Lecturer.getLecturerByNIP(departmentHead);
     if (lecturer === null) {
       throw new NotFoundError("lecturer's not found");
     }
@@ -41,7 +41,7 @@ export class HeadMajorService {
 
     const inserted = await Thesis.assignDepartmentHead(
       thesisID,
-      departmentHead
+      lecturer.dsnId
     );
 
     const data = {
