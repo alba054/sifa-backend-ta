@@ -44,6 +44,9 @@ export class User {
           { prodiID: options?.major },
         ],
       },
+      include: {
+        ref_departemen: true,
+      },
     });
   }
 
