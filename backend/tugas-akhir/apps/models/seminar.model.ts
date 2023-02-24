@@ -8,6 +8,17 @@ import {
 } from "../utils/interfaces/seminar.interface";
 
 export class Seminar {
+  static async approveSeminarRequest(seminarID: number, isAccepted: boolean) {
+    return await prismaDB.seminar.update({
+      where: {
+        smrId: seminarID,
+      },
+      data: {
+        statusPermohonan: isAccepted ? "Diterima" : "Ditolak",
+      },
+    });
+  }
+
   static async deleteSeminarByID(seminarID: number) {
     return await prismaDB.seminar.delete({ where: { smrId: seminarID } });
   }
@@ -132,7 +143,7 @@ export class Seminar {
             { NOT: { smrNilaiAngka: null } },
           ],
         },
-        orderBy: {updated_at: "desc"},
+        orderBy: { updated_at: "desc" },
         include: {
           tugas_akhir: { include: { mahasiswa: true } },
         },
@@ -147,7 +158,7 @@ export class Seminar {
           { smrNilaiAngka: null },
         ],
       },
-      orderBy: {updated_at: "desc"},
+      orderBy: { updated_at: "desc" },
       include: {
         tugas_akhir: { include: { mahasiswa: true } },
       },
@@ -171,7 +182,7 @@ export class Seminar {
           { NOT: { smrFileKesediaan: null } },
         ],
       },
-      orderBy: {updated_at: "desc"},
+      orderBy: { updated_at: "desc" },
       include: {
         seminar_dokumen: true,
         tugas_akhir: {
@@ -260,7 +271,7 @@ export class Seminar {
         //   ],
         // },
       },
-      orderBy: {updated_at: "desc"},
+      orderBy: { updated_at: "desc" },
       include: {
         tugas_akhir: {
           include: {
@@ -323,7 +334,7 @@ export class Seminar {
         //   ],
         // },
       },
-      orderBy: {updated_at: "desc"},
+      orderBy: { updated_at: "desc" },
       include: {
         tugas_akhir: {
           include: {
@@ -406,7 +417,7 @@ export class Seminar {
         //   ],
         // },
       },
-      orderBy: {updated_at: "desc"},
+      orderBy: { updated_at: "desc" },
       include: {
         seminar_dokumen: true,
         tugas_akhir: {
@@ -546,7 +557,7 @@ export class Seminar {
           include: { mahasiswa: true },
         },
       },
-      orderBy: {updated_at: "desc"},
+      orderBy: { updated_at: "desc" },
     });
   }
 
@@ -622,7 +633,7 @@ export class Seminar {
           pembimbing: { some: { dosen: { dsnNip: nim } } },
         },
       },
-      orderBy: {updated_at: "desc"},
+      orderBy: { updated_at: "desc" },
       include: {
         seminar_dokumen: true,
         tugas_akhir: {

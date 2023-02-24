@@ -55,6 +55,16 @@ import { WebNotifService } from "./webNotif.service";
 //  />
 
 export class SeminarCoordinatorService {
+  static async approveSeminarRequest(seminarID: number, isAccepted: boolean) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null) {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    return await Seminar.approveSeminarRequest(seminarID, isAccepted);
+  }
+
   static async scoreSeminar(
     lecturerID: number,
     seminarID: number,
@@ -283,6 +293,10 @@ export class SeminarCoordinatorService {
       throw new NotFoundError("seminar's not found");
     }
 
+    if (seminar.statusPermohonan !== "Diterima") {
+      throw new BadRequestError("seminar request's not accepted");
+    }
+
     if (seminar.smrNilaiAngka !== null || seminar.smrNilaiHuruf !== null) {
       throw new NotFoundError("seminar has been scored");
     }
@@ -364,6 +378,10 @@ export class SeminarCoordinatorService {
 
     if (seminar === null) {
       throw new NotFoundError("seminar's not found");
+    }
+
+    if (seminar.statusPermohonan !== "Diterima") {
+      throw new BadRequestError("seminar request's not accepted");
     }
 
     if (seminar.smrNilaiAngka !== null || seminar.smrNilaiHuruf !== null) {

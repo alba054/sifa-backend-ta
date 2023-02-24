@@ -15,6 +15,15 @@ seminarCoordinatorRouter
   );
 
 seminarCoordinatorRouter
+  .route("/seminars/:seminarID/approve")
+  .put(
+    AuthorizationMiddleware.authorize([
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+    ]),
+    SeminarCoordinatorHandler.approveSeminarRequest
+  );
+
+seminarCoordinatorRouter
   .route("/seminars/scheduled")
   .get(
     AuthorizationMiddleware.authorize([

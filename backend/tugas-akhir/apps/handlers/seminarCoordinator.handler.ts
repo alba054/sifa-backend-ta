@@ -5,6 +5,37 @@ import { ISeminarSchedulePost } from "../utils/interfaces/seminar.interface";
 import { constants, createResponse } from "../utils/utils";
 
 export class SeminarCoordinatorHandler {
+  static async approveSeminarRequest(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { seminarID } = req.params;
+    const { isAccepted } = req.body;
+
+    try {
+      if (typeof isAccepted === "undefined") {
+        throw new BadRequestError("provide isAccepted");
+      }
+
+      await SeminarCoordinatorService.approveSeminarRequest(
+        Number(seminarID),
+        Boolean(isAccepted)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully accept seminar request"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async scoreSeminar(req: Request, res: Response, next: NextFunction) {
     const { seminarID } = req.params;
     const { score, lecturerID } = req.body;
