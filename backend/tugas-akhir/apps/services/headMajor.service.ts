@@ -31,9 +31,11 @@ export class HeadMajorService {
     }
 
     const userDepartmentHead = await User.getUserByUsername(lecturer.dsnNip);
+    // console.log(userDepartmentHead);
+
     if (
-      !userDepartmentHead?.badges.some(
-        (b) => b.name === constants.DEPARTMENT_ADMIN_GROUP_ACCESS
+      !userDepartmentHead?.user_badge.some(
+        (b) => b.badge.name === constants.DEPARTMENT_ADMIN_GROUP_ACCESS
       )
     ) {
       throw new BadRequestError("lecturer's not department head");

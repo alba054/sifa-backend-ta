@@ -166,8 +166,8 @@ export function fetchNewUserData(time?: Date | string) {
           lab_id: number;
           signature_path: number;
         }) => {
-          count++;
-          console.log(count);
+          // count++;
+          // console.log(count);
 
           const id = u.id;
           const username = u.username;

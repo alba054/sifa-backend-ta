@@ -42,6 +42,10 @@ export class HeadMajorHandler {
     const { departmentHead } = req.body;
 
     try {
+      if (typeof departmentHead === "undefined") {
+        throw new BadRequestError("provide departmentHead");
+      }
+
       await HeadMajorService.assignThesisToDepartmentHead(
         Number(thesisID),
         departmentHead

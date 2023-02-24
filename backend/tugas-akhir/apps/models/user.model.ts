@@ -97,6 +97,7 @@ export class User {
         ref_prodi: true,
         adm_group_unit: true,
         badges: true,
+        user_badge: { include: { badge: true } },
       },
     });
   }

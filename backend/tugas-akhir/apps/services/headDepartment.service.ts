@@ -72,7 +72,8 @@ export class HeadDepartmentService {
   }
 
   static async getProposedThesis(username: string) {
-    let proposedThesis = await Thesis.getAllThesis("Belum_Diproses");
+    let proposedThesis = await Thesis.getAllThesis("Diterima");
+    // console.log(proposedThesis);
 
     proposedThesis = proposedThesis.filter(
       (t) => t.kepalaDepartemen?.dsnNip === username

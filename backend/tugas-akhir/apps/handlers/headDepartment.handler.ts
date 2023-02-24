@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { HeadDepartmentService } from "../services/headDepartment.service";
+import { BadRequestError } from "../utils/error/badrequestError";
 import { createResponse, constants } from "../utils/utils";
 
 export class HeadDepartmentHandler {
@@ -8,11 +9,15 @@ export class HeadDepartmentHandler {
     const { isAccepted, lab1, lab2 } = req.body;
 
     try {
+      if (typeof isAccepted === "undefined") {
+        throw new BadRequestError("provide isAccepted");
+      }
+
       await HeadDepartmentService.updateLab(
         Number(thesisID),
         Boolean(isAccepted),
-        Number(lab1),
-        Number(lab2)
+        Number(lab1) || undefined,
+        Number(lab2) || undefined
       );
 
       return res
@@ -53,9 +58,9 @@ export class HeadDepartmentHandler {
       const studentThesis = proposedThesis.filter(
         (thesis) => thesis.taMhsNim === nim
       );
-      if (studentThesis.length < 2) {
-        continue;
-      }
+      // if (studentThesis.length < 2) {
+      //   continue;
+      // }
       response.push({
         NIM: nim,
         data: studentThesis,
