@@ -59,7 +59,9 @@ setInterval(() => {
 setInterval(() => {
   const today = new Date();
   fetchNewUserData(
-    `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate() - 1}`
+    `${today.getFullYear()}-${today.getMonth() + 1}-${
+      today.getDate() - 1 === 0 ? 1 : today.getDate() - 1
+    }`
   );
   // console.log("hai");
 }, 10000);
