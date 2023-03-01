@@ -23,6 +23,7 @@ import notifRouter from "./notification.route";
 import userIntegrationRouter from "./userIntegration.route";
 import webNotifRouter from "./webNotif.route";
 import headDepartmentRouter from "./headDepartment.route";
+import statisticRouter from "./statistic.route";
 
 const router = express.Router();
 
@@ -44,6 +45,7 @@ router.use("/head-admins", headAdminRouter); // * ktu
 router.use("/deans", deanRouter);
 router.use("/seminar-coordinators", seminarCoordinatorRouter);
 router.use("/vice-deans", viceDeanRouter);
+router.use("/statistics", statisticRouter);
 // * chat service
 router.use("/chat", chatRouter);
 router.use("/files", fileRouter);

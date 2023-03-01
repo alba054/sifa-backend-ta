@@ -5,6 +5,39 @@ import { InternalServerError } from "../utils/error/internalError";
 import { ILecturer } from "../utils/interfaces/lecturer.interface";
 
 export class Lecturer {
+  static async getExaminersCountByStatus(status?: any) {
+    return await prismaDB.dosen.findMany({
+      where: {
+        AND: [
+          { penguji: { every: { statusTerima: "Diterima" } } },
+          { mahasiswa: { every: { mhsStatus: status } } },
+        ],
+      },
+      select: { dsnNama: true, penguji: true },
+    });
+  }
+
+  static async getSupervisorsCountByStatus(status?: any) {
+    return await prismaDB.dosen.findMany({
+      where: {
+        AND: [
+          { pembimbing: { every: { statusTerima: "Diterima" } } },
+          { mahasiswa: { every: { mhsStatus: status } } },
+        ],
+      },
+      select: { dsnNama: true, pembimbing: true },
+    });
+  }
+
+  static async getSupervisorsCountByPosition() {
+    return await prismaDB.dosen.findMany({
+      where: {
+        AND: [{ pembimbing: { every: { statusTerima: "Diterima" } } }],
+      },
+      select: { dsnNama: true, pembimbing: true },
+    });
+  }
+
   static async getLecturerByID(lecturerID: number) {
     return await prismaDB.dosen.findUnique({
       where: { dsnId: lecturerID },
