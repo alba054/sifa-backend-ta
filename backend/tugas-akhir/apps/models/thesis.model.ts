@@ -177,7 +177,7 @@ export class Thesis {
         ref_laboratorium2: true,
         sk_pembimbing: true,
         sk_penguji: true,
-        seminar: { where: { smrTglSeminar: null }, include: {seminar_dokumen: true} },
+        seminar: { where: { smrTglSeminar: null, NOT: {ref_jenisujian: "Ujian_Skripsi"} }, include: {seminar_dokumen: true} },
       },
       orderBy: { updated_at: "desc" },
     });
