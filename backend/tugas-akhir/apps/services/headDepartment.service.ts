@@ -76,7 +76,9 @@ export class HeadDepartmentService {
     // console.log(proposedThesis);
 
     proposedThesis = proposedThesis.filter(
-      (t) => t.kepalaDepartemen?.dsnNip === username
+      (t) =>
+        t.kepalaDepartemen?.dsnNip === username &&
+        t.statusDepartemen !== "Diterima"
     );
 
     return proposedThesis;
