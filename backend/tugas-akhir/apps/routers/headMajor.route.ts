@@ -93,6 +93,7 @@ headMajorRouter
     AuthorizationMiddleware.authorize([
       constants.VOCATION_ADMIN_GROUP_ACCESS,
       constants.HEAD_MAJOR_GROUP_ACCESS,
+      constants.DEPARTMENT_ADMIN_GROUP_ACCESS
     ]),
     HeadMajorMiddleware.checkEligibilityToAssignExaminer,
     HeadMajorHandler.assignExaminers
@@ -104,6 +105,7 @@ headMajorRouter
     AuthorizationMiddleware.authorize([
       constants.VOCATION_ADMIN_GROUP_ACCESS,
       constants.HEAD_MAJOR_GROUP_ACCESS,
+      constants.DEPARTMENT_ADMIN_GROUP_ACCESS
     ]),
     HeadMajorHandler.getExaminersHistory
   );
