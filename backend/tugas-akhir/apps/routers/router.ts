@@ -24,6 +24,7 @@ import userIntegrationRouter from "./userIntegration.route";
 import webNotifRouter from "./webNotif.route";
 import headDepartmentRouter from "./headDepartment.route";
 import statisticRouter from "./statistic.route";
+import refSeminarRouter from "./refSeminar.route";
 
 const router = express.Router();
 
@@ -40,6 +41,7 @@ router.use("/head-departments", headDepartmentRouter);
 router.use("/head-labs", headLabRouter);
 router.use("/head-faculties", headFacultyRouter);
 router.use("/ref-letters", refLetterRouter);
+router.use("/ref-seminar", refSeminarRouter);
 router.use("/subsection-admins", subsectionAdminRouter);
 router.use("/head-admins", headAdminRouter); // * ktu
 router.use("/deans", deanRouter);
