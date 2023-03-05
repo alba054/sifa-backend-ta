@@ -11,6 +11,38 @@ import { NotFoundError } from "../utils/error/notFoundError";
 dotenv.config();
 
 export class LecturerHandler {
+  static async scoreInvitedSeminarV2(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+    const { score } = req.body;
+
+    try {
+      if (typeof score === "undefined") {
+        throw new BadRequestError("provide score");
+      }
+
+      if (!Array.isArray(score)) {
+        throw new BadRequestError("score must be array");
+      }
+
+      await LecturerService.scoreSeminarV2(nim, Number(seminarID), score);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully give score to seminar"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getAllApprentices(
     req: Request,
     res: Response,

@@ -1,10 +1,13 @@
 import { Seminar } from "../models/seminar.model";
+import { SeminarReferences } from "../models/seminarRef.model";
 import { SeminarScore } from "../models/seminarScore.model";
 import { Thesis } from "../models/thesis.model";
 import { User } from "../models/user.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { ISeminarSchedulePost } from "../utils/interfaces/seminar.interface";
+import { ISeminarRefPost } from "../utils/interfaces/seminarRef.interface";
+import { ISeminarScorePost } from "../utils/interfaces/seminarScore.interface";
 import { IWebNotif } from "../utils/interfaces/webNotif.interface";
 import { notifService } from "../utils/notification";
 import { constants } from "../utils/utils";
@@ -55,6 +58,98 @@ import { WebNotifService } from "./webNotif.service";
 //  />
 
 export class SeminarCoordinatorService {
+  static async scoreSeminarV2(
+    lecturerID: number,
+    seminarID: number,
+    score: ISeminarScorePost[]
+  ) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null) {
+      throw new NotFoundError("seminar's not found");
+    }
+    const lecturer = seminar.seminar_persetujuan.find(
+      (s) => s.ssetujuDsnId === lecturerID
+    );
+
+    if (typeof lecturer === "undefined") {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    if (seminar.smrFileKesediaan === null && seminar.smrFileUndangan === null) {
+      throw new BadRequestError("cannot scores yet");
+    }
+
+    if (seminar.smrFileBeritaAcara !== null) {
+      throw new BadRequestError("has been blocked");
+    }
+
+    score.forEach(async (s) => {
+      const ref = await SeminarReferences.getSeminarReferencesByID(s.refID);
+
+      if (ref === null) {
+        throw new NotFoundError("ref's not found");
+      }
+
+      if (s.score > ref.max || s.score < ref.min) {
+        throw new BadRequestError("provided score is out of bound");
+      }
+
+      s.score = s.score * ref.weight;
+      await SeminarScore.scoreSeminarV2(seminarID, lecturer.dosen.dsnId, s);
+    });
+
+    const seminarScores = await SeminarScore.getSeminarScoresBySeminarID(
+      seminarID
+    );
+
+    const refByType = await SeminarReferences.getSeminarReferencesBySeminarType(
+      seminar.ref_jenisujian
+    );
+
+    if (seminarScores.length === refByType.length * 4) {
+      const scores = seminarScores.map((s) => s.snilaiNilai);
+      if (scores.every((s) => s !== null)) {
+        // console.log(scores);
+
+        let finalScore = scores.reduce((total, s) => (total ?? 0) + (s ?? 0));
+        // console.log(finalScore);
+
+        finalScore = (finalScore ?? 0) / seminarScores.length;
+
+        await Seminar.updateAvgScore(seminarID, finalScore);
+      }
+    }
+  }
+
+  static async deleteSeminarRef(refID: number) {
+    const ref = await SeminarReferences.getSeminarReferencesByID(refID);
+
+    if (ref === null) {
+      throw new NotFoundError("references item's not found");
+    }
+
+    return await SeminarReferences.deleteSeminarRefByID(refID);
+  }
+
+  static async editSeminarRef(refID: number, body: ISeminarRefPost) {
+    const ref = await SeminarReferences.getSeminarReferencesByID(refID);
+
+    if (ref === null) {
+      throw new NotFoundError("references item's not found");
+    }
+
+    return await SeminarReferences.updateSeminarRef(refID, body);
+  }
+
+  static async addSeminarRef(body: ISeminarRefPost) {
+    return await SeminarReferences.addSeminarRef(body);
+  }
+
+  static async getReferencesItems() {
+    return await SeminarReferences.getSeminarReferences();
+  }
+
   static async approveSeminarRequest(seminarID: number, isAccepted: boolean) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 
@@ -159,6 +254,7 @@ export class SeminarCoordinatorService {
     }
 
     return await Seminar.provideScoringAndEventLetter(
+      seminar.tugas_akhir.taMhsNim,
       seminarID,
       scoringLetterPath,
       eventLetterPath
@@ -386,6 +482,14 @@ export class SeminarCoordinatorService {
 
     if (seminar.smrNilaiAngka !== null || seminar.smrNilaiHuruf !== null) {
       throw new NotFoundError("seminar has been scored");
+    }
+
+    if (seminar.tugas_akhir.pembimbing.length < 2) {
+      throw new BadRequestError("thesis's supervisors must be 2");
+    }
+
+    if (seminar.tugas_akhir.penguji.length < 2) {
+      throw new BadRequestError("thesis's examiner must be 2");
     }
 
     const user = await User.getUserByUsername(

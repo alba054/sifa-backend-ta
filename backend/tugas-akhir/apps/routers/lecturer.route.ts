@@ -152,7 +152,7 @@ lecturerRouter
   .route("/:nim/seminars/invited/:seminarID/scoring")
   .post(
     AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
-    LecturerHandler.scoreInvitedSeminar
+    LecturerHandler.scoreInvitedSeminarV2
   );
 
 lecturerRouter

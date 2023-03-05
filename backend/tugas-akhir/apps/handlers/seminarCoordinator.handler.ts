@@ -2,9 +2,164 @@ import { Request, Response, NextFunction } from "express";
 import { SeminarCoordinatorService } from "../services/seminarCoordinator.service";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { ISeminarSchedulePost } from "../utils/interfaces/seminar.interface";
+import { ISeminarRefPost } from "../utils/interfaces/seminarRef.interface";
+import { ISeminarScorePost } from "../utils/interfaces/seminarScore.interface";
 import { constants, createResponse } from "../utils/utils";
 
 export class SeminarCoordinatorHandler {
+  static async scoreSeminarV2(req: Request, res: Response, next: NextFunction) {
+    const { seminarID } = req.params;
+    let { score, lecturerID } = req.body;
+
+    try {
+      if (typeof score === "undefined") {
+        throw new BadRequestError("provide score");
+      }
+
+      if (!Array.isArray(score)) {
+        throw new BadRequestError("score must be array");
+      }
+
+      await SeminarCoordinatorService.scoreSeminarV2(
+        Number(lecturerID),
+        Number(seminarID),
+        score
+      );
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully give score to seminar"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async deleteRefItemHandler(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { refID } = req.params;
+
+    await SeminarCoordinatorService.deleteSeminarRef(Number(refID));
+    try {
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully delete seminar ref"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async putRefItemHandler(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { refID } = req.params;
+    const body = req.body as ISeminarRefPost;
+
+    try {
+      if (
+        typeof body.max === "undefined" ||
+        typeof body.min === "undefined" ||
+        typeof body.status === "undefined" ||
+        typeof body.type === "undefined" ||
+        typeof body.weight === "undefined" ||
+        typeof body.scoringType === "undefined"
+      ) {
+        throw new BadRequestError(
+          "provide max, min, status, type, weight, scoringType"
+        );
+      }
+
+      body.max = Number(body.max);
+      body.min = Number(body.min);
+      body.weight = Number(body.weight);
+
+      await SeminarCoordinatorService.editSeminarRef(Number(refID), body);
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully put seminar ref"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async postRefItemHandler(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const body = req.body as ISeminarRefPost;
+
+    try {
+      if (
+        typeof body.max === "undefined" ||
+        typeof body.min === "undefined" ||
+        typeof body.status === "undefined" ||
+        typeof body.type === "undefined" ||
+        typeof body.weight === "undefined" ||
+        typeof body.scoringType === "undefined"
+      ) {
+        throw new BadRequestError(
+          "provide max, min, status, type, weight, scoringType"
+        );
+      }
+
+      body.max = Number(body.max);
+      body.min = Number(body.min);
+      body.weight = Number(body.weight);
+
+      await SeminarCoordinatorService.addSeminarRef(body);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully post seminar ref"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getRefItemHandler(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const references = await SeminarCoordinatorService.getReferencesItems();
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get all references items",
+          references
+        )
+      );
+  }
+
   static async approveSeminarRequest(
     req: Request,
     res: Response,

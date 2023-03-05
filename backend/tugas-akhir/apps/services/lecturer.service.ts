@@ -2,6 +2,7 @@ import { Examiner } from "../models/examiner.model";
 import { Lecturer } from "../models/lecturer.model";
 import { Seminar } from "../models/seminar.model";
 import { SeminarNote } from "../models/seminarNote.model";
+import { SeminarReferences } from "../models/seminarRef.model";
 import { SeminarScore } from "../models/seminarScore.model";
 import { Supervisor } from "../models/supervisor.model";
 import { Thesis } from "../models/thesis.model";
@@ -9,12 +10,77 @@ import { User } from "../models/user.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { ILecturer } from "../utils/interfaces/lecturer.interface";
+import { ISeminarScorePost } from "../utils/interfaces/seminarScore.interface";
 import { IWebNotif } from "../utils/interfaces/webNotif.interface";
 import { notifService } from "../utils/notification";
 import { constants } from "../utils/utils";
 import { WebNotifService } from "./webNotif.service";
 
 export class LecturerService {
+  static async scoreSeminarV2(
+    nim: string,
+    seminarID: number,
+    score: ISeminarScorePost[]
+  ) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null) {
+      throw new NotFoundError("seminar's not found");
+    }
+    const lecturer = seminar.seminar_persetujuan.find(
+      (s) => s.dosen.dsnNip === nim
+    );
+
+    if (typeof lecturer === "undefined") {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    if (seminar.smrFileKesediaan === null && seminar.smrFileUndangan === null) {
+      throw new BadRequestError("cannot scores yet");
+    }
+
+    if (seminar.smrFileBeritaAcara !== null) {
+      throw new BadRequestError("has been blocked");
+    }
+
+    score.forEach(async (s) => {
+      const ref = await SeminarReferences.getSeminarReferencesByID(s.refID);
+
+      if (ref === null) {
+        throw new NotFoundError("ref's not found");
+      }
+
+      if (s.score > ref.max || s.score < ref.min) {
+        throw new BadRequestError("provided score is out of bound");
+      }
+
+      s.score = s.score * ref.weight;
+      await SeminarScore.scoreSeminarV2(seminarID, lecturer.dosen.dsnId, s);
+    });
+
+    const seminarScores = await SeminarScore.getSeminarScoresBySeminarID(
+      seminarID
+    );
+
+    const refByType = await SeminarReferences.getSeminarReferencesBySeminarType(
+      seminar.ref_jenisujian
+    );
+
+    if (seminarScores.length === refByType.length * 4) {
+      const scores = seminarScores.map((s) => s.snilaiNilai);
+      if (scores.every((s) => s !== null)) {
+        // console.log(scores);
+
+        let finalScore = scores.reduce((total, s) => (total ?? 0) + (s ?? 0));
+        // console.log(finalScore);
+
+        finalScore = (finalScore ?? 0) / seminarScores.length;
+
+        await Seminar.updateAvgScore(seminarID, finalScore);
+      }
+    }
+  }
+
   static async getApprentices(nim: string) {
     return await Thesis.getThesisBySupervisor(nim);
   }

@@ -79,11 +79,21 @@ export class Seminar {
   }
 
   static async provideScoringAndEventLetter(
+    nim: string,
     seminarID: number,
     scoringLetterPath: string,
     eventLetterPath: string | undefined
   ) {
     try {
+      if (eventLetterPath) {
+        await prismaDB.mahasiswa.update({
+          where: { mhsNim: nim },
+          data: {
+            mhsStatus: "Lulus",
+          },
+        });
+      }
+
       return await prismaDB.seminar.update({
         where: { smrId: seminarID },
         data: {

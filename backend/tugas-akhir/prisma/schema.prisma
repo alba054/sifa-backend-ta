@@ -74,10 +74,10 @@ model dosen {
   pembimbing                                               pembimbing[]
   penasehat_akademik                                       penasehat_akademik[]
   penguji                                                  penguji[]
-  revisi_pembimbing_dosenTorevisi_pembimbing_rpmbBaruDsnId revisi_pembimbing[]   @relation("dosenTorevisi_pembimbing_rpmbBaruDsnId")
-  revisi_pembimbing_dosenTorevisi_pembimbing_rpmbLamaDsnId revisi_pembimbing[]   @relation("dosenTorevisi_pembimbing_rpmbLamaDsnId")
-  revisi_penguji_dosenTorevisi_penguji_rujiLamaDsnId       revisi_penguji[]      @relation("dosenTorevisi_penguji_rujiLamaDsnId")
-  revisi_penguji_dosenTorevisi_penguji_rujiBaruDsnId       revisi_penguji[]      @relation("dosenTorevisi_penguji_rujiBaruDsnId")
+  revisi_pembimbing_dosenTorevisi_pembimbing_rpmbBaruDsnId revisi_pembimbing[]     @relation("dosenTorevisi_pembimbing_rpmbBaruDsnId")
+  revisi_pembimbing_dosenTorevisi_pembimbing_rpmbLamaDsnId revisi_pembimbing[]     @relation("dosenTorevisi_pembimbing_rpmbLamaDsnId")
+  revisi_penguji_dosenTorevisi_penguji_rujiLamaDsnId       revisi_penguji[]        @relation("dosenTorevisi_penguji_rujiLamaDsnId")
+  revisi_penguji_dosenTorevisi_penguji_rujiBaruDsnId       revisi_penguji[]        @relation("dosenTorevisi_penguji_rujiBaruDsnId")
   seminar_catatan                                          seminar_catatan[]
   seminar_nilai                                            seminar_nilai[]
   seminar_persetujuan                                      seminar_persetujuan[]
@@ -568,6 +568,18 @@ model seminar_dokumen {
   @@index([dokSmrId], map: "seminar_dokumen_FK")
 }
 
+model seminar_ref {
+  id            Int             @id @default(autoincrement()) @db.UnsignedInt
+  seminarType   JenisUjian
+  scoringType   Scoring_Type
+  name          String?
+  min           Float
+  max           Float
+  status        String?
+  weight        Float
+  seminar_nilai seminar_nilai[]
+}
+
 model seminar_nilai {
   snilaiId            Int            @id @default(autoincrement()) @db.UnsignedInt
   snilaiSmrId         Int?
@@ -576,7 +588,9 @@ model seminar_nilai {
   snilaiDate          DateTime?      @db.DateTime(0)
   snilaiUser          String?        @db.VarChar(30)
   created_at          DateTime?      @default(now())
+  seminar_ref_id      Int            @db.UnsignedInt
   updated_at          DateTime?      @updatedAt
+  seminar_ref         seminar_ref    @relation(fields: [seminar_ref_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   seminar             seminar?       @relation(fields: [snilaiSmrId], references: [smrId], onDelete: Restrict, map: "seminar_nilai_ibfk_1")
   dosen               dosen?         @relation(fields: [snilaiDsnId], references: [dsnId], onDelete: Cascade, map: "seminar_nilai_ibfk_2")
   ref_itemnilai       ref_itemnilai? @relation(fields: [ref_itemnilaiItemId], references: [itemId])
@@ -593,11 +607,13 @@ model seminar_persetujuan {
   ssetujuDate      DateTime?        @db.Date
   ssetujuStatus    Int?
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
-  ssetujuCatatan   String?          @db.Text
-  created_at       DateTime?        @default(now())
-  updated_at       DateTime?        @updatedAt
-  dosen            dosen            @relation(fields: [ssetujuDsnId], references: [dsnId], onDelete: Cascade, map: "seminar_persetujuan_ibfk_1")
-  seminar          seminar          @relation(fields: [ssetujuSmrId], references: [smrId], onDelete: Cascade, map: "seminar_persetujuan_ibfk_2")
+
+  ssetujuCatatan String?   @db.Text
+  created_at     DateTime? @default(now())
+  updated_at     DateTime? @updatedAt
+
+  dosen   dosen   @relation(fields: [ssetujuDsnId], references: [dsnId], onDelete: Cascade, map: "seminar_persetujuan_ibfk_1")
+  seminar seminar @relation(fields: [ssetujuSmrId], references: [smrId], onDelete: Cascade, map: "seminar_persetujuan_ibfk_2")
 
   @@unique([ssetujuSmrId, ssetujuDsnId], map: "ssgabung")
   @@index([ssetujuDsnId], map: "ssetujuDsnId")
@@ -1056,4 +1072,11 @@ enum Role {
   DOSEN
   ADMIN_PRODI
   ADMIN_FAKULTAS
+}
+
+enum Scoring_Type {
+  Kualitas_Rencana_Penelitian
+  Presentasi
+  Penguasaan_Materi
+  Kesesuaian_Pola_Penulisan_Ilmiah
 }

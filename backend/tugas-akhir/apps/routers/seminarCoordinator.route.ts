@@ -104,7 +104,37 @@ seminarCoordinatorRouter
     AuthorizationMiddleware.authorize([
       constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
     ]),
-    SeminarCoordinatorHandler.scoreSeminar
+    SeminarCoordinatorHandler.scoreSeminarV2
+  );
+
+seminarCoordinatorRouter
+  .route("/ref")
+  .get(
+    AuthorizationMiddleware.authorize([
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+    ]),
+    SeminarCoordinatorHandler.getRefItemHandler
+  )
+  .post(
+    AuthorizationMiddleware.authorize([
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+    ]),
+    SeminarCoordinatorHandler.postRefItemHandler
+  );
+
+seminarCoordinatorRouter
+  .route("/ref/:refID")
+  .put(
+    AuthorizationMiddleware.authorize([
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+    ]),
+    SeminarCoordinatorHandler.putRefItemHandler
+  )
+  .delete(
+    AuthorizationMiddleware.authorize([
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+    ]),
+    SeminarCoordinatorHandler.deleteRefItemHandler
   );
 
 export default seminarCoordinatorRouter;
