@@ -74,10 +74,10 @@ model dosen {
   pembimbing                                               pembimbing[]
   penasehat_akademik                                       penasehat_akademik[]
   penguji                                                  penguji[]
-  revisi_pembimbing_dosenTorevisi_pembimbing_rpmbBaruDsnId revisi_pembimbing[]     @relation("dosenTorevisi_pembimbing_rpmbBaruDsnId")
-  revisi_pembimbing_dosenTorevisi_pembimbing_rpmbLamaDsnId revisi_pembimbing[]     @relation("dosenTorevisi_pembimbing_rpmbLamaDsnId")
-  revisi_penguji_dosenTorevisi_penguji_rujiLamaDsnId       revisi_penguji[]        @relation("dosenTorevisi_penguji_rujiLamaDsnId")
-  revisi_penguji_dosenTorevisi_penguji_rujiBaruDsnId       revisi_penguji[]        @relation("dosenTorevisi_penguji_rujiBaruDsnId")
+  revisi_pembimbing_dosenTorevisi_pembimbing_rpmbBaruDsnId revisi_pembimbing[]   @relation("dosenTorevisi_pembimbing_rpmbBaruDsnId")
+  revisi_pembimbing_dosenTorevisi_pembimbing_rpmbLamaDsnId revisi_pembimbing[]   @relation("dosenTorevisi_pembimbing_rpmbLamaDsnId")
+  revisi_penguji_dosenTorevisi_penguji_rujiLamaDsnId       revisi_penguji[]      @relation("dosenTorevisi_penguji_rujiLamaDsnId")
+  revisi_penguji_dosenTorevisi_penguji_rujiBaruDsnId       revisi_penguji[]      @relation("dosenTorevisi_penguji_rujiBaruDsnId")
   seminar_catatan                                          seminar_catatan[]
   seminar_nilai                                            seminar_nilai[]
   seminar_persetujuan                                      seminar_persetujuan[]
@@ -975,6 +975,7 @@ model user {
   keterangan     String? @db.VarChar(100)
   labID          Int?
   notificationID String?
+  signature      String? @db.VarChar(255)
 
   ref_prodi            ref_prodi?             @relation(fields: [prodiID], references: [prdId], onDelete: Restrict, map: "user_ibfk_2")
   ref_departemen       ref_departemen?        @relation(fields: [departementID], references: [dprtId])

@@ -168,7 +168,7 @@ export function fetchNewUserData(time?: Date | string) {
         major: number;
         is_enable: number;
         lab_id: number;
-        signature_path: number;
+        signature_path: string;
       }) => {
         // count++;
         // console.log(count);
@@ -183,6 +183,7 @@ export function fetchNewUserData(time?: Date | string) {
         const role = Number(u.user_role_id);
         const status = Number(u.is_enable);
         const lab = u.lab_id;
+        const signature = u.signature_path;
 
         const user = await User.getUserByUsername(username);
         connection.query(
@@ -207,6 +208,7 @@ export function fetchNewUserData(time?: Date | string) {
                     vocationID: major,
                     departmentID: department,
                     status,
+                    signature,
                   });
                 } else if (res[0].name === constants.LECTURER_GROUP_ACCESS) {
                   // todo: lecturer departmentID is undefined so create a default value
@@ -221,6 +223,7 @@ export function fetchNewUserData(time?: Date | string) {
                     vocationID: major,
                     labID: lab ?? null,
                     status,
+                    signature,
                   });
                   // } else if (
                   //   Number(role) === constants.LAB_ADMIN_GROUP_ACCESS
@@ -252,6 +255,7 @@ export function fetchNewUserData(time?: Date | string) {
                     departmentID: department,
                     status,
                     labID: lab ?? null,
+                    signature,
                   });
                 }
               } else {

@@ -13,3 +13,4 @@ uploaded_file
 swagger-output.json
 seed/ujiansidang.seed.sql
 dist/
+.prettierrc

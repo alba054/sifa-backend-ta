@@ -81,7 +81,8 @@ export class UserService {
       .setGroupAccess(newUser.groupAccess)
       .setDepartmentID(newUser.departmentID)
       .setLabID(newUser.labID)
-      .setVocationID(newUser.vocationID);
+      .setVocationID(newUser.vocationID)
+      .setSignature(newUser.signature);
 
     try {
       const insertedUser = await User.insertIntoUser(user);

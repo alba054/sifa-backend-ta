@@ -10,6 +10,7 @@ export interface IUser {
   vocationID?: number;
   labID?: number;
   password?: string;
+  signature?: string;
 }
 
 // export interface IStudentRequestSignUp {

@@ -113,6 +113,7 @@ export class User {
   vocationID?: number;
   labID?: number;
   id?: number;
+  signature?: string;
 
   constructor(username: string, password: string) {
     this.username = username;
@@ -131,6 +132,11 @@ export class User {
       status: this.status,
       username: this.username,
     } as IUser;
+  }
+
+  setSignature(signature: string | undefined) {
+    this.signature = signature;
+    return this;
   }
 
   setID(id?: number) {
@@ -197,7 +203,8 @@ export class User {
     major?: number,
     email?: string,
     name?: string,
-    lab?: number
+    lab?: number,
+    signature?: string
   ) {
     try {
       if (lab !== null) {
@@ -220,6 +227,7 @@ export class User {
           prodiID: major,
           name,
           labID: lab,
+          signature,
         },
       });
 
