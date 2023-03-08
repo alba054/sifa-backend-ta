@@ -10,7 +10,7 @@ interface IDocumentPost {
 export interface ISeminarSchedulePost {
   seminarDate: number;
   startTime: number;
-  endTime: number;
+  endTime?: number;
   place: string;
   note?: string;
   groupID?: string;

@@ -477,7 +477,12 @@ export class Seminar {
   ) {
     const seminarDate = new Date(body.seminarDate);
     const startTime = new Date(body.startTime);
-    const endTime = new Date(body.endTime);
+    const endTime = body.endTime ? new Date(body.endTime) : 0;
+
+    const smrJamSelesai =
+      endTime !== 0
+        ? `${endTime.getHours()}:${endTime.getMinutes()}`
+        : "selesai";
     // Number(body.seminarDate.split("-")[2]),
     // Number(body.seminarDate.split("-")[1]),
     // Number(body.seminarDate.split("-")[0])
@@ -489,7 +494,7 @@ export class Seminar {
       data: {
         smrLink: body.note,
         smrJamMulai: `${startTime.getHours()}:${startTime.getMinutes()}`,
-        smrJamSelesai: `${endTime.getHours()}:${endTime.getMinutes()}`,
+        smrJamSelesai,
         smrTempat: body.place,
         smrTglSeminar: seminarDate,
         smrFileKesediaan: null,
@@ -533,8 +538,12 @@ export class Seminar {
   ) {
     const seminarDate = new Date(body.seminarDate);
     const startTime = new Date(body.startTime);
-    const endTime = new Date(body.endTime);
+    const endTime = body.endTime ? new Date(body.endTime) : 0;
 
+    const smrJamSelesai =
+      endTime !== 0
+        ? `${endTime.getHours()}:${endTime.getMinutes()}`
+        : "selesai";
     const seminar = await prismaDB.seminar.update({
       where: {
         smrId: seminarID,
@@ -542,7 +551,7 @@ export class Seminar {
       data: {
         smrLink: body.note,
         smrJamMulai: `${startTime.getHours()}:${startTime.getMinutes()}`,
-        smrJamSelesai: `${endTime.getHours()}:${endTime.getMinutes()}`,
+        smrJamSelesai,
         smrTempat: body.place,
         smrTglSeminar: seminarDate,
         groupID: body.groupID,

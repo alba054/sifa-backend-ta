@@ -494,18 +494,17 @@ export class SeminarCoordinatorHandler {
     const body = req.body as ISeminarSchedulePost;
     try {
       if (
-        typeof body.endTime === "undefined" ||
         typeof body.place === "undefined" ||
         typeof body.seminarDate === "undefined" ||
         typeof body.startTime === "undefined" ||
         typeof body.groupID === "undefined"
       ) {
         throw new BadRequestError(
-          "provide endTime, place, seminarDate, startTime, groupID"
+          "provide place, seminarDate, startTime, groupID"
         );
       }
 
-      body.endTime = Number(body.endTime);
+      body.endTime = body.endTime ? Number(body.endTime) : 0;
       body.seminarDate = Number(body.seminarDate);
       body.startTime = Number(body.startTime);
       // const datePattern = /[\d][\d]-[\d][\d]-[\d][\d][\d][\d]/;

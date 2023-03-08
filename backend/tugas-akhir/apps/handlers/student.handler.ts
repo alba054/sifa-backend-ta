@@ -33,17 +33,14 @@ export class StudentHandler {
     const body = req.body as ISeminarSchedulePost;
     try {
       if (
-        typeof body.endTime === "undefined" ||
         typeof body.place === "undefined" ||
         typeof body.seminarDate === "undefined" ||
         typeof body.startTime === "undefined"
       ) {
-        throw new BadRequestError(
-          "provide endTime, place, seminarDate, startTime"
-        );
+        throw new BadRequestError("provide place, seminarDate, startTime");
       }
 
-      body.endTime = Number(body.endTime);
+      body.endTime = body.endTime ? Number(body.endTime) : 0;
       body.seminarDate = Number(body.seminarDate);
       body.startTime = Number(body.startTime);
       // const datePattern = /[\d][\d]-[\d][\d]-[\d][\d][\d][\d]/;
