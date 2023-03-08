@@ -168,7 +168,8 @@ export class DocumentService {
       throw new BadRequestError("data's not for this student");
     }
 
-    const dean = await User.getUserByBadge(constants.DEAN_GROUP_ACCESS);
+    let dean = await User.getUsersByBadge(constants.DEAN_GROUP_ACCESS);
+    dean = dean.filter((d) => d.username !== "superuser");
     const seminarCoord = await User.getUserByBadge(
       constants.SEMINAR_COORDINATOR_GROUP_ACCESS
     );
@@ -191,8 +192,8 @@ export class DocumentService {
         (s) => s.ujiUrutan === 2
       )?.dosen;
       response.push({
-        deanName: dean?.name || "",
-        deanNIP: dean?.username || "",
+        deanName: dean[0].name || "",
+        deanNIP: dean[0].username || "",
         mainMentorNIP: mainMentor?.dsnNip,
         sideMentorNIP: sideMentor?.dsnNip,
         coordinatorSeminarNote: s.smrCatatan,

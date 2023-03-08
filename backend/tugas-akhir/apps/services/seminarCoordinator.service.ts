@@ -1,3 +1,4 @@
+import { group } from "console";
 import { Seminar } from "../models/seminar.model";
 import { SeminarReferences } from "../models/seminarRef.model";
 import { SeminarScore } from "../models/seminarScore.model";
@@ -58,6 +59,10 @@ import { WebNotifService } from "./webNotif.service";
 //  />
 
 export class SeminarCoordinatorService {
+  static async getSeminarsByGroupID(groupID: string) {
+    return Seminar.getSeminarByGroupID(groupID);
+  }
+
   static async scoreSeminarV2(
     lecturerID: number,
     seminarID: number,
@@ -463,7 +468,11 @@ export class SeminarCoordinatorService {
       throw new NotFoundError("seminar has been scored");
     }
 
-    return Seminar.deleteSeminarSchedule(seminarID);
+    if (!seminar.groupID) {
+      throw new BadRequestError("seminar has not been scheduled");
+    }
+
+    return Seminar.deleteSeminarSchedule(seminarID, seminar.groupID);
   }
 
   static async createSeminarSchedule(

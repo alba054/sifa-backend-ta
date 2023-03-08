@@ -78,6 +78,15 @@ seminarCoordinatorRouter
   );
 
 seminarCoordinatorRouter
+  .route("/seminar/group/:groupID")
+  .get(
+    AuthorizationMiddleware.authorize([
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+    ]),
+    SeminarCoordinatorHandler.getSeminarsByGroup
+  );
+
+seminarCoordinatorRouter
   .route("/seminars/:seminarID")
   .post(
     AuthorizationMiddleware.authorize([

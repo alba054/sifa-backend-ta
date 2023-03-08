@@ -7,6 +7,28 @@ import { ISeminarScorePost } from "../utils/interfaces/seminarScore.interface";
 import { constants, createResponse } from "../utils/utils";
 
 export class SeminarCoordinatorHandler {
+  static async getSeminarsByGroup(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { groupID } = req.params;
+
+    const seminars = await SeminarCoordinatorService.getSeminarsByGroupID(
+      groupID
+    );
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get seminars by groupID",
+          seminars
+        )
+      );
+  }
+
   static async scoreSeminarV2(req: Request, res: Response, next: NextFunction) {
     const { seminarID } = req.params;
     let { score, lecturerID } = req.body;
