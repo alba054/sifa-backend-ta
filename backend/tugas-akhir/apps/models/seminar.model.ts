@@ -249,7 +249,8 @@ export class Seminar {
   static async provideInvitationAndApprovalLetter(
     seminarID: number,
     invitationPath: string,
-    approvalPath: string
+    approvalPath: string,
+    signature: string
   ) {
     try {
       return await prismaDB.seminar.update({
@@ -258,6 +259,7 @@ export class Seminar {
           smrFileUndangan: invitationPath,
           smrFileKesediaan: approvalPath,
           smrTglUndangan: new Date(),
+          signature: signature,
         },
       });
     } catch (error) {

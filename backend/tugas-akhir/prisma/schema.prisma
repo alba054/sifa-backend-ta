@@ -516,6 +516,7 @@ model seminar {
   smrFileKesediaan          String?                     @db.VarChar(200)
   smrFileBeritaAcara        String?
   smrFileKeteranganNilai    String?
+  signature String?
   statusPermohonan          StatusPermohonan            @default(Belum_Diproses)
   smrTglBeritaAcara         DateTime?                   @db.Date
   smrTglUndangan            DateTime?                   @db.Date

@@ -103,10 +103,11 @@ export class DocumentService {
     //   constants.VICE_DEAN_GROUP_ACCESS
     // );
 
+    const student = await User.getUserByUsername(nim);
     return {
       name: exam.tugas_akhir.mahasiswa.mhsNama,
       nim: exam.tugas_akhir.taMhsNim,
-      department: "Farmasi",
+      department: student?.ref_departemen?.dprtNama,
       faculty: "Farmasi",
       firstViceDean: exam.viceDeanName || "",
       firstViceDeanNIP: exam.viceDeanNIP || "",
@@ -146,14 +147,28 @@ export class DocumentService {
       throw new BadRequestError("data's not for this student");
     }
 
+    const student = await User.getUserByUsername(seminar.tugas_akhir.taMhsNim);
+
     return {
-      department: "Farmasi",
+      department: student?.ref_departemen?.dprtNama,
       letterDate: seminar.smrTglBeritaAcara,
       proposalTitle: seminar.tugas_akhir.taJudul,
       score: seminar.smrNilaiAngka,
       season: "",
       studentName: seminar.tugas_akhir.mahasiswa.mhsNama,
       studentNIM: seminar.tugas_akhir.mahasiswa.mhsNim,
+      mainMentorNIP: seminar.tugas_akhir.pembimbing.filter(
+        (l) => l.ref_posisipmb === "Utama"
+      )[0].dosen.dsnNip,
+      mainMentorName: seminar.tugas_akhir.pembimbing.filter(
+        (l) => l.ref_posisipmb === "Utama"
+      )[0].dosen.dsnNama,
+      sideMentorNIP: seminar.tugas_akhir.pembimbing.filter(
+        (l) => l.ref_posisipmb === "Pendamping"
+      )[0].dosen.dsnNip,
+      sideMentorName: seminar.tugas_akhir.pembimbing.filter(
+        (l) => l.ref_posisipmb === "Pendamping"
+      )[0].dosen.dsnNama,
     } as ISeminarScoreDoc;
   }
 
@@ -178,6 +193,8 @@ export class DocumentService {
 
     const response: any[] = [];
 
+    const student = await User.getUserByUsername(seminar.tugas_akhir.taMhsNim);
+
     seminars.forEach((s) => {
       const mainMentor = s.tugas_akhir.pembimbing.find(
         (s) => s.ref_posisipmb === "Utama"
@@ -197,7 +214,7 @@ export class DocumentService {
         mainMentorNIP: mainMentor?.dsnNip,
         sideMentorNIP: sideMentor?.dsnNip,
         coordinatorSeminarNote: s.smrCatatan,
-        department: "Farmasi",
+        department: student?.ref_departemen?.dprtNama,
         firstExaminer: firstExaminer?.dsnNama,
         firstExaminerNIP: firstExaminer?.dsnNip,
         letterNumber: "",
@@ -217,6 +234,7 @@ export class DocumentService {
         studentName: s.tugas_akhir.mahasiswa.mhsNama,
         studentNIM: s.tugas_akhir.taMhsNim,
         link: s.smrLink,
+        signature: s.signature,
       } as ISeminarInvitationDoc);
     });
 
@@ -335,10 +353,11 @@ export class DocumentService {
     }
 
     // const dean = await User.getUserByBadge(constants.DEAN_GROUP_ACCESS);
+    const student = await User.getUserByUsername(nim);
     return {
       deanName: sk.deanName || "",
       deanNIP: sk.deanNIP || "",
-      department: "Farmasi",
+      department: student?.ref_departemen?.dprtNama,
       letterDate: sk.skpTglSurat,
       letterNumber: sk.skpNomor,
       chaiman: sk.tugas_akhir.pembimbing.find(
@@ -371,11 +390,11 @@ export class DocumentService {
     }
 
     // const dean = await User.getUserByBadge(constants.DEAN_GROUP_ACCESS);
-
+    const student = await User.getUserByUsername(nim);
     return {
       deanName: sk.deanName || "",
       deanNIP: sk.deanNIP || "",
-      department: "Farmasi",
+      department: student?.ref_departemen?.dprtNama,
       letterDate: sk.skbTglSurat,
       letterNumber: sk.skbNomor,
       mainMentor: sk.tugas_akhir.pembimbing.find(

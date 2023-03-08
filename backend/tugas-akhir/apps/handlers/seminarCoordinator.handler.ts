@@ -347,21 +347,25 @@ export class SeminarCoordinatorHandler {
     res: Response,
     next: NextFunction
   ) {
-    const { invitationPath, approvalPath } = req.body;
+    const { invitationPath, approvalPath, signature } = req.body;
     const { seminarID } = req.params;
 
     try {
       if (
         typeof invitationPath === "undefined" ||
-        typeof approvalPath === "undefined"
+        typeof approvalPath === "undefined" ||
+        typeof signature === "undefined"
       ) {
-        throw new BadRequestError("provide invitationPath and approvalPath");
+        throw new BadRequestError(
+          "provide invitationPath, approvalPath, signature"
+        );
       }
 
       await SeminarCoordinatorService.provideInvitationAndApprovalLetter(
         Number(seminarID),
         invitationPath,
-        approvalPath
+        approvalPath,
+        signature
       );
 
       return res

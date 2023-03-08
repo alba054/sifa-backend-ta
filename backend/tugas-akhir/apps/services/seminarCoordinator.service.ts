@@ -4,6 +4,7 @@ import { SeminarReferences } from "../models/seminarRef.model";
 import { SeminarScore } from "../models/seminarScore.model";
 import { Thesis } from "../models/thesis.model";
 import { User } from "../models/user.model";
+import { decodeBase64 } from "../utils/decoder";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { ISeminarSchedulePost } from "../utils/interfaces/seminar.interface";
@@ -11,8 +12,11 @@ import { ISeminarRefPost } from "../utils/interfaces/seminarRef.interface";
 import { ISeminarScorePost } from "../utils/interfaces/seminarScore.interface";
 import { IWebNotif } from "../utils/interfaces/webNotif.interface";
 import { notifService } from "../utils/notification";
+import { writeToFile } from "../utils/storage";
 import { constants } from "../utils/utils";
 import { WebNotifService } from "./webNotif.service";
+
+import { v4 as uuidv4 } from "uuid";
 
 /* <PDFSuratKesediaan
         name={"Muh. Yusuf Syam"}
@@ -286,7 +290,8 @@ export class SeminarCoordinatorService {
   static async provideInvitationAndApprovalLetter(
     seminarID: number,
     invitationPath: string,
-    approvalPath: string
+    approvalPath: string,
+    signature: string
   ) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 
@@ -309,10 +314,17 @@ export class SeminarCoordinatorService {
       );
     }
 
+    const filename = writeToFile(
+      constants.SIGN_FILE_PATH,
+      uuidv4() + ".png",
+      decodeBase64(signature)
+    );
+
     const inserted = await Seminar.provideInvitationAndApprovalLetter(
       seminarID,
       invitationPath,
-      approvalPath
+      approvalPath,
+      `${constants.SIGN_FILE_PATH}/${filename}`
     );
 
     const userSupervisor0 = await User.getUserByUsername(
