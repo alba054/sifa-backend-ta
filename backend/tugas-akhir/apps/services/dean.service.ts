@@ -43,7 +43,13 @@ export class DeanService {
       decodeBase64(signature)
     );
 
-    return await SupervisorSK.signSK(SKID, signed, username, name, filename);
+    return await SupervisorSK.signSK(
+      SKID,
+      signed,
+      username,
+      name,
+      `${constants.SIGN_FILE_PATH}/${filename}.png`
+    );
   }
 
   static async signExaminerSK(
@@ -69,7 +75,13 @@ export class DeanService {
       decodeBase64(signature)
     );
 
-    return await ExaminerSK.signSK(SKID, signed, username, name, filename);
+    return await ExaminerSK.signSK(
+      SKID,
+      signed,
+      username,
+      name,
+      `${constants.SIGN_FILE_PATH}/${filename}.png`
+    );
   }
 
   static async getApprovedThesisWithSK(nim: any) {

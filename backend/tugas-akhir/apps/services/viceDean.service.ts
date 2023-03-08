@@ -45,7 +45,7 @@ export class ViceDeanService {
       isAccepted,
       username,
       name,
-      filename
+      `${constants.SIGN_FILE_PATH}/${filename}.png`
     );
   }
 

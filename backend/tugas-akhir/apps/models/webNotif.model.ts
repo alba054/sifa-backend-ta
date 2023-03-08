@@ -18,6 +18,7 @@ export class WebNotif {
   static async getUserNotification(id: number, role?: any) {
     return await prismaDB.web_notifikasi.findMany({
       where: { AND: [{ userId: id }, { role }] },
+      orderBy: { updated_at: "desc" },
     });
   }
 
