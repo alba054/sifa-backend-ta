@@ -392,7 +392,8 @@ export class Seminar {
   static async changeScheduledSeminarApproval(
     seminarID: number,
     isAccepted: boolean,
-    nim: string
+    nim: string,
+    signature: string
   ) {
     try {
       return await prismaDB.seminar_persetujuan.updateMany({
@@ -401,6 +402,7 @@ export class Seminar {
         },
         data: {
           statusPermohonan: isAccepted ? "Diterima" : "Ditolak",
+          signature,
         },
       });
     } catch (error) {

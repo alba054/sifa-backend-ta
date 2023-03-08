@@ -274,17 +274,21 @@ export class LecturerHandler {
     next: NextFunction
   ) {
     const { nim, seminarID } = req.params;
-    const { isAccepted } = req.body;
+    const { isAccepted, signature } = req.body;
 
     try {
-      if (typeof isAccepted === "undefined") {
-        throw new BadRequestError("provide isAccepted");
+      if (
+        typeof isAccepted === "undefined" ||
+        typeof signature === "undefined"
+      ) {
+        throw new BadRequestError("provide isAccepted and signature");
       }
 
       await LecturerService.acceptOrRejectScheduledSeminar(
         nim,
         Number(seminarID),
-        Boolean(isAccepted)
+        Boolean(isAccepted),
+        signature
       );
 
       return res

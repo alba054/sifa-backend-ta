@@ -7,14 +7,18 @@ import { SeminarScore } from "../models/seminarScore.model";
 import { Supervisor } from "../models/supervisor.model";
 import { Thesis } from "../models/thesis.model";
 import { User } from "../models/user.model";
+import { decodeBase64 } from "../utils/decoder";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { ILecturer } from "../utils/interfaces/lecturer.interface";
 import { ISeminarScorePost } from "../utils/interfaces/seminarScore.interface";
 import { IWebNotif } from "../utils/interfaces/webNotif.interface";
 import { notifService } from "../utils/notification";
+import { writeToFile } from "../utils/storage";
 import { constants } from "../utils/utils";
 import { WebNotifService } from "./webNotif.service";
+
+import { v4 as uuidv4 } from "uuid";
 
 export class LecturerService {
   static async scoreSeminarV2(
@@ -264,7 +268,8 @@ export class LecturerService {
   static async acceptOrRejectScheduledSeminar(
     nim: string,
     seminarID: number,
-    isAccepted: boolean
+    isAccepted: boolean,
+    signature: string
   ) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 
@@ -294,11 +299,17 @@ export class LecturerService {
         user.username
       );
     }
+    const filename = writeToFile(
+      constants.SIGN_FILE_PATH,
+      uuidv4() + ".png",
+      decodeBase64(signature)
+    );
 
     return await Seminar.changeScheduledSeminarApproval(
       seminarID,
       isAccepted,
-      nim
+      nim,
+      `${constants.SIGN_FILE_PATH}/${filename}`
     );
   }
 

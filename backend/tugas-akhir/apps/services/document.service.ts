@@ -315,17 +315,36 @@ export class DocumentService {
       throw new BadRequestError("data's not for this student");
     }
 
+    const firstExaminer = seminar.tugas_akhir.pembimbing.find(
+      (s) => s.ref_posisipmb === "Utama"
+    )?.dosen;
+    const secondExaminer = seminar.tugas_akhir.pembimbing.find(
+      (s) => s.ref_posisipmb === "Pendamping"
+    )?.dosen;
+    const thirdExaminer = seminar.tugas_akhir.penguji.find(
+      (s) => s.ujiUrutan === 1
+    )?.dosen;
+    const forthExaminer = seminar.tugas_akhir.penguji.find(
+      (s) => s.ujiUrutan === 2
+    )?.dosen;
+
     return {
-      firstExaminer: seminar.tugas_akhir.pembimbing.find(
-        (s) => s.ref_posisipmb === "Utama"
-      )?.dosen.dsnNama,
-      secondExaminer: seminar.tugas_akhir.pembimbing.find(
-        (s) => s.ref_posisipmb === "Pendamping"
-      )?.dosen.dsnNama,
-      thirdExaminer: seminar.tugas_akhir.penguji.find((s) => s.ujiUrutan === 1)
-        ?.dosen.dsnNama,
-      forthExaminer: seminar.tugas_akhir.penguji.find((s) => s.ujiUrutan === 2)
-        ?.dosen.dsnNama,
+      firstExaminer: firstExaminer?.dsnNama,
+      firstExaminerSignature: seminar.seminar_persetujuan.find(
+        (l) => l.ssetujuDsnId === firstExaminer?.dsnId
+      )?.signature,
+      secondExaminer: secondExaminer?.dsnNama,
+      secondExaminerSignature: seminar.seminar_persetujuan.find(
+        (l) => l.ssetujuDsnId === secondExaminer?.dsnId
+      )?.signature,
+      thirdExaminer: thirdExaminer?.dsnNama,
+      thirdExaminerSignature: seminar.seminar_persetujuan.find(
+        (l) => l.ssetujuDsnId === thirdExaminer?.dsnId
+      )?.signature,
+      forthExaminer: forthExaminer?.dsnNama,
+      forthExaminerSignature: seminar.seminar_persetujuan.find(
+        (l) => l.ssetujuDsnId === forthExaminer?.dsnId
+      )?.signature,
       letterDate: seminar.smrTglUndangan || "",
       proposalTitle: seminar.tugas_akhir.taJudul,
       seminarDate: seminar.smrTglSeminar ?? "",

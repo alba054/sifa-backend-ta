@@ -609,6 +609,7 @@ model seminar_persetujuan {
   ssetujuDate      DateTime?        @db.Date
   ssetujuStatus    Int?
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
+  signature String?
 
   ssetujuCatatan String?   @db.Text
   created_at     DateTime? @default(now())
