@@ -13,4 +13,5 @@ export interface ISeminarSchedulePost {
   endTime: number;
   place: string;
   note?: string;
+  groupID?: string;
 }

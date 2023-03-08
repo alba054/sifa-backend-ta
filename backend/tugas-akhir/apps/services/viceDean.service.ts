@@ -1,5 +1,10 @@
 import { ExamProposal } from "../models/examProposal.model";
+import { decodeBase64 } from "../utils/decoder";
 import { NotFoundError } from "../utils/error/notFoundError";
+import { writeToFile } from "../utils/storage";
+import { constants } from "../utils/utils";
+
+import { v4 as uuidv4 } from "uuid";
 
 export class ViceDeanService {
   static async unsignedProposal(examID: number) {
@@ -9,7 +14,7 @@ export class ViceDeanService {
       throw new NotFoundError("proposal's not found");
     }
 
-    return await ExamProposal.signExamProposal(examID, false, "", "");
+    return await ExamProposal.signExamProposal(examID, false, "", "", "");
   }
 
   static async getHistoryOfSignedProposals() {
@@ -20,7 +25,8 @@ export class ViceDeanService {
     examID: number,
     isAccepted: boolean,
     username: string,
-    name: string
+    name: string,
+    signature: string
   ) {
     const proposal = await ExamProposal.getExamProposalByID(examID);
 
@@ -28,11 +34,18 @@ export class ViceDeanService {
       throw new NotFoundError("proposal's not found");
     }
 
+    const filename = writeToFile(
+      constants.SIGN_FILE_PATH,
+      uuidv4(),
+      decodeBase64(signature)
+    );
+
     return await ExamProposal.signExamProposal(
       examID,
       isAccepted,
       username,
-      name
+      name,
+      filename
     );
   }
 

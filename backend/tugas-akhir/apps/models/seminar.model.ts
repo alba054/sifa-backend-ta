@@ -8,6 +8,34 @@ import {
 } from "../utils/interfaces/seminar.interface";
 
 export class Seminar {
+  static async getSeminarByGroupID(groupID: string | null) {
+    return await prismaDB.seminar.findMany({
+      where: {
+        groupID,
+      },
+      include: {
+        seminar_catatan: { include: { dosen: true } },
+        seminar_dokumen: true,
+        seminar_persetujuan: { include: { dosen: true } },
+        seminar_status_pembimbing: {
+          include: { pembimbing: { include: { dosen: true } } },
+        },
+        seminar_nilai: {
+          include: {
+            dosen: true,
+          },
+        },
+        tugas_akhir: {
+          include: {
+            pembimbing: { include: { dosen: true } },
+            penguji: { include: { dosen: true } },
+            mahasiswa: { include: { ref_prodi: true } },
+          },
+        },
+      },
+    });
+  }
+
   static async approveSeminarRequest(seminarID: number, isAccepted: boolean) {
     return await prismaDB.seminar.update({
       where: {
@@ -466,6 +494,7 @@ export class Seminar {
         smrTglSeminar: seminarDate,
         smrFileKesediaan: null,
         smrFileUndangan: null,
+        groupID: body.groupID,
       },
     });
 
@@ -516,6 +545,7 @@ export class Seminar {
         smrJamSelesai: `${endTime.getHours()}:${endTime.getMinutes()}`,
         smrTempat: body.place,
         smrTglSeminar: seminarDate,
+        groupID: body.groupID,
       },
       include: {
         tugas_akhir: {

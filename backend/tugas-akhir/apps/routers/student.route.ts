@@ -137,6 +137,13 @@ studentRouter
   );
 
 studentRouter
+  .route("/:nim/seminars/:seminarID/schedule")
+  .post(
+    AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),
+    StudentHandler.scheduleFinalExam
+  );
+
+studentRouter
   .route("/:nim/exams")
   .post(
     AuthorizationMiddleware.authorize([constants.STUDENT_GROUP_ACCESS]),

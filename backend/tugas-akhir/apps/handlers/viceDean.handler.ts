@@ -51,18 +51,22 @@ export class ViceDeanHandler {
     next: NextFunction
   ) {
     const { examID } = req.params;
-    const { isAccepted } = req.body;
+    const { isAccepted, signature } = req.body;
     const { username, name } = res.locals.user;
 
     try {
-      if (typeof isAccepted === "undefined") {
-        throw new BadRequestError("provide isAccepted");
+      if (
+        typeof isAccepted === "undefined" ||
+        typeof signature === "undefined"
+      ) {
+        throw new BadRequestError("provide isAccepted and signature");
       }
       await ViceDeanService.signExamProposal(
         Number(examID),
         Boolean(isAccepted),
         username,
-        name
+        name,
+        signature
       );
 
       return res

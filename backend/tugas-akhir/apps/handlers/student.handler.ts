@@ -15,12 +15,72 @@ import { LabFreeService } from "../services/labFree.service";
 import { IThesis, IThesisPost } from "../utils/interfaces/thesis.interface";
 import { ThesisService } from "../services/thesis.service";
 import { decodeBase64 } from "../utils/decoder";
-import { ISeminarDocumentPost } from "../utils/interfaces/seminar.interface";
+import {
+  ISeminarDocumentPost,
+  ISeminarSchedulePost,
+} from "../utils/interfaces/seminar.interface";
 import { IRequestExamDocumentPost } from "../utils/interfaces/exam.interface";
 
 dotenv.config();
 
 export class StudentHandler {
+  static async scheduleFinalExam(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { seminarID } = req.params;
+    const body = req.body as ISeminarSchedulePost;
+    try {
+      if (
+        typeof body.endTime === "undefined" ||
+        typeof body.place === "undefined" ||
+        typeof body.seminarDate === "undefined" ||
+        typeof body.startTime === "undefined"
+      ) {
+        throw new BadRequestError(
+          "provide endTime, place, seminarDate, startTime"
+        );
+      }
+
+      body.endTime = Number(body.endTime);
+      body.seminarDate = Number(body.seminarDate);
+      body.startTime = Number(body.startTime);
+      // const datePattern = /[\d][\d]-[\d][\d]-[\d][\d][\d][\d]/;
+      // const timePattern = /[\d][\d]:[\d][\d]/;
+
+      // if (!datePattern.test(body.seminarDate)) {
+      //   throw new BadRequestError("seminarDate format should be dd-mm-yyyy");
+      // }
+
+      // // const date = body.seminarDate.split("-");
+      // // const startTime = body.startTime.split(":");
+      // // const endTime = body.endTime.split(":");
+
+      // if (
+      //   !timePattern.test(body.startTime) ||
+      //   !timePattern.test(body.endTime)
+      // ) {
+      //   throw new BadRequestError(
+      //     "startTime and endTime format should be hh:mm"
+      //   );
+      // }
+
+      await StudentService.createSeminarSchedule(Number(seminarID), body);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully schedule seminar"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async deleteSeminar(req: Request, res: Response, next: NextFunction) {
     const { nim, seminarID } = req.params;
 
@@ -427,11 +487,11 @@ export class StudentHandler {
       thesis = thesis.filter((th) => th.statusPermohonan === proposalStatus);
     }
 
-    if (thesis.length > 1) {
-      const temp = thesis[0];
-      thesis[0] = thesis[1];
-      thesis[1] = temp;
-    }
+    // if (thesis.length > 1) {
+    //   const temp = thesis[0];
+    //   thesis[0] = thesis[1];
+    //   thesis[1] = temp;
+    // }
     // const temp = thesis[0];
     // thesis[0] = thesis[1];
     // thesis[1] = temp;

@@ -19,6 +19,7 @@ export interface ISupervisorSKDoc {
   mainMentor: string;
   sideMentor: string;
   major: string;
+  signature?: string;
 }
 
 export interface IExaminerSKDoc {
@@ -33,6 +34,7 @@ export interface IExaminerSKDoc {
   secretary: string;
   major: string;
   member: string[];
+  signature?: string;
 }
 
 export interface ISeminarApprovalDoc {
@@ -121,4 +123,5 @@ export interface IExamProposalDoc {
   firstViceDean: string;
   firstViceDeanNIP: string;
   letterDate: string | Date;
+  signature?: string;
 }

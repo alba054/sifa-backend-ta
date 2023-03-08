@@ -9,7 +9,8 @@ export class ExaminerSK {
     SKID: number,
     signed: boolean,
     username: string,
-    name: string
+    name: string,
+    signature?: string
   ) {
     try {
       return await prismaDB.sk_penguji.update({
@@ -18,6 +19,7 @@ export class ExaminerSK {
           skpStatus: signed ? 1 : null,
           deanName: name,
           deanNIP: username,
+          signature,
         },
       });
     } catch (error) {

@@ -3,6 +3,11 @@ import { SupervisorSK } from "../models/supervisorSK.model";
 import { Thesis } from "../models/thesis.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
+import { writeToFile } from "../utils/storage";
+import { constants } from "../utils/utils";
+
+import { v4 as uuidv4 } from "uuid";
+import { decodeBase64 } from "../utils/decoder";
 
 export class DeanService {
   static async getApprovedThesisWithSKDetail(thesisID: number) {
@@ -19,7 +24,8 @@ export class DeanService {
     SKID: number,
     signed: boolean,
     username: string,
-    name: string
+    name: string,
+    signature: string
   ) {
     const supervisorSK = await SupervisorSK.getSKByID(SKID);
 
@@ -31,14 +37,21 @@ export class DeanService {
       throw new BadRequestError("cannot sign anymore");
     }
 
-    return await SupervisorSK.signSK(SKID, signed, username, name);
+    const filename = writeToFile(
+      constants.SIGN_FILE_PATH,
+      uuidv4(),
+      decodeBase64(signature)
+    );
+
+    return await SupervisorSK.signSK(SKID, signed, username, name, filename);
   }
 
   static async signExaminerSK(
     SKID: number,
     signed: boolean,
     username: string,
-    name: string
+    name: string,
+    signature: string
   ) {
     const examinerSK = await ExaminerSK.getSKByID(SKID);
 
@@ -50,7 +63,13 @@ export class DeanService {
       throw new BadRequestError("cannot sign anymore");
     }
 
-    return await ExaminerSK.signSK(SKID, signed, username, name);
+    const filename = writeToFile(
+      constants.SIGN_FILE_PATH,
+      uuidv4(),
+      decodeBase64(signature)
+    );
+
+    return await ExaminerSK.signSK(SKID, signed, username, name, filename);
   }
 
   static async getApprovedThesisWithSK(nim: any) {

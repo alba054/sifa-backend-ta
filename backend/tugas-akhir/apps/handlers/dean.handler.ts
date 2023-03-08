@@ -36,19 +36,20 @@ export class DeanHandler {
     next: NextFunction
   ) {
     const { SKID } = req.params;
-    const { signed } = req.body;
+    const { signed, signature } = req.body;
     const { username, name } = res.locals.user;
 
     try {
-      if (typeof signed === "undefined") {
-        throw new BadRequestError("provide signed");
+      if (typeof signed === "undefined" || typeof signature === "undefined") {
+        throw new BadRequestError("provide signed and signature");
       }
 
       await DeanService.signSupervisorSK(
         Number(SKID),
         Boolean(signed),
         username,
-        name
+        name,
+        signature
       );
 
       return res
@@ -63,19 +64,20 @@ export class DeanHandler {
 
   static async signExaminerSK(req: Request, res: Response, next: NextFunction) {
     const { SKID } = req.params;
-    const { signed } = req.body;
+    const { signed, signature } = req.body;
     const { username, name } = res.locals.user;
 
     try {
-      if (typeof signed === "undefined") {
-        throw new BadRequestError("provide signed");
+      if (typeof signed === "undefined" || typeof signature === "undefined") {
+        throw new BadRequestError("provide signed and signature");
       }
 
       await DeanService.signExaminerSK(
         Number(SKID),
         Boolean(signed),
         username,
-        name
+        name,
+        signature
       );
 
       return res

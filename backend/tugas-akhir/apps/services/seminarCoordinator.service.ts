@@ -417,7 +417,7 @@ export class SeminarCoordinatorService {
       role: constants.LECTURER_GROUP_ACCESS,
       title: "Persetujuan Jadwal Seminar",
       description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
-      link: "/dosen/persetujuan/waktu-seminar",
+      link: "/dosen/persetujuan-pelaksanaan-seminar",
     } as IWebNotif;
 
     const dataSupervisor1 = {
@@ -425,7 +425,7 @@ export class SeminarCoordinatorService {
       role: constants.LECTURER_GROUP_ACCESS,
       title: "Persetujuan Jadwal Seminar",
       description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
-      link: "/dosen/persetujuan/waktu-seminar",
+      link: "/dosen/persetujuan-pelaksanaan-seminar",
     } as IWebNotif;
 
     const dataExaminer0 = {
@@ -433,7 +433,7 @@ export class SeminarCoordinatorService {
       role: constants.LECTURER_GROUP_ACCESS,
       title: "Persetujuan Jadwal Seminar",
       description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
-      link: "/dosen/persetujuan/waktu-seminar",
+      link: "/dosen/persetujuan-pelaksanaan-seminar",
     } as IWebNotif;
 
     const dataExaminer1 = {
@@ -441,7 +441,7 @@ export class SeminarCoordinatorService {
       role: constants.LECTURER_GROUP_ACCESS,
       title: "Persetujuan Jadwal Seminar",
       description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
-      link: "/dosen/persetujuan/waktu-seminar",
+      link: "/dosen/persetujuan-pelaksanaan-seminar",
     } as IWebNotif;
 
     await WebNotifService.createNotification(dataSupervisor0);
@@ -523,7 +523,7 @@ export class SeminarCoordinatorService {
       role: constants.LECTURER_GROUP_ACCESS,
       title: "Persetujuan Jadwal Seminar",
       description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
-      link: "/dosen/persetujuan/waktu-seminar",
+      link: "/dosen/persetujuan-pelaksanaan-seminar",
     } as IWebNotif;
 
     const dataSupervisor1 = {
@@ -531,7 +531,7 @@ export class SeminarCoordinatorService {
       role: constants.LECTURER_GROUP_ACCESS,
       title: "Persetujuan Jadwal Seminar",
       description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
-      link: "/dosen/persetujuan/waktu-seminar",
+      link: "/dosen/persetujuan-pelaksanaan-seminar",
     } as IWebNotif;
 
     const dataExaminer0 = {
@@ -539,7 +539,7 @@ export class SeminarCoordinatorService {
       role: constants.LECTURER_GROUP_ACCESS,
       title: "Persetujuan Jadwal Seminar",
       description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
-      link: "/dosen/persetujuan/waktu-seminar",
+      link: "/dosen/persetujuan-pelaksanaan-seminar",
     } as IWebNotif;
 
     const dataExaminer1 = {
@@ -547,7 +547,7 @@ export class SeminarCoordinatorService {
       role: constants.LECTURER_GROUP_ACCESS,
       title: "Persetujuan Jadwal Seminar",
       description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
-      link: "/dosen/persetujuan/waktu-seminar",
+      link: "/dosen/persetujuan-pelaksanaan-seminar",
     } as IWebNotif;
 
     await WebNotifService.createNotification(dataSupervisor0);

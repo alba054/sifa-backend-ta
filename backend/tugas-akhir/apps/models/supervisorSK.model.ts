@@ -9,7 +9,8 @@ export class SupervisorSK {
     SKID: number,
     signed: boolean,
     username: string,
-    name: string
+    name: string,
+    signature: string
   ) {
     try {
       return await prismaDB.sk_pembimbing.update({
@@ -18,6 +19,7 @@ export class SupervisorSK {
           skbStatus: signed ? 1 : null,
           deanName: name,
           deanNIP: username,
+          signature_path: signature,
         },
       });
     } catch (error) {

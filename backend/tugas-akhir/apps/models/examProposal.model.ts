@@ -27,7 +27,8 @@ export class ExamProposal {
     examID: number,
     isAccepted: boolean,
     username: string,
-    name: string
+    name: string,
+    signature: string
   ) {
     try {
       return await prismaDB.permohonan_ujian_sidang.update({
@@ -36,6 +37,7 @@ export class ExamProposal {
           statusTTD: isAccepted,
           viceDeanName: name,
           viceDeanNIP: username,
+          signature_path: signature,
         },
       });
     } catch (error) {

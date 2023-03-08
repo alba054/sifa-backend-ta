@@ -119,7 +119,7 @@ export class HeadMajorService {
       role: constants.LECTURER_GROUP_ACCESS,
       title: "Usulan Sebagai Penguji",
       description: `Anda ditunjuk sebagai penguji mahasiswa ${thesis?.mahasiswa.mhsNama} dengan judul tugas akhir ${thesis?.taJudul}`,
-      link: "/dosen/usulan/penguji",
+      link: "/dosen/usulan-penguji",
     } as IWebNotif;
 
     const examiner = await Examiner.createExaminer(thesisID, body);

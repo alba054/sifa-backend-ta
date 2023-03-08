@@ -131,6 +131,7 @@ export class DocumentService {
         sk,
       ],
       letterDate: exam.tanggalSK,
+      signature: exam.signature_path,
     } as IExamProposalDoc;
   }
 
@@ -167,51 +168,58 @@ export class DocumentService {
       throw new BadRequestError("data's not for this student");
     }
 
-    const mainMentor = seminar.tugas_akhir.pembimbing.find(
-      (s) => s.ref_posisipmb === "Utama"
-    )?.dosen;
-    const sideMentor = seminar.tugas_akhir.pembimbing.find(
-      (s) => s.ref_posisipmb === "Pendamping"
-    )?.dosen;
-    const firstExaminer = seminar.tugas_akhir.penguji.find(
-      (s) => s.ujiUrutan === 1
-    )?.dosen;
-    const secondExaminer = seminar.tugas_akhir.penguji.find(
-      (s) => s.ujiUrutan === 2
-    )?.dosen;
-
     const dean = await User.getUserByBadge(constants.DEAN_GROUP_ACCESS);
     const seminarCoord = await User.getUserByBadge(
       constants.SEMINAR_COORDINATOR_GROUP_ACCESS
     );
 
-    return {
-      deanName: dean?.name || "",
-      deanNIP: dean?.username || "",
-      mainMentorNIP: mainMentor?.dsnNip,
-      sideMentorNIP: sideMentor?.dsnNip,
-      coordinatorSeminarNote: seminar.smrCatatan,
-      department: "Farmasi",
-      firstExaminer: firstExaminer?.dsnNama,
-      firstExaminerNIP: firstExaminer?.dsnNip,
-      letterNumber: "",
-      secondExaminer: secondExaminer?.dsnNama,
-      secondExaminerNIP: secondExaminer?.dsnNip,
-      seminarCoordinatorName: seminarCoord?.name || "",
-      seminarCoordinatorNIP: seminarCoord?.username || "",
-      letterDate: seminar.smrTglUndangan || "",
-      mainMentor: mainMentor?.dsnNama,
-      sideMentor: sideMentor?.dsnNama,
-      major: seminar.tugas_akhir.mahasiswa.ref_prodi?.prdNama,
-      proposalTitle: seminar.tugas_akhir.taJudul,
-      seminarDate: seminar.smrTglSeminar ?? "",
-      seminarEndTime: seminar.smrJamSelesai,
-      seminarPlace: seminar.smrTempat,
-      seminarStartTime: seminar.smrJamMulai,
-      studentName: seminar.tugas_akhir.mahasiswa.mhsNama,
-      studentNIM: seminar.tugas_akhir.taMhsNim,
-      link: seminar.smrLink,
-    } as ISeminarInvitationDoc;
+    const seminars = await Seminar.getSeminarByGroupID(seminar.groupID);
+
+    const response: any[] = [];
+
+    seminars.forEach((s) => {
+      const mainMentor = s.tugas_akhir.pembimbing.find(
+        (s) => s.ref_posisipmb === "Utama"
+      )?.dosen;
+      const sideMentor = s.tugas_akhir.pembimbing.find(
+        (s) => s.ref_posisipmb === "Pendamping"
+      )?.dosen;
+      const firstExaminer = s.tugas_akhir.penguji.find(
+        (s) => s.ujiUrutan === 1
+      )?.dosen;
+      const secondExaminer = s.tugas_akhir.penguji.find(
+        (s) => s.ujiUrutan === 2
+      )?.dosen;
+      response.push({
+        deanName: dean?.name || "",
+        deanNIP: dean?.username || "",
+        mainMentorNIP: mainMentor?.dsnNip,
+        sideMentorNIP: sideMentor?.dsnNip,
+        coordinatorSeminarNote: s.smrCatatan,
+        department: "Farmasi",
+        firstExaminer: firstExaminer?.dsnNama,
+        firstExaminerNIP: firstExaminer?.dsnNip,
+        letterNumber: "",
+        secondExaminer: secondExaminer?.dsnNama,
+        secondExaminerNIP: secondExaminer?.dsnNip,
+        seminarCoordinatorName: seminarCoord?.name || "",
+        seminarCoordinatorNIP: seminarCoord?.username || "",
+        letterDate: s.smrTglUndangan || "",
+        mainMentor: mainMentor?.dsnNama,
+        sideMentor: sideMentor?.dsnNama,
+        major: s.tugas_akhir.mahasiswa.ref_prodi?.prdNama,
+        proposalTitle: s.tugas_akhir.taJudul,
+        seminarDate: s.smrTglSeminar ?? "",
+        seminarEndTime: s.smrJamSelesai,
+        seminarPlace: s.smrTempat,
+        seminarStartTime: s.smrJamMulai,
+        studentName: s.tugas_akhir.mahasiswa.mhsNama,
+        studentNIM: s.tugas_akhir.taMhsNim,
+        link: s.smrLink,
+      } as ISeminarInvitationDoc);
+    });
+
+    return;
   }
   static async getSeminarLetterEventData(nim: any, seminarID: number) {
     const seminar = await Seminar.getSeminarByID(seminarID);
@@ -342,6 +350,7 @@ export class DocumentService {
       studentName: sk.tugas_akhir.mahasiswa.mhsNama,
       studentNIM: sk.tugas_akhir.taMhsNim,
       member: sk.tugas_akhir.penguji.map((e) => e.dosen.dsnNama),
+      signature: sk.signature,
     } as IExaminerSKDoc;
   }
 
@@ -377,6 +386,7 @@ export class DocumentService {
       major: sk.tugas_akhir.mahasiswa.ref_prodi?.prdNama,
       studentName: sk.tugas_akhir.mahasiswa.mhsNama,
       studentNIM: sk.tugas_akhir.taMhsNim,
+      signature: sk.signature_path,
     } as ISupervisorSKDoc;
   }
 

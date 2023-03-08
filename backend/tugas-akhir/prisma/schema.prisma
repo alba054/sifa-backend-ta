@@ -507,6 +507,7 @@ model seminar {
   smrJamSelesai             String?
   smrStatus                 Int?
   smrStatusUjian            Int?
+  groupID String?
   smrFileUndangan           String?                     @db.VarChar(200)
   smrTglUsulan              DateTime?                   @db.Date
   smrCatatan                String?                     @db.Text
@@ -701,6 +702,7 @@ model sk_pembimbing {
   note             String?
   deanName         String?
   deanNIP          String?
+  signature_path String?
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
   skbStatusAkses   Int?
   created_at       DateTime?        @default(now())
@@ -774,6 +776,7 @@ model sk_penguji {
   note             String?
   deanName         String?
   deanNIP          String?
+  signature String?
   created_at       DateTime?        @default(now())
   updated_at       DateTime?        @updatedAt
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
@@ -919,6 +922,7 @@ model permohonan_ujian_sidang {
   catatanAdminFakultas   String?
   catatanKTU             String?
   statusTTD              Boolean                           @default(false)
+  signature_path String?
   tanggalSK              DateTime?                         @db.Date
   created_at             DateTime                          @default(now())
   viceDeanNIP            String?

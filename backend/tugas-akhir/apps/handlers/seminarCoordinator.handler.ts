@@ -412,10 +412,11 @@ export class SeminarCoordinatorHandler {
         typeof body.endTime === "undefined" ||
         typeof body.place === "undefined" ||
         typeof body.seminarDate === "undefined" ||
-        typeof body.startTime === "undefined"
+        typeof body.startTime === "undefined" ||
+        typeof body.groupID === "undefined"
       ) {
         throw new BadRequestError(
-          "provide endTime, place, seminarDate, startTime"
+          "provide endTime, place, seminarDate, startTime, groupID"
         );
       }
 
@@ -496,10 +497,11 @@ export class SeminarCoordinatorHandler {
         typeof body.endTime === "undefined" ||
         typeof body.place === "undefined" ||
         typeof body.seminarDate === "undefined" ||
-        typeof body.startTime === "undefined"
+        typeof body.startTime === "undefined" ||
+        typeof body.groupID === "undefined"
       ) {
         throw new BadRequestError(
-          "provide endTime, place, seminarDate, startTime"
+          "provide endTime, place, seminarDate, startTime, groupID"
         );
       }
 

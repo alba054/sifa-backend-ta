@@ -7,18 +7,118 @@ import { StudentBuilder } from "../utils/builder/student.builder";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { IRequestExamDocumentPost } from "../utils/interfaces/exam.interface";
-import { ISeminarDocumentPost } from "../utils/interfaces/seminar.interface";
+import {
+  ISeminarDocumentPost,
+  ISeminarSchedulePost,
+} from "../utils/interfaces/seminar.interface";
 import {
   IStudent,
   IStudentUpdate,
 } from "../utils/interfaces/student.interface";
 import { IWebNotif } from "../utils/interfaces/webNotif.interface";
+import { notifService } from "../utils/notification";
 import { writeToFile } from "../utils/storage";
 import { constants } from "../utils/utils";
 import { FileService } from "./file.service";
 import { WebNotifService } from "./webNotif.service";
 
 export class StudentService {
+  static async createSeminarSchedule(
+    seminarID: number,
+    body: ISeminarSchedulePost
+  ) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null) {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    if (seminar.statusPermohonan !== "Diterima") {
+      throw new BadRequestError("seminar request's not accepted");
+    }
+
+    if (seminar.ref_jenisujian !== "Ujian_Skripsi") {
+      throw new BadRequestError("cannot schedule seminar but 'ujian skripsi'");
+    }
+
+    if (seminar.smrNilaiAngka !== null || seminar.smrNilaiHuruf !== null) {
+      throw new NotFoundError("seminar has been scored");
+    }
+
+    if (seminar.tugas_akhir.pembimbing.length < 2) {
+      throw new BadRequestError("thesis's supervisors must be 2");
+    }
+
+    if (seminar.tugas_akhir.penguji.length < 2) {
+      throw new BadRequestError("thesis's examiner must be 2");
+    }
+
+    const user = await User.getUserByUsername(
+      seminar.tugas_akhir.mahasiswa.mhsNim
+    );
+
+    if (user !== null) {
+      notifService.sendNotification(
+        `seminar koordinator telah menjadwalkan seminar`,
+        [user.notificationID],
+        seminar.tugas_akhir.mahasiswa.mhsNim
+      );
+    }
+    const inserted = await Seminar.updateSeminarSchedule(seminarID, body);
+
+    const userSupervisor0 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[0].dosen.dsnNip
+    );
+    const userSupervisor1 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[1].dosen.dsnNip
+    );
+    const userExaminer0 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[2].dosen.dsnNip
+    );
+    const userExaminer1 = await User.getUserByUsername(
+      seminar.seminar_persetujuan[3].dosen.dsnNip
+    );
+
+    const dataSupervisor0 = {
+      userID: userSupervisor0?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Jadwal Seminar",
+      description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+      link: "/dosen/persetujuan-pelaksanaan-seminar",
+    } as IWebNotif;
+
+    const dataSupervisor1 = {
+      userID: userSupervisor1?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Jadwal Seminar",
+      description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+      link: "/dosen/persetujuan-pelaksanaan-seminar",
+    } as IWebNotif;
+
+    const dataExaminer0 = {
+      userID: userExaminer0?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Jadwal Seminar",
+      description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+      link: "/dosen/persetujuan-pelaksanaan-seminar",
+    } as IWebNotif;
+
+    const dataExaminer1 = {
+      userID: userExaminer1?.id,
+      role: constants.LECTURER_GROUP_ACCESS,
+      title: "Persetujuan Jadwal Seminar",
+      description: `jadwal seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+      link: "/dosen/persetujuan-pelaksanaan-seminar",
+    } as IWebNotif;
+
+    await WebNotifService.createNotification(dataSupervisor0);
+    await WebNotifService.createNotification(dataSupervisor1);
+    await WebNotifService.createNotification(dataExaminer0);
+    await WebNotifService.createNotification(dataExaminer1);
+
+    return inserted;
+  }
+
   static async deleteSeminar(nim: string, seminarID: number) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 
@@ -205,7 +305,7 @@ export class StudentService {
       role: constants.LECTURER_GROUP_ACCESS,
       title: "Persetujuan Seminar Oleh Pembimbing",
       description: `mahasiswa ${thesis[0].mahasiswa.mhsNama} mengajukan permohonan seminar dengan judul tugas akhir ${thesis[0].taJudul}`,
-      link: "/dosen/persetujuan/pembimbing ",
+      link: "/dosen/usulan-pembimbing",
     } as IWebNotif;
 
     const dataSupervisor1 = {
@@ -213,7 +313,7 @@ export class StudentService {
       role: constants.LECTURER_GROUP_ACCESS,
       title: "Persetujuan Seminar Oleh Pembimbing",
       description: `mahasiswa ${thesis[0].mahasiswa.mhsNama} mengajukan permohonan seminar dengan judul tugas akhir ${thesis[0].taJudul}`,
-      link: "/dosen/persetujuan/pembimbing ",
+      link: "/dosen/usulan-pembimbing",
     } as IWebNotif;
 
     await WebNotifService.createNotification(dataSupervisor0);
