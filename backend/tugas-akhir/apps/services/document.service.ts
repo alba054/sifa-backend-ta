@@ -219,7 +219,7 @@ export class DocumentService {
       } as ISeminarInvitationDoc);
     });
 
-    return;
+    return response;
   }
   static async getSeminarLetterEventData(nim: any, seminarID: number) {
     const seminar = await Seminar.getSeminarByID(seminarID);
