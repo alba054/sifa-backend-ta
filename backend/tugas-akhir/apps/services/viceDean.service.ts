@@ -36,7 +36,7 @@ export class ViceDeanService {
 
     const filename = writeToFile(
       constants.SIGN_FILE_PATH,
-      uuidv4(),
+      uuidv4() + ".png",
       decodeBase64(signature)
     );
 
@@ -45,7 +45,7 @@ export class ViceDeanService {
       isAccepted,
       username,
       name,
-      `${constants.SIGN_FILE_PATH}/${filename}.png`
+      `${constants.SIGN_FILE_PATH}/${filename}`
     );
   }
 
