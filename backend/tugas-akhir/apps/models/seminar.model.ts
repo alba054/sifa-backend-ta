@@ -510,6 +510,12 @@ export class Seminar {
   }
 
   static async deleteSeminarSchedule(seminarID: number, groupID: string) {
+    await prismaDB.seminar_persetujuan.deleteMany({
+      where: {
+        seminar: { groupID },
+      },
+    });
+
     const seminar = await prismaDB.seminar.updateMany({
       where: {
         groupID,
@@ -523,12 +529,6 @@ export class Seminar {
         smrFileKesediaan: null,
         smrFileUndangan: null,
         groupID: null,
-      },
-    });
-
-    await prismaDB.seminar_persetujuan.deleteMany({
-      where: {
-        seminar: { groupID },
       },
     });
   }
