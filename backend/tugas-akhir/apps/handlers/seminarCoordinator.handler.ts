@@ -48,9 +48,9 @@ export class SeminarCoordinatorHandler {
         score
       );
 
-      if (typeof opt === "string") {
-        throw new BadRequestError(opt);
-      }
+      // if (typeof opt === "string") {
+      //   throw new BadRequestError(opt);
+      // }
 
       return res
         .status(201)

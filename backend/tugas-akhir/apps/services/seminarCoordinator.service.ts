@@ -95,22 +95,38 @@ export class SeminarCoordinatorService {
 
     const scoreToInsert: ISeminarScorePost[] = [];
 
-    score.forEach(async (s) => {
-      const ref = await SeminarReferences.getSeminarReferencesByID(s.refID);
+    for (let i = 0; i < score.length; i++) {
+      const sc = score[i];
+      const ref = await SeminarReferences.getSeminarReferencesByID(sc.refID);
 
       if (ref === null) {
-        // throw new NotFoundError("ref's not found");
-        return "ref's not found";
+        throw new NotFoundError("ref's not found");
       }
 
-      if (s.score > ref.max || s.score < ref.min) {
-        // throw new BadRequestError("provided score is out of bound");
-        return "provided score is out of bound";
+      if (sc.score > ref.max || sc.score < ref.min) {
+        throw new BadRequestError("provided score is out of bound");
       }
 
-      s.score = s.score * ref.weight;
-      scoreToInsert.push({ score: s.score, refID: s.refID });
-    });
+      sc.score = sc.score * ref.weight;
+      scoreToInsert.push({ score: sc.score, refID: sc.refID });
+    }
+
+    // score.forEach(async (s) => {
+    //   const ref = await SeminarReferences.getSeminarReferencesByID(s.refID);
+
+    //   if (ref === null) {
+    //     // throw new NotFoundError("ref's not found");
+    //     return "ref's not found";
+    //   }
+
+    //   if (s.score > ref.max || s.score < ref.min) {
+    //     // throw new BadRequestError("provided score is out of bound");
+    //     return "provided score is out of bound";
+    //   }
+
+    //   s.score = s.score * ref.weight;
+    //   scoreToInsert.push({ score: s.score, refID: s.refID });
+    // });
 
     scoreToInsert.forEach(async (s) => {
       await SeminarScore.scoreSeminarV2(seminarID, lecturer.dosen.dsnId, s);
