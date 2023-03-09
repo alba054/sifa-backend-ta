@@ -19,7 +19,7 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
   if (err) {
-    console.error(err);
+    // console.error(err);
   }
   return;
 });
