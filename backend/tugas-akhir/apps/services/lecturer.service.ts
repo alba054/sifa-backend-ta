@@ -47,6 +47,7 @@ export class LecturerService {
       throw new BadRequestError("has been blocked");
     }
 
+    const scoreToInsert: ISeminarScorePost[] = [];
     score.forEach(async (s) => {
       const ref = await SeminarReferences.getSeminarReferencesByID(s.refID);
 
@@ -59,6 +60,10 @@ export class LecturerService {
       }
 
       s.score = s.score * ref.weight;
+      scoreToInsert.push({ score: s.score, refID: s.refID });
+    });
+
+    scoreToInsert.forEach(async (s) => {
       await SeminarScore.scoreSeminarV2(seminarID, lecturer.dosen.dsnId, s);
     });
 
