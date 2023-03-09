@@ -133,6 +133,31 @@ export class ThesisService {
     return approvedThesis;
   }
 
+  static async getApprovedThesisDispositionByHeadMajor(
+    vocationID: number,
+    status: any
+  ) {
+    let approvedThesis = await Thesis.getApprovedThesisByVocation(vocationID);
+
+    if (status === "unresolved") {
+      approvedThesis = approvedThesis.filter(
+        (t) => !t.disposisi_kaprodi.length
+      );
+      approvedThesis = approvedThesis.filter(
+        (t) => t.pembimbing.length > 1 && t.penguji.length > 1
+      );
+    } else {
+      approvedThesis = approvedThesis.filter((t) => {
+        return t.disposisi_kaprodi.length > 0;
+      });
+      approvedThesis = approvedThesis.filter(
+        (t) => t.pembimbing.length > 1 && t.penguji.length > 1
+      );
+    }
+
+    return approvedThesis;
+  }
+
   static async editProposedThesis(
     body: IThesisPost,
     nim: string,

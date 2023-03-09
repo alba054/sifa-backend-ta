@@ -33,6 +33,61 @@ interface IAssignedExaminer {
 }
 
 export class HeadMajorHandler {
+  static async getApprovedThesisDisposition(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const { vocationID } = res.locals.user;
+      const { status } = req.query;
+
+      const approvedThesis =
+        await ThesisService.getApprovedThesisDispositionByHeadMajor(
+          vocationID,
+          status
+        );
+
+      const uniqueNIM: string[] = [];
+
+      // todo: separate thesis by student's nim
+      for (const thesis of approvedThesis) {
+        if (!uniqueNIM.includes(thesis.taMhsNim)) {
+          uniqueNIM.push(thesis.taMhsNim);
+        }
+      }
+
+      const response: any[] = [];
+      for (const nim of uniqueNIM) {
+        const studentThesis = approvedThesis.filter(
+          (thesis) => thesis.taMhsNim === nim
+        );
+
+        const headDepartment = await User.getUserByBadge(
+          constants.DEPARTMENT_ADMIN_GROUP_ACCESS
+        );
+        response.push({
+          NIM: nim,
+          headDepartmentName: headDepartment?.name,
+          headDepartmentNIP: headDepartment?.username,
+          data: studentThesis,
+        });
+      }
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get all approved thesis",
+            response
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async assignThesisToDepartmentHead(
     req: Request,
     res: Response,

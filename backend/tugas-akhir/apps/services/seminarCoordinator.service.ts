@@ -621,7 +621,10 @@ export class SeminarCoordinatorService {
     const response: any[] = [];
     for (const nim of uniqueNIM) {
       const studentThesis = thesis.filter((t) => t.taMhsNim === nim);
-      if (studentThesis[0].seminar.every((s) => !s.smrTglSeminar)) {
+      if (
+        studentThesis[0].seminar.every((s) => !s.smrTglSeminar) &&
+        studentThesis[0].seminar.every((s) => s.statusPermohonan === "Diterima")
+      ) {
         response.push({
           NIM: nim,
           name: studentThesis[0].mahasiswa.mhsNama,

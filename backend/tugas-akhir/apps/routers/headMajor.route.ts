@@ -28,6 +28,17 @@ headMajorRouter
     HeadMajorHandler.getApprovedThesisHistory
   );
 
+// * get approved thesis
+headMajorRouter
+  .route("/thesis/approved/disposition")
+  .get(
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
+    HeadMajorHandler.getApprovedThesisDisposition
+  );
+
 headMajorRouter
   .route("/thesis")
   .get(
@@ -93,7 +104,7 @@ headMajorRouter
     AuthorizationMiddleware.authorize([
       constants.VOCATION_ADMIN_GROUP_ACCESS,
       constants.HEAD_MAJOR_GROUP_ACCESS,
-      constants.DEPARTMENT_ADMIN_GROUP_ACCESS
+      constants.DEPARTMENT_ADMIN_GROUP_ACCESS,
     ]),
     HeadMajorMiddleware.checkEligibilityToAssignExaminer,
     HeadMajorHandler.assignExaminers
@@ -105,7 +116,7 @@ headMajorRouter
     AuthorizationMiddleware.authorize([
       constants.VOCATION_ADMIN_GROUP_ACCESS,
       constants.HEAD_MAJOR_GROUP_ACCESS,
-      constants.DEPARTMENT_ADMIN_GROUP_ACCESS
+      constants.DEPARTMENT_ADMIN_GROUP_ACCESS,
     ]),
     HeadMajorHandler.getExaminersHistory
   );
