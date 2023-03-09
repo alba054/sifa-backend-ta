@@ -42,11 +42,15 @@ export class SeminarCoordinatorHandler {
         throw new BadRequestError("score must be array");
       }
 
-      await SeminarCoordinatorService.scoreSeminarV2(
+      const opt = await SeminarCoordinatorService.scoreSeminarV2(
         Number(lecturerID),
         Number(seminarID),
         score
       );
+
+      if (typeof opt === "string") {
+        throw new BadRequestError(opt);
+      }
 
       return res
         .status(201)

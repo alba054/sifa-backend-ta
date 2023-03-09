@@ -98,20 +98,18 @@ export class SeminarCoordinatorService {
     score.forEach(async (s) => {
       const ref = await SeminarReferences.getSeminarReferencesByID(s.refID);
 
-      try {
-        if (ref === null) {
-          throw new NotFoundError("ref's not found");
-        }
-
-        if (s.score > ref.max || s.score < ref.min) {
-          throw new BadRequestError("provided score is out of bound");
-        }
-
-        s.score = s.score * ref.weight;
-        scoreToInsert.push({ score: s.score, refID: s.refID });
-      } catch (error) {
-        throw error;
+      if (ref === null) {
+        // throw new NotFoundError("ref's not found");
+        return "ref's not found";
       }
+
+      if (s.score > ref.max || s.score < ref.min) {
+        // throw new BadRequestError("provided score is out of bound");
+        return "provided score is out of bound";
+      }
+
+      s.score = s.score * ref.weight;
+      scoreToInsert.push({ score: s.score, refID: s.refID });
     });
 
     scoreToInsert.forEach(async (s) => {
