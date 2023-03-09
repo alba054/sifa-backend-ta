@@ -34,8 +34,8 @@ export class SeminarCoordinatorHandler {
     let { score, lecturerID } = req.body;
 
     try {
-      if (typeof score === "undefined") {
-        throw new BadRequestError("provide score");
+      if (typeof score === "undefined" || typeof lecturerID === "undefined") {
+        throw new BadRequestError("provide score, lecturerID");
       }
 
       if (!Array.isArray(score)) {

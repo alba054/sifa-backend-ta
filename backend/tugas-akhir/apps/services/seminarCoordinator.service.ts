@@ -95,20 +95,24 @@ export class SeminarCoordinatorService {
 
     const scoreToInsert: ISeminarScorePost[] = [];
 
-    score.forEach(async (s) => {
-      const ref = await SeminarReferences.getSeminarReferencesByID(s.refID);
+    try {
+      score.forEach(async (s) => {
+        const ref = await SeminarReferences.getSeminarReferencesByID(s.refID);
 
-      if (ref === null) {
-        throw new NotFoundError("ref's not found");
-      }
+        if (ref === null) {
+          throw new NotFoundError("ref's not found");
+        }
 
-      if (s.score > ref.max || s.score < ref.min) {
-        throw new BadRequestError("provided score is out of bound");
-      }
+        if (s.score > ref.max || s.score < ref.min) {
+          throw new BadRequestError("provided score is out of bound");
+        }
 
-      s.score = s.score * ref.weight;
-      scoreToInsert.push({ score: s.score, refID: s.refID });
-    });
+        s.score = s.score * ref.weight;
+        scoreToInsert.push({ score: s.score, refID: s.refID });
+      });
+    } catch (error) {
+      throw error;
+    }
 
     scoreToInsert.forEach(async (s) => {
       await SeminarScore.scoreSeminarV2(seminarID, lecturer.dosen.dsnId, s);
