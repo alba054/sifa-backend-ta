@@ -128,9 +128,18 @@ export class SeminarCoordinatorService {
     //   scoreToInsert.push({ score: s.score, refID: s.refID });
     // });
 
-    scoreToInsert.forEach(async (s) => {
-      await SeminarScore.scoreSeminarV2(seminarID, lecturer.dosen.dsnId, s);
-    });
+    // scoreToInsert.forEach(async (s) => {
+    //   await SeminarScore.scoreSeminarV2(seminarID, lecturer.dosen.dsnId, s);
+    // });
+
+    for (let i = 0; i < scoreToInsert.length; i++) {
+      const score_ = scoreToInsert[i];
+      await SeminarScore.scoreSeminarV2(
+        seminarID,
+        lecturer.dosen.dsnId,
+        score_
+      );
+    }
 
     const seminarScores = await SeminarScore.getSeminarScoresBySeminarID(
       seminarID
