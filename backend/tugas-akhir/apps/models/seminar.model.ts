@@ -479,9 +479,9 @@ export class Seminar {
     seminarID: number,
     body: ISeminarSchedulePost
   ) {
-    const seminarDate = new Date(body.seminarDate);
-    const startTime = new Date(body.startTime);
-    const endTime = body.endTime ? new Date(body.endTime) : 0;
+    const seminarDate = new Date(body.seminarDate + 8 * 1000 * 3600);
+    const startTime = new Date(body.startTime + 8 * 1000 * 3600);
+    const endTime = body.endTime ? new Date(body.endTime + 8 * 1000 * 3600) : 0;
 
     const smrJamSelesai =
       endTime !== 0
