@@ -157,7 +157,7 @@ export class SeminarCoordinatorService {
         let finalScore = scores.reduce((total, s) => (total ?? 0) + (s ?? 0));
         // console.log(finalScore);
 
-        finalScore = (finalScore ?? 0) / seminarScores.length;
+        finalScore = (finalScore ?? 0) / 4;
 
         await Seminar.updateAvgScore(seminarID, finalScore);
       }
