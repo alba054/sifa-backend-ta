@@ -65,9 +65,14 @@ export class LecturerService {
       scoreToInsert.push({ score: sc.score, refID: sc.refID });
     }
 
-    scoreToInsert.forEach(async (s) => {
-      await SeminarScore.scoreSeminarV2(seminarID, lecturer.dosen.dsnId, s);
-    });
+    for (let i = 0; i < scoreToInsert.length; i++) {
+      const score_ = scoreToInsert[i];
+      await SeminarScore.scoreSeminarV2(
+        seminarID,
+        lecturer.dosen.dsnId,
+        score_
+      );
+    }
 
     const seminarScores = await SeminarScore.getSeminarScoresBySeminarID(
       seminarID
@@ -85,7 +90,7 @@ export class LecturerService {
         let finalScore = scores.reduce((total, s) => (total ?? 0) + (s ?? 0));
         // console.log(finalScore);
 
-        finalScore = (finalScore ?? 0) / seminarScores.length;
+        finalScore = (finalScore ?? 0) / 4;
 
         await Seminar.updateAvgScore(seminarID, finalScore);
       }
