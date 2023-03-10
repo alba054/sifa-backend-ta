@@ -11,7 +11,8 @@ export class LabFree {
   static async changeRequestLabStatus(
     reqLabID: number,
     isAccepted: boolean,
-    resolveDate: string
+    resolveDate: string,
+    signature?: string
   ) {
     try {
       return await prismaDB.bebas_lab.update({
@@ -19,6 +20,7 @@ export class LabFree {
         data: {
           ref_permohonan: isAccepted ? "Diterima" : "Ditolak",
           blTglSurat: new Date(),
+          signature_path: signature,
         },
       });
     } catch (error) {

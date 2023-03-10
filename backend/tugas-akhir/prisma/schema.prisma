@@ -34,6 +34,7 @@ model bebas_lab {
   updated_at       DateTime?        @updatedAt
   // blStatus         Int?
   blTahun          Int?
+  signature_path String?
   ref_permohonan   StatusPermohonan @default(Belum_Diproses)
   ref_laboratorium ref_laboratorium @relation(fields: [blLabId], references: [labId], onDelete: Cascade, map: "Bebas_Lab_ibfk_1")
   // ref_permohonan   ref_permohonan?  @relation(fields: [blStatus], references: [tastatusId], onDelete: Cascade, map: "Bebas_Lab_ibfk_2")

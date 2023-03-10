@@ -5,13 +5,17 @@ import { Supervisor } from "../models/supervisor.model";
 import { Thesis } from "../models/thesis.model";
 import { ThesisHeadMajorDisposition } from "../models/thesisHeadMajorDisposition.model";
 import { User } from "../models/user.model";
+import { decodeBase64 } from "../utils/decoder";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { ILabLetterPost } from "../utils/interfaces/labLetter.interface";
 import { IWebNotif } from "../utils/interfaces/webNotif.interface";
+import { writeToFile } from "../utils/storage";
 import { constants } from "../utils/utils";
 import { LabFreeService } from "./labFree.service";
 import { WebNotifService } from "./webNotif.service";
+
+import { v4 as uuidv4 } from "uuid";
 
 interface ISupervisorBodyPost {
   lecturerID: number;
@@ -75,7 +79,8 @@ export class HeadLabService {
     reqLabID: number,
     labID: number,
     isAccepted: boolean,
-    resolveDate: string
+    resolveDate: string,
+    signature: string
   ) {
     const reqlab = await LabFree.getFreeLabRequestsByID(reqLabID);
 
@@ -87,10 +92,17 @@ export class HeadLabService {
       throw new BadRequestError("provide resolveDate");
     }
 
+    const filename = writeToFile(
+      constants.SIGN_FILE_PATH,
+      uuidv4() + ".png",
+      decodeBase64(signature)
+    );
+
     return await LabFree.changeRequestLabStatus(
       reqLabID,
       isAccepted,
-      resolveDate
+      resolveDate,
+      `${constants.SIGN_FILE_PATH}/${filename}`
     );
   }
 

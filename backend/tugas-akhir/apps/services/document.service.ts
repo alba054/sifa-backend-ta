@@ -253,46 +253,61 @@ export class DocumentService {
 
     const firstExaminer = seminar.tugas_akhir.pembimbing.find(
       (s) => s.ref_posisipmb === "Utama"
-    )?.dosen.dsnNama;
+    )?.dosen;
     const secondExaminer = seminar.tugas_akhir.pembimbing.find(
       (s) => s.ref_posisipmb === "Pendamping"
-    )?.dosen.dsnNama;
+    )?.dosen;
     const thirdExaminer = seminar.tugas_akhir.penguji.find(
       (s) => s.ujiUrutan === 1
-    )?.dosen.dsnNama;
+    )?.dosen;
     const forthExaminer = seminar.tugas_akhir.penguji.find(
       (s) => s.ujiUrutan === 2
-    )?.dosen.dsnNama;
+    )?.dosen;
 
     const firstExaminerScore = seminar.seminar_nilai.find(
-      (e) => e.dosen?.dsnNama === firstExaminer
+      (e) => e.dosen?.dsnNama === firstExaminer?.dsnNama
     )?.snilaiNilai;
     const secondExaminerScore = seminar.seminar_nilai.find(
-      (e) => e.dosen?.dsnNama === secondExaminer
+      (e) => e.dosen?.dsnNama === secondExaminer?.dsnNama
     )?.snilaiNilai;
     const thirdExaminerScore = seminar.seminar_nilai.find(
-      (e) => e.dosen?.dsnNama === thirdExaminer
+      (e) => e.dosen?.dsnNama === thirdExaminer?.dsnNama
     )?.snilaiNilai;
     const forthExaminerScore = seminar.seminar_nilai.find(
-      (e) => e.dosen?.dsnNama === forthExaminer
+      (e) => e.dosen?.dsnNama === forthExaminer?.dsnNama
     )?.snilaiNilai;
 
-    const dean = await User.getUserByBadge(constants.DEAN_GROUP_ACCESS);
+    const dean = await User.getUsersByBadge(
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS
+    );
 
     return {
-      deanName: dean?.name || "",
-      deanNIP: dean?.username || "",
-      firstExaminer,
-      secondExaminer,
-      thirdExaminer,
-      forthExaminer,
+      deanName: dean.filter((d) => d.name !== "superuser")[0].name || "",
+      deanNIP: dean.filter((d) => d.name !== "superuser")[0].username || "",
+      firstExaminer: firstExaminer?.dsnNama || "",
+      secondExaminer: secondExaminer?.dsnNama || "",
+      thirdExaminer: thirdExaminer?.dsnNama || "",
+      forthExaminer: forthExaminer?.dsnNama || "",
       firstExaminerScore,
       secondExaminerScore,
       thirdExaminerScore,
       forthExaminerScore,
+      firstExaminerSignature: seminar.seminar_persetujuan.find(
+        (l) => l.ssetujuDsnId === firstExaminer?.dsnId
+      )?.signature,
+      secondExaminerSignature: seminar.seminar_persetujuan.find(
+        (l) => l.ssetujuDsnId === secondExaminer?.dsnId
+      )?.signature,
+      thirdExaminerSignature: seminar.seminar_persetujuan.find(
+        (l) => l.ssetujuDsnId === thirdExaminer?.dsnId
+      )?.signature,
+      forthExaminerSignature: seminar.seminar_persetujuan.find(
+        (l) => l.ssetujuDsnId === forthExaminer?.dsnId
+      )?.signature,
+      seminarCoordinatorSignature: seminar.signature,
       letterDate: seminar.smrTglBeritaAcara,
-      mainMentor: firstExaminer,
-      sideMentor: secondExaminer,
+      mainMentor: firstExaminer?.dsnNama || "",
+      sideMentor: secondExaminer?.dsnNama || "",
       major: seminar.tugas_akhir.mahasiswa.ref_prodi?.prdNama,
       proposalTitle: seminar.tugas_akhir.taJudul,
       seminarDate: seminar.smrTglSeminar ?? "",
@@ -453,6 +468,7 @@ export class DocumentService {
       letterNumber: "",
       studentName: freeLab.mahasiswa.mhsNama,
       studentNIM: nim,
+      signature: freeLab.signature_path,
     } as IFreeLabDoc;
   }
 }

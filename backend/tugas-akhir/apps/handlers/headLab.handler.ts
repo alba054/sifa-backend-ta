@@ -178,18 +178,22 @@ export class HeadLabHandler {
   ) {
     const { reqLabID } = req.params;
     const { labID } = res.locals.user;
-    const { isAccepted, resolveDate } = req.body;
+    const { isAccepted, resolveDate, signature } = req.body;
 
     try {
-      if (typeof isAccepted === "undefined") {
-        throw new BadRequestError("provide isAccepted");
+      if (
+        typeof isAccepted === "undefined" ||
+        typeof signature === "undefined"
+      ) {
+        throw new BadRequestError("provide isAccepted and signature");
       }
 
       await HeadLabService.acceptOrRejectRequestLab(
         Number(reqLabID),
         Number(labID),
         Boolean(isAccepted),
-        resolveDate
+        resolveDate,
+        signature
       );
 
       return res

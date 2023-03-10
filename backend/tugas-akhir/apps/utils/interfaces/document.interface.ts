@@ -65,6 +65,11 @@ export interface ISeminarLetterEventDoc {
   secondExaminer: string;
   thirdExaminer: string;
   forthExaminer: string;
+  firstExaminerSignature?: string;
+  secondExaminerSignature?: string;
+  thirdExaminerSignature?: string;
+  forthExaminerSignature?: string;
+  seminarCoordinatorSignature?: string;
   mainMentor: string;
   sideMentor: string;
   deanName: string;
