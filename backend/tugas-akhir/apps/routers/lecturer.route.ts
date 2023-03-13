@@ -180,6 +180,37 @@ lecturerRouter
     LecturerHandler.acceptOrRejectSeminarRequest
   );
 
+lecturerRouter
+  .route("/:nim/moderator/seminars")
+  .get(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.getSeminarsAsModerator
+  );
+
+lecturerRouter
+  .route("/:nim/moderator/seminars/:seminarID")
+  .put(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.acceptOrRejectSeminarAsModerator
+  );
+
+lecturerRouter
+  .route("/:nim/moderator/seminars/evaluation")
+  .get(
+    AuthorizationMiddleware.authorize([
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+      constants.LECTURER_GROUP_ACCESS,
+    ]),
+    LecturerHandler.getSeminarEvaluation
+  );
+
+lecturerRouter
+  .route("/:nim/moderator/seminars/:seminarID/scoring")
+  .put(
+    AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
+    LecturerHandler.scoreSeminar
+  );
+
 // lecturerRouter.route("/:nim/")
 // // * restore status to InProcess
 // lecturerRouter

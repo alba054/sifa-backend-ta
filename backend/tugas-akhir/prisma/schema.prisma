@@ -34,7 +34,7 @@ model bebas_lab {
   updated_at       DateTime?        @updatedAt
   // blStatus         Int?
   blTahun          Int?
-  signature_path String?
+  signature_path   String?
   ref_permohonan   StatusPermohonan @default(Belum_Diproses)
   ref_laboratorium ref_laboratorium @relation(fields: [blLabId], references: [labId], onDelete: Cascade, map: "Bebas_Lab_ibfk_1")
   // ref_permohonan   ref_permohonan?  @relation(fields: [blStatus], references: [tastatusId], onDelete: Cascade, map: "Bebas_Lab_ibfk_2")
@@ -87,6 +87,7 @@ model dosen {
   koordinator_seminar                                      koordinator_seminar[]
   pengusul                                                 pengusul[]
   tugas_akhir                                              tugas_akhir[]
+  seminar                                                  seminar[]
 
   @@index([dsnBidangKeahlian], map: "dsnBidangKeahlian")
   @@index([dsnDprtId], map: "dsnDprtId")
@@ -501,23 +502,24 @@ model revisi_penguji {
 }
 
 model seminar {
-  smrId                     Int                         @id @default(autoincrement())
-  smrTaId                   Int
-  smrTglSeminar             DateTime?                   @db.Date
-  smrJamMulai               String?
-  smrJamSelesai             String?
-  smrStatus                 Int?
-  smrStatusUjian            Int?
-  groupID String?
-  smrFileUndangan           String?                     @db.VarChar(200)
-  smrTglUsulan              DateTime?                   @db.Date
-  smrCatatan                String?                     @db.Text
-  smrTempat                 String?                     @db.VarChar(100)
-  smrLink                   String?                     @db.Text
-  smrFileKesediaan          String?                     @db.VarChar(200)
-  smrFileBeritaAcara        String?
-  smrFileKeteranganNilai    String?
-  signature String?
+  smrId                  Int       @id @default(autoincrement())
+  smrTaId                Int
+  smrTglSeminar          DateTime? @db.Date
+  smrJamMulai            String?
+  smrJamSelesai          String?
+  smrStatus              Int?
+  smrStatusUjian         Int?
+  groupID                String?
+  smrFileUndangan        String?   @db.VarChar(200)
+  smrTglUsulan           DateTime? @db.Date
+  smrCatatan             String?   @db.Text
+  smrTempat              String?   @db.VarChar(100)
+  smrLink                String?   @db.Text
+  smrFileKesediaan       String?   @db.VarChar(200)
+  smrFileBeritaAcara     String?
+  smrFileKeteranganNilai String?
+  signature              String?
+
   statusPermohonan          StatusPermohonan            @default(Belum_Diproses)
   smrTglBeritaAcara         DateTime?                   @db.Date
   smrTglUndangan            DateTime?                   @db.Date
@@ -525,8 +527,11 @@ model seminar {
   smrNilaiHuruf             String?                     @db.VarChar(2)
   created_at                DateTime?                   @default(now())
   updated_at                DateTime?                   @updatedAt
+  moderatorID               Int?
+  statusPermohonanModerator StatusPermohonan            @default(Belum_Diproses)
   ref_jenisujian            JenisUjian
   tugas_akhir               tugas_akhir                 @relation(fields: [smrTaId], references: [taId], onDelete: Cascade, map: "seminar_ibfk_2")
+  moderator                 dosen?                      @relation(fields: [moderatorID], references: [dsnId], onDelete: Cascade, onUpdate: Cascade)
   // ref_jenisujian            ref_jenisujian              @relation(fields: [smrJenisUjian], references: [jenisId], onUpdate: Restrict, map: "seminar_ibfk_3")
   seminar_catatan           seminar_catatan[]
   seminar_dokumen           seminar_dokumen[]
@@ -610,7 +615,7 @@ model seminar_persetujuan {
   ssetujuDate      DateTime?        @db.Date
   ssetujuStatus    Int?
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
-  signature String?
+  signature        String?
 
   ssetujuCatatan String?   @db.Text
   created_at     DateTime? @default(now())
@@ -705,7 +710,7 @@ model sk_pembimbing {
   note             String?
   deanName         String?
   deanNIP          String?
-  signature_path String?
+  signature_path   String?
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
   skbStatusAkses   Int?
   created_at       DateTime?        @default(now())
@@ -779,7 +784,7 @@ model sk_penguji {
   note             String?
   deanName         String?
   deanNIP          String?
-  signature String?
+  signature        String?
   created_at       DateTime?        @default(now())
   updated_at       DateTime?        @updatedAt
   statusPermohonan StatusPermohonan @default(Belum_Diproses)
@@ -925,7 +930,7 @@ model permohonan_ujian_sidang {
   catatanAdminFakultas   String?
   catatanKTU             String?
   statusTTD              Boolean                           @default(false)
-  signature_path String?
+  signature_path         String?
   tanggalSK              DateTime?                         @db.Date
   created_at             DateTime                          @default(now())
   viceDeanNIP            String?

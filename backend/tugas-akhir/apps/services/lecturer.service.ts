@@ -21,6 +21,169 @@ import { WebNotifService } from "./webNotif.service";
 import { v4 as uuidv4 } from "uuid";
 
 export class LecturerService {
+  static async scoreSeminarAsModerator(
+    nim: string,
+    lecturerID: number,
+    seminarID: number,
+    score: ISeminarScorePost[]
+  ) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null) {
+      throw new NotFoundError("seminar's not found");
+    }
+    const lecturer = seminar.seminar_persetujuan.find(
+      (s) => s.ssetujuDsnId === lecturerID
+    );
+
+    if (typeof lecturer === "undefined") {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    if (seminar.smrFileKesediaan === null && seminar.smrFileUndangan === null) {
+      throw new BadRequestError("cannot scores yet");
+    }
+
+    if (seminar.smrFileBeritaAcara !== null) {
+      throw new BadRequestError("has been blocked");
+    }
+
+    if (
+      seminar.moderator?.dsnNip !== nim ||
+      seminar.statusPermohonanModerator !== "Diterima"
+    ) {
+      throw new NotFoundError("this lecturer is a moderator for this seminar");
+    }
+
+    const scoreToInsert: ISeminarScorePost[] = [];
+
+    for (let i = 0; i < score.length; i++) {
+      const sc = score[i];
+      const ref = await SeminarReferences.getSeminarReferencesByID(sc.refID);
+
+      if (ref === null) {
+        throw new NotFoundError("ref's not found");
+      }
+
+      if (sc.score > ref.max || sc.score < ref.min) {
+        throw new BadRequestError("provided score is out of bound");
+      }
+
+      sc.score = sc.score * ref.weight;
+      scoreToInsert.push({ score: sc.score, refID: sc.refID });
+    }
+
+    // score.forEach(async (s) => {
+    //   const ref = await SeminarReferences.getSeminarReferencesByID(s.refID);
+
+    //   if (ref === null) {
+    //     // throw new NotFoundError("ref's not found");
+    //     return "ref's not found";
+    //   }
+
+    //   if (s.score > ref.max || s.score < ref.min) {
+    //     // throw new BadRequestError("provided score is out of bound");
+    //     return "provided score is out of bound";
+    //   }
+
+    //   s.score = s.score * ref.weight;
+    //   scoreToInsert.push({ score: s.score, refID: s.refID });
+    // });
+
+    // scoreToInsert.forEach(async (s) => {
+    //   await SeminarScore.scoreSeminarV2(seminarID, lecturer.dosen.dsnId, s);
+    // });
+
+    for (let i = 0; i < scoreToInsert.length; i++) {
+      const score_ = scoreToInsert[i];
+      await SeminarScore.scoreSeminarV2(
+        seminarID,
+        lecturer.dosen.dsnId,
+        score_
+      );
+    }
+
+    const seminarScores = await SeminarScore.getSeminarScoresBySeminarID(
+      seminarID
+    );
+
+    const refByType = await SeminarReferences.getSeminarReferencesBySeminarType(
+      seminar.ref_jenisujian
+    );
+
+    if (seminarScores.length === refByType.length * 4) {
+      const scores = seminarScores.map((s) => s.snilaiNilai);
+      if (scores.every((s) => s !== null)) {
+        // console.log(scores);
+
+        let finalScore = scores.reduce((total, s) => (total ?? 0) + (s ?? 0));
+        // console.log(finalScore);
+
+        finalScore = (finalScore ?? 0) / 4;
+
+        await Seminar.updateAvgScore(seminarID, finalScore);
+      }
+    }
+  }
+
+  static async getSeminarEvaluation(nim: string) {
+    let unscored = await Seminar.getSeminarByScore(false);
+    let scored = await Seminar.getSeminarByScore(true);
+
+    unscored = unscored.filter((s) => s.moderator?.dsnNip === nim);
+    scored = scored.filter((s) => s.moderator?.dsnNip === nim);
+
+    return { unscoredSeminars: unscored, scoredSeminars: scored };
+  }
+
+  static async acceptOrRejectModeratorOffer(
+    nim: string,
+    seminarID: number,
+    isAccepted: boolean
+  ) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null) {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    if (seminar.moderator?.dsnNip !== nim) {
+      throw new NotFoundError(
+        "this lecturer is not a moderator for the seminar"
+      );
+    }
+
+    const inserted = await Seminar.changeModeratorAcceptanceStatus(
+      seminarID,
+      isAccepted
+    );
+
+    const seminarCoordinators = await User.getUsersByBadge(
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS
+    );
+
+    seminarCoordinators.forEach(async (u) => {
+      if (u !== null) {
+        const data = {
+          userID: u.id,
+          role: constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+          title: "Persetujuan Judul Tugas Akhir",
+          description: `dosen moderator telah menyetujui seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama}`,
+          link: "/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian",
+        } as IWebNotif;
+        await WebNotifService.createNotification(data);
+      }
+    });
+
+    return inserted;
+  }
+
+  static async getSeminarsAsModerator(nim: string) {
+    const seminars = await Seminar.getSeminarsModerator(nim);
+
+    return seminars;
+  }
+
   static async scoreSeminarV2(
     nim: string,
     seminarID: number,

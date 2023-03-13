@@ -52,6 +52,7 @@ seminarCoordinatorRouter
   .get(
     AuthorizationMiddleware.authorize([
       constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+      constants.LECTURER_GROUP_ACCESS,
     ]),
     SeminarCoordinatorHandler.getSeminarEvaluation
   );

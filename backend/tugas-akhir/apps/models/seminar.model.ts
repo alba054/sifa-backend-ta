@@ -8,6 +8,45 @@ import {
 } from "../utils/interfaces/seminar.interface";
 
 export class Seminar {
+  static async changeModeratorAcceptanceStatus(
+    seminarID: number,
+    isAccepted: boolean
+  ) {
+    try {
+      return await prismaDB.seminar.update({
+        where: {
+          smrId: seminarID,
+        },
+        data: {
+          statusPermohonanModerator: isAccepted ? "Diterima" : "Ditolak",
+        },
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
+  static async getSeminarsModerator(nim: string) {
+    return await prismaDB.seminar.findMany({
+      where: {
+        moderator: { dsnNip: nim },
+      },
+      include: {
+        tugas_akhir: {
+          include: {
+            mahasiswa: true,
+          },
+        },
+      },
+    });
+  }
+
   static async getSeminarByGroupID(groupID: string | null) {
     return await prismaDB.seminar.findMany({
       where: {
@@ -184,6 +223,7 @@ export class Seminar {
         orderBy: { updated_at: "desc" },
         include: {
           tugas_akhir: { include: { mahasiswa: true } },
+          moderator: true,
         },
       });
     }
@@ -199,6 +239,7 @@ export class Seminar {
       orderBy: { updated_at: "desc" },
       include: {
         tugas_akhir: { include: { mahasiswa: true } },
+        moderator: true,
       },
     });
   }
@@ -504,6 +545,7 @@ export class Seminar {
         smrFileKesediaan: null,
         smrFileUndangan: null,
         groupID: body.groupID,
+        moderatorID: body.moderator,
       },
     });
 
@@ -560,6 +602,7 @@ export class Seminar {
         smrTempat: body.place,
         smrTglSeminar: seminarDate,
         groupID: body.groupID,
+        moderatorID: body.moderator,
       },
       include: {
         tugas_akhir: {
@@ -754,6 +797,7 @@ export class Seminar {
             mahasiswa: { include: { ref_prodi: true } },
           },
         },
+        moderator: true,
       },
     });
   }
