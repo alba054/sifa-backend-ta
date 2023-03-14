@@ -16,6 +16,21 @@ interface IBody {
 }
 
 export class Thesis {
+  static async getThesisWithAcceptedSupervisorsAndExaminers() {
+    return await prismaDB.tugas_akhir.findMany({
+      where: {
+        AND: [
+          { penguji: { every: { statusTerima: "Diterima" } } },
+          { pembimbing: { every: { statusTerima: "Diterima" } } },
+        ],
+      },
+      include: {
+        pembimbing: { include: { dosen: true } },
+        penguji: { include: { dosen: true } },
+      },
+    });
+  }
+
   static async updateLab(
     thesisID: number,
     isAccepted: boolean,
@@ -177,7 +192,13 @@ export class Thesis {
         ref_laboratorium2: true,
         sk_pembimbing: true,
         sk_penguji: true,
-        seminar: { where: { smrTglSeminar: null, NOT: {ref_jenisujian: "Ujian_Skripsi"} }, include: {seminar_dokumen: true} },
+        seminar: {
+          where: {
+            smrTglSeminar: null,
+            NOT: { ref_jenisujian: "Ujian_Skripsi" },
+          },
+          include: { seminar_dokumen: true },
+        },
       },
       orderBy: { updated_at: "desc" },
     });

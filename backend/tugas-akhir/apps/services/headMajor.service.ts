@@ -1,5 +1,6 @@
 import { Examiner } from "../models/examiner.model";
 import { Lecturer } from "../models/lecturer.model";
+import { Supervisor } from "../models/supervisor.model";
 import { Thesis } from "../models/thesis.model";
 import { User } from "../models/user.model";
 import { BadRequestError } from "../utils/error/badrequestError";
@@ -15,6 +16,48 @@ interface IAssignedExaminer {
 }
 
 export class HeadMajorService {
+  static async approveSupervisor(supervisorID: number, isAccepted: boolean) {
+    const supervisor = await Supervisor.getSupervisorByID(supervisorID);
+
+    if (supervisor === null) {
+      throw new NotFoundError("supervisor's not found");
+    }
+
+    if (supervisor.statusTerima !== "Diterima") {
+      throw new BadRequestError(
+        "lecturer hasn't been accepted the offer to be supervisor yet"
+      );
+    }
+
+    await Supervisor.acceptOrRejectSupervisorByHeadMajor(
+      supervisorID,
+      isAccepted
+    );
+  }
+
+  static async getThesisWithAcceptedExaminers() {
+    const examiners =
+      await Thesis.getThesisWithAcceptedSupervisorsAndExaminers();
+
+    return examiners;
+  }
+
+  static async approveExaminer(examinerID: number, isAccepted: boolean) {
+    const examiner = await Examiner.getExaminerByID(examinerID);
+
+    if (examiner === null) {
+      throw new NotFoundError("examiner's not found");
+    }
+
+    if (examiner.statusTerima !== "Diterima") {
+      throw new BadRequestError(
+        "lecturer hasn't been accepted the offer to be examiner yet"
+      );
+    }
+
+    await Examiner.acceptOrRejectExaminerByHeadMajor(examinerID, isAccepted);
+  }
+
   static async assignThesisToDepartmentHead(
     thesisID: number,
     departmentHead: string

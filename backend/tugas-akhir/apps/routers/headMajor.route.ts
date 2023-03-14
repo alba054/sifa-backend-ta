@@ -121,6 +121,36 @@ headMajorRouter
     HeadMajorHandler.getExaminersHistory
   );
 
+headMajorRouter
+  .route("/commitees/approved")
+  .get(
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
+    HeadMajorHandler.getApprovedExaminers
+  );
+
+headMajorRouter
+  .route("/examiners/:examinerID")
+  .put(
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
+    HeadMajorHandler.approveExaminers
+  );
+
+headMajorRouter
+  .route("/supervisors/:supervisorID")
+  .put(
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
+    HeadMajorHandler.approveSupervisors
+  );
+
 // * get dispositions
 headMajorRouter
   .route("/dispositions")
