@@ -63,6 +63,40 @@ import { v4 as uuidv4 } from "uuid";
 //  />
 
 export class SeminarCoordinatorService {
+  static async getSeminarRequestsBeforeApproved() {
+    let thesis = await Thesis.getApprovedThesis();
+
+    thesis = thesis.filter((t) => {
+      return t.seminar.length > 0;
+    });
+
+    const uniqueNIM: string[] = [];
+    // todo: separate thesis by student's nim
+    for (const t of thesis) {
+      if (!uniqueNIM.includes(t.taMhsNim)) {
+        uniqueNIM.push(t.taMhsNim);
+      }
+    }
+
+    const response: any[] = [];
+    for (const nim of uniqueNIM) {
+      const studentThesis = thesis.filter((t) => t.taMhsNim === nim);
+      if (
+        studentThesis[0].seminar.every((s) => !s.smrTglSeminar) &&
+        studentThesis[0].seminar.some((s) => s.statusPermohonan !== "Diterima")
+      ) {
+        response.push({
+          NIM: nim,
+          name: studentThesis[0].mahasiswa.mhsNama,
+          types: studentThesis[0].seminar.filter((s) => !s.smrTglSeminar),
+          data: studentThesis,
+        });
+      }
+    }
+
+    return response;
+  }
+
   static async getSeminarsByGroupID(groupID: string) {
     return Seminar.getSeminarByGroupID(groupID);
   }

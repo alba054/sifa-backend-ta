@@ -7,6 +7,25 @@ import { ISeminarScorePost } from "../utils/interfaces/seminarScore.interface";
 import { constants, createResponse } from "../utils/utils";
 
 export class SeminarCoordinatorHandler {
+  static async getSeminarRequestsBeforeApproved(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const seminars =
+      await SeminarCoordinatorService.getSeminarRequestsBeforeApproved();
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get seminars",
+          seminars
+        )
+      );
+  }
+
   static async getSeminarsByGroup(
     req: Request,
     res: Response,
