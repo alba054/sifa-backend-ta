@@ -9,13 +9,13 @@ import {
 
 export class Seminar {
   static async changeModeratorAcceptanceStatus(
-    seminarID: number,
+    groupID: string,
     isAccepted: boolean
   ) {
     try {
-      return await prismaDB.seminar.update({
+      return await prismaDB.seminar.updateMany({
         where: {
-          smrId: seminarID,
+          groupID,
         },
         data: {
           statusPermohonanModerator: isAccepted ? "Diterima" : "Ditolak",
@@ -71,6 +71,7 @@ export class Seminar {
             mahasiswa: { include: { ref_prodi: true } },
           },
         },
+        moderator: true,
       },
     });
   }

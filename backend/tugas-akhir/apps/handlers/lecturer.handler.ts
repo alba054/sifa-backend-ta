@@ -74,7 +74,7 @@ export class LecturerHandler {
     res: Response,
     next: NextFunction
   ) {
-    const { nim, seminarID } = req.params;
+    const { nim, groupID } = req.params;
     const { isAccepted } = req.body;
 
     try {
@@ -84,7 +84,7 @@ export class LecturerHandler {
 
       await LecturerService.acceptOrRejectModeratorOffer(
         nim,
-        Number(seminarID),
+        groupID,
         Boolean(isAccepted)
       );
 

@@ -80,7 +80,11 @@ export class Thesis {
   static async getThesisBySupervisor(nim: string) {
     return await prismaDB.tugas_akhir.findMany({
       where: {
-        pembimbing: { some: { dosen: { dsnNip: nim } } },
+        pembimbing: {
+          some: {
+            AND: [{ dosen: { dsnNip: nim } }, { statusTerima: "Diterima" }],
+          },
+        },
       },
       include: {
         mahasiswa: true,

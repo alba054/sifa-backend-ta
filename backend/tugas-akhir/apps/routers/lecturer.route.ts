@@ -188,7 +188,7 @@ lecturerRouter
   );
 
 lecturerRouter
-  .route("/:nim/moderator/seminars/:seminarID")
+  .route("/:nim/moderator/seminars/:groupID")
   .put(
     AuthorizationMiddleware.authorize([constants.LECTURER_GROUP_ACCESS]),
     LecturerHandler.acceptOrRejectSeminarAsModerator
