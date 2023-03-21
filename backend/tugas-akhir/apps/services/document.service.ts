@@ -469,6 +469,14 @@ export class DocumentService {
       studentName: freeLab.mahasiswa.mhsNama,
       studentNIM: nim,
       signature: freeLab.signature_path,
+      labName: freeLab.ref_laboratorium.labNama,
+      major: freeLab.mahasiswa.ref_prodi?.prdNama,
+      title: freeLab.mahasiswa.tugas_akhir.find(
+        (t) =>
+          t.statusPermohonan === "Diterima" &&
+          t.statusDepartemen === "Diterima" &&
+          t.taKRSKHSStatus === "Diterima"
+      )?.taJudul,
     } as IFreeLabDoc;
   }
 }

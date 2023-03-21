@@ -6,6 +6,10 @@ export interface IFreeLabDoc {
   headLabNIP: string;
   letterDate: string | Date;
   letterNumber: string;
+  labName: string;
+  major: string;
+  title: string;
+  signature?: string;
 }
 
 export interface ISupervisorSKDoc {
