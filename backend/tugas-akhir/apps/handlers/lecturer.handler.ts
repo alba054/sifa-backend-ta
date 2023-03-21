@@ -11,6 +11,116 @@ import { NotFoundError } from "../utils/error/notFoundError";
 dotenv.config();
 
 export class LecturerHandler {
+  static async scoreSeminar(req: Request, res: Response, next: NextFunction) {
+    const { nim, seminarID } = req.params;
+
+    let { score, lecturerID } = req.body;
+
+    try {
+      if (typeof score === "undefined" || typeof lecturerID === "undefined") {
+        throw new BadRequestError("provide score, lecturerID");
+      }
+
+      if (!Array.isArray(score)) {
+        throw new BadRequestError("score must be array");
+      }
+
+      const opt = await LecturerService.scoreSeminarAsModerator(
+        nim,
+        Number(lecturerID),
+        Number(seminarID),
+        score
+      );
+
+      // if (typeof opt === "string") {
+      //   throw new BadRequestError(opt);
+      // }
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully give score to seminar"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getSeminarEvaluation(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim } = req.params;
+
+    const seminars = await LecturerService.getSeminarEvaluation(nim);
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get evaluations",
+          seminars
+        )
+      );
+  }
+
+  static async acceptOrRejectSeminarAsModerator(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim, seminarID } = req.params;
+    const { isAccepted } = req.body;
+
+    try {
+      if (typeof isAccepted === "undefined") {
+        throw new BadRequestError("provide isAccepted");
+      }
+
+      await LecturerService.acceptOrRejectModeratorOffer(
+        nim,
+        Number(seminarID),
+        Boolean(isAccepted)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "succesfully accept/reject seminar as moderator"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getSeminarsAsModerator(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { nim } = req.params;
+
+    const seminars = await LecturerService.getSeminarsAsModerator(nim);
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "succesfully get seminars as moderator",
+          seminars
+        )
+      );
+  }
+
   static async scoreInvitedSeminarV2(
     req: Request,
     res: Response,

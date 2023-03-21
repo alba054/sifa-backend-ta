@@ -462,16 +462,18 @@ export class SeminarCoordinatorHandler {
         typeof body.place === "undefined" ||
         typeof body.seminarDate === "undefined" ||
         typeof body.startTime === "undefined" ||
-        typeof body.groupID === "undefined"
+        typeof body.groupID === "undefined" ||
+        typeof body.moderator === "undefined"
       ) {
         throw new BadRequestError(
-          "provide endTime, place, seminarDate, startTime, groupID"
+          "provide endTime, place, seminarDate, startTime, groupID, moderator"
         );
       }
 
       body.endTime = Number(body.endTime);
       body.seminarDate = Number(body.seminarDate);
       body.startTime = Number(body.startTime);
+      body.moderator = Number(body.moderator);
 
       // const datePattern = /[\d][\d]-[\d][\d]-[\d][\d][\d][\d]/;
       // const timePattern = /[\d][\d]:[\d][\d]/;
@@ -546,16 +548,18 @@ export class SeminarCoordinatorHandler {
         typeof body.place === "undefined" ||
         typeof body.seminarDate === "undefined" ||
         typeof body.startTime === "undefined" ||
-        typeof body.groupID === "undefined"
+        typeof body.groupID === "undefined" ||
+        typeof body.moderator === "undefined"
       ) {
         throw new BadRequestError(
-          "provide place, seminarDate, startTime, groupID"
+          "provide place, seminarDate, startTime, groupID, moderator"
         );
       }
 
       body.endTime = body.endTime ? Number(body.endTime) : 0;
       body.seminarDate = Number(body.seminarDate);
       body.startTime = Number(body.startTime);
+      body.moderator = Number(body.moderator);
       // const datePattern = /[\d][\d]-[\d][\d]-[\d][\d][\d][\d]/;
       // const timePattern = /[\d][\d]:[\d][\d]/;
 
