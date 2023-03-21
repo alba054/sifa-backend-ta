@@ -195,7 +195,7 @@ export class LecturerService {
       });
     }
 
-    return seminars;
+    return response;
   }
 
   static async scoreSeminarV2(
