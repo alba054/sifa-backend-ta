@@ -33,6 +33,78 @@ interface IAssignedExaminer {
 }
 
 export class HeadMajorHandler {
+  static async approveSupervisors(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { supervisorID } = req.params;
+    const { isAccepted } = req.body;
+
+    try {
+      await HeadMajorService.approveSupervisor(
+        Number(supervisorID),
+        Boolean(isAccepted)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully approve/reject supervisor"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getApprovedExaminers(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const examiners = await HeadMajorService.getThesisWithAcceptedExaminers();
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get thesis with accepted examiners",
+          examiners
+        )
+      );
+  }
+
+  static async approveExaminers(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { examinerID } = req.params;
+    const { isAccepted } = req.body;
+
+    try {
+      await HeadMajorService.approveExaminer(
+        Number(examinerID),
+        Boolean(isAccepted)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully approve/reject examiner"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getApprovedThesisDisposition(
     req: Request,
     res: Response,

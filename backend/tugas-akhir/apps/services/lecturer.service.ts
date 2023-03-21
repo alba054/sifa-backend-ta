@@ -138,23 +138,19 @@ export class LecturerService {
 
   static async acceptOrRejectModeratorOffer(
     nim: string,
-    seminarID: number,
+    groupID: string,
     isAccepted: boolean
   ) {
-    const seminar = await Seminar.getSeminarByID(seminarID);
+    const seminars = await Seminar.getSeminarByGroupID(groupID);
 
-    if (seminar === null) {
-      throw new NotFoundError("seminar's not found");
-    }
-
-    if (seminar.moderator?.dsnNip !== nim) {
+    if (seminars.every((s) => s.moderator?.dsnNip !== nim)) {
       throw new NotFoundError(
-        "this lecturer is not a moderator for the seminar"
+        "this lecturer is not a moderator for the seminar group"
       );
     }
 
     const inserted = await Seminar.changeModeratorAcceptanceStatus(
-      seminarID,
+      groupID,
       isAccepted
     );
 
@@ -168,7 +164,7 @@ export class LecturerService {
           userID: u.id,
           role: constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
           title: "Persetujuan Judul Tugas Akhir",
-          description: `dosen moderator telah menyetujui seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama}`,
+          description: `dosen moderator telah menyetujui seminar mahasiswa ${seminars[0]?.tugas_akhir.mahasiswa.mhsNama}`,
           link: "/admin-program-studi/persetujuan/judul-penelitian/permohonan-judul-penelitian",
         } as IWebNotif;
         await WebNotifService.createNotification(data);
@@ -180,8 +176,26 @@ export class LecturerService {
 
   static async getSeminarsAsModerator(nim: string) {
     const seminars = await Seminar.getSeminarsModerator(nim);
+    const response: any[] = [];
+    const groups: string[] = [];
 
-    return seminars;
+    // todo: separate thesis by student's nim
+    for (const seminar of seminars) {
+      if (seminar.groupID !== null && !groups.includes(seminar.groupID)) {
+        groups.push(seminar.groupID);
+      }
+    }
+
+    for (const group of groups) {
+      const seminar = seminars.filter((s) => s.groupID === group);
+
+      response.push({
+        groupID: group,
+        data: seminar,
+      });
+    }
+
+    return response;
   }
 
   static async scoreSeminarV2(

@@ -9,6 +9,30 @@ interface ISupervisorBodyPost {
 }
 
 export class Supervisor {
+  static async acceptOrRejectSupervisorByHeadMajor(
+    supervisorID: number,
+    isAccepted: boolean
+  ) {
+    try {
+      return await prismaDB.pembimbing.updateMany({
+        data: {
+          statusTerima: isAccepted ? "Diterima" : "Ditolak",
+        },
+        where: {
+          AND: [{ pmbId: supervisorID }],
+        },
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
   static async getAllSupervisors(
     status: "Belum_Diproses" | "Diterima" | "Ditolak" | undefined
   ) {
