@@ -403,6 +403,8 @@ export class HeadLabHandler {
         throw new BadRequestError("provide lecturerID and position");
       }
 
+      body.lecturerID = Number(body.lecturerID);
+
       const assignedThesis = await HeadLabService.assignSupervisor(
         Number(thesisID),
         Number(labID),
