@@ -111,6 +111,7 @@ export interface ISeminarInvitationDoc {
   department: string;
   coordinatorSeminarNote: string;
   link?: string;
+  moderator?: string;
 }
 
 export interface ISeminarScoreDoc {

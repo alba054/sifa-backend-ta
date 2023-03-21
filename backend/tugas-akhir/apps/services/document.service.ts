@@ -112,6 +112,7 @@ export class DocumentService {
       firstViceDean: exam.viceDeanName || "",
       firstViceDeanNIP: exam.viceDeanNIP || "",
       checkList: [
+        true,
         krs,
         true,
         true,
@@ -235,6 +236,7 @@ export class DocumentService {
         studentNIM: s.tugas_akhir.taMhsNim,
         link: s.smrLink,
         signature: s.signature,
+        moderator: s.moderator?.dsnNama,
       } as ISeminarInvitationDoc);
     });
 
@@ -264,18 +266,26 @@ export class DocumentService {
       (s) => s.ujiUrutan === 2
     )?.dosen;
 
-    const firstExaminerScore = seminar.seminar_nilai.find(
-      (e) => e.dosen?.dsnNama === firstExaminer?.dsnNama
-    )?.snilaiNilai;
-    const secondExaminerScore = seminar.seminar_nilai.find(
-      (e) => e.dosen?.dsnNama === secondExaminer?.dsnNama
-    )?.snilaiNilai;
-    const thirdExaminerScore = seminar.seminar_nilai.find(
-      (e) => e.dosen?.dsnNama === thirdExaminer?.dsnNama
-    )?.snilaiNilai;
-    const forthExaminerScore = seminar.seminar_nilai.find(
-      (e) => e.dosen?.dsnNama === forthExaminer?.dsnNama
-    )?.snilaiNilai;
+    const firstExaminerScore =
+      seminar.seminar_nilai
+        .filter((e) => e.dosen?.dsnNip === firstExaminer?.dsnNip)
+        .map((s) => s.snilaiNilai)
+        .reduce((total, score) => (total ?? 0) + (score ?? 0)) ?? 0 / 4;
+    const secondExaminerScore =
+      seminar.seminar_nilai
+        .filter((e) => e.dosen?.dsnNip === secondExaminer?.dsnNip)
+        .map((s) => s.snilaiNilai)
+        .reduce((total, score) => (total ?? 0) + (score ?? 0)) ?? 0 / 4;
+    const thirdExaminerScore =
+      seminar.seminar_nilai
+        .filter((e) => e.dosen?.dsnNip === thirdExaminer?.dsnNip)
+        .map((s) => s.snilaiNilai)
+        .reduce((total, score) => (total ?? 0) + (score ?? 0)) ?? 0 / 4;
+    const forthExaminerScore =
+      seminar.seminar_nilai
+        .filter((e) => e.dosen?.dsnNip === forthExaminer?.dsnNip)
+        .map((s) => s.snilaiNilai)
+        .reduce((total, score) => (total ?? 0) + (score ?? 0)) ?? 0 / 4;
 
     const dean = await User.getUsersByBadge(
       constants.SEMINAR_COORDINATOR_GROUP_ACCESS
