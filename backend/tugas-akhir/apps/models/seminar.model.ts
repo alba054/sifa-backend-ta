@@ -656,7 +656,11 @@ export class Seminar {
     return await prismaDB.seminar.findMany({
       include: {
         tugas_akhir: {
-          include: { mahasiswa: true },
+          include: {
+            mahasiswa: true,
+            pembimbing: { include: { dosen: true } },
+            penguji: { include: { dosen: true } },
+          },
         },
       },
       orderBy: { updated_at: "desc" },
