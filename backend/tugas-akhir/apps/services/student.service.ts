@@ -33,9 +33,9 @@ export class StudentService {
       throw new NotFoundError("seminar's not found");
     }
 
-    if (seminar.statusPermohonan !== "Diterima") {
-      throw new BadRequestError("seminar request's not accepted");
-    }
+    // if (seminar.statusPermohonan !== "Diterima") {
+    //   throw new BadRequestError("seminar request's not accepted");
+    // }
 
     if (seminar.ref_jenisujian !== "Ujian_Skripsi") {
       throw new BadRequestError("cannot schedule seminar but 'ujian skripsi'");
