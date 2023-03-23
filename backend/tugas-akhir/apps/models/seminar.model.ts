@@ -655,6 +655,7 @@ export class Seminar {
   static async getSeminars() {
     return await prismaDB.seminar.findMany({
       include: {
+        seminar_persetujuan: { include: { dosen: true } },
         tugas_akhir: {
           include: {
             mahasiswa: true,
