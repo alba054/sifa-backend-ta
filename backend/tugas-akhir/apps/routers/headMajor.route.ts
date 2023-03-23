@@ -193,7 +193,7 @@ headMajorRouter
 
 headMajorRouter
   .route("/seminars/invited/:seminarID")
-  .get(
+  .put(
     AuthorizationMiddleware.authorize([
       constants.VOCATION_ADMIN_GROUP_ACCESS,
       constants.HEAD_MAJOR_GROUP_ACCESS,
