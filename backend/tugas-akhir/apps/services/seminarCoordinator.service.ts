@@ -497,20 +497,24 @@ export class SeminarCoordinatorService {
       seminar.seminar_persetujuan[3].dosen.dsnNip
     );
 
-    const moderator = await Lecturer.getLecturerByID(body.moderator);
+    if (body.moderator) {
+      const moderator = await Lecturer.getLecturerByID(body.moderator);
 
-    if (moderator === null) {
-      throw new NotFoundError("lecturer assigned as moderator is not found");
+      if (moderator === null) {
+        throw new NotFoundError("lecturer assigned as moderator is not found");
+      }
+
+      const userModerator = await User.getUserByUsername(moderator.dsnNip);
+
+      const dataModerator = {
+        userID: userModerator?.id,
+        role: constants.LECTURER_GROUP_ACCESS,
+        title: "Persetujuan Moderator",
+        description: `ditunjuk sebagai moderator seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+        link: "/dosen/persetujuan-pelaksanaan-seminar",
+      } as IWebNotif;
+      await WebNotifService.createNotification(dataModerator);
     }
-    const userModerator = await User.getUserByUsername(moderator.dsnNip);
-
-    const dataModerator = {
-      userID: userModerator?.id,
-      role: constants.LECTURER_GROUP_ACCESS,
-      title: "Persetujuan Moderator",
-      description: `ditunjuk sebagai moderator seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
-      link: "/dosen/persetujuan-pelaksanaan-seminar",
-    } as IWebNotif;
 
     const dataSupervisor0 = {
       userID: userSupervisor0?.id,
@@ -548,7 +552,6 @@ export class SeminarCoordinatorService {
     await WebNotifService.createNotification(dataSupervisor1);
     await WebNotifService.createNotification(dataExaminer0);
     await WebNotifService.createNotification(dataExaminer1);
-    await WebNotifService.createNotification(dataModerator);
 
     return inserted;
   }
@@ -597,12 +600,25 @@ export class SeminarCoordinatorService {
       throw new BadRequestError("thesis's examiner must be 2");
     }
 
-    const moderator = await Lecturer.getLecturerByID(body.moderator);
+    if (body.moderator) {
+      const moderator = await Lecturer.getLecturerByID(body.moderator);
 
-    if (moderator === null) {
-      throw new NotFoundError("lecturer assigned as moderator is not found");
+      if (moderator === null) {
+        throw new NotFoundError("lecturer assigned as moderator is not found");
+      }
+
+      const userModerator = await User.getUserByUsername(moderator.dsnNip);
+
+      const dataModerator = {
+        userID: userModerator?.id,
+        role: constants.LECTURER_GROUP_ACCESS,
+        title: "Persetujuan Moderator",
+        description: `ditunjuk sebagai moderator seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
+        link: "/dosen/persetujuan-pelaksanaan-seminar",
+      } as IWebNotif;
+
+      await WebNotifService.createNotification(dataModerator);
     }
-    const userModerator = await User.getUserByUsername(moderator.dsnNip);
 
     const user = await User.getUserByUsername(
       seminar.tugas_akhir.mahasiswa.mhsNim
@@ -629,14 +645,6 @@ export class SeminarCoordinatorService {
     const userExaminer1 = await User.getUserByUsername(
       seminar.seminar_persetujuan[3].dosen.dsnNip
     );
-
-    const dataModerator = {
-      userID: userModerator?.id,
-      role: constants.LECTURER_GROUP_ACCESS,
-      title: "Persetujuan Moderator",
-      description: `ditunjuk sebagai moderator seminar mahasiswa ${seminar.tugas_akhir.mahasiswa.mhsNama} dengan judul tugas akhir ${seminar.tugas_akhir.taJudul} pada tanggal ${seminar.smrTglSeminar}`,
-      link: "/dosen/persetujuan-pelaksanaan-seminar",
-    } as IWebNotif;
 
     const dataSupervisor0 = {
       userID: userSupervisor0?.id,
@@ -674,7 +682,6 @@ export class SeminarCoordinatorService {
     await WebNotifService.createNotification(dataSupervisor1);
     await WebNotifService.createNotification(dataExaminer0);
     await WebNotifService.createNotification(dataExaminer1);
-    await WebNotifService.createNotification(dataModerator);
 
     return inserted;
   }

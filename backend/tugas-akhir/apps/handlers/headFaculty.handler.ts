@@ -7,6 +7,20 @@ import { ISupervisorSKPost } from "../utils/interfaces/supervisorSK.interface";
 import { constants, createResponse } from "../utils/utils";
 
 export class HeadFacultyHandler {
+  static async getSeminarExam(req: Request, res: Response, next: NextFunction) {
+    const exams = await HeadFacultyService.getExamSeminars();
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get seminars exam",
+          exams
+        )
+      );
+  }
+
   static async getHistoryOfExamProposal(
     req: Request,
     res: Response,

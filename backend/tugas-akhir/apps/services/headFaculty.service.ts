@@ -1,5 +1,6 @@
 import { ExaminerSK } from "../models/examinerSK.model";
 import { ExamProposal } from "../models/examProposal.model";
+import { Seminar } from "../models/seminar.model";
 import { SupervisorSK } from "../models/supervisorSK.model";
 import { Thesis } from "../models/thesis.model";
 import { User } from "../models/user.model";
@@ -12,6 +13,18 @@ import { constants } from "../utils/utils";
 import { WebNotifService } from "./webNotif.service";
 
 export class HeadFacultyService {
+  static async getExamSeminars() {
+    let exams = await Seminar.getSeminars();
+
+    exams = exams.filter(
+      (s) =>
+        s.ref_jenisujian === "Ujian_Skripsi" &&
+        s.statusPermohonan === "Diterima"
+    );
+
+    return exams;
+  }
+
   static async getHistoryOfExamProposal() {
     return await ExamProposal.getHistoryOfExamProposal();
   }

@@ -112,6 +112,13 @@ headFacultyRouter
     AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
     HeadFacultyHandler.acceptOrRejectExamProposal
   );
+
+headFacultyRouter
+  .route("/exam/seminars")
+  .get(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.getSeminarExam
+  );
 // .get(
 //   AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
 //   HeadFacultyHandler.getSupervisorSK
