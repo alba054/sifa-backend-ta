@@ -14,5 +14,5 @@ export interface ISeminarSchedulePost {
   place: string;
   note?: string;
   groupID?: string;
-  moderator: number;
+  moderator?: number;
 }
