@@ -181,4 +181,24 @@ headMajorRouter
     HeadMajorHandler.deleteDispositionOfApprovedThesis
   );
 
+headMajorRouter
+  .route("/seminars/invited")
+  .get(
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
+    HeadMajorHandler.getExamSeminar
+  );
+
+headMajorRouter
+  .route("/seminars/invited/:seminarID")
+  .get(
+    AuthorizationMiddleware.authorize([
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.HEAD_MAJOR_GROUP_ACCESS,
+    ]),
+    HeadMajorHandler.signExamSeminar
+  );
+
 export default headMajorRouter;

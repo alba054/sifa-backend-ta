@@ -643,6 +643,10 @@ export class Seminar {
           ssetujuDsnId: seminar.tugas_akhir.penguji[1].ujiDsnId,
         },
       });
+
+      if (seminar.ref_jenisujian === "Ujian_Skripsi") {
+        await this.approveSeminarRequest(seminarID, true);
+      }
     } catch (error) {}
 
     return seminar;

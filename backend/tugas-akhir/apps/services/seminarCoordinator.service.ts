@@ -367,11 +367,11 @@ export class SeminarCoordinatorService {
       throw new NotFoundError("seminar's not found");
     }
 
-    if (seminar.smrFileKesediaan !== null && seminar.smrFileUndangan !== null) {
-      throw new BadRequestError(
-        "can't create invitation and approval letter. existed"
-      );
-    }
+    // if (seminar.smrFileKesediaan !== null && seminar.smrFileUndangan !== null) {
+    //   throw new BadRequestError(
+    //     "can't create invitation and approval letter. existed"
+    //   );
+    // }
 
     let members = seminar.seminar_persetujuan;
     members = members.filter((m) => m.statusPermohonan === "Diterima");

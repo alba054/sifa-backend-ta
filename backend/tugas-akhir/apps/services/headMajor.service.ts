@@ -1,14 +1,19 @@
 import { Examiner } from "../models/examiner.model";
 import { Lecturer } from "../models/lecturer.model";
+import { Seminar } from "../models/seminar.model";
 import { Supervisor } from "../models/supervisor.model";
 import { Thesis } from "../models/thesis.model";
 import { User } from "../models/user.model";
+import { decodeBase64 } from "../utils/decoder";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { IWebNotif } from "../utils/interfaces/webNotif.interface";
+import { writeToFile } from "../utils/storage";
 import { constants } from "../utils/utils";
 import { ThesisHeadMajorDispositionService } from "./thesisHeadMajorDisposition.service";
 import { WebNotifService } from "./webNotif.service";
+
+import { v4 as uuidv4 } from "uuid";
 
 interface IAssignedExaminer {
   position: number;
@@ -16,6 +21,45 @@ interface IAssignedExaminer {
 }
 
 export class HeadMajorService {
+  static async signExamSeminar(seminarID: number, signature: string) {
+    const exam = await Seminar.getSeminarByID(seminarID);
+
+    if (exam === null) {
+      throw new NotFoundError("seminar's not found");
+    }
+
+    if (exam.ref_jenisujian !== "Ujian_Skripsi") {
+      throw new NotFoundError("seminar is not ujian skripsi");
+    }
+
+    const filename = writeToFile(
+      constants.SIGN_FILE_PATH,
+      uuidv4() + ".png",
+      decodeBase64(signature)
+    );
+
+    const inserted = await Seminar.provideInvitationAndApprovalLetter(
+      seminarID,
+      "",
+      "",
+      `${constants.SIGN_FILE_PATH}/${filename}`
+    );
+  }
+
+  static async getExamSeminars() {
+    let exams = await Seminar.getSeminars();
+
+    exams = exams.filter(
+      (s) =>
+        s.ref_jenisujian === "Ujian_Skripsi" &&
+        s.statusPermohonan === "Diterima" &&
+        s.smrFileKesediaan !== null &&
+        s.smrFileUndangan !== null
+    );
+
+    return exams;
+  }
+
   static async approveSupervisor(supervisorID: number, isAccepted: boolean) {
     const supervisor = await Supervisor.getSupervisorByID(supervisorID);
 

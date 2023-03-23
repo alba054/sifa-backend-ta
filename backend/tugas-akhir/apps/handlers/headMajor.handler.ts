@@ -33,6 +33,41 @@ interface IAssignedExaminer {
 }
 
 export class HeadMajorHandler {
+  static async signExamSeminar(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { seminarID } = req.params;
+    const { signature } = req.body;
+
+    try {
+      await HeadMajorService.signExamSeminar(Number(seminarID), signature);
+
+      return res
+        .status(200)
+        .json(
+          createResponse(constants.SUCCESS_MESSAGE, "successfully sign seminar")
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getExamSeminar(req: Request, res: Response, next: NextFunction) {
+    const exams = await HeadMajorService.getExamSeminars();
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get seminars exam",
+          exams
+        )
+      );
+  }
+
   static async approveSupervisors(
     req: Request,
     res: Response,
