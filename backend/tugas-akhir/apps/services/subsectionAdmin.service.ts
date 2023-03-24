@@ -58,7 +58,7 @@ export class SubsectionAdminService {
       throw new NotFoundError("sk's not found");
     }
 
-    return await SupervisorSK.changeSKStatus(SKID, isAccepted, note);
+    return await SupervisorSK.changeSubsectionSKStatus(SKID, isAccepted, note);
   }
 
   static async getSupervisorSKDetail(SKID: number) {
@@ -76,7 +76,7 @@ export class SubsectionAdminService {
       throw new NotFoundError("sk's not found");
     }
 
-    return await ExaminerSK.changeSKStatus(SKID, isAccepted, note);
+    return await ExaminerSK.changeSubsectionSKStatus(SKID, isAccepted, note);
   }
 
   static async getExaminerSKDetail(SKID: number) {

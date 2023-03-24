@@ -201,7 +201,7 @@ export class HeadLabService {
       role: constants.LECTURER_GROUP_ACCESS,
       title: "Usulan Sebagai Pembimbing",
       description: `Anda ditunjuk sebagai pembimbing mahasiswa ${thesis?.mahasiswa.mhsNama} dengan judul tugas akhir ${thesis?.taJudul}`,
-      link: "/dosen/usulan/pembimbing",
+      link: "/dosen/usulan-pembimbing",
     } as IWebNotif;
 
     await WebNotifService.createNotification(data);

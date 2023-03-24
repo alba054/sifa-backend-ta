@@ -90,8 +90,8 @@ export class HeadFacultyService {
           t.penguji.length > 1;
 
         const withSK =
-          (t.sk_pembimbing.at(-1)?.statusPermohonan !== "Diterima" ||
-            t.sk_penguji.at(-1)?.statusPermohonan !== "Diterima") &&
+          (t.sk_pembimbing.at(-1)?.statusPermohonanKasubag !== "Diterima" ||
+            t.sk_penguji.at(-1)?.statusPermohonanKasubag !== "Diterima") &&
           t.pembimbing.length > 1 &&
           t.penguji.length > 1;
 

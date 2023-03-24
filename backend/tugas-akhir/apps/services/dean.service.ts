@@ -29,7 +29,11 @@ export class DeanService {
   ) {
     const supervisorSK = await SupervisorSK.getSKByID(SKID);
 
-    if (supervisorSK === null || supervisorSK.statusPermohonan !== "Diterima") {
+    if (
+      supervisorSK === null ||
+      (supervisorSK.statusPermohonanKasubag !== "Diterima" &&
+        supervisorSK?.statusPermohonanKTU !== "Diterima")
+    ) {
       throw new NotFoundError("sk's not found");
     }
 
@@ -61,7 +65,11 @@ export class DeanService {
   ) {
     const examinerSK = await ExaminerSK.getSKByID(SKID);
 
-    if (examinerSK === null || examinerSK.statusPermohonan !== "Diterima") {
+    if (
+      examinerSK === null ||
+      (examinerSK.statusPermohonanKasubag !== "Diterima" &&
+        examinerSK?.statusPermohonanKTU !== "Diterima")
+    ) {
       throw new NotFoundError("sk's not found");
     }
 
@@ -93,10 +101,14 @@ export class DeanService {
 
     thesis = thesis.filter((t) => {
       const approvedSupervisorSK = t.sk_pembimbing.some(
-        (sk) => sk.statusPermohonan === "Diterima"
+        (sk) =>
+          sk.statusPermohonanKasubag === "Diterima" &&
+          sk.statusPermohonanKTU === "Diterima"
       );
       const approvedExaminerSK = t.sk_penguji.some(
-        (sk) => sk.statusPermohonan === "Diterima"
+        (sk) =>
+          sk.statusPermohonanKasubag === "Diterima" &&
+          sk.statusPermohonanKTU === "Diterima"
       );
 
       return approvedExaminerSK && approvedSupervisorSK;

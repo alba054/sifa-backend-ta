@@ -163,6 +163,7 @@ export class Supervisor {
         tugas_akhir: {
           include: {
             pembimbing: true,
+            kepalaDepartemen: true,
           },
         },
       },

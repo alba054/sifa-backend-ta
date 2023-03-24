@@ -33,7 +33,7 @@ export class SupervisorSK {
     }
   }
 
-  static async changeSKStatus(
+  static async changeKTUSKStatus(
     SKID: number,
     isAccepted: boolean,
     note: string | undefined
@@ -43,7 +43,23 @@ export class SupervisorSK {
         skbId: SKID,
       },
       data: {
-        statusPermohonan: isAccepted ? "Diterima" : "Ditolak",
+        statusPermohonanKTU: isAccepted ? "Diterima" : "Ditolak",
+        note: note,
+      },
+    });
+  }
+
+  static async changeSubsectionSKStatus(
+    SKID: number,
+    isAccepted: boolean,
+    note: string | undefined
+  ) {
+    return await prismaDB.sk_pembimbing.update({
+      where: {
+        skbId: SKID,
+      },
+      data: {
+        statusPermohonanKasubag: isAccepted ? "Diterima" : "Ditolak",
         note: note,
       },
     });
@@ -103,7 +119,8 @@ export class SupervisorSK {
           skbNomor: body.SKNumber || "xxxx/yyyy/zzzz",
           skbTglSurat: new Date(),
           skbDprtId: 1,
-          statusPermohonan: "Belum_Diproses",
+          statusPermohonanKasubag: "Belum_Diproses",
+          statusPermohonanKTU: "Belum_Diproses",
         },
       });
     } catch (error) {

@@ -5,6 +5,22 @@ import { InternalServerError } from "../utils/error/internalError";
 import { IExaminerSKPost } from "../utils/interfaces/examinerSK.interface";
 
 export class ExaminerSK {
+  static async changeSubsectionSKStatus(
+    SKID: number,
+    isAccepted: boolean,
+    note: string | undefined
+  ) {
+    return await prismaDB.sk_penguji.update({
+      where: {
+        skpId: SKID,
+      },
+      data: {
+        statusPermohonanKasubag: isAccepted ? "Diterima" : "Ditolak",
+        note: note,
+      },
+    });
+  }
+
   static async signSK(
     SKID: number,
     signed: boolean,
@@ -33,7 +49,7 @@ export class ExaminerSK {
     }
   }
 
-  static async changeSKStatus(
+  static async changeKTUSKStatus(
     SKID: number,
     isAccepted: boolean,
     note: string | undefined
@@ -43,7 +59,7 @@ export class ExaminerSK {
         skpId: SKID,
       },
       data: {
-        statusPermohonan: isAccepted ? "Diterima" : "Ditolak",
+        statusPermohonanKTU: isAccepted ? "Diterima" : "Ditolak",
         note: note,
       },
     });
@@ -103,7 +119,8 @@ export class ExaminerSK {
           skpTaId: body.thesisID,
           skpNomor: body.SKNumber || "xxxx/yyyy/zzzz",
           skpTglSurat: new Date(),
-          statusPermohonan: "Belum_Diproses",
+          statusPermohonanKasubag: "Belum_Diproses",
+          statusPermohonanKTU: "Belum_Diproses",
         },
       });
     } catch (error) {

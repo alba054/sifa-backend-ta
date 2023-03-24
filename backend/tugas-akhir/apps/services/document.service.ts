@@ -92,10 +92,16 @@ export class DocumentService {
     );
 
     const examinerSK = exam.tugas_akhir.sk_pembimbing.some(
-      (sk) => sk.skbStatus === 1 && sk.statusPermohonan === "Diterima"
+      (sk) =>
+        sk.skbStatus === 1 &&
+        sk.statusPermohonanKasubag === "Diterima" &&
+        sk.statusPermohonanKTU === "Diterima"
     );
     const supervisoerSK = exam.tugas_akhir.sk_penguji.some(
-      (sk) => sk.skpStatus === 1 && sk.statusPermohonan === "Diterima"
+      (sk) =>
+        sk.skpStatus === 1 &&
+        sk.statusPermohonanKasubag === "Diterima" &&
+        sk.statusPermohonanKTU === "Diterima"
     );
     const sk = examinerSK && supervisoerSK;
 

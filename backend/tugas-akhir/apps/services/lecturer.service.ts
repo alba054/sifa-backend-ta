@@ -679,36 +679,54 @@ export class LecturerService {
         (p) => p.statusTerima === "Diterima"
       )
     ) {
-      const vocationAdminUser = await User.getUsersByBadge(
-        constants.VOCATION_ADMIN_GROUP_ACCESS
-      );
-      const headMajorUser = await User.getUsersByBadge(
-        constants.HEAD_MAJOR_GROUP_ACCESS
+      const headDepartmentUser = await User.getUserByBadge(
+        constants.DEPARTMENT_ADMIN_GROUP_ACCESS
       );
 
-      vocationAdminUser.forEach(async (u) => {
+      if (
+        headDepartmentUser &&
+        headDepartmentUser.name ===
+          supervisor.tugas_akhir.kepalaDepartemen?.dsnNama
+      ) {
         const data = {
-          userID: u.id,
-          role: constants.VOCATION_ADMIN_GROUP_ACCESS,
+          userID: headDepartmentUser.id,
+          role: constants.DEPARTMENT_ADMIN_GROUP_ACCESS,
           title: "Penyusunan Tim Penguji",
           description: `tugas akhir dengan judul ${supervisor.tugas_akhir.taJudul} siap diajukan penguji`,
-          link: "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji",
+          link: "/kepala-departemen/penyusunan-tim-penguji",
         } as IWebNotif;
 
         await WebNotifService.createNotification(data);
-      });
+      }
+      // const vocationAdminUser = await User.getUsersByBadge(
+      //   constants.VOCATION_ADMIN_GROUP_ACCESS
+      // );
+      // const headMajorUser = await User.getUsersByBadge(
+      //   constants.HEAD_MAJOR_GROUP_ACCESS
+      // );
+      // vocationAdminUser.forEach(async (u) => {
+      //   const data = {
+      //     userID: u.id,
+      //     role: constants.VOCATION_ADMIN_GROUP_ACCESS,
+      //     title: "Penyusunan Tim Penguji",
+      //     description: `tugas akhir dengan judul ${supervisor.tugas_akhir.taJudul} siap diajukan penguji`,
+      //     link: "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji",
+      //   } as IWebNotif;
 
-      headMajorUser.forEach(async (u) => {
-        const data = {
-          userID: u.id,
-          role: constants.VOCATION_ADMIN_GROUP_ACCESS,
-          title: "Penyusunan Tim Penguji",
-          description: `tugas akhir dengan judul ${supervisor.tugas_akhir.taJudul} siap diajukan penguji`,
-          link: "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji",
-        } as IWebNotif;
+      //   await WebNotifService.createNotification(data);
+      // });
 
-        await WebNotifService.createNotification(data);
-      });
+      // headMajorUser.forEach(async (u) => {
+      //   const data = {
+      //     userID: u.id,
+      //     role: constants.VOCATION_ADMIN_GROUP_ACCESS,
+      //     title: "Penyusunan Tim Penguji",
+      //     description: `tugas akhir dengan judul ${supervisor.tugas_akhir.taJudul} siap diajukan penguji`,
+      //     link: "/tugas-akhir/admin-program-studi/persetujuan/penyusunan-tim-penguji",
+      //   } as IWebNotif;
+
+      //   await WebNotifService.createNotification(data);
+      // });
     }
 
     if (user) {

@@ -293,6 +293,21 @@ export class StudentService {
       seminarType
     );
 
+    const seminarCoordinatorUser = await User.getUsersByBadge(
+      constants.SEMINAR_COORDINATOR_GROUP_ACCESS
+    );
+
+    seminarCoordinatorUser.forEach(async (u) => {
+      const data = {
+        userID: u.id,
+        role: constants.SEMINAR_COORDINATOR_GROUP_ACCESS,
+        title: "Persetujuan Seminar Oleh Koordinator Seminar",
+        description: `mahasiswa ${thesis[0].mahasiswa.mhsNama} mengajukan permohonan seminar dengan judul tugas akhir ${thesis[0].taJudul}`,
+        link: "/koordinator-seminar/persetujuan-seminar",
+      } as IWebNotif;
+      await WebNotifService.createNotification(data);
+    });
+
     const userSupervisor0 = await User.getUserByUsername(
       thesis[0].pembimbing[0].dosen.dsnNip
     );

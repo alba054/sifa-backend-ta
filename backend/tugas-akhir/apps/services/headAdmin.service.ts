@@ -84,7 +84,7 @@ export class HeadAdminService {
       throw new NotFoundError("sk's not found");
     }
 
-    return await SupervisorSK.changeSKStatus(SKID, isAccepted, note);
+    return await SupervisorSK.changeKTUSKStatus(SKID, isAccepted, note);
   }
 
   static async getSupervisorSKDetail(SKID: number) {
@@ -102,7 +102,7 @@ export class HeadAdminService {
       throw new NotFoundError("sk's not found");
     }
 
-    return await ExaminerSK.changeSKStatus(SKID, isAccepted, note);
+    return await ExaminerSK.changeKTUSKStatus(SKID, isAccepted, note);
   }
 
   static async getExaminerSKDetail(SKID: number) {
