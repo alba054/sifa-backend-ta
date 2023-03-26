@@ -404,6 +404,7 @@ export class Thesis {
         },
         data: {
           statusPermohonan: thesisOneStatus,
+          statusDepartemen: "Diterima",
           taCatatan: noteThesisOne,
           tanggalPenyelesaian: resolveDateOne,
         },
@@ -420,6 +421,7 @@ export class Thesis {
         data: {
           statusPermohonan: thesisTwoStatus,
           taCatatan: noteThesisTwo,
+          statusDepartemen: "Diterima",
           tanggalPenyelesaian: resolveDateTwo,
         },
       });
