@@ -323,31 +323,31 @@ export class StudentService {
       await WebNotifService.createNotification(data);
     });
 
-    const userSupervisor0 = await User.getUserByUsername(
-      thesis[0].pembimbing[0].dosen.dsnNip
-    );
-    const userSupervisor1 = await User.getUserByUsername(
-      thesis[0].pembimbing[1].dosen.dsnNip
-    );
+    // const userSupervisor0 = await User.getUserByUsername(
+    //   thesis[0].pembimbing[0].dosen.dsnNip
+    // );
+    // const userSupervisor1 = await User.getUserByUsername(
+    //   thesis[0].pembimbing[1].dosen.dsnNip
+    // );
 
-    const dataSupervisor0 = {
-      userID: userSupervisor0?.id,
-      role: constants.LECTURER_GROUP_ACCESS,
-      title: "Persetujuan Seminar Oleh Pembimbing",
-      description: `mahasiswa ${thesis[0].mahasiswa.mhsNama} mengajukan permohonan seminar dengan judul tugas akhir ${thesis[0].taJudul}`,
-      link: "/dosen/usulan-pembimbing",
-    } as IWebNotif;
+    // const dataSupervisor0 = {
+    //   userID: userSupervisor0?.id,
+    //   role: constants.LECTURER_GROUP_ACCESS,
+    //   title: "Persetujuan Seminar Oleh Pembimbing",
+    //   description: `mahasiswa ${thesis[0].mahasiswa.mhsNama} mengajukan permohonan seminar dengan judul tugas akhir ${thesis[0].taJudul}`,
+    //   link: "/dosen/usulan-pembimbing",
+    // } as IWebNotif;
 
-    const dataSupervisor1 = {
-      userID: userSupervisor1?.id,
-      role: constants.LECTURER_GROUP_ACCESS,
-      title: "Persetujuan Seminar Oleh Pembimbing",
-      description: `mahasiswa ${thesis[0].mahasiswa.mhsNama} mengajukan permohonan seminar dengan judul tugas akhir ${thesis[0].taJudul}`,
-      link: "/dosen/usulan-pembimbing",
-    } as IWebNotif;
+    // const dataSupervisor1 = {
+    //   userID: userSupervisor1?.id,
+    //   role: constants.LECTURER_GROUP_ACCESS,
+    //   title: "Persetujuan Seminar Oleh Pembimbing",
+    //   description: `mahasiswa ${thesis[0].mahasiswa.mhsNama} mengajukan permohonan seminar dengan judul tugas akhir ${thesis[0].taJudul}`,
+    //   link: "/dosen/usulan-pembimbing",
+    // } as IWebNotif;
 
-    await WebNotifService.createNotification(dataSupervisor0);
-    await WebNotifService.createNotification(dataSupervisor1);
+    // await WebNotifService.createNotification(dataSupervisor0);
+    // await WebNotifService.createNotification(dataSupervisor1);
 
     return seminar;
   }
