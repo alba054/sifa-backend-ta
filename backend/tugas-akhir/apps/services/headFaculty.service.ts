@@ -13,6 +13,40 @@ import { constants } from "../utils/utils";
 import { WebNotifService } from "./webNotif.service";
 
 export class HeadFacultyService {
+  static async deleteSeminar(seminarID: number) {
+    const seminar = await Seminar.getSeminarByID(seminarID);
+
+    if (seminar === null) {
+      throw new NotFoundError("seminar's not found");
+    }
+    // if (
+    //   seminar.seminar_persetujuan.filter(
+    //     (s) => s.statusPermohonan === "Diterima"
+    //   ).length > 2
+    // ) {
+    //   throw new BadRequestError("cannot delete seminar, has been approved");
+    // }
+
+    return await Seminar.deleteSeminarByID(seminarID);
+  }
+
+  static async getExamDetail(seminarID: number) {
+    const exam = await Seminar.getSeminarByID(seminarID);
+
+    if (exam === null) {
+      throw new NotFoundError("exam's not found");
+    }
+
+    if (
+      exam.ref_jenisujian !== "Ujian_Skripsi" &&
+      exam.statusPermohonan !== "Diterima"
+    ) {
+      throw new NotFoundError("not exam or haven't been accepted");
+    }
+
+    return exam;
+  }
+
   static async getExamSeminars() {
     let exams = await Seminar.getSeminars();
 

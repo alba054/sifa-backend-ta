@@ -119,6 +119,17 @@ headFacultyRouter
     AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
     HeadFacultyHandler.getSeminarExam
   );
+
+headFacultyRouter
+  .route("/exam/seminars/:seminarID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.getSeminarExamDetail
+  )
+  .delete(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.deleteSeminar
+  );
 // .get(
 //   AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
 //   HeadFacultyHandler.getSupervisorSK

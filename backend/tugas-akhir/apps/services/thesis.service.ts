@@ -71,6 +71,47 @@ export class ThesisService {
       const approvedThesis = await Thesis.getThesisByID(approvedTitleID.id);
 
       if (approvedThesis) {
+        if (approvedThesis.taLabId) {
+          const user = await User.getUserByBadge(
+            constants.LAB_ADMIN_GROUP_ACCESS,
+            {
+              lab: Number(approvedThesis.taLabId),
+            }
+          );
+
+          if (user) {
+            const data = {
+              userID: user?.id,
+              role: constants.LAB_ADMIN_GROUP_ACCESS,
+              title: "Tugas Akhir Mahasiswa Pada Lab",
+              description: `mahasiswa dengan judul tugas akhir ${approvedThesis.taJudul}`,
+              link: "/kepala-lab/tugas-akhir",
+            } as IWebNotif;
+
+            await WebNotifService.createNotification(data);
+          }
+        }
+        if (approvedThesis.taLabId2) {
+          const user = await User.getUserByBadge(
+            constants.LAB_ADMIN_GROUP_ACCESS,
+            {
+              lab: Number(approvedThesis.taLabId2),
+            }
+          );
+
+          if (user) {
+            const data = {
+              userID: user?.id,
+              role: constants.LAB_ADMIN_GROUP_ACCESS,
+              title: "Tugas Akhir Mahasiswa Pada Lab",
+              description: `mahasiswa dengan judul tugas akhir ${approvedThesis.taJudul}`,
+              link: "/kepala-lab/tugas-akhir",
+            } as IWebNotif;
+
+            await WebNotifService.createNotification(data);
+          }
+        }
+
         const user = await User.getUserByUsername(
           approvedThesis.mahasiswa.mhsNim
         );
@@ -278,40 +319,40 @@ export class ThesisService {
 
     const newThesis = await Thesis.insertNewThesis(thesis);
 
-    if (thesis.labID) {
-      const user = await User.getUserByBadge(constants.LAB_ADMIN_GROUP_ACCESS, {
-        lab: Number(thesis.labID),
-      });
+    // if (thesis.labID) {
+    //   const user = await User.getUserByBadge(constants.LAB_ADMIN_GROUP_ACCESS, {
+    //     lab: Number(thesis.labID),
+    //   });
 
-      if (user) {
-        const data = {
-          userID: user?.id,
-          role: constants.LAB_ADMIN_GROUP_ACCESS,
-          title: "Tugas Akhir Mahasiswa Pada Lab",
-          description: `mahasiswa dengan judul tugas akhir ${thesis.title}`,
-          link: "/kepala-lab/tugas-akhir",
-        } as IWebNotif;
+    //   if (user) {
+    //     const data = {
+    //       userID: user?.id,
+    //       role: constants.LAB_ADMIN_GROUP_ACCESS,
+    //       title: "Tugas Akhir Mahasiswa Pada Lab",
+    //       description: `mahasiswa dengan judul tugas akhir ${thesis.title}`,
+    //       link: "/kepala-lab/tugas-akhir",
+    //     } as IWebNotif;
 
-        await WebNotifService.createNotification(data);
-      }
-    }
-    if (thesis.labID2) {
-      const user = await User.getUserByBadge(constants.LAB_ADMIN_GROUP_ACCESS, {
-        lab: Number(thesis.labID2),
-      });
+    //     await WebNotifService.createNotification(data);
+    //   }
+    // }
+    // if (thesis.labID2) {
+    //   const user = await User.getUserByBadge(constants.LAB_ADMIN_GROUP_ACCESS, {
+    //     lab: Number(thesis.labID2),
+    //   });
 
-      if (user) {
-        const data = {
-          userID: user?.id,
-          role: constants.LAB_ADMIN_GROUP_ACCESS,
-          title: "Tugas Akhir Mahasiswa Pada Lab",
-          description: `mahasiswa dengan judul tugas akhir ${thesis.title}`,
-          link: "/kepala-lab/tugas-akhir",
-        } as IWebNotif;
+    //   if (user) {
+    //     const data = {
+    //       userID: user?.id,
+    //       role: constants.LAB_ADMIN_GROUP_ACCESS,
+    //       title: "Tugas Akhir Mahasiswa Pada Lab",
+    //       description: `mahasiswa dengan judul tugas akhir ${thesis.title}`,
+    //       link: "/kepala-lab/tugas-akhir",
+    //     } as IWebNotif;
 
-        await WebNotifService.createNotification(data);
-      }
-    }
+    //     await WebNotifService.createNotification(data);
+    //   }
+    // }
 
     if (thesis.lecturerPropose) {
       const lecturer0 = await Lecturer.getLecturerByID(thesis.lecturerPropose);

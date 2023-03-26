@@ -44,6 +44,7 @@ export class Seminar {
           },
         },
       },
+      orderBy: { updated_at: "desc" },
     });
   }
 

@@ -282,6 +282,21 @@ export class StudentService {
       );
     }
 
+    if (seminarType === "Ujian_Skripsi") {
+      const examPermission = await ExamProposal.getExamProposalByThesisID(
+        thesis[0].taId
+      );
+
+      if (
+        examPermission?.statusPermohonan !== "Diterima" &&
+        !examPermission?.statusTTD &&
+        examPermission?.statusValidasiBerkas !== "Diterima" &&
+        examPermission?.statusVerifikasiBerkas !== "Diterima"
+      ) {
+        throw new BadRequestError("can't create exam seminar");
+      }
+    }
+
     const supervisorsID = [
       thesis[0].pembimbing[0].pmbId,
       thesis[0].pembimbing[1].pmbId,

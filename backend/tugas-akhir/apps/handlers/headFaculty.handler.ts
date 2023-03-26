@@ -7,6 +7,44 @@ import { ISupervisorSKPost } from "../utils/interfaces/supervisorSK.interface";
 import { constants, createResponse } from "../utils/utils";
 
 export class HeadFacultyHandler {
+  static async deleteSeminar(req: Request, res: Response, next: NextFunction) {
+    const { seminarID } = req.params;
+
+    try {
+      await HeadFacultyService.deleteSeminar(Number(seminarID));
+
+      return res
+        .status(200)
+        .json(createResponse(constants.SUCCESS_MESSAGE, "successfully delete"));
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getSeminarExamDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { seminarID } = req.params;
+
+    try {
+      const exam = await HeadFacultyService.getExamDetail(Number(seminarID));
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get seminar exam",
+            exam
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async getSeminarExam(req: Request, res: Response, next: NextFunction) {
     const exams = await HeadFacultyService.getExamSeminars();
 
