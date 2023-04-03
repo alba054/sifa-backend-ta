@@ -3,6 +3,33 @@ import { DocumentService } from "../services/document.service";
 import { createResponse, constants } from "../utils/utils";
 
 export class DocumentHandler {
+  static async getVerificationSKData(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { SKID } = req.params;
+    const { nim } = req.query;
+
+    try {
+      const data = await DocumentService.getVerificationSKData(
+        nim,
+        Number(SKID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get verification SK data",
+            data
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
   static async getExamProposalDocumentData(
     req: Request,
     res: Response,

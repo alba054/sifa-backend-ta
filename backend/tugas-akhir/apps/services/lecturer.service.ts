@@ -490,7 +490,7 @@ export class LecturerService {
     }
     const filename = writeToFile(
       constants.SIGN_FILE_PATH,
-      uuidv4() + ".png",
+      nim + ".png",
       decodeBase64(signature)
     );
 

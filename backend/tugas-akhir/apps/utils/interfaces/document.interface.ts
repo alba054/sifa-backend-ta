@@ -24,6 +24,7 @@ export interface ISupervisorSKDoc {
   sideMentor: string;
   major: string;
   signature?: string;
+  proposalTitle?: string;
 }
 
 export interface IExaminerSKDoc {
@@ -39,6 +40,7 @@ export interface IExaminerSKDoc {
   major: string;
   member: string[];
   signature?: string;
+  proposalTitle: string;
 }
 
 export interface ISeminarApprovalDoc {
@@ -54,6 +56,7 @@ export interface ISeminarApprovalDoc {
   secondExaminer: string;
   thirdExaminer: string;
   forthExaminer: string;
+  major?: string;
 }
 
 export interface ISeminarLetterEventDoc {
@@ -134,4 +137,19 @@ export interface IExamProposalDoc {
   firstViceDeanNIP: string;
   letterDate: string | Date;
   signature?: string;
+}
+
+export interface IVerificationSKDoc {
+  viceaDeanName: string;
+  viceDeanNip: string;
+  name: string;
+  nim: string;
+  major: string;
+  educationLevel: "s1" | "s2" | "s3" | "profesi" | "spesialis";
+  sksPassed: number;
+  isNameCorrect: boolean;
+  isNimCorrect: boolean;
+  isMajorCorrect: boolean;
+  letterDate: string | Date;
+  signature: string;
 }

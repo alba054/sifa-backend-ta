@@ -43,7 +43,7 @@ export class DeanService {
 
     const filename = writeToFile(
       constants.SIGN_FILE_PATH,
-      uuidv4() + ".png",
+      username + ".png",
       decodeBase64(signature)
     );
 
@@ -79,7 +79,7 @@ export class DeanService {
 
     const filename = writeToFile(
       constants.SIGN_FILE_PATH,
-      uuidv4() + ".png",
+      username + ".png",
       decodeBase64(signature)
     );
 

@@ -4,6 +4,7 @@ import { LabFree } from "../models/labFree.model";
 import { Seminar } from "../models/seminar.model";
 import { SupervisorSK } from "../models/supervisorSK.model";
 import { User } from "../models/user.model";
+import { VerificationSK } from "../models/verificationSK.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import {
@@ -15,11 +16,46 @@ import {
   ISeminarLetterEventDoc,
   ISeminarScoreDoc,
   ISupervisorSKDoc,
+  IVerificationSKDoc,
 } from "../utils/interfaces/document.interface";
 import { constants } from "../utils/utils";
 import { LabFreeService } from "./labFree.service";
 
 export class DocumentService {
+  static async getVerificationSKData(nim: any, SKID: number) {
+    const verificationSK = await VerificationSK.getSKByID(SKID);
+
+    if (verificationSK === null) {
+      throw new NotFoundError("sk is not found");
+    }
+
+    if (verificationSK.tugas_akhir.taMhsNim !== nim) {
+      throw new BadRequestError("data's not for this student");
+    }
+
+    if (
+      verificationSK.statusPermohonan !== "Diterima" &&
+      !verificationSK.signed
+    ) {
+      throw new BadRequestError("sk hasn't been verified by vice dean");
+    }
+
+    return {
+      educationLevel: "s1",
+      isMajorCorrect: verificationSK.isMajorCorrect,
+      isNameCorrect: verificationSK.isNameCorrect,
+      isNimCorrect: verificationSK.isNimCorrect,
+      letterDate: verificationSK.letterDate,
+      major: "S1 Farmasi",
+      name: verificationSK.tugas_akhir.mahasiswa.mhsNama,
+      nim: verificationSK.tugas_akhir.taMhsNim,
+      signature: verificationSK.signature,
+      sksPassed: verificationSK.sksPassed,
+      viceaDeanName: verificationSK.viceDeanName,
+      viceDeanNip: verificationSK.viceDeanNip,
+    } as IVerificationSKDoc;
+  }
+
   static async getExamProposalData(nim: any, examID: number) {
     const exam = await ExamProposal.getExamProposalByID(examID);
 
@@ -384,6 +420,7 @@ export class DocumentService {
       seminarStartTime: seminar.smrJamMulai,
       studentName: seminar.tugas_akhir.mahasiswa.mhsNama,
       studentNIM: seminar.tugas_akhir.taMhsNim,
+      major: seminar.tugas_akhir.mahasiswa.ref_prodi?.prdNama,
     } as ISeminarApprovalDoc;
   }
 
@@ -421,6 +458,7 @@ export class DocumentService {
       studentNIM: sk.tugas_akhir.taMhsNim,
       member: sk.tugas_akhir.penguji.map((e) => e.dosen.dsnNama),
       signature: sk.signature,
+      proposalTitle: sk.tugas_akhir.taJudul,
     } as IExaminerSKDoc;
   }
 
@@ -457,6 +495,7 @@ export class DocumentService {
       studentName: sk.tugas_akhir.mahasiswa.mhsNama,
       studentNIM: sk.tugas_akhir.taMhsNim,
       signature: sk.signature_path,
+      proposalTitle: sk.tugas_akhir.taJudul,
     } as ISupervisorSKDoc;
   }
 

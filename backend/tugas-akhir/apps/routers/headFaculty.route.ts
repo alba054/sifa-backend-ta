@@ -55,6 +55,32 @@ headFacultyRouter
     HeadFacultyHandler.getExaminerSKDetail
   );
 
+// * create examiner sk
+// * get all examiner sk
+headFacultyRouter
+  .route("/verifications/sk")
+  .post(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.createVerificationSK
+  )
+  .get(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.getVerificationSK
+  );
+
+// * delete examiner sk
+// * get examiner SK detail
+headFacultyRouter
+  .route("/verifications/sk/:SKID")
+  .delete(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.deleteVerificationSK
+  )
+  .get(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.getVerificationSKDetail
+  );
+
 // * create supervisor sk
 // * get all supervisor sk
 headFacultyRouter
@@ -130,6 +156,7 @@ headFacultyRouter
     AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
     HeadFacultyHandler.deleteSeminar
   );
+
 // .get(
 //   AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
 //   HeadFacultyHandler.getSupervisorSK

@@ -4,9 +4,110 @@ import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { IExaminerSKPost } from "../utils/interfaces/examinerSK.interface";
 import { ISupervisorSKPost } from "../utils/interfaces/supervisorSK.interface";
+import { IVerificationSKPost } from "../utils/interfaces/verificationSK.interface";
 import { constants, createResponse } from "../utils/utils";
 
 export class HeadFacultyHandler {
+  static async getVerificationSKDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { SKID } = req.params;
+
+    const verificationSK = await HeadFacultyService.getVerificationSKDetail(
+      Number(SKID)
+    );
+
+    if (verificationSK === null) {
+      return next(new NotFoundError("sk's not found"));
+    }
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get verification SK",
+          verificationSK
+        )
+      );
+  }
+
+  static async deleteVerificationSK(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { SKID } = req.params;
+
+    try {
+      await HeadFacultyService.deleteVerificationSK(Number(SKID));
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully delete verification SK"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getVerificationSK(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const verificationSK = await HeadFacultyService.getVerificationSK();
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get verification SK",
+          verificationSK
+        )
+      );
+  }
+
+  static async createVerificationSK(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const body = req.body as IVerificationSKPost;
+
+    try {
+      if (
+        typeof body.SKNumber === "undefined" ||
+        typeof body.thesisID === "undefined"
+      ) {
+        throw new BadRequestError("provide SKNumber and thesisID");
+      }
+
+      body.thesisID = Number(body.thesisID);
+      const verificationSK = await HeadFacultyService.createVerificationSK(
+        body
+      );
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully create verification SK"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async deleteSeminar(req: Request, res: Response, next: NextFunction) {
     const { seminarID } = req.params;
 

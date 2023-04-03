@@ -4,6 +4,69 @@ import { BadRequestError } from "../utils/error/badrequestError";
 import { createResponse, constants } from "../utils/utils";
 
 export class ViceDeanHandler {
+  static async verifyVerificationSK(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { SKID } = req.params;
+
+    const { isAccepted, signature } = req.body;
+    const { username, name } = res.locals.user;
+
+    try {
+      if (
+        typeof isAccepted === "undefined" ||
+        typeof signature === "undefined"
+      ) {
+        throw new BadRequestError("provide isAccepted and signature");
+      }
+      await ViceDeanService.verifyVerificationSK(
+        Number(SKID),
+        Boolean(isAccepted),
+        username,
+        name,
+        signature
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully accept/reject proposal"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getVerificationSKDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { SKID } = req.params;
+
+    try {
+      const verificationSK = await ViceDeanService.getVerificationSKDetail(
+        Number(SKID)
+      );
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get verificationSK detail",
+            verificationSK
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
   static async unsignedExamProposal(
     req: Request,
     res: Response,

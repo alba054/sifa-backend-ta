@@ -725,6 +725,30 @@ model sk_pembimbing {
   @@index([skbTaId], map: "skbTaId")
 }
 
+model sk_verifikasi {
+  id Int @id @default(autoincrement())
+  thesisID Int
+  letterNumber String
+  letterDate DateTime @db.Date
+  signed Boolean?
+  viceDeanName String?
+  viceDeanNip String?
+  sksPassed Int @default(144)
+  isNameCorrect Boolean @default(true)
+  isNimCorrect Boolean @default(true)
+  isMajorCorrect Boolean @default(true)
+  signature String?
+  statusPermohonan StatusPermohonan @default(Diterima)
+  created_at              DateTime?        @default(now())
+  updated_at              DateTime?        @updatedAt
+  tugas_akhir             tugas_akhir     @relation(fields: [thesisID], references: [taId], onDelete: Cascade, map: "sk_verifikasi_fk1")
+
+  // @@index([skbLabId], map: "skbLabId")
+  // @@index([skbStatus], map: "skbStatus")
+  // @@index([skbStatusAkses], map: "skbStatusAkses")
+  // @@index([skbTaId], map: "skbTaId")
+}
+
 model sk_pembimbing_dep {
   skbId                  Int                      @id @default(autoincrement())
   skbTaId                Int
@@ -909,6 +933,7 @@ model tugas_akhir {
   seminar                                                seminar[]
   sk_fakultas                                            sk_fakultas[]
   sk_pembimbing                                          sk_pembimbing[]
+  sk_verifikasi sk_verifikasi[]
   sk_pembimbing_dep                                      sk_pembimbing_dep[]
   sk_penguji                                             sk_penguji[]
   sk_penguji_dep                                         sk_penguji_dep[]

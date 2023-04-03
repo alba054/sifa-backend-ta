@@ -37,4 +37,15 @@ viceDeanRouter
     ViceDeanHandler.signeExamProposal
   );
 
+viceDeanRouter
+  .route("/verifications/:SKID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.VICE_DEAN_GROUP_ACCESS]),
+    ViceDeanHandler.getVerificationSKDetail
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.VICE_DEAN_GROUP_ACCESS]),
+    ViceDeanHandler.verifyVerificationSK
+  );
+
 export default viceDeanRouter;

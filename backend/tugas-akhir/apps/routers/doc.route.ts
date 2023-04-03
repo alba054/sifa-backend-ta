@@ -49,6 +49,22 @@ docRouter
   );
 
 docRouter
+  .route("/students/sk/verifications/:SKID")
+  .get(
+    AuthorizationMiddleware.authorize([
+      constants.STUDENT_GROUP_ACCESS,
+      constants.LAB_ADMIN_GROUP_ACCESS,
+      constants.ADMINHEAD_GROUP_ACCCESS,
+      constants.SUBSECTIONHEAD_GROUP_ACCESS,
+      constants.FACULTY_ADMIN_GROUP_ACCESS,
+      constants.DEAN_GROUP_ACCESS,
+      constants.VOCATION_ADMIN_GROUP_ACCESS,
+      constants.VICE_DEAN_GROUP_ACCESS,
+    ]),
+    DocumentHandler.getVerificationSKData
+  );
+
+docRouter
   .route("/students/seminars/:seminarID/approval")
   .get(
     AuthorizationMiddleware.authorize([

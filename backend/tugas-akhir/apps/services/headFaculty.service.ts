@@ -4,15 +4,71 @@ import { Seminar } from "../models/seminar.model";
 import { SupervisorSK } from "../models/supervisorSK.model";
 import { Thesis } from "../models/thesis.model";
 import { User } from "../models/user.model";
+import { VerificationSK } from "../models/verificationSK.model";
 import { BadRequestError } from "../utils/error/badrequestError";
 import { NotFoundError } from "../utils/error/notFoundError";
 import { IExaminerSKPost } from "../utils/interfaces/examinerSK.interface";
 import { ISupervisorSKPost } from "../utils/interfaces/supervisorSK.interface";
+import { IVerificationSKPost } from "../utils/interfaces/verificationSK.interface";
 import { IWebNotif } from "../utils/interfaces/webNotif.interface";
 import { constants } from "../utils/utils";
 import { WebNotifService } from "./webNotif.service";
 
 export class HeadFacultyService {
+  static async getVerificationSKDetail(SKID: number) {
+    return await VerificationSK.getSKByID(SKID);
+  }
+
+  static async deleteVerificationSK(SKID: number) {
+    const verificationSK = await VerificationSK.getSKByID(SKID);
+
+    if (verificationSK === null) {
+      throw new NotFoundError("sk is not found");
+    }
+
+    return await VerificationSK.deleteSKByID(SKID);
+  }
+
+  static async getVerificationSK() {
+    return VerificationSK.getVerificationSK();
+  }
+
+  static async createVerificationSK(body: IVerificationSKPost) {
+    const thesis = await Thesis.getThesisByID(body.thesisID);
+
+    if (thesis === null || thesis.taKRSKHSStatus === "Belum_Diproses") {
+      throw new NotFoundError("thesis's not found");
+    }
+
+    if (
+      thesis.penguji.length < 2 ||
+      thesis.penguji[0].statusTerima !== "Diterima" ||
+      thesis.penguji[1].statusTerima !== "Diterima"
+    ) {
+      throw new NotFoundError("thesis doesn't have examiners");
+    }
+
+    const verificationSK = await VerificationSK.createNewSK(body);
+
+    // const userSubsection = await User.getUsersByBadge(
+    //   constants.SUBSECTIONHEAD_GROUP_ACCESS
+    // );
+
+    // userSubsection.forEach(async (u) => {
+    //   const data = {
+    //     userID: u.id,
+    //     role: constants.SUBSECTIONHEAD_GROUP_ACCESS,
+    //     title: "SK Pembimbing dan Penguji",
+    //     description: `SK penguji tugas akhir dengan judul ${thesis.taJudul} siap direview`,
+    //     link: "/kasubag/persetujuan/sk-pembimbing-dan-penguji",
+    //   } as IWebNotif;
+
+    //   await WebNotifService.createNotification(data);
+    // });
+
+    return verificationSK;
+  }
+
   static async deleteSeminar(seminarID: number) {
     const seminar = await Seminar.getSeminarByID(seminarID);
 
