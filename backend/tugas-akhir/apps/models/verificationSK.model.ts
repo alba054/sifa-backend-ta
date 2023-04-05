@@ -68,6 +68,7 @@ export class VerificationSK {
       include: {
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: {
               include: {
                 ref_prodi: true,

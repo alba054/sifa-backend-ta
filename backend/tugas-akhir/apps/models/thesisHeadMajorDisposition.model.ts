@@ -14,6 +14,7 @@ export class ThesisHeadMajorDisposition {
       include: {
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             ref_laboratorium: true,
             ref_laboratorium2: true,
             mahasiswa: true,
@@ -49,6 +50,7 @@ export class ThesisHeadMajorDisposition {
       include: {
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             ref_laboratorium: true,
             ref_laboratorium2: true,
             pembimbing: { include: { dosen: true } },

@@ -83,6 +83,7 @@ export class ExamProposal {
       include: {
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
             penguji: { include: { dosen: true } },
@@ -125,6 +126,7 @@ export class ExamProposal {
       include: {
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
             penguji: { include: { dosen: true } },
@@ -148,6 +150,7 @@ export class ExamProposal {
       include: {
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
             penguji: { include: { dosen: true } },
@@ -191,6 +194,7 @@ export class ExamProposal {
       include: {
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
             penguji: { include: { dosen: true } },
@@ -209,6 +213,7 @@ export class ExamProposal {
       include: {
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
             penguji: { include: { dosen: true } },

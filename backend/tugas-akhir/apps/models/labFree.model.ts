@@ -69,7 +69,12 @@ export class LabFree {
     return await prismaDB.bebas_lab.findUnique({
       where: { blId: reqlabsID },
       include: {
-        mahasiswa: { include: { ref_prodi: true, tugas_akhir: true } },
+        mahasiswa: {
+          include: {
+            ref_prodi: true,
+            tugas_akhir: { include: { sk_verifikasi: true } },
+          },
+        },
         ref_laboratorium: true,
       },
     });

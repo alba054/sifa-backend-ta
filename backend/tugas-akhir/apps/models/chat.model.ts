@@ -45,6 +45,7 @@ export class Chat {
               pembimbing: { include: { dosen: true } },
               penguji: { include: { dosen: true } },
               mahasiswa: true,
+              sk_verifikasi: true,
             },
           },
         },
@@ -54,7 +55,12 @@ export class Chat {
         where: { bimTaId: thesisID, bimPesanType: 0 },
         include: {
           tugas_akhir: {
-            include: { pembimbing: true, penguji: true, mahasiswa: true },
+            include: {
+              pembimbing: true,
+              penguji: true,
+              mahasiswa: true,
+              sk_verifikasi: true,
+            },
           },
         },
       });
@@ -64,7 +70,12 @@ export class Chat {
       where: { bimTaId: thesisID },
       include: {
         tugas_akhir: {
-          include: { pembimbing: true, penguji: true, mahasiswa: true },
+          include: {
+            pembimbing: true,
+            penguji: true,
+            mahasiswa: true,
+            sk_verifikasi: true,
+          },
         },
       },
     });

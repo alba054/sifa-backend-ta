@@ -73,6 +73,7 @@ export class ExaminerSK {
         ref_prodi: true,
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: {
               include: {
                 ref_prodi: true,

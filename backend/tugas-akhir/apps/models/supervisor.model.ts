@@ -44,7 +44,11 @@ export class Supervisor {
         where: {},
         include: {
           dosen: true,
-          tugas_akhir: true,
+          tugas_akhir: {
+            include: {
+              sk_verifikasi: true,
+            },
+          },
         },
         orderBy: { updated_at: "desc" },
       });
@@ -54,7 +58,11 @@ export class Supervisor {
       where: { statusTerima: status },
       include: {
         dosen: true,
-        tugas_akhir: true,
+        tugas_akhir: {
+          include: {
+            sk_verifikasi: true,
+          },
+        },
       },
       orderBy: { updated_at: "desc" },
     });
@@ -104,6 +112,7 @@ export class Supervisor {
           dosen: true,
           tugas_akhir: {
             include: {
+              sk_verifikasi: true,
               ref_laboratorium: true,
               ref_laboratorium2: true,
               mahasiswa: true,
@@ -125,6 +134,7 @@ export class Supervisor {
         dosen: true,
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             ref_laboratorium: true,
             ref_laboratorium2: true,
             mahasiswa: true,
@@ -162,6 +172,7 @@ export class Supervisor {
         dosen: true,
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             pembimbing: true,
             kepalaDepartemen: true,
           },

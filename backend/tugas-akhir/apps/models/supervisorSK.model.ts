@@ -86,6 +86,7 @@ export class SupervisorSK {
         ref_departemen: true,
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: {
               include: {
                 ref_prodi: true,

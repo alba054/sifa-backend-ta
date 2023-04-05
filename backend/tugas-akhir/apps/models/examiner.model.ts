@@ -42,7 +42,11 @@ export class Examiner {
         where: {},
         include: {
           dosen: true,
-          tugas_akhir: true,
+          tugas_akhir: {
+            include: {
+              sk_verifikasi: true,
+            },
+          },
         },
         orderBy: { updated_at: "desc" },
       });
@@ -52,7 +56,11 @@ export class Examiner {
       where: { statusTerima: status },
       include: {
         dosen: true,
-        tugas_akhir: true,
+        tugas_akhir: {
+          include: {
+            sk_verifikasi: true,
+          },
+        },
       },
       orderBy: { updated_at: "desc" },
     });
@@ -125,6 +133,7 @@ export class Examiner {
           dosen: true,
           tugas_akhir: {
             include: {
+              sk_verifikasi: true,
               mahasiswa: true,
               ref_laboratorium: true,
               ref_laboratorium2: true,
@@ -146,6 +155,7 @@ export class Examiner {
         dosen: true,
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: true,
             ref_laboratorium: true,
             ref_laboratorium2: true,

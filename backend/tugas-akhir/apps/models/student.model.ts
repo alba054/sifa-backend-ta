@@ -26,7 +26,11 @@ export class Student implements IStudent {
         bebas_lab: true,
         dosen: true,
         ref_prodi: true,
-        tugas_akhir: true,
+        tugas_akhir: {
+          include: {
+            sk_verifikasi: true,
+          },
+        },
       },
     });
   }
@@ -130,7 +134,11 @@ export class Student implements IStudent {
         bebas_lab: true,
         dosen: true,
         ref_prodi: true,
-        tugas_akhir: true,
+        tugas_akhir: {
+          include: {
+            sk_verifikasi: true,
+          },
+        },
       },
       skip: page,
       take: limit,
@@ -147,7 +155,11 @@ export class Student implements IStudent {
         bebas_lab: true,
         dosen: true,
         ref_prodi: true,
-        tugas_akhir: true,
+        tugas_akhir: {
+          include: {
+            sk_verifikasi: true,
+          },
+        },
       },
     });
 

@@ -40,6 +40,7 @@ export class Seminar {
       include: {
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: true,
           },
         },
@@ -67,6 +68,7 @@ export class Seminar {
         },
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             pembimbing: { include: { dosen: true } },
             penguji: { include: { dosen: true } },
             mahasiswa: { include: { ref_prodi: true } },
@@ -103,6 +105,7 @@ export class Seminar {
       include: {
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: true,
             pembimbing: {
               include: { dosen: true },
@@ -194,6 +197,7 @@ export class Seminar {
         seminar_dokumen: true,
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
             penguji: { include: { dosen: true } },
@@ -224,7 +228,7 @@ export class Seminar {
         },
         orderBy: { updated_at: "desc" },
         include: {
-          tugas_akhir: { include: { mahasiswa: true } },
+          tugas_akhir: { include: { mahasiswa: true, sk_verifikasi: true } },
           moderator: true,
         },
       });
@@ -240,7 +244,7 @@ export class Seminar {
       },
       orderBy: { updated_at: "desc" },
       include: {
-        tugas_akhir: { include: { mahasiswa: true } },
+        tugas_akhir: { include: { mahasiswa: true, sk_verifikasi: true } },
         moderator: true,
       },
     });
@@ -271,6 +275,7 @@ export class Seminar {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
             penguji: { include: { dosen: true } },
+            sk_verifikasi: true,
           },
         },
         seminar_persetujuan: {
@@ -334,6 +339,7 @@ export class Seminar {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
             penguji: { include: { dosen: true } },
+            sk_verifikasi: true,
           },
         },
         seminar_persetujuan: {
@@ -359,6 +365,7 @@ export class Seminar {
         tugas_akhir: {
           include: {
             mahasiswa: true,
+            sk_verifikasi: true,
           },
         },
         seminar_persetujuan: {
@@ -384,6 +391,7 @@ export class Seminar {
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
             penguji: { include: { dosen: true } },
+            sk_verifikasi: true,
           },
         },
         seminar_nilai: {
@@ -422,6 +430,7 @@ export class Seminar {
         tugas_akhir: {
           include: {
             mahasiswa: true,
+            sk_verifikasi: true,
           },
         },
         seminar_persetujuan: {
@@ -478,6 +487,7 @@ export class Seminar {
         tugas_akhir: {
           include: {
             mahasiswa: true,
+            sk_verifikasi: true,
           },
         },
         seminar_persetujuan: {
@@ -507,6 +517,7 @@ export class Seminar {
         seminar_dokumen: true,
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: true,
           },
         },
@@ -609,6 +620,7 @@ export class Seminar {
       include: {
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             pembimbing: { include: { dosen: true } },
             penguji: { include: { dosen: true } },
           },
@@ -659,6 +671,7 @@ export class Seminar {
         seminar_persetujuan: { include: { dosen: true } },
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: true,
             pembimbing: { include: { dosen: true } },
             penguji: { include: { dosen: true } },
@@ -714,6 +727,7 @@ export class Seminar {
       include: {
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: true,
           },
         },
@@ -746,6 +760,7 @@ export class Seminar {
         seminar_dokumen: true,
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             mahasiswa: true,
           },
         },
@@ -803,6 +818,7 @@ export class Seminar {
         },
         tugas_akhir: {
           include: {
+            sk_verifikasi: true,
             pembimbing: { include: { dosen: true } },
             penguji: { include: { dosen: true } },
             mahasiswa: { include: { ref_prodi: true } },
