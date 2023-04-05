@@ -301,6 +301,7 @@ export class ExamProposal {
       where: { tugas_akhir: { mahasiswa: { mhsNim: nim } } },
       include: {
         dokumen_ujian_sidang: true,
+        tugas_akhir: { include: { sk_verifikasi: true } },
       },
     });
   }
