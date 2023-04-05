@@ -258,6 +258,7 @@ export class ExamProposal {
             ref_laboratorium2: true,
             sk_pembimbing: true,
             sk_penguji: true,
+            sk_verifikasi: true,
           },
         },
         dokumen_ujian_sidang: true,
