@@ -453,7 +453,7 @@ export class DocumentService {
       secretary: sk.tugas_akhir.pembimbing.find(
         (s) => s.ref_posisipmb === "Pendamping"
       )?.dosen.dsnNama,
-      major: sk.tugas_akhir.mahasiswa.ref_prodi?.prdNama || "",
+      major: sk.tugas_akhir.mahasiswa.ref_prodi?.prdNama || "S1 Farmasi",
       studentName: sk.tugas_akhir.mahasiswa.mhsNama,
       studentNIM: sk.tugas_akhir.taMhsNim,
       member: sk.tugas_akhir.penguji.map((e) => e.dosen.dsnNama),
