@@ -125,6 +125,11 @@ export interface ISeminarScoreDoc {
   proposalTitle: string;
   score: number;
   season: string;
+  firstExaminerSignature?: string;
+  secondExaminerSignature?: string;
+  thirdExaminerSignature?: string;
+  forthExaminerSignature?: string;
+  seminarCoordinatorSignature?: string;
 }
 
 export interface IExamProposalDoc {

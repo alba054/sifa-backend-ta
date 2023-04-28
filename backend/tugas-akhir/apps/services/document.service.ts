@@ -191,6 +191,18 @@ export class DocumentService {
     }
 
     const student = await User.getUserByUsername(seminar.tugas_akhir.taMhsNim);
+    const firstExaminer = seminar.tugas_akhir.pembimbing.find(
+      (s) => s.ref_posisipmb === "Utama"
+    )?.dosen;
+    const secondExaminer = seminar.tugas_akhir.pembimbing.find(
+      (s) => s.ref_posisipmb === "Pendamping"
+    )?.dosen;
+    const thirdExaminer = seminar.tugas_akhir.penguji.find(
+      (s) => s.ujiUrutan === 1
+    )?.dosen;
+    const forthExaminer = seminar.tugas_akhir.penguji.find(
+      (s) => s.ujiUrutan === 2
+    )?.dosen;
 
     return {
       department: student?.ref_departemen?.dprtNama,
@@ -212,6 +224,18 @@ export class DocumentService {
       sideMentorName: seminar.tugas_akhir.pembimbing.filter(
         (l) => l.ref_posisipmb === "Pendamping"
       )[0].dosen.dsnNama,
+      firstExaminerSignature: seminar.seminar_persetujuan.find(
+        (l) => l.ssetujuDsnId === firstExaminer?.dsnId
+      )?.signature,
+      secondExaminerSignature: seminar.seminar_persetujuan.find(
+        (l) => l.ssetujuDsnId === secondExaminer?.dsnId
+      )?.signature,
+      thirdExaminerSignature: seminar.seminar_persetujuan.find(
+        (l) => l.ssetujuDsnId === thirdExaminer?.dsnId
+      )?.signature,
+      forthExaminerSignature: seminar.seminar_persetujuan.find(
+        (l) => l.ssetujuDsnId === forthExaminer?.dsnId
+      )?.signature,
     } as ISeminarScoreDoc;
   }
 
