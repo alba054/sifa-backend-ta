@@ -468,7 +468,7 @@ export class StudentHandler {
     // * use one of the query params not both
     const { excludeProposalStatus, proposalStatus } = req.query;
 
-    let thesis = await ThesisService.getAllProposedThesis(nim);
+    let thesis = await ThesisService.getAllProposedThesisV2(nim);
 
     // * if excludeProposalStatus = Belum_Diproses
     // * display history

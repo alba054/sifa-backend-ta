@@ -22,6 +22,12 @@ interface IBody {
 }
 
 export class ThesisService {
+  static async getAllProposedThesisV2(nim: string) {
+    const thesis = await Thesis.getAllProposedThesisV2(nim);
+
+    return thesis;
+  }
+
   static async getApprovedThesisDetail(id: number) {
     const approvedThesis = await Thesis.getApprovedThesisDetail(id);
 

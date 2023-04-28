@@ -16,6 +16,25 @@ interface IBody {
 }
 
 export class Thesis {
+  static async getAllProposedThesisV2(nim: string) {
+    const thesis = await prismaDB.tugas_akhir.findMany({
+      where: { taMhsNim: nim },
+      include: {
+        mahasiswa: true,
+        ref_laboratorium: true,
+        ref_laboratorium2: true,
+        // _count: true,
+        pengusul: { include: { dosen: true } },
+        pembimbing: { include: { dosen: true } },
+        penguji: { include: { dosen: true } },
+        sk_pembimbing: true,
+        sk_penguji: true,
+      },
+    });
+
+    return thesis;
+  }
+
   static async getThesisWithAcceptedSupervisorsAndExaminers() {
     return await prismaDB.tugas_akhir.findMany({
       where: {
