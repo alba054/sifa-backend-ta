@@ -48,4 +48,40 @@ viceDeanRouter
     ViceDeanHandler.verifyVerificationSK
   );
 
+viceDeanRouter
+  .route("/sk")
+  .get(
+    AuthorizationMiddleware.authorize([constants.ADMINHEAD_GROUP_ACCCESS]),
+    ViceDeanHandler.getThesisWithSK
+  );
+
+viceDeanRouter
+  .route("/sk/:thesisID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.ADMINHEAD_GROUP_ACCCESS]),
+    ViceDeanHandler.getThesisSKDetail
+  );
+
+viceDeanRouter
+  .route("/examiners/sk/:SKID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.ADMINHEAD_GROUP_ACCCESS]),
+    ViceDeanHandler.getExaminerSKDetail
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.ADMINHEAD_GROUP_ACCCESS]),
+    ViceDeanHandler.acceptOrRejectExaminerSK
+  );
+
+viceDeanRouter
+  .route("/supervisors/sk/:SKID")
+  .get(
+    AuthorizationMiddleware.authorize([constants.ADMINHEAD_GROUP_ACCCESS]),
+    ViceDeanHandler.getSupervisorSKDetail
+  )
+  .put(
+    AuthorizationMiddleware.authorize([constants.ADMINHEAD_GROUP_ACCCESS]),
+    ViceDeanHandler.acceptOrRejectSupervisorSK
+  );
+
 export default viceDeanRouter;

@@ -129,6 +129,19 @@ headFacultyRouter
   );
 
 headFacultyRouter
+  .route("/exams/signed")
+  .get(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.getSignedExamProposal
+  );
+headFacultyRouter
+  .route("/exams/:examID/signed")
+  .put(
+    AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),
+    HeadFacultyHandler.uploadExamProposalDocument
+  );
+
+headFacultyRouter
   .route("/exams/:examID")
   .get(
     AuthorizationMiddleware.authorize([constants.FACULTY_ADMIN_GROUP_ACCESS]),

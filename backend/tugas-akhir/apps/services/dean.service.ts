@@ -32,7 +32,8 @@ export class DeanService {
     if (
       supervisorSK === null ||
       (supervisorSK.statusPermohonanKasubag !== "Diterima" &&
-        supervisorSK?.statusPermohonanKTU !== "Diterima")
+        supervisorSK?.statusPermohonanKTU !== "Diterima" &&
+        supervisorSK.statusPermohonanWD !== "Diterima")
     ) {
       throw new NotFoundError("sk's not found");
     }
@@ -68,7 +69,8 @@ export class DeanService {
     if (
       examinerSK === null ||
       (examinerSK.statusPermohonanKasubag !== "Diterima" &&
-        examinerSK?.statusPermohonanKTU !== "Diterima")
+        examinerSK?.statusPermohonanKTU !== "Diterima" &&
+        examinerSK.statusPermohonanWD !== "Diterima")
     ) {
       throw new NotFoundError("sk's not found");
     }
@@ -103,12 +105,14 @@ export class DeanService {
       const approvedSupervisorSK = t.sk_pembimbing.some(
         (sk) =>
           sk.statusPermohonanKasubag === "Diterima" &&
+          sk.statusPermohonanWD === "Diterima" &&
           sk.statusPermohonanKTU === "Diterima"
       );
       const approvedExaminerSK = t.sk_penguji.some(
         (sk) =>
           sk.statusPermohonanKasubag === "Diterima" &&
-          sk.statusPermohonanKTU === "Diterima"
+          sk.statusPermohonanKTU === "Diterima" &&
+          sk.statusPermohonanWD === "Diterima"
       );
 
       return approvedExaminerSK && approvedSupervisorSK;

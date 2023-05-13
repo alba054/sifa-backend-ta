@@ -14,7 +14,34 @@ import { IWebNotif } from "../utils/interfaces/webNotif.interface";
 import { constants } from "../utils/utils";
 import { WebNotifService } from "./webNotif.service";
 
+import { v4 as uuidv4 } from "uuid";
+import { decodeBase64 } from "../utils/decoder";
+import { writeToFile } from "../utils/storage";
+
 export class HeadFacultyService {
+  static async uploadExamProposalDocument(examID: number, doc: string) {
+    const examProposal = ExamProposal.getExamProposalByID(examID);
+
+    if (examProposal === null) {
+      throw new NotFoundError("exam proposal's not found");
+    }
+
+    const filename = writeToFile(
+      constants.EXAM_PROPOSAL_PATH,
+      uuidv4() + ".pdf",
+      decodeBase64(doc)
+    );
+
+    return await ExamProposal.uploadDocument(
+      examID,
+      `${constants.EXAM_PROPOSAL_PATH}/${filename}`
+    );
+  }
+
+  static async getListOfSignedExamProposal() {
+    return await ExamProposal.getSignedProposals();
+  }
+
   static async getVerificationSKDetail(SKID: number) {
     return await VerificationSK.getSKByID(SKID);
   }

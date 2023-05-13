@@ -5,6 +5,13 @@ import { InternalServerError } from "../utils/error/internalError";
 import { IRequestExamDocumentPost } from "../utils/interfaces/exam.interface";
 
 export class ExamProposal {
+  static async uploadDocument(examID: number, path: string) {
+    return await prismaDB.permohonan_ujian_sidang.update({
+      where: { id: examID },
+      data: { filePermohonanUjianSidang: path },
+    });
+  }
+
   static async getSignedProposals() {
     return await prismaDB.permohonan_ujian_sidang.findMany({
       where: { statusTTD: true },

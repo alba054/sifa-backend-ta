@@ -713,6 +713,7 @@ model sk_pembimbing {
   signature_path          String?
   statusPermohonanKasubag StatusPermohonan @default(Belum_Diproses)
   statusPermohonanKTU     StatusPermohonan @default(Belum_Diproses)
+  statusPermohonanWD      StatusPermohonan @default(Belum_Diproses)
   skbStatusAkses          Int?
   created_at              DateTime?        @default(now())
   updated_at              DateTime?        @updatedAt
@@ -726,22 +727,23 @@ model sk_pembimbing {
 }
 
 model sk_verifikasi {
-  id Int @id @default(autoincrement())
-  thesisID Int
-  letterNumber String
-  letterDate DateTime @db.Date
-  signed Boolean?
-  viceDeanName String?
-  viceDeanNip String?
-  sksPassed Int @default(144)
-  isNameCorrect Boolean @default(true)
-  isNimCorrect Boolean @default(true)
-  isMajorCorrect Boolean @default(true)
-  signature String?
+  id               Int              @id @default(autoincrement())
+  thesisID         Int
+  letterNumber     String
+  letterDate       DateTime         @db.Date
+  signed           Boolean?
+  viceDeanName     String?
+  viceDeanNip      String?
+  sksPassed        Int              @default(144)
+  isNameCorrect    Boolean          @default(true)
+  isNimCorrect     Boolean          @default(true)
+  isMajorCorrect   Boolean          @default(true)
+  signature        String?
+  fileSKVerifikasi String?
   statusPermohonan StatusPermohonan @default(Diterima)
-  created_at              DateTime?        @default(now())
-  updated_at              DateTime?        @updatedAt
-  tugas_akhir             tugas_akhir     @relation(fields: [thesisID], references: [taId], onDelete: Cascade, map: "sk_verifikasi_fk1")
+  created_at       DateTime?        @default(now())
+  updated_at       DateTime?        @updatedAt
+  tugas_akhir      tugas_akhir      @relation(fields: [thesisID], references: [taId], onDelete: Cascade, map: "sk_verifikasi_fk1")
 
   // @@index([skbLabId], map: "skbLabId")
   // @@index([skbStatus], map: "skbStatus")
@@ -814,6 +816,7 @@ model sk_penguji {
   updated_at              DateTime?        @updatedAt
   statusPermohonanKasubag StatusPermohonan @default(Belum_Diproses)
   statusPermohonanKTU     StatusPermohonan @default(Belum_Diproses)
+  statusPermohonanWD      StatusPermohonan @default(Belum_Diproses)
   tugas_akhir             tugas_akhir      @relation(fields: [skpTaId], references: [taId], onDelete: Cascade, map: "sk_penguji_ibfk_1")
   ref_prodi               ref_prodi?       @relation(fields: [skpPrdId], references: [prdId], map: "sk_penguji_ibfk_2")
   ref_departemen          ref_departemen?  @relation(fields: [skpDprtId], references: [dprtId])
@@ -933,7 +936,7 @@ model tugas_akhir {
   seminar                                                seminar[]
   sk_fakultas                                            sk_fakultas[]
   sk_pembimbing                                          sk_pembimbing[]
-  sk_verifikasi sk_verifikasi[]
+  sk_verifikasi                                          sk_verifikasi[]
   sk_pembimbing_dep                                      sk_pembimbing_dep[]
   sk_penguji                                             sk_penguji[]
   sk_penguji_dep                                         sk_penguji_dep[]
@@ -948,23 +951,24 @@ model tugas_akhir {
 }
 
 model permohonan_ujian_sidang {
-  id                     Int                               @id @default(autoincrement())
-  tugas_akhirTaId        Int
-  statusValidasiBerkas   StatusPermohonan                  @default(Belum_Diproses)
-  statusVerifikasiBerkas StatusPermohonan                  @default(Belum_Diproses)
-  statusPermohonan       StatusPermohonan                  @default(Belum_Diproses)
-  catatanKasubag         String?
-  catatanAdminFakultas   String?
-  catatanKTU             String?
-  statusTTD              Boolean                           @default(false)
-  signature_path         String?
-  tanggalSK              DateTime?                         @db.Date
-  created_at             DateTime                          @default(now())
-  viceDeanNIP            String?
-  viceDeanName           String?
-  updated_at             DateTime?                         @updatedAt
-  dokumen_ujian_sidang   dokumen_permohonan_ujian_sidang[]
-  tugas_akhir            tugas_akhir                       @relation(fields: [tugas_akhirTaId], references: [taId])
+  id                        Int                               @id @default(autoincrement())
+  tugas_akhirTaId           Int
+  statusValidasiBerkas      StatusPermohonan                  @default(Belum_Diproses)
+  statusVerifikasiBerkas    StatusPermohonan                  @default(Belum_Diproses)
+  statusPermohonan          StatusPermohonan                  @default(Belum_Diproses)
+  catatanKasubag            String?
+  catatanAdminFakultas      String?
+  catatanKTU                String?
+  statusTTD                 Boolean                           @default(false)
+  signature_path            String?
+  tanggalSK                 DateTime?                         @db.Date
+  created_at                DateTime                          @default(now())
+  viceDeanNIP               String?
+  viceDeanName              String?
+  updated_at                DateTime?                         @updatedAt
+  filePermohonanUjianSidang String?
+  dokumen_ujian_sidang      dokumen_permohonan_ujian_sidang[]
+  tugas_akhir               tugas_akhir                       @relation(fields: [tugas_akhirTaId], references: [taId])
 }
 
 model ref_dokumen_ujian_sidang {

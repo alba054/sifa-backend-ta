@@ -5,6 +5,22 @@ import { InternalServerError } from "../utils/error/internalError";
 import { IExaminerSKPost } from "../utils/interfaces/examinerSK.interface";
 
 export class ExaminerSK {
+  static async changeViceDeanSKStatus(
+    SKID: number,
+    isAccepted: boolean,
+    note: string | undefined
+  ) {
+    return await prismaDB.sk_penguji.update({
+      where: {
+        skpId: SKID,
+      },
+      data: {
+        statusPermohonanWD: isAccepted ? "Diterima" : "Ditolak",
+        note: note,
+      },
+    });
+  }
+
   static async changeSubsectionSKStatus(
     SKID: number,
     isAccepted: boolean,

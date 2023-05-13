@@ -8,6 +8,43 @@ import { IVerificationSKPost } from "../utils/interfaces/verificationSK.interfac
 import { constants, createResponse } from "../utils/utils";
 
 export class HeadFacultyHandler {
+  static async uploadExamProposalDocument(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { doc } = req.body;
+    const { examID } = req.params;
+
+    try {
+      if (typeof doc === "undefined") {
+        throw new BadRequestError("provice doc in base64 format");
+      }
+
+      await HeadFacultyService.uploadExamProposalDocument(Number(examID), doc);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async getSignedExamProposal(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const proposals = await HeadFacultyService.getListOfSignedExamProposal();
+
+    return res
+      .status(200)
+      .json(
+        createResponse(
+          constants.SUCCESS_MESSAGE,
+          "successfully get unverified proposals",
+          proposals
+        )
+      );
+  }
+
   static async getVerificationSKDetail(
     req: Request,
     res: Response,
