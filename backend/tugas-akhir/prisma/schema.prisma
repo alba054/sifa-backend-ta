@@ -519,6 +519,7 @@ model seminar {
   smrFileBeritaAcara     String?
   smrFileKeteranganNilai String?
   signature              String?
+  statusTTDHeadMajor     Boolean?  @default(false)
 
   statusPermohonan          StatusPermohonan            @default(Belum_Diproses)
   smrTglBeritaAcara         DateTime?                   @db.Date

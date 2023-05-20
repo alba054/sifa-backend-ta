@@ -44,6 +44,8 @@ export class HeadMajorService {
       "",
       `${constants.SIGN_FILE_PATH}/${filename}`
     );
+
+    await Seminar.signByHeadMajor(seminarID);
   }
 
   static async getExamSeminars() {

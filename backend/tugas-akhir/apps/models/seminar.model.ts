@@ -8,6 +8,23 @@ import {
 } from "../utils/interfaces/seminar.interface";
 
 export class Seminar {
+  static async signByHeadMajor(seminarID: number) {
+    try {
+      return await prismaDB.seminar.update({
+        where: { smrId: seminarID },
+        data: { statusTTDHeadMajor: true },
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestError(error.message);
+      } else if (error instanceof Error) {
+        throw new InternalServerError(error.message);
+      } else {
+        throw new InternalServerError("server error");
+      }
+    }
+  }
+
   static async changeModeratorAcceptanceStatus(
     groupID: string,
     isAccepted: boolean
