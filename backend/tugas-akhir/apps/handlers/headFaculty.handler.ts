@@ -22,6 +22,14 @@ export class HeadFacultyHandler {
       }
 
       await HeadFacultyService.uploadExamProposalDocument(Number(examID), doc);
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            constants.SUCCESS_MESSAGE,
+            "successfully get unverified proposals"
+          )
+        );
     } catch (error) {
       return next(error);
     }
