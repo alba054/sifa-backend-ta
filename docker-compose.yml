@@ -1,0 +1,33 @@
+networks:
+  proxy:
+    external: true
+volumes:
+  learnyscape-api-data:
+    external: true
+
+services:
+  learnyscape-api:
+    container_name: learnyscape-api
+    image: docker.io/npedigihouse/app:learnyscape-api
+    restart: always
+    ports:
+      - 9678:9678
+    environment:
+      DATABASE_URL: "mysql://root:np3digihous3@172.17.0.1:3306/learnyscape"
+      # token variable
+      ISSUER: api.localhost.com
+      ACCESS_SECRET_KEY: aljsdfouou12308ald
+      REFRESH_SECRET_KEY: 089123jladsf8jlz
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: admin
+      PORT: 9678
+      HOST: 0.0.0.0
+      ABS_PATH: "/app"
+    networks:
+      - proxy
+    volumes:
+      - learnyscape-api-data:/app/storage
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.learnyscape-api.rule=Host(`learnyscape-api.npedigihouse.tech`) && PathPrefix(`/api`)"
