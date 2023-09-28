@@ -87,13 +87,12 @@ export class BasicAuthMiddleware {
         if (user && "error" in user) {
           switch (user.error) {
             case 404:
-              throw new NotFoundError(
-                constants.USER_NOT_FOUND_ERROR,
-                user.message
+              return next(
+                new NotFoundError(constants.USER_NOT_FOUND_ERROR, user.message)
               );
             default:
-              throw new InternalServerError(
-                constants.INTERNAL_SERVER_ERROR_CODE
+              return next(
+                new InternalServerError(constants.INTERNAL_SERVER_ERROR_CODE)
               );
           }
         }

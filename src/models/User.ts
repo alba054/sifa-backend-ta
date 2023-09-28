@@ -2,7 +2,6 @@ import db from "../database";
 import { constants, createErrorObject } from "../utils";
 import { IPostUserPayload, IPutUserProfile } from "../utils/interfaces/User";
 import bcryptjs from "bcryptjs";
-import { Prisma } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export class User {
@@ -115,7 +114,7 @@ export class User {
         },
       });
     } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === "P2002") {
           return createErrorObject(
             400,
