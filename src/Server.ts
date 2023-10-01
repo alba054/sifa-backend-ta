@@ -3,6 +3,8 @@ import { ErrorHandler } from "./middleware/error/ErrorHandler";
 import dotenv from "dotenv";
 import cors from "cors";
 import { UserRouter } from "./api/users/UserRouter";
+import { SubjectRouter } from "./api/subjects/SubjectRouter";
+import { ClassRouter } from "./api/classes/ClassRouter";
 
 dotenv.config();
 
@@ -30,6 +32,8 @@ class Server {
 
     // * api base route
     this.app.use("/api", new UserRouter().register());
+    this.app.use("/api", new SubjectRouter().register());
+    this.app.use("/api", new ClassRouter().register());
     // * error handling
     this.app.use(ErrorHandler);
   }

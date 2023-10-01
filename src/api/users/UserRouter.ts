@@ -6,9 +6,9 @@ import { multerHelper } from "../../utils/MulterHelper";
 import { UserHandler } from "./UserHandler";
 
 export class UserRouter {
-  userHandler: UserHandler;
-  path: string;
-  router: Router;
+  private userHandler: UserHandler;
+  private path: string;
+  private router: Router;
 
   constructor() {
     this.path = "/users";

@@ -4,7 +4,12 @@ import { InternalServerError } from "../../exceptions/httpError/InternalServerEr
 import { NotFoundError } from "../../exceptions/httpError/NotFoundError";
 import { AuthenticationService } from "../../services/facade/AuthenticationService";
 import { UserService } from "../../services/UserService";
-import { constants, createResponse } from "../../utils";
+import {
+  constants,
+  createResponse,
+  throwResultError,
+  throwValidationError,
+} from "../../utils";
 import { IUserProfileDTO } from "../../utils/dto/UserDTO";
 import { UploadFileHelper } from "../../utils/helper/UploadFileHelper";
 import { ITokenPayload } from "../../utils/interfaces/TokenPayload";
@@ -79,28 +84,14 @@ export class UserHandler {
         payload
       );
 
-      if (validationResult && "error" in validationResult) {
-        throw new BadRequestError(
-          validationResult.errorCode,
-          validationResult.message
-        );
-      }
+      throwValidationError(validationResult);
 
       const testError = await this.userService.updateUserProfileMaster(
         id,
         payload
       );
 
-      if (testError && "error" in testError) {
-        switch (testError.error) {
-          case 400:
-            throw new BadRequestError(testError.errorCode, testError.message);
-          case 404:
-            throw new NotFoundError(testError.errorCode, testError.message);
-          default:
-            throw new InternalServerError(testError.errorCode);
-        }
-      }
+      throwResultError(testError);
 
       return res
         .status(200)
@@ -121,16 +112,7 @@ export class UserHandler {
     try {
       const result = await this.userService.deleteUserById(id);
 
-      if (result && "error" in result) {
-        switch (result.error) {
-          case 400:
-            throw new BadRequestError(result.errorCode, result.message);
-          case 404:
-            throw new NotFoundError(result.errorCode, result.message);
-          default:
-            throw new InternalServerError(result.errorCode);
-        }
-      }
+      throwResultError(result);
 
       return res
         .status(200)
@@ -197,6 +179,8 @@ export class UserHandler {
       );
 
       if (typeof fileToSend === "string") {
+        console.log(`${constants.ABS_PATH}/${fileToSend}`);
+
         return res.sendFile(`${constants.ABS_PATH}/${fileToSend}`);
       }
       switch (fileToSend?.error) {
@@ -263,16 +247,7 @@ export class UserHandler {
         tokenPayload.username
       );
 
-      if (result && "error" in result) {
-        switch (result.error) {
-          case 400:
-            throw new BadRequestError(result.errorCode, result.message);
-          case 404:
-            throw new NotFoundError(result.errorCode, result.message);
-          default:
-            throw new InternalServerError(result.errorCode);
-        }
-      }
+      throwResultError(result);
 
       return res
         .status(200)
@@ -292,26 +267,9 @@ export class UserHandler {
         UserPayloadSchema,
         payload
       );
-
-      if (validationResult && "error" in validationResult) {
-        throw new BadRequestError(
-          validationResult.errorCode,
-          validationResult.message
-        );
-      }
-
+      throwValidationError(validationResult);
       const testError = await this.userService.addNewUser(payload);
-
-      if (testError && "error" in testError) {
-        switch (testError.error) {
-          case 400:
-            throw new BadRequestError(testError.errorCode, testError.message);
-          case 404:
-            throw new NotFoundError(testError.errorCode, testError.message);
-          default:
-            throw new InternalServerError(testError.errorCode);
-        }
-      }
+      throwResultError(testError);
 
       return res
         .status(201)
@@ -336,28 +294,13 @@ export class UserHandler {
         payload
       );
 
-      if (validationResult && "error" in validationResult) {
-        throw new BadRequestError(
-          validationResult.errorCode,
-          validationResult.message
-        );
-      }
+      throwValidationError(validationResult);
 
       const testError = await this.userService.updateUserProfile(
         tokenPayload.username,
         payload
       );
-
-      if (testError && "error" in testError) {
-        switch (testError.error) {
-          case 400:
-            throw new BadRequestError(testError.errorCode, testError.message);
-          case 404:
-            throw new NotFoundError(testError.errorCode, testError.message);
-          default:
-            throw new InternalServerError(testError.errorCode);
-        }
-      }
+      throwResultError(testError);
 
       return res
         .status(200)

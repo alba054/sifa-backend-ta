@@ -24,6 +24,24 @@ model User {
   @@map("users")
 }
 
+model Subject {
+  id      String  @id @db.VarChar(100)
+  name    String  @db.VarChar(255)
+  code    String? @unique @db.VarChar(50)
+  classes Class[]
+
+  @@map("subjects")
+}
+
+model Class {
+  id        String   @id @db.VarChar(100)
+  name      String   @db.VarChar(255)
+  Subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  subjectId String  @db.VarChar(100)
+
+  @@map("classes")
+}
+
 enum Role {
   LECTURER
   STUDENT

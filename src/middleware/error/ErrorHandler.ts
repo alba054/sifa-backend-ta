@@ -14,5 +14,10 @@ export const ErrorHandler = async (
 
   return res
     .status(ERROR_CODE)
-    .json(createResponse(err.name, err.errorCode, err.message + "\n\n"));
+    .json(
+      createResponse(err.name, null, {
+        code: err.errorCode,
+        message: err.message,
+      })
+    );
 };

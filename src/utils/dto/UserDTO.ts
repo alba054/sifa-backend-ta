@@ -1,4 +1,5 @@
 export interface IUserProfileDTO {
+  id: string;
   username: string;
   fullname: string;
   email?: string;
