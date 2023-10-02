@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { SubjectHandler } from "./SubjectHandler";
 import { AuthorizationBearer } from "../../middleware/auth/AuthorizationBearer";
-import { constants } from "../../utils";
+import { ROLE } from "../../utils";
 
 export class SubjectRouter {
   private handler: SubjectHandler;
@@ -20,14 +20,14 @@ export class SubjectRouter {
     this.router
       .route(this.path)
       .post(
-        AuthorizationBearer.authorize([constants.ADMIN_ROLE]),
+        AuthorizationBearer.authorize([ROLE.ADMIN]),
         this.handler.postSubject
       )
       .get(
         AuthorizationBearer.authorize([
-          constants.ADMIN_ROLE,
-          constants.STUDENT_ROLE,
-          constants.LECTURER_ROLE,
+          ROLE.ADMIN,
+          ROLE.STUDENT,
+          ROLE.LECTURER,
         ]),
         this.handler.getSubjects
       );
@@ -36,12 +36,9 @@ export class SubjectRouter {
     // * delete subject
     this.router
       .route(this.path + "/:id")
-      .put(
-        AuthorizationBearer.authorize([constants.ADMIN_ROLE]),
-        this.handler.putSubject
-      )
+      .put(AuthorizationBearer.authorize([ROLE.ADMIN]), this.handler.putSubject)
       .delete(
-        AuthorizationBearer.authorize([constants.ADMIN_ROLE]),
+        AuthorizationBearer.authorize([ROLE.ADMIN]),
         this.handler.deleteSubject
       );
 

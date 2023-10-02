@@ -1,8 +1,33 @@
 import db from "../database";
-import { catchPrismaError } from "../utils";
-import { IPostClass, IPutClass } from "../utils/interfaces/Class";
+import { catchPrismaError, constants } from "../utils";
+import {
+  IPostClass,
+  IPutClass,
+  IPutUserClass,
+} from "../utils/interfaces/Class";
 
 export class Class {
+  async insertUserToClass(id: string, payload: string[]) {
+    try {
+      return db.class.update({
+        where: {
+          id,
+        },
+        data: {
+          user: {
+            connect: payload.map((i) => {
+              return {
+                id: i,
+              };
+            }),
+          },
+        },
+      });
+    } catch (error) {
+      return catchPrismaError(error);
+    }
+  }
+
   async deleteClassById(id: string) {
     try {
       return db.class.delete({
@@ -24,6 +49,8 @@ export class Class {
         data: {
           name: payload.name,
           subjectId: payload.subjectId,
+          day: payload.day,
+          time: payload.time,
         },
       });
     } catch (error) {
@@ -39,14 +66,17 @@ export class Class {
     });
   }
 
-  async getAllClasses(subjectId: string | undefined) {
+  async getAllClasses(page: number = 1, subjectId: string | undefined) {
     return db.class.findMany({
       include: {
         Subject: true,
+        user: true,
       },
       where: {
         subjectId: subjectId === "" ? undefined : subjectId,
       },
+      skip: (page - 1) * constants.PAGINATION_OFFSET,
+      take: constants.PAGINATION_OFFSET,
     });
   }
 
@@ -57,6 +87,8 @@ export class Class {
           id,
           name: payload.name,
           subjectId: payload.subjectId,
+          day: payload.day,
+          time: payload.time,
         },
       });
     } catch (error) {

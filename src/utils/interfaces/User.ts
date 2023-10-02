@@ -20,3 +20,7 @@ export interface IPutUserMasterData {
   readonly password?: string;
   readonly email?: string;
 }
+
+export interface IPutClassUser {
+  readonly classId: string;
+}

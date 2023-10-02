@@ -1,7 +1,9 @@
+import { StudentWaitingList } from "../models/StudentWaitingList";
 import { User } from "../models/User";
-import { constants, createErrorObject } from "../utils";
+import { ERRORCODE, ROLE, createErrorObject } from "../utils";
 import {
   IPostUserPayload,
+  IPutClassUser,
   IPutUserMasterData,
   IPutUserProfile,
 } from "../utils/interfaces/User";
@@ -9,9 +11,37 @@ import { v4 as uuidv4 } from "uuid";
 
 export class UserService {
   private userModel: User;
+  private studentWaitingListModel: StudentWaitingList;
 
   constructor() {
     this.userModel = new User();
+    this.studentWaitingListModel = new StudentWaitingList();
+  }
+
+  async addStudentClassWaitingList(userId: string, payload: IPutClassUser) {
+    const user = await this.userModel.getUserById(userId);
+
+    if (!user) {
+      return createErrorObject(
+        404,
+        "user's not found",
+        ERRORCODE.USER_NOT_FOUND_ERROR
+      );
+    }
+
+    if (user.role !== ROLE.STUDENT) {
+      return createErrorObject(
+        400,
+        "user's not student",
+        ERRORCODE.BAD_REQUEST_ERROR
+      );
+    }
+
+    return this.studentWaitingListModel.insertStudentWaitingList(
+      uuidv4(),
+      userId,
+      payload
+    );
   }
 
   async getUserById(id: string) {
@@ -21,7 +51,7 @@ export class UserService {
       return createErrorObject(
         404,
         "user's not found",
-        constants.USER_NOT_FOUND_ERROR
+        ERRORCODE.USER_NOT_FOUND_ERROR
       );
     }
 
@@ -43,7 +73,7 @@ export class UserService {
       return createErrorObject(
         404,
         "user's not found",
-        constants.USER_NOT_FOUND_ERROR
+        ERRORCODE.USER_NOT_FOUND_ERROR
       );
     }
 
@@ -51,12 +81,11 @@ export class UserService {
   }
 
   async getAllUsers(
-    page: number,
-    take: number,
+    page: number = 1,
     search?: string | undefined,
-    role?: "STUDENT" | "LECTURER" | "ADMIN" | any | undefined
+    role?: ROLE | string | undefined
   ) {
-    return this.userModel.getAllUsers(page, take, search, role);
+    return this.userModel.getAllUsers(page, search, role);
   }
 
   async getUserProfilePicture(username: string) {
@@ -66,7 +95,7 @@ export class UserService {
       return createErrorObject(
         404,
         "no profile picture's uploaded",
-        constants.PROFILE_PICTURE_NOT_FOUND_ERROR
+        ERRORCODE.PROFILE_PICTURE_NOT_FOUND_ERROR
       );
     }
 
@@ -80,7 +109,7 @@ export class UserService {
       return createErrorObject(
         404,
         "user's not found",
-        constants.USER_NOT_FOUND_ERROR
+        ERRORCODE.USER_NOT_FOUND_ERROR
       );
     }
 
@@ -102,7 +131,7 @@ export class UserService {
       return createErrorObject(
         404,
         "user's not found",
-        constants.USER_NOT_FOUND_ERROR
+        ERRORCODE.USER_NOT_FOUND_ERROR
       );
     }
 

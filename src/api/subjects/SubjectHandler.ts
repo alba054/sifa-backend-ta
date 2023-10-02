@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { Validator } from "../../validator/Validator";
 import {
+  RESPONSE_MESSAGE,
   constants,
   createResponse,
   throwResultError,
@@ -29,11 +30,16 @@ export class SubjectHandler {
   }
 
   async getSubjects(req: Request, res: Response, next: NextFunction) {
-    const subjects = await this.subjectService.getSubjects();
+    const { page, search } = req.query;
+
+    const subjects = await this.subjectService.getSubjects(
+      parseInt(String(page ?? "1")),
+      String(search ?? "")
+    );
 
     return res.status(200).json(
       createResponse(
-        constants.SUCCESS_RESPONSE_MESSAGE,
+        RESPONSE_MESSAGE.SUCCESS,
         subjects.map((s) => {
           return {
             name: s.name,
@@ -56,7 +62,7 @@ export class SubjectHandler {
         .status(200)
         .json(
           createResponse(
-            constants.SUCCESS_RESPONSE_MESSAGE,
+            RESPONSE_MESSAGE.SUCCESS,
             "successfully delete subject"
           )
         );
@@ -82,10 +88,7 @@ export class SubjectHandler {
       return res
         .status(201)
         .json(
-          createResponse(
-            constants.SUCCESS_RESPONSE_MESSAGE,
-            "successfully edit subject"
-          )
+          createResponse(RESPONSE_MESSAGE.SUCCESS, "successfully edit subject")
         );
     } catch (error) {
       return next(error);
@@ -109,7 +112,7 @@ export class SubjectHandler {
         .status(201)
         .json(
           createResponse(
-            constants.SUCCESS_RESPONSE_MESSAGE,
+            RESPONSE_MESSAGE.SUCCESS,
             "successfully add new subject"
           )
         );

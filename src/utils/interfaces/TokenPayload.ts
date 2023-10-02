@@ -1,6 +1,8 @@
+import { ROLE } from "..";
+
 export interface ITokenPayload {
   readonly username: string;
   readonly email?: string;
-  readonly role: "LECTURER" | "STUDENT" | "ADMIN";
+  readonly role: ROLE;
   readonly userId: string;
 }

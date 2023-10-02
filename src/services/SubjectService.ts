@@ -1,5 +1,5 @@
 import { Subject } from "../models/Subject";
-import { constants, createErrorObject } from "../utils";
+import { ERRORCODE, constants, createErrorObject } from "../utils";
 import { IPostSubject, IPutSubject } from "../utils/interfaces/Subject";
 import { v4 as uuidv4 } from "uuid";
 
@@ -10,8 +10,8 @@ export class SubjectService {
     this.subjectModel = new Subject();
   }
 
-  async getSubjects() {
-    return this.subjectModel.getAllSubjects();
+  async getSubjects(page: number = 1, search: string | undefined) {
+    return this.subjectModel.getAllSubjects(page, search);
   }
 
   async deleteSubjectById(id: string) {
@@ -21,7 +21,7 @@ export class SubjectService {
       return createErrorObject(
         404,
         "subject's not found",
-        constants.COMMON_NOT_FOUND
+        ERRORCODE.COMMON_NOT_FOUND
       );
     }
 
@@ -35,7 +35,7 @@ export class SubjectService {
       return createErrorObject(
         404,
         "subject's not found",
-        constants.COMMON_NOT_FOUND
+        ERRORCODE.COMMON_NOT_FOUND
       );
     }
 

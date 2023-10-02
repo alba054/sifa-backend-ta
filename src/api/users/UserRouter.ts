@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { AuthorizationBearer } from "../../middleware/auth/AuthorizationBearer";
 import { BasicAuthMiddleware } from "../../middleware/auth/BasicAuth";
-import { constants } from "../../utils";
+import { ROLE } from "../../utils";
 import { multerHelper } from "../../utils/MulterHelper";
 import { UserHandler } from "./UserHandler";
 
@@ -24,29 +24,29 @@ export class UserRouter {
       .route(this.path)
       .get(
         AuthorizationBearer.authorize([
-          constants.STUDENT_ROLE,
-          constants.ADMIN_ROLE,
-          constants.LECTURER_ROLE,
+          ROLE.STUDENT,
+          ROLE.ADMIN,
+          ROLE.LECTURER,
         ]),
         this.userHandler.getUserProfile
       )
       .put(
         AuthorizationBearer.authorize([
-          constants.STUDENT_ROLE,
-          constants.ADMIN_ROLE,
-          constants.LECTURER_ROLE,
+          ROLE.STUDENT,
+          ROLE.ADMIN,
+          ROLE.LECTURER,
         ]),
         this.userHandler.putUserProfile
       )
       .post(
-        AuthorizationBearer.authorize([constants.ADMIN_ROLE]),
+        AuthorizationBearer.authorize([ROLE.ADMIN]),
         this.userHandler.postUser
       )
       .delete(
         AuthorizationBearer.authorize([
-          constants.STUDENT_ROLE,
-          constants.ADMIN_ROLE,
-          constants.LECTURER_ROLE,
+          ROLE.STUDENT,
+          ROLE.ADMIN,
+          ROLE.LECTURER,
         ]),
         this.userHandler.deleteUserAccount
       );
@@ -65,26 +65,26 @@ export class UserRouter {
       .route(this.path + "/pic")
       .post(
         AuthorizationBearer.authorize([
-          constants.STUDENT_ROLE,
-          constants.ADMIN_ROLE,
-          constants.LECTURER_ROLE,
+          ROLE.STUDENT,
+          ROLE.ADMIN,
+          ROLE.LECTURER,
         ]),
         multerHelper.upload.single("pic"),
         this.userHandler.postProfilePicture
       )
       .get(
         AuthorizationBearer.authorize([
-          constants.STUDENT_ROLE,
-          constants.ADMIN_ROLE,
-          constants.LECTURER_ROLE,
+          ROLE.STUDENT,
+          ROLE.ADMIN,
+          ROLE.LECTURER,
         ]),
         this.userHandler.getUserProfilePic
       )
       .delete(
         AuthorizationBearer.authorize([
-          constants.STUDENT_ROLE,
-          constants.ADMIN_ROLE,
-          constants.LECTURER_ROLE,
+          ROLE.STUDENT,
+          ROLE.ADMIN,
+          ROLE.LECTURER,
         ]),
         this.userHandler.deleteUserProfilePic
       );
@@ -93,7 +93,7 @@ export class UserRouter {
     this.router
       .route(this.path + "/master")
       .get(
-        AuthorizationBearer.authorize([constants.ADMIN_ROLE]),
+        AuthorizationBearer.authorize([ROLE.ADMIN]),
         this.userHandler.getAllUsers
       );
 
@@ -103,16 +103,32 @@ export class UserRouter {
     this.router
       .route(this.path + "/:id/master")
       .delete(
-        AuthorizationBearer.authorize([constants.ADMIN_ROLE]),
+        AuthorizationBearer.authorize([ROLE.ADMIN]),
         this.userHandler.deleteUserById
       )
       .put(
-        AuthorizationBearer.authorize([constants.ADMIN_ROLE]),
+        AuthorizationBearer.authorize([ROLE.ADMIN]),
         this.userHandler.updateUserById
       )
       .get(
-        AuthorizationBearer.authorize([constants.ADMIN_ROLE]),
+        AuthorizationBearer.authorize([ROLE.ADMIN]),
         this.userHandler.getUserById
+      );
+
+    // * student register to class
+    this.router
+      .route(this.path + "/classes")
+      .put(
+        AuthorizationBearer.authorize([ROLE.STUDENT]),
+        this.userHandler.putRegistrationStudentToClass
+      );
+
+    // * class lecturers viewing student waiting list
+    this.router
+      .route(this.path + "/classes/:id/waiting-lists")
+      .get(
+        AuthorizationBearer.authorize([ROLE.LECTURER]),
+        this.userHandler.getLecturerStudentsWaitingLists
       );
 
     return this.router;

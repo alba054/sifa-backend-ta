@@ -1,5 +1,5 @@
 import { config } from "../../config/Config";
-import { constants, createErrorObject } from "../../utils";
+import { ERRORCODE, constants, createErrorObject } from "../../utils";
 import { tokenGenerator } from "../../utils/auth/TokenGenerator";
 import { ITokenPayload } from "../../utils/interfaces/TokenPayload";
 
@@ -47,7 +47,7 @@ export class AuthenticationService {
         ? createErrorObject(
             404,
             "payload's not found",
-            constants.PAYLOAD_NOT_FOUND
+            ERRORCODE.PAYLOAD_NOT_FOUND
           )
         : decoded;
     } catch (error) {

@@ -1,5 +1,5 @@
 import db from "../database";
-import { catchPrismaError, constants, createErrorObject } from "../utils";
+import { ROLE, catchPrismaError, constants, createErrorObject } from "../utils";
 import { IPostUserPayload, IPutUserProfile } from "../utils/interfaces/User";
 import bcryptjs from "bcryptjs";
 
@@ -21,22 +21,25 @@ export class User {
   }
 
   async getAllUsers(
-    page: number,
-    take: number,
+    page: number = 1,
     search: string | undefined,
-    role: "STUDENT" | "LECTURER" | "ADMIN" | any | undefined
+    role: ROLE | any | undefined
   ) {
     return db.user.findMany({
       where: {
-        OR: [
-          { username: { contains: search } },
-          { email: { contains: search } },
-          { fullname: { contains: search } },
+        AND: [
+          {
+            OR: [
+              { username: { contains: search === "" ? undefined : search } },
+              { email: { contains: search === "" ? undefined : search } },
+              { fullname: { contains: search === "" ? undefined : search } },
+            ],
+          },
+          { role: role === "" ? undefined : role },
         ],
-        role,
       },
-      skip: (page - 1) * take,
-      take,
+      skip: (page - 1) * constants.PAGINATION_OFFSET,
+      take: constants.PAGINATION_OFFSET,
     });
   }
 

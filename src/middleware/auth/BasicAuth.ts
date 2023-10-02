@@ -6,7 +6,7 @@ import { UserService } from "../../services/UserService";
 import { InternalServerError } from "../../exceptions/httpError/InternalServerError";
 import { UnauthenticatedError } from "../../exceptions/httpError/UnauthenticatedError";
 import { ITokenPayload } from "../../utils/interfaces/TokenPayload";
-import { constants } from "../../utils";
+import { ERRORCODE } from "../../utils";
 
 export class BasicAuthMiddleware {
   private static checkBasicAuth() {
@@ -18,7 +18,7 @@ export class BasicAuthMiddleware {
         // todo: handler for authorization is not provided
         return next(
           new BadRequestError(
-            constants.MISSING_VALUE_HEADER_ERROR,
+            ERRORCODE.MISSING_VALUE_HEADER_ERROR,
             "Provide Authorization in header"
           )
         );
@@ -28,7 +28,7 @@ export class BasicAuthMiddleware {
         // todo: handler for invalid schema (without Basic Prefix)
         return next(
           new BadRequestError(
-            constants.MISSING_VALUE_HEADER_ERROR,
+            ERRORCODE.MISSING_VALUE_HEADER_ERROR,
             'Invalid schema. provide "Basic <credential>"'
           )
         );
@@ -38,7 +38,7 @@ export class BasicAuthMiddleware {
         // todo: handler for authorization credential is not provided
         return next(
           new BadRequestError(
-            constants.MISSING_VALUE_HEADER_ERROR,
+            ERRORCODE.MISSING_VALUE_HEADER_ERROR,
             "provide credential"
           )
         );
@@ -56,7 +56,7 @@ export class BasicAuthMiddleware {
         // todo: handler for username or password is not provided
         return next(
           new BadRequestError(
-            constants.MISSING_VALUE_HEADER_ERROR,
+            ERRORCODE.MISSING_VALUE_HEADER_ERROR,
             "provide credential in <username:password> format. encode it in base64"
           )
         );
@@ -73,7 +73,7 @@ export class BasicAuthMiddleware {
         if (!res.locals.credential) {
           return next(
             new BadRequestError(
-              constants.MISSING_VALUE_HEADER_ERROR,
+              ERRORCODE.MISSING_VALUE_HEADER_ERROR,
               "provide credential"
             )
           );
@@ -88,11 +88,11 @@ export class BasicAuthMiddleware {
           switch (user.error) {
             case 404:
               return next(
-                new NotFoundError(constants.USER_NOT_FOUND_ERROR, user.message)
+                new NotFoundError(ERRORCODE.USER_NOT_FOUND_ERROR, user.message)
               );
             default:
               return next(
-                new InternalServerError(constants.INTERNAL_SERVER_ERROR_CODE)
+                new InternalServerError(ERRORCODE.INTERNAL_SERVER_ERROR_CODE)
               );
           }
         }
@@ -105,7 +105,7 @@ export class BasicAuthMiddleware {
         if (!passwordIsCorrect) {
           return next(
             new UnauthenticatedError(
-              constants.PASSWORD_INCORRECT_ERROR,
+              ERRORCODE.PASSWORD_INCORRECT_ERROR,
               "password is incorrect"
             )
           );

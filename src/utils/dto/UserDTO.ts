@@ -6,3 +6,9 @@ export interface IUserProfileDTO {
   role: "LECTURER" | "STUDENT" | "ADMIN";
   userId: string;
 }
+
+export interface IUserClassDTO {
+  id: string;
+  fullname: string;
+  username: string;
+}

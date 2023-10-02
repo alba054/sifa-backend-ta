@@ -21,3 +21,7 @@ export const UserProfileMasterPayloadSchema = Joi.object({
   role: Joi.string().valid("LECTURER", "STUDENT", "ADMIN").optional(),
   password: Joi.string().optional(),
 });
+
+export const UserClassPayloadSchema = Joi.object({
+  classId: Joi.string().required(),
+});

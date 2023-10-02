@@ -6,23 +6,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 dotenv.config();
 
-export const constants = {
-  SUCCESS_RESPONSE_MESSAGE: "success",
-  FAILED_RESPONSE_MESSAGE: "failed",
-  ACCESS_TOKEN_EXP: 24 * 60 * 60 * 30, // *  1 month
-  REFRESH_TOKEN_EXP: 24 * 60 * 60 * 30, // * 1 month
-  INVALID_TOKEN: "token is invalid",
-  MALFORMED_TOKEN:
-    "token is not formed correctly. JWT format is xxxx.yyyyy.zzzz",
-  SIGNATURE_REQUIRED: "provide secret key to verify token",
-  INVALID_SIGNATURE: "secret key is not valid",
-  STUDENT_ROLE: "STUDENT",
-  LECTURER_ROLE: "SUPERVISOR",
-  ADMIN_ROLE: "ADMIN",
-  ABS_PATH: process.env.ABS_PATH,
-  PROFILE_PIC_PATH: "storage/user-pic/",
-  PASSWORD_SALT: 10,
-  HISTORY_ELEMENTS_PER_PAGE: 25,
+export const ERRORCODE = {
   INTERNAL_SERVER_ERROR_CODE: "E501",
   UNIQUE_CONSTRAINT_ERROR: "E401",
   USER_NOT_FOUND_ERROR: "E402",
@@ -42,10 +26,61 @@ export const constants = {
   COMMON_NOT_FOUND: "E444",
 };
 
+export enum DAY {
+  SUNDAY = "SUNDAY",
+  MONDAY = "MONDAY",
+  TUESDAY = "TUESDAY",
+  WEDNESDAY = "WEDNESDAY",
+  THURSDAY = "THURSDAY",
+  FRIDAY = "FRIDAY",
+  SATURDAY = "SATURDAY",
+}
+
+export const DAYS = [
+  "SUNDAY",
+  "MONDAY",
+  "TUESDAY",
+  "WEDNESDAY",
+  "THURSDAY",
+  "FRIDAY",
+  "SATURDAY",
+];
+
+export enum ROLE {
+  STUDENT = "STUDENT",
+  LECTURER = "LECTURER",
+  ADMIN = "ADMIN",
+}
+
+export enum ACCEPTANCE_STATUS {
+  PENDING = "PENDING",
+  ACCEPTED = "ACCEPTED",
+  REJECTED = "REJECTED",
+}
+
+export enum RESPONSE_MESSAGE {
+  SUCCESS = "success",
+  FAILED = "failed",
+}
+
+export const constants = {
+  ACCESS_TOKEN_EXP: 24 * 60 * 60 * 30, // *  1 month
+  REFRESH_TOKEN_EXP: 24 * 60 * 60 * 30, // * 1 month
+  INVALID_TOKEN: "token is invalid",
+  MALFORMED_TOKEN:
+    "token is not formed correctly. JWT format is xxxx.yyyyy.zzzz",
+  SIGNATURE_REQUIRED: "provide secret key to verify token",
+  INVALID_SIGNATURE: "secret key is not valid",
+  ABS_PATH: process.env.ABS_PATH,
+  PROFILE_PIC_PATH: "storage/user-pic/",
+  PASSWORD_SALT: 10,
+  PAGINATION_OFFSET: 25,
+};
+
 export const createErrorObject = (
   error: number = 500,
   message: string = "Internal Error",
-  errorCode: string = constants.INTERNAL_SERVER_ERROR_CODE
+  errorCode: string = ERRORCODE.INTERNAL_SERVER_ERROR_CODE
 ) => {
   return { error, message, errorCode };
 };
@@ -88,28 +123,28 @@ export const catchPrismaError = (error: any) => {
       return createErrorObject(
         400,
         "unique constraint failed on field" + error.meta?.target,
-        constants.UNIQUE_CONSTRAINT_ERROR
+        ERRORCODE.UNIQUE_CONSTRAINT_ERROR
       );
     } else if (error.code === "P2000") {
       return createErrorObject(
         400,
         "the value you provided too long for " + error.meta?.target,
-        constants.LONG_VALUE_ERROR
+        ERRORCODE.LONG_VALUE_ERROR
       );
     } else if (error.code === "P2003") {
       return createErrorObject(
         400,
         "the value you provided failed to reference on " + error.meta?.target,
-        constants.INVALID_VALUE_ERROR
+        ERRORCODE.INVALID_VALUE_ERROR
       );
     } else if (error.code === "P2005") {
       return createErrorObject(
         400,
         "the value you provided for field is invalid " + error.meta?.target,
-        constants.INVALID_VALUE_ERROR
+        ERRORCODE.INVALID_VALUE_ERROR
       );
     } else {
-      return createErrorObject(400, error.message, constants.BAD_REQUEST_ERROR);
+      return createErrorObject(400, error.message, ERRORCODE.BAD_REQUEST_ERROR);
     }
   } else {
     return createErrorObject(500, String(error));

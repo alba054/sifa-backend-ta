@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { constants, createErrorObject } from "../utils";
+import { ERRORCODE, createErrorObject } from "../utils";
 
 export class Validator {
   validate(schema: Joi.ObjectSchema, payload: any) {
@@ -9,7 +9,7 @@ export class Validator {
       return createErrorObject(
         400,
         validationResult.error.message,
-        constants.VALIDATOR_ERROR
+        ERRORCODE.VALIDATOR_ERROR
       );
     }
 

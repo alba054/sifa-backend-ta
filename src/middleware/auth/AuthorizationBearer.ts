@@ -5,7 +5,7 @@ import { InternalServerError } from "../../exceptions/httpError/InternalServerEr
 import { tokenGenerator } from "../../utils/auth/TokenGenerator";
 import { config } from "../../config/Config";
 import { UnauthorizedError } from "../../exceptions/httpError/UnauthorizedError";
-import { constants } from "../../utils";
+import { ERRORCODE, constants } from "../../utils";
 import { UnauthenticatedError } from "../../exceptions/httpError/UnauthenticatedError";
 import { NotFoundError } from "../../exceptions/httpError/NotFoundError";
 import { UserService } from "../../services/UserService";
@@ -24,7 +24,7 @@ export class AuthorizationBearer {
         // todo: handler for authorization is not provided
         return next(
           new BadRequestError(
-            constants.MISSING_VALUE_HEADER_ERROR,
+            ERRORCODE.MISSING_VALUE_HEADER_ERROR,
             "Provide Authorization in header"
           )
         );
@@ -34,7 +34,7 @@ export class AuthorizationBearer {
         // todo: handler for invalid schema (without Basic Prefix)
         return next(
           new BadRequestError(
-            constants.MISSING_VALUE_HEADER_ERROR,
+            ERRORCODE.MISSING_VALUE_HEADER_ERROR,
             'Invalid schema. provide "Bearer <token>"'
           )
         );
@@ -44,7 +44,7 @@ export class AuthorizationBearer {
         // todo: handler for authorization credential is not provided
         return next(
           new BadRequestError(
-            constants.MISSING_VALUE_HEADER_ERROR,
+            ERRORCODE.MISSING_VALUE_HEADER_ERROR,
             "provide token"
           )
         );
@@ -54,7 +54,7 @@ export class AuthorizationBearer {
 
       if (!config.config.ACCESS_SECRET_KEY) {
         return next(
-          new InternalServerError(constants.INTERNAL_SERVER_ERROR_CODE)
+          new InternalServerError(ERRORCODE.INTERNAL_SERVER_ERROR_CODE)
         );
       }
 
@@ -70,7 +70,7 @@ export class AuthorizationBearer {
         if (!tokenPayload) {
           return next(
             new UnauthorizedError(
-              constants.TOKEN_NOT_PROVIDED_ERROR,
+              ERRORCODE.TOKEN_NOT_PROVIDED_ERROR,
               "provide token"
             )
           );
@@ -83,12 +83,12 @@ export class AuthorizationBearer {
           switch (user.error) {
             case 404:
               throw new NotFoundError(
-                constants.USER_NOT_FOUND_ERROR,
+                ERRORCODE.USER_NOT_FOUND_ERROR,
                 user.message
               );
             default:
               throw new InternalServerError(
-                constants.INTERNAL_SERVER_ERROR_CODE
+                ERRORCODE.INTERNAL_SERVER_ERROR_CODE
               );
           }
         }
@@ -96,7 +96,7 @@ export class AuthorizationBearer {
         if (!roles.includes(user.role)) {
           return next(
             new UnauthorizedError(
-              constants.UNAUTHORIZED_ROLE_ERROR,
+              ERRORCODE.UNAUTHORIZED_ROLE_ERROR,
               "you cannot access this resource"
             )
           );
@@ -109,7 +109,7 @@ export class AuthorizationBearer {
         if (error instanceof TokenExpiredError) {
           return next(
             new UnauthenticatedError(
-              constants.TOKEN_EXPIRED_ERROR,
+              ERRORCODE.TOKEN_EXPIRED_ERROR,
               error.message
             )
           );
@@ -118,7 +118,7 @@ export class AuthorizationBearer {
             // todo: BadRequestError with custom invalid token message
             return next(
               new BadRequestError(
-                constants.INVALID_TOKEN_ERROR,
+                ERRORCODE.INVALID_TOKEN_ERROR,
                 constants.INVALID_TOKEN
               )
             );
@@ -126,7 +126,7 @@ export class AuthorizationBearer {
             // todo: BadRequestError with custom token malformed message
             return next(
               new BadRequestError(
-                constants.MALFORMED_TOKEN_ERROR,
+                ERRORCODE.MALFORMED_TOKEN_ERROR,
                 constants.MALFORMED_TOKEN
               )
             );
@@ -134,7 +134,7 @@ export class AuthorizationBearer {
             // todo: BadRequestError with custom required signature message
             return next(
               new BadRequestError(
-                constants.INVALID_TOKEN_ERROR,
+                ERRORCODE.INVALID_TOKEN_ERROR,
                 constants.SIGNATURE_REQUIRED
               )
             );
@@ -142,13 +142,13 @@ export class AuthorizationBearer {
             // todo: BadRequestError with custom invalid signature message
             return next(
               new BadRequestError(
-                constants.INVALID_TOKEN_ERROR,
+                ERRORCODE.INVALID_TOKEN_ERROR,
                 constants.INVALID_SIGNATURE
               )
             );
           } else {
             return next(
-              new BadRequestError(constants.BAD_REQUEST_ERROR, error.message)
+              new BadRequestError(ERRORCODE.BAD_REQUEST_ERROR, error.message)
             );
           }
         }

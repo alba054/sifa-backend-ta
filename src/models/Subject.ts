@@ -3,8 +3,17 @@ import { catchPrismaError, constants, createErrorObject } from "../utils";
 import db from "../database";
 
 export class Subject {
-  async getAllSubjects() {
-    return db.subject.findMany();
+  async getAllSubjects(page: number = 1, search: string | undefined) {
+    return db.subject.findMany({
+      skip: (page - 1) * constants.PAGINATION_OFFSET,
+      take: constants.PAGINATION_OFFSET,
+      where: {
+        OR: [
+          { name: { contains: search === "" ? undefined : search } },
+          { code: { startsWith: search === "" ? undefined : search } },
+        ],
+      },
+    });
   }
 
   async deleteSubjectById(id: string) {

@@ -11,39 +11,92 @@ datasource db {
 }
 
 model User {
-  id         String   @id @db.VarChar(100)
-  fullname   String   @db.VarChar(255)
-  username   String   @unique @db.VarChar(25)
-  password   String   @db.VarChar(255)
-  email      String?  @unique @db.VarChar(255)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  role       Role
-  profilePic String?  @db.VarChar(255)
+  id                 String               @id @db.VarChar(100)
+  fullname           String               @db.VarChar(255)
+  username           String               @unique @db.VarChar(25)
+  password           String               @db.VarChar(255)
+  email              String?              @unique @db.VarChar(255)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @default(now()) @updatedAt
+  role               Role
+  profilePic         String?              @db.VarChar(255)
+  classes            Class[]
+  StudentWaitingList StudentWaitingList[]
 
   @@map("users")
 }
 
 model Subject {
-  id      String  @id @db.VarChar(100)
-  name    String  @db.VarChar(255)
-  code    String? @unique @db.VarChar(50)
-  classes Class[]
+  id        String   @id @db.VarChar(100)
+  name      String   @db.VarChar(255)
+  code      String?  @unique @db.VarChar(50)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  classes   Class[]
 
   @@map("subjects")
 }
 
 model Class {
-  id        String   @id @db.VarChar(100)
-  name      String   @db.VarChar(255)
-  Subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  subjectId String  @db.VarChar(100)
+  id                 String               @id @db.VarChar(100)
+  name               String               @db.VarChar(255)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @default(now()) @updatedAt
+  day                Day?                 @default(MONDAY)
+  time               Int                  @default(0) @db.UnsignedMediumInt
+  Subject            Subject              @relation(fields: [subjectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  subjectId          String               @db.VarChar(100)
+  user               User[]
+  references         Reference[]
+  StudentWaitingList StudentWaitingList[]
 
   @@map("classes")
+}
+
+model Reference {
+  id          String   @id @db.VarChar(100)
+  name        String   @db.VarChar(255)
+  attachment  String?  @db.VarChar(255)
+  description String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+  Class       Class?   @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  classId     String?  @db.VarChar(100)
+
+  @@map("references")
+}
+
+model StudentWaitingList {
+  id        String           @id @db.VarChar(100)
+  class     Class            @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  classId   String           @db.VarChar(100)
+  userId    String           @db.VarChar(100)
+  status    AcceptanceStatus @default(PENDING)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @default(now()) @updatedAt
+
+  @@map("student_waiting_lists")
 }
 
 enum Role {
   LECTURER
   STUDENT
   ADMIN
+}
+
+enum Day {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
+enum AcceptanceStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
