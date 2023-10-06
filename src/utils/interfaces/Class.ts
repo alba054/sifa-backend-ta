@@ -5,6 +5,7 @@ export interface IPostClass {
   readonly subjectId: string;
   readonly day: DAY;
   readonly time: number;
+  readonly endTime: number;
 }
 
 export interface IPutClass {
@@ -12,6 +13,7 @@ export interface IPutClass {
   readonly subjectId?: string;
   readonly day?: DAY;
   readonly time?: number;
+  readonly endTime?: number;
 }
 
 export interface IPutUserClass {

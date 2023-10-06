@@ -23,4 +23,5 @@ export interface IPutUserMasterData {
 
 export interface IPutClassUser {
   readonly classId: string;
+  readonly isCancelled: boolean;
 }

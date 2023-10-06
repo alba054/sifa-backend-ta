@@ -53,14 +53,14 @@ export class StudentWaitingListService {
     }
 
     if (!payload.status) {
-      return this.studentWaitingListModel.updateAcceptanceStatusById(
-        id,
-        payload
+      return this.studentWaitingListModel.deleteStudentWaitingListByUserIdAndClassId(
+        waitingList.userId,
+        waitingList.classId
       );
     }
 
     try {
-      return db.$transaction([
+      return await db.$transaction([
         db.studentWaitingList.update({
           where: {
             id,
@@ -92,11 +92,13 @@ export class StudentWaitingListService {
   async getStudentWaitingListOfLecturer(
     classId: string,
     userId: string,
+    page: number = 1,
     status?: ACCEPTANCE_STATUS | string | undefined
   ) {
     return this.studentWaitingListModel.getStudentWaitingListByLecturer(
       classId,
       userId,
+      page,
       status
     );
   }

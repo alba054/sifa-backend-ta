@@ -116,11 +116,16 @@ export class UserRouter {
       );
 
     // * student register to class
+    // * list of classes (lecturer and student)
     this.router
       .route(this.path + "/classes")
       .put(
         AuthorizationBearer.authorize([ROLE.STUDENT]),
         this.userHandler.putRegistrationStudentToClass
+      )
+      .get(
+        AuthorizationBearer.authorize([ROLE.STUDENT, ROLE.LECTURER]),
+        this.userHandler.getUserClasses
       );
 
     // * class lecturers viewing student waiting list
@@ -129,6 +134,14 @@ export class UserRouter {
       .get(
         AuthorizationBearer.authorize([ROLE.LECTURER]),
         this.userHandler.getLecturerStudentsWaitingLists
+      );
+
+    // * user view schedule based on current request time
+    this.router
+      .route(this.path + "/schedules")
+      .get(
+        AuthorizationBearer.authorize([ROLE.LECTURER, ROLE.STUDENT]),
+        this.userHandler.getTodayClassSchedules
       );
 
     return this.router;

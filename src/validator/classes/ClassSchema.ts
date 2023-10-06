@@ -8,6 +8,7 @@ export const ClassPayloadSchema = Joi.object({
     .valid(...DAYS)
     .required(),
   time: Joi.number().min(0).required(),
+  endTime: Joi.number().min(0).required(),
 });
 
 export const ClassEditPayloadSchema = Joi.object({
@@ -17,6 +18,7 @@ export const ClassEditPayloadSchema = Joi.object({
     .valid(...DAYS)
     .optional(),
   time: Joi.number().min(0).optional(),
+  endTime: Joi.number().min(0).optional(),
 });
 
 export const ClassLecturerPayloadSchema = Joi.object({

@@ -7,7 +7,16 @@ export interface IListClassDTO {
   id: string;
   subject: IListSubjectDTO;
   time: number;
+  endTime: number;
   day: DAY;
   lecturers: IUserClassDTO[];
   students: IUserClassDTO[];
+}
+
+export interface IListClassScheduleDTO {
+  id: string;
+  className: string;
+  startTime: number;
+  endTime: number;
+  day: DAY;
 }

@@ -18,7 +18,7 @@ export class Subject {
 
   async deleteSubjectById(id: string) {
     try {
-      return db.subject.delete({
+      return await db.subject.delete({
         where: { id },
       });
     } catch (error) {
@@ -28,7 +28,7 @@ export class Subject {
 
   async updateSubjectById(id: string, payload: IPutSubject) {
     try {
-      return db.subject.update({
+      return await db.subject.update({
         where: {
           id,
         },
@@ -52,7 +52,7 @@ export class Subject {
 
   async inserNewSubject(id: string, payload: IPostSubject) {
     try {
-      return db.subject.create({
+      return await db.subject.create({
         data: {
           id,
           name: payload.name,

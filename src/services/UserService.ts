@@ -1,6 +1,12 @@
 import { StudentWaitingList } from "../models/StudentWaitingList";
 import { User } from "../models/User";
-import { ERRORCODE, ROLE, createErrorObject } from "../utils";
+import {
+  ACCEPTANCE_STATUS,
+  DAYS,
+  ERRORCODE,
+  ROLE,
+  createErrorObject,
+} from "../utils";
 import {
   IPostUserPayload,
   IPutClassUser,
@@ -16,6 +22,17 @@ export class UserService {
   constructor() {
     this.userModel = new User();
     this.studentWaitingListModel = new StudentWaitingList();
+  }
+
+  async getSchedulesByDay(userId: string, date: Date) {
+    return this.userModel.getClassSchedulesByDay(
+      userId,
+      DAYS[date.getDay() - 1]
+    );
+  }
+
+  async getUserClasses(userId: string, page: number = 1) {
+    return this.userModel.getUserClassesByUserId(userId, page);
   }
 
   async addStudentClassWaitingList(userId: string, payload: IPutClassUser) {
@@ -34,6 +51,35 @@ export class UserService {
         400,
         "user's not student",
         ERRORCODE.BAD_REQUEST_ERROR
+      );
+    }
+
+    if (payload.isCancelled) {
+      const studentWaitingList =
+        await this.studentWaitingListModel.getStudentWaitingListByUserIdAndClassId(
+          userId,
+          payload.classId
+        );
+
+      if (!studentWaitingList) {
+        return createErrorObject(
+          404,
+          "you don't request to this class",
+          ERRORCODE.COMMON_NOT_FOUND
+        );
+      }
+
+      if (studentWaitingList.status !== ACCEPTANCE_STATUS.PENDING) {
+        return createErrorObject(
+          400,
+          "request has been accepted cannot cancel",
+          ERRORCODE.BAD_REQUEST_ERROR
+        );
+      }
+
+      return this.studentWaitingListModel.deleteStudentWaitingListByUserIdAndClassId(
+        userId,
+        payload.classId
       );
     }
 

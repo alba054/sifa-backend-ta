@@ -9,7 +9,7 @@ import {
 export class Class {
   async insertUserToClass(id: string, payload: string[]) {
     try {
-      return db.class.update({
+      return await db.class.update({
         where: {
           id,
         },
@@ -30,7 +30,7 @@ export class Class {
 
   async deleteClassById(id: string) {
     try {
-      return db.class.delete({
+      return await db.class.delete({
         where: {
           id,
         },
@@ -42,7 +42,7 @@ export class Class {
 
   async updateClassById(id: string, payload: IPutClass) {
     try {
-      return db.class.update({
+      return await db.class.update({
         where: {
           id,
         },
@@ -51,6 +51,7 @@ export class Class {
           subjectId: payload.subjectId,
           day: payload.day,
           time: payload.time,
+          endTime: payload.endTime,
         },
       });
     } catch (error) {
@@ -82,13 +83,14 @@ export class Class {
 
   async inserNewClass(id: string, payload: IPostClass) {
     try {
-      return db.class.create({
+      return await db.class.create({
         data: {
           id,
           name: payload.name,
           subjectId: payload.subjectId,
           day: payload.day,
           time: payload.time,
+          endTime: payload.endTime,
         },
       });
     } catch (error) {

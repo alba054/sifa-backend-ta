@@ -12,3 +12,9 @@ export interface IUserClassDTO {
   fullname: string;
   username: string;
 }
+
+export interface IUserListUserClassDTO {
+  id: string;
+  className: string;
+  lecturerName: string[];
+}

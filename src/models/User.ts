@@ -1,9 +1,49 @@
 import db from "../database";
-import { ROLE, catchPrismaError, constants, createErrorObject } from "../utils";
+import {
+  DAY,
+  ROLE,
+  catchPrismaError,
+  constants,
+  createErrorObject,
+} from "../utils";
 import { IPostUserPayload, IPutUserProfile } from "../utils/interfaces/User";
 import bcryptjs from "bcryptjs";
 
 export class User {
+  async getClassSchedulesByDay(userId: string, day: DAY | any) {
+    return db.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        classes: {
+          where: {
+            day,
+          },
+        },
+      },
+    });
+  }
+
+  async getUserClassesByUserId(userId: string, page: number = 1) {
+    return db.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        classes: {
+          include: {
+            user: {
+              where: {
+                role: ROLE.LECTURER,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
   async deleteUserById(id: string) {
     return db.user.delete({
       where: {

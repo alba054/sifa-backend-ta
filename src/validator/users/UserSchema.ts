@@ -24,4 +24,5 @@ export const UserProfileMasterPayloadSchema = Joi.object({
 
 export const UserClassPayloadSchema = Joi.object({
   classId: Joi.string().required(),
+  isCancelled: Joi.boolean().default(false),
 });

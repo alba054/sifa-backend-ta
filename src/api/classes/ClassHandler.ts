@@ -129,6 +129,7 @@ export class ClassHandler {
             },
             day: c.day,
             time: c.time,
+            endTime: c.endTime,
             lecturers: c.user
               .filter((u) => u.role === ROLE.LECTURER)
               .map((u) => {

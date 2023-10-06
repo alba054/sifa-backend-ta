@@ -8,11 +8,15 @@ import {
   ERRORCODE,
   RESPONSE_MESSAGE,
   constants,
+  convertEpochToDate,
   createResponse,
   throwResultError,
   throwValidationError,
 } from "../../utils";
-import { IUserProfileDTO } from "../../utils/dto/UserDTO";
+import {
+  IUserListUserClassDTO,
+  IUserProfileDTO,
+} from "../../utils/dto/UserDTO";
 import { UploadFileHelper } from "../../utils/helper/UploadFileHelper";
 import { ITokenPayload } from "../../utils/interfaces/TokenPayload";
 import {
@@ -30,6 +34,7 @@ import {
 import { Validator } from "../../validator/Validator";
 import { StudentWaitingListService } from "../../services/StudentWaitingListService";
 import { IListStudentWaitingListDTO } from "../../utils/dto/StudentWaitingListDTO";
+import { IListClassScheduleDTO } from "../../utils/dto/ClassDTO";
 
 export class UserHandler {
   private userService: UserService;
@@ -58,6 +63,59 @@ export class UserHandler {
       this.putRegistrationStudentToClass.bind(this);
     this.getLecturerStudentsWaitingLists =
       this.getLecturerStudentsWaitingLists.bind(this);
+    this.getUserClasses = this.getUserClasses.bind(this);
+    this.getTodayClassSchedules = this.getTodayClassSchedules.bind(this);
+  }
+
+  async getTodayClassSchedules(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const tokenPayload: ITokenPayload = res.locals.user;
+
+    const todaySchedules = await this.userService.getSchedulesByDay(
+      tokenPayload.userId,
+      convertEpochToDate(new Date().getTime(), constants.OFFSET_TIME)
+    );
+
+    return res.status(200).json(
+      createResponse(
+        RESPONSE_MESSAGE.SUCCESS,
+        todaySchedules?.classes.map((c) => {
+          return {
+            className: c.name,
+            id: c.id,
+            startTime: c.time,
+            endTime: c.endTime,
+            day: c.day,
+          } as IListClassScheduleDTO;
+        })
+      )
+    );
+  }
+
+  async getUserClasses(req: Request, res: Response, next: NextFunction) {
+    const tokenPayload: ITokenPayload = res.locals.user;
+    const { page } = req.query;
+
+    const userClasses = await this.userService.getUserClasses(
+      tokenPayload.userId,
+      parseInt(String(page ?? "1"))
+    );
+
+    return res.status(200).json(
+      createResponse(
+        RESPONSE_MESSAGE.SUCCESS,
+        userClasses?.classes.map((c) => {
+          return {
+            className: c.name,
+            id: c.id,
+            lecturerName: c.user.map((l) => l.fullname),
+          } as IUserListUserClassDTO;
+        })
+      )
+    );
   }
 
   async getLecturerStudentsWaitingLists(
@@ -66,13 +124,14 @@ export class UserHandler {
     next: NextFunction
   ) {
     const { id } = req.params;
-    const { status } = req.query;
+    const { status, page } = req.query;
     const tokenPayload: ITokenPayload = res.locals.user;
 
     const result =
       await this.studentWaitingListService.getStudentWaitingListOfLecturer(
         id,
         tokenPayload.userId,
+        parseInt(String(page ?? "1")),
         String(status ?? "")
       );
 
@@ -118,7 +177,7 @@ export class UserHandler {
         .json(
           createResponse(
             RESPONSE_MESSAGE.SUCCESS,
-            "successfully update user profile"
+            "successfully join or cancel request"
           )
         );
     } catch (error) {
