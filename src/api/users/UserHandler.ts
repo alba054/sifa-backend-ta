@@ -310,8 +310,6 @@ export class UserHandler {
       );
 
       if (typeof fileToSend === "string") {
-        console.log(`${constants.ABS_PATH}/${fileToSend}`);
-
         return res.sendFile(`${constants.ABS_PATH}/${fileToSend}`);
       }
       switch (fileToSend?.error) {

@@ -1,11 +1,5 @@
 import db from "../database";
-import {
-  DAY,
-  ROLE,
-  catchPrismaError,
-  constants,
-  createErrorObject,
-} from "../utils";
+import { DAY, ROLE, catchPrismaError, constants } from "../utils";
 import { IPostUserPayload, IPutUserProfile } from "../utils/interfaces/User";
 import bcryptjs from "bcryptjs";
 

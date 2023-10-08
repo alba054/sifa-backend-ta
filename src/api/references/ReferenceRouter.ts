@@ -25,6 +25,34 @@ export class ReferenceRouter {
         this.handler.postReference
       );
 
+    // * get reference detail
+    this.router
+      .route(this.path + "/:id")
+      .get(
+        AuthorizationBearer.authorize([ROLE.LECTURER, ROLE.STUDENT]),
+        this.handler.getReferenceDetail
+      )
+      .delete(
+        AuthorizationBearer.authorize([ROLE.LECTURER]),
+        this.handler.deleteReference
+      );
+
+    // * get reference by class
+    this.router
+      .route(this.path + "/classes/:id")
+      .get(
+        AuthorizationBearer.authorize([ROLE.LECTURER, ROLE.STUDENT]),
+        this.handler.getReferences
+      );
+
+    // * get reference attachment
+    this.router
+      .route(this.path + "/attachments/:id")
+      .get(
+        AuthorizationBearer.authorize([ROLE.LECTURER, ROLE.STUDENT]),
+        this.handler.getReferenceAttachment
+      );
+
     return this.router;
   }
 }

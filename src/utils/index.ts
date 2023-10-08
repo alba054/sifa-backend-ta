@@ -84,6 +84,7 @@ export const constants = {
   PASSWORD_SALT: 10,
   PAGINATION_OFFSET: 25,
   OFFSET_TIME: 8, // * GMT+8
+  ATTACHMENT_REFERENCE_URI: "/references/attachments/",
 };
 
 export const createErrorObject = (

@@ -3,6 +3,12 @@ import { v4 as uuidv4 } from "uuid";
 import path from "path";
 
 export class UploadFileHelper {
+  static deleteFile(filePath: string) {
+    fs.unlink(filePath, (err) => {
+      console.log(err);
+    });
+  }
+
   static uploadFileBuffer(
     originalName: string,
     filePath: string,
