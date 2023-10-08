@@ -64,6 +64,9 @@ export class Class {
       where: {
         id,
       },
+      include: {
+        user: true,
+      },
     });
   }
 

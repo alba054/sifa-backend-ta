@@ -50,21 +50,66 @@ model Class {
   user               User[]
   references         Reference[]
   StudentWaitingList StudentWaitingList[]
+  Task               Task[]
+  Announcement       Announcement[]
 
   @@map("classes")
 }
 
 model Reference {
-  id          String   @id @db.VarChar(100)
-  name        String   @db.VarChar(255)
-  attachment  String?  @db.VarChar(255)
-  description String?  @db.Text
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
-  Class       Class?   @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  classId     String?  @db.VarChar(100)
+  id          String       @id @db.VarChar(100)
+  name        String       @db.VarChar(255)
+  attachments Attachment[]
+  description String?      @db.Text
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now()) @updatedAt
+  Class       Class?       @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  classId     String?      @db.VarChar(100)
 
   @@map("references")
+}
+
+model Task {
+  id          String       @id @db.VarChar(100)
+  name        String       @db.VarChar(255)
+  attachments Attachment[]
+  description String?      @db.Text
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now()) @updatedAt
+  Class       Class?       @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  classId     String?      @db.VarChar(100)
+
+  @@map("tasks")
+}
+
+model Announcement {
+  id          String       @id @db.VarChar(100)
+  name        String       @db.VarChar(255)
+  attachments Attachment[]
+  description String?      @db.Text
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now()) @updatedAt
+  Class       Class?       @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  classId     String?      @db.VarChar(100)
+
+  @@map("announcements")
+}
+
+model Attachment {
+  id             String        @id @db.VarChar(100)
+  name           String        @db.VarChar(255)
+  attachment     String?       @db.VarChar(255)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now()) @updatedAt
+  historyType    HistoryType
+  Reference      Reference?    @relation(fields: [referenceId], references: [id])
+  referenceId    String?       @db.VarChar(100)
+  Task           Task?         @relation(fields: [taskId], references: [id])
+  taskId         String?       @db.VarChar(100)
+  Announcement   Announcement? @relation(fields: [announcementId], references: [id])
+  announcementId String?       @db.VarChar(100)
+
+  @@map("attachments")
 }
 
 model StudentWaitingList {
@@ -82,12 +127,13 @@ model StudentWaitingList {
 }
 
 model History {
-  id        String           @id @db.VarChar(100)
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @default(now()) @updatedAt
+  id          String      @id @db.VarChar(100)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now()) @updatedAt
   historyType HistoryType
-  description String? @db.Text
-  
+  description String?     @db.Text
+  uri         String?     @db.VarChar(100)
+
   @@map("histories")
 }
 
