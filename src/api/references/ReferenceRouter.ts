@@ -26,6 +26,7 @@ export class ReferenceRouter {
       );
 
     // * get reference detail
+    // * delete reference by id
     this.router
       .route(this.path + "/:id")
       .get(
