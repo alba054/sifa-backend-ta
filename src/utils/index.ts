@@ -81,10 +81,14 @@ export const constants = {
   ABS_PATH: process.env.ABS_PATH,
   PROFILE_PIC_PATH: "storage/user-pic/",
   REFERENCE_PATH: "storage/references/",
+  ANNOUNCEMENT_PATH: "storage/announcements/",
+  TASK_PATH: "storage/tasks/",
   PASSWORD_SALT: 10,
   PAGINATION_OFFSET: 25,
   OFFSET_TIME: 8, // * GMT+8
   ATTACHMENT_REFERENCE_URI: "/references/attachments/",
+  ANNOUNCEMENT_REFERENCE_URI: "/announcements/attachments/",
+  TASK_REFERENCE_URI: "/tasks/attachments/",
 };
 
 export const createErrorObject = (

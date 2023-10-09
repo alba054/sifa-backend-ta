@@ -5,6 +5,7 @@ import {
   constants,
   createResponse,
   ERRORCODE,
+  HISTORYTYPE,
   RESPONSE_MESSAGE,
   throwResultError,
   throwValidationError,
@@ -73,7 +74,8 @@ export class ReferenceHandler {
     try {
       const attachment = await this.attachmentService.getAttachmentById(
         tokenPayload.userId,
-        id
+        id,
+        HISTORYTYPE.REFERENCE
       );
 
       if (attachment && "error" in attachment) {

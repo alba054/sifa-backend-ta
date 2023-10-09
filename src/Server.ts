@@ -7,6 +7,8 @@ import { SubjectRouter } from "./api/subjects/SubjectRouter";
 import { ClassRouter } from "./api/classes/ClassRouter";
 import { StudentWaitingListRouter } from "./api/waiting-lists/StudentWaitingListRouter";
 import { ReferenceRouter } from "./api/references/ReferenceRouter";
+import { AnnouncementRouter } from "./api/announcements/AnnouncementRouter";
+import { TaskRouter } from "./api/tasks/TaskRouter";
 
 dotenv.config();
 
@@ -38,6 +40,8 @@ class Server {
     this.app.use("/api", new ClassRouter().register());
     this.app.use("/api", new StudentWaitingListRouter().register());
     this.app.use("/api", new ReferenceRouter().register());
+    this.app.use("/api", new AnnouncementRouter().register());
+    this.app.use("/api", new TaskRouter().register());
     // * error handling
     this.app.use(ErrorHandler);
   }

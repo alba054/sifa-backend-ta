@@ -1,4 +1,4 @@
-import db from "../database";
+import { Announcement } from "../models/Announcement";
 import { Class } from "../models/Class";
 import {
   catchPrismaError,
@@ -7,92 +7,21 @@ import {
   ERRORCODE,
   HISTORYTYPE,
 } from "../utils";
-import { IPostReference } from "../utils/interfaces/Reference";
+import { IPostAnnouncement } from "../utils/interfaces/Announcement";
 import { v4 as uuidv4 } from "uuid";
 import { UploadFileHelper } from "../utils/helper/UploadFileHelper";
-import { Reference } from "../models/Reference";
-import { ITokenPayload } from "../utils/interfaces/TokenPayload";
+import db from "../database";
 
-export class ReferenceService {
+export class AnnouncementService {
   private classModel: Class;
-  private referenceModel: Reference;
+  private announcementModel: Announcement;
 
   constructor() {
     this.classModel = new Class();
-    this.referenceModel = new Reference();
+    this.announcementModel = new Announcement();
   }
 
-  async deleteReferenceById(userId: string, id: string) {
-    const reference = await this.referenceModel.getReferenceById(id);
-
-    if (!reference) {
-      return createErrorObject(
-        404,
-        "reference's not found",
-        ERRORCODE.COMMON_NOT_FOUND
-      );
-    }
-
-    if (!reference.Class?.user.find((u) => u.id === userId)) {
-      return createErrorObject(
-        400,
-        "this class is not for you",
-        ERRORCODE.BAD_REQUEST_ERROR
-      );
-    }
-
-    try {
-      reference.attachments.forEach((a) => {
-        UploadFileHelper.deleteFile(
-          `${constants.ABS_PATH}/storage/${a.attachment}`
-        );
-      });
-
-      return db.$transaction([
-        db.attachment.deleteMany({
-          where: {
-            referenceId: id,
-          },
-        }),
-        db.reference.delete({
-          where: {
-            id,
-          },
-        }),
-        db.history.deleteMany({
-          where: {
-            uri: id,
-          },
-        }),
-      ]);
-    } catch (error) {
-      return catchPrismaError(error);
-    }
-  }
-
-  async getReferenceById(userId: string, id: string) {
-    const reference = await this.referenceModel.getReferenceById(id);
-
-    if (!reference) {
-      return createErrorObject(
-        404,
-        "reference's not found",
-        ERRORCODE.COMMON_NOT_FOUND
-      );
-    }
-
-    if (!reference.Class?.user.find((u) => u.id === userId)) {
-      return createErrorObject(
-        400,
-        "this class is not for you",
-        ERRORCODE.BAD_REQUEST_ERROR
-      );
-    }
-
-    return reference;
-  }
-
-  async getReferenceByClassId(userId: string, id: string) {
+  async getAnnouncementByClassId(userId: string, id: string) {
     const class_ = await this.classModel.getClassById(id);
 
     if (!class_) {
@@ -111,12 +40,82 @@ export class ReferenceService {
       );
     }
 
-    return this.referenceModel.getReferenceByClassId(id);
+    return this.announcementModel.getAnnouncementByClassId(id);
   }
 
-  async addNewReference(
+  async deleteAnnouncementById(userId: string, id: string) {
+    const announcement = await this.announcementModel.getAnnouncementById(id);
+
+    if (!announcement) {
+      return createErrorObject(
+        404,
+        "announcement's not found",
+        ERRORCODE.COMMON_NOT_FOUND
+      );
+    }
+
+    if (!announcement.Class?.user.find((u) => u.id === userId)) {
+      return createErrorObject(
+        400,
+        "this class is not for you",
+        ERRORCODE.BAD_REQUEST_ERROR
+      );
+    }
+
+    try {
+      announcement.attachments.forEach((a) => {
+        UploadFileHelper.deleteFile(
+          `${constants.ABS_PATH}/storage/${a.attachment}`
+        );
+      });
+
+      return db.$transaction([
+        db.attachment.deleteMany({
+          where: {
+            announcementId: id,
+          },
+        }),
+        db.announcement.delete({
+          where: {
+            id,
+          },
+        }),
+        db.history.deleteMany({
+          where: {
+            uri: id,
+          },
+        }),
+      ]);
+    } catch (error) {
+      return catchPrismaError(error);
+    }
+  }
+
+  async getAnnouncementById(userId: string, id: string) {
+    const announcement = await this.announcementModel.getAnnouncementById(id);
+
+    if (!announcement) {
+      return createErrorObject(
+        404,
+        "announcement's not found",
+        ERRORCODE.COMMON_NOT_FOUND
+      );
+    }
+
+    if (!announcement.Class?.user.find((u) => u.id === userId)) {
+      return createErrorObject(
+        400,
+        "this class is not for you",
+        ERRORCODE.BAD_REQUEST_ERROR
+      );
+    }
+
+    return announcement;
+  }
+
+  async addNewAnnouncement(
     userId: string,
-    payload: IPostReference,
+    payload: IPostAnnouncement,
     files: Express.Multer.File[] | any
   ) {
     const class_ = await this.classModel.getClassById(payload.classId);
@@ -144,19 +143,20 @@ export class ReferenceService {
       for (const file of files) {
         const uploadedFile = UploadFileHelper.uploadFileBuffer(
           file.originalname,
-          `${constants.REFERENCE_PATH}/${class_.id}`,
+          `${constants.ANNOUNCEMENT_PATH}/${class_.id}`,
           file.buffer
         );
         uploadedFiles.push(uploadedFile);
       }
 
       return await db.$transaction([
-        db.reference.create({
+        db.announcement.create({
           data: {
             id: referenceId,
             name: payload.name ?? "",
             classId: payload.classId,
             description: payload.description,
+            authorId: userId,
             attachments: {
               createMany: {
                 data: uploadedFiles.map((f) => {
@@ -164,7 +164,7 @@ export class ReferenceService {
                     id: uuidv4(),
                     name: "",
                     attachment: f,
-                    historyType: HISTORYTYPE.REFERENCE,
+                    historyType: HISTORYTYPE.ANNOUNCEMENT,
                   };
                 }),
               },
@@ -173,7 +173,7 @@ export class ReferenceService {
         }),
         db.history.create({
           data: {
-            historyType: HISTORYTYPE.REFERENCE,
+            historyType: HISTORYTYPE.ANNOUNCEMENT,
             id: uuidv4(),
             description: payload.description,
             uri: referenceId,
