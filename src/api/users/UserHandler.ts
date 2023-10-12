@@ -111,7 +111,7 @@ export class UserHandler {
           return {
             className: c.name,
             id: c.id,
-            lecturerName: c.user.map((l) => l.fullname),
+            lecturerNames: c.user.map((l) => l.fullname),
           } as IUserListUserClassDTO;
         })
       )

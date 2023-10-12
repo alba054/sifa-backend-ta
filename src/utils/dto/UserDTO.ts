@@ -16,5 +16,5 @@ export interface IUserClassDTO {
 export interface IUserListUserClassDTO {
   id: string;
   className: string;
-  lecturerName: string[];
+  lecturerNames: string[];
 }
