@@ -34,6 +34,19 @@ export class Attachment {
             },
           },
         },
+        TaskSubmission: {
+          include: {
+            task: {
+              include: {
+                Class: {
+                  include: {
+                    user: true,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     });
   }

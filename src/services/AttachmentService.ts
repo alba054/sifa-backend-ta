@@ -1,5 +1,5 @@
 import { Attachment } from "../models/Attachment";
-import { ERRORCODE, createErrorObject, HISTORYTYPE } from "../utils";
+import { ERRORCODE, createErrorObject, HISTORYTYPE, ROLE } from "../utils";
 
 export class AttachmentService {
   private attachmentModel: Attachment;
@@ -8,7 +8,12 @@ export class AttachmentService {
     this.attachmentModel = new Attachment();
   }
 
-  async getAttachmentById(userId: string, id: string, type: HISTORYTYPE) {
+  async getAttachmentById(
+    userId: string,
+    id: string,
+    type: HISTORYTYPE,
+    role?: ROLE | undefined
+  ) {
     const attachment = await this.attachmentModel.getAttachmentById(id);
 
     if (!attachment) {
@@ -49,6 +54,30 @@ export class AttachmentService {
             "this attachment's not for you",
             ERRORCODE.BAD_REQUEST_ERROR
           );
+        }
+        break;
+
+      case HISTORYTYPE.TASK_SUBMISSION:
+        if (
+          !attachment.TaskSubmission?.task?.Class?.user.find(
+            (u) => u.id === userId
+          )
+        ) {
+          return createErrorObject(
+            400,
+            "this attachment's not for you",
+            ERRORCODE.BAD_REQUEST_ERROR
+          );
+        }
+
+        if (role === ROLE.STUDENT) {
+          if (attachment.TaskSubmission.studentId !== userId) {
+            return createErrorObject(
+              400,
+              "this attachment's not for you",
+              ERRORCODE.BAD_REQUEST_ERROR
+            );
+          }
         }
         break;
       default:

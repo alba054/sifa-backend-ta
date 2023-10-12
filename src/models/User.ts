@@ -4,6 +4,27 @@ import { IPostUserPayload, IPutUserProfile } from "../utils/interfaces/User";
 import bcryptjs from "bcryptjs";
 
 export class User {
+  async getUserByClassIncludeTask(classId: string, taskId: string) {
+    return db.user.findMany({
+      where: {
+        role: ROLE.STUDENT,
+        classes: {
+          some: {
+            id: classId,
+          },
+        },
+      },
+      include: {
+        TaskSubmission: {
+          where: {
+            taskId,
+            turnedInStatus: true,
+          },
+        },
+      },
+    });
+  }
+
   async getClassSchedulesByDay(userId: string, day: DAY | any) {
     return db.user.findUnique({
       where: {

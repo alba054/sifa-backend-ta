@@ -64,9 +64,7 @@ export class AnnouncementService {
 
     try {
       announcement.attachments.forEach((a) => {
-        UploadFileHelper.deleteFile(
-          `${constants.ABS_PATH}/storage/${a.attachment}`
-        );
+        UploadFileHelper.deleteFile(`${constants.ABS_PATH}/${a.attachment}`);
       });
 
       return db.$transaction([

@@ -1,12 +1,26 @@
 import db from "../database";
-import { catchPrismaError, constants } from "../utils";
-import {
-  IPostClass,
-  IPutClass,
-  IPutUserClass,
-} from "../utils/interfaces/Class";
+import { catchPrismaError, constants, ROLE } from "../utils";
+import { IPostClass, IPutClass } from "../utils/interfaces/Class";
 
 export class Class {
+  async getClassSubmissionByTaskId(id: string, taskId: string) {
+    return db.class.findUnique({
+      where: { id },
+      include: {
+        user: {
+          where: {
+            role: ROLE.STUDENT,
+            TaskSubmission: {
+              some: {
+                id: taskId,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
   async insertUserToClass(id: string, payload: string[]) {
     try {
       return await db.class.update({

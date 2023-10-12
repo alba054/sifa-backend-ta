@@ -41,6 +41,7 @@ export enum HISTORYTYPE {
   QUIZ = "QUIZ",
   TASK = "TASK",
   REFERENCE = "REFERENCE",
+  TASK_SUBMISSION = "TASK_SUBMISSION",
 }
 
 export const DAYS = [
@@ -83,12 +84,14 @@ export const constants = {
   REFERENCE_PATH: "storage/references/",
   ANNOUNCEMENT_PATH: "storage/announcements/",
   TASK_PATH: "storage/tasks/",
+  TASK_SUBMISSION_PATH: "storage/tasks-submissions/",
   PASSWORD_SALT: 10,
   PAGINATION_OFFSET: 25,
   OFFSET_TIME: 8, // * GMT+8
   ATTACHMENT_REFERENCE_URI: "/references/attachments/",
   ANNOUNCEMENT_REFERENCE_URI: "/announcements/attachments/",
   TASK_REFERENCE_URI: "/tasks/attachments/",
+  TASK_SUBMISSION_REFERENCE_URI: "/tasks/submissions/attachments/",
 };
 
 export const createErrorObject = (

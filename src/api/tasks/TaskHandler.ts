@@ -10,13 +10,29 @@ import {
   ERRORCODE,
   HISTORYTYPE,
   RESPONSE_MESSAGE,
+  ROLE,
   throwResultError,
   throwValidationError,
 } from "../../utils";
-import { IListTasksDTO, ITaskDetailDTO } from "../../utils/dto/TaskDTO";
-import { IPostTask } from "../../utils/interfaces/Task";
+import {
+  IListTasksDTO,
+  IListTaskSubmissionDTO,
+  ITaskDetailDTO,
+  ITaskSubmissionDetailDTO,
+} from "../../utils/dto/TaskDTO";
+import {
+  IPostTask,
+  IPostTaskSubmission,
+  IPutTaskSubmission,
+  IPutTurnInStatusTaskSubmission,
+} from "../../utils/interfaces/Task";
 import { ITokenPayload } from "../../utils/interfaces/TokenPayload";
-import { TaskPayloadSchema } from "../../validator/tasks/TaskSchema";
+import {
+  TaskPayloadSchema,
+  TaskSubmissionPayloadSchema,
+  TaskSubmissionUpdatePayloadSchema,
+  TurnedInTaskSubmissionPayloadSchema,
+} from "../../validator/tasks/TaskSchema";
 import { Validator } from "../../validator/Validator";
 
 export class TaskHandler {
@@ -34,6 +50,312 @@ export class TaskHandler {
     this.deleteTask = this.deleteTask.bind(this);
     this.getTasks = this.getTasks.bind(this);
     this.getTaskAttachment = this.getTaskAttachment.bind(this);
+    this.postTaskSubmission = this.postTaskSubmission.bind(this);
+    this.putTurnInStatusTaskSubmission =
+      this.putTurnInStatusTaskSubmission.bind(this);
+    this.deleteTaskSubmission = this.deleteTaskSubmission.bind(this);
+    this.putTaskSubmission = this.putTaskSubmission.bind(this);
+    this.getTaskSubmissions = this.getTaskSubmissions.bind(this);
+    this.getTaskSubmission = this.getTaskSubmission.bind(this);
+    this.getTaskSubmissionsStudent = this.getTaskSubmissionsStudent.bind(this);
+    this.putTurnInStatusTaskSubmission =
+      this.putTurnInStatusTaskSubmission.bind(this);
+    this.getTaskSubmissionAttachment =
+      this.getTaskSubmissionAttachment.bind(this);
+  }
+
+  async getTaskSubmissionAttachment(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const tokenPayload: ITokenPayload = res.locals.user;
+    const { id } = req.params;
+
+    try {
+      const attachment = await this.attachmentService.getAttachmentById(
+        tokenPayload.userId,
+        id,
+        HISTORYTYPE.TASK_SUBMISSION,
+        tokenPayload.role
+      );
+
+      if (attachment && "error" in attachment) {
+        switch (attachment.error) {
+          case 400:
+            throw new BadRequestError(attachment.errorCode, attachment.message);
+          case 404:
+            throw new NotFoundError(attachment.errorCode, attachment.message);
+          default:
+            throw new InternalServerError(attachment.errorCode);
+        }
+      }
+
+      return res.sendFile(`${constants.ABS_PATH}/${attachment.attachment}`);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  async getTaskSubmissionsStudent(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const tokenPayload: ITokenPayload = res.locals.user;
+    const { id } = req.params;
+
+    try {
+      const submission = await this.taskService.getTaskSubmissionByTaskId(
+        tokenPayload.userId,
+        id
+      );
+
+      if (submission && "error" in submission) {
+        switch (submission.error) {
+          case 400:
+            throw new BadRequestError(submission.errorCode, submission.message);
+          case 404:
+            throw new NotFoundError(submission.errorCode, submission.message);
+          default:
+            throw new InternalServerError(submission.errorCode);
+        }
+      }
+
+      return res.status(200).json(
+        createResponse(RESPONSE_MESSAGE.SUCCESS, {
+          userId: submission.studentId ?? null,
+          studentName: submission.student?.fullname ?? null,
+          turnInStatus: submission.turnedInStatus ?? false,
+          taskSubmissionId: submission.id ?? null,
+          attachment: submission.attachments.map(
+            (a) => `${constants.TASK_SUBMISSION_REFERENCE_URI}${a.id}`
+          ),
+        } as ITaskSubmissionDetailDTO)
+      );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  async getTaskSubmission(req: Request, res: Response, next: NextFunction) {
+    const tokenPayload: ITokenPayload = res.locals.user;
+    const { id } = req.params;
+
+    try {
+      const submission = await this.taskService.getTaskSubmissionById(
+        tokenPayload.userId,
+        tokenPayload.role,
+        id
+      );
+
+      if (submission && "error" in submission) {
+        switch (submission.error) {
+          case 400:
+            throw new BadRequestError(submission.errorCode, submission.message);
+          case 404:
+            throw new NotFoundError(submission.errorCode, submission.message);
+          default:
+            throw new InternalServerError(submission.errorCode);
+        }
+      }
+
+      return res.status(200).json(
+        createResponse(RESPONSE_MESSAGE.SUCCESS, {
+          userId: submission?.studentId ?? null,
+          studentName: submission?.student?.fullname ?? null,
+          turnInStatus: submission?.turnedInStatus ?? false,
+          taskSubmissionId: submission?.id ?? null,
+          attachment: submission?.attachments.map(
+            (a) => `${constants.TASK_SUBMISSION_REFERENCE_URI}${a.id}`
+          ),
+        } as ITaskSubmissionDetailDTO)
+      );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  async getTaskSubmissions(req: Request, res: Response, next: NextFunction) {
+    const tokenPayload: ITokenPayload = res.locals.user;
+    const { id } = req.params;
+
+    try {
+      if (tokenPayload.role === ROLE.STUDENT) {
+        return next();
+      }
+
+      const submissions = await this.taskService.getStudentTaskSubmissions(
+        tokenPayload.userId,
+        id
+      );
+
+      if (submissions && "error" in submissions) {
+        switch (submissions.error) {
+          case 400:
+            throw new BadRequestError(
+              submissions.errorCode,
+              submissions.message
+            );
+          case 404:
+            throw new NotFoundError(submissions.errorCode, submissions.message);
+          default:
+            throw new InternalServerError(submissions.errorCode);
+        }
+      }
+
+      return res.status(200).json(
+        createResponse(
+          RESPONSE_MESSAGE.SUCCESS,
+          submissions.map((s) => {
+            return {
+              studentName: s.fullname,
+              userId: s.id,
+              taskSubmissionId: s.TaskSubmission[0]?.id ?? null,
+              turnInStatus: s.TaskSubmission[0]?.turnedInStatus ?? false,
+            } as IListTaskSubmissionDTO;
+          })
+        )
+      );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  async putTaskSubmission(req: Request, res: Response, next: NextFunction) {
+    const tokenPayload: ITokenPayload = res.locals.user;
+    const { id } = req.params;
+    const payload: IPutTaskSubmission = req.body;
+
+    try {
+      const validationResult = this.validator.validate(
+        TaskSubmissionUpdatePayloadSchema,
+        payload
+      );
+
+      throwValidationError(validationResult);
+      const testError = await this.taskService.updateTaskSubmissionById(
+        tokenPayload.userId,
+        payload,
+        id,
+        req.files
+      );
+      throwResultError(testError);
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            RESPONSE_MESSAGE.SUCCESS,
+            "successfully update task submission"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  async deleteTaskSubmission(req: Request, res: Response, next: NextFunction) {
+    const tokenPayload: ITokenPayload = res.locals.user;
+    const { id } = req.params;
+
+    try {
+      const testError = await this.taskService.deleteTaskSubmissionById(
+        tokenPayload.userId,
+        id
+      );
+      throwResultError(testError);
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            RESPONSE_MESSAGE.SUCCESS,
+            "successfully delete task submission"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  async putTurnInStatusTaskSubmission(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const tokenPayload: ITokenPayload = res.locals.user;
+    const { id } = req.params;
+    const payload: IPutTurnInStatusTaskSubmission = req.body;
+
+    try {
+      const validationResult = this.validator.validate(
+        TurnedInTaskSubmissionPayloadSchema,
+        payload
+      );
+
+      throwValidationError(validationResult);
+      const testError =
+        await this.taskService.updateTurnedInStatusTaskSubmissionById(
+          tokenPayload.userId,
+          payload,
+          id
+        );
+      throwResultError(testError);
+
+      return res
+        .status(200)
+        .json(
+          createResponse(
+            RESPONSE_MESSAGE.SUCCESS,
+            "successfully submit or unsubmit submission"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  async postTaskSubmission(req: Request, res: Response, next: NextFunction) {
+    const tokenPayload: ITokenPayload = res.locals.user;
+    const payload: IPostTaskSubmission = req.body;
+
+    try {
+      if (!req.files) {
+        throw new BadRequestError(ERRORCODE.BAD_REQUEST_ERROR, "provide files");
+      }
+
+      if (!req.files.length) {
+        throw new BadRequestError(
+          ERRORCODE.BAD_REQUEST_ERROR,
+          "at least one file in files"
+        );
+      }
+
+      const validationResult = this.validator.validate(
+        TaskSubmissionPayloadSchema,
+        payload
+      );
+
+      throwValidationError(validationResult);
+      const testError = await this.taskService.addTaskSubmission(
+        tokenPayload.userId,
+        payload,
+        req.files
+      );
+      throwResultError(testError);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            RESPONSE_MESSAGE.SUCCESS,
+            "successfully add new task submission"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
   }
 
   async getTaskAttachment(req: Request, res: Response, next: NextFunction) {
