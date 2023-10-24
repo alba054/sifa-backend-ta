@@ -8,6 +8,7 @@ import {
   constants,
   createResponse,
   ERRORCODE,
+  getTokenPayload,
   HISTORYTYPE,
   RESPONSE_MESSAGE,
   ROLE,
@@ -69,7 +70,7 @@ export class TaskHandler {
     res: Response,
     next: NextFunction
   ) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -102,7 +103,7 @@ export class TaskHandler {
     res: Response,
     next: NextFunction
   ) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -139,7 +140,7 @@ export class TaskHandler {
   }
 
   async getTaskSubmission(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -177,7 +178,7 @@ export class TaskHandler {
   }
 
   async getTaskSubmissions(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -223,7 +224,7 @@ export class TaskHandler {
   }
 
   async putTaskSubmission(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
     const payload: IPutTaskSubmission = req.body;
 
@@ -256,7 +257,7 @@ export class TaskHandler {
   }
 
   async deleteTaskSubmission(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -284,7 +285,7 @@ export class TaskHandler {
     res: Response,
     next: NextFunction
   ) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
     const payload: IPutTurnInStatusTaskSubmission = req.body;
 
@@ -317,7 +318,7 @@ export class TaskHandler {
   }
 
   async postTaskSubmission(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const payload: IPostTaskSubmission = req.body;
 
     try {
@@ -359,7 +360,7 @@ export class TaskHandler {
   }
 
   async getTaskAttachment(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -387,7 +388,7 @@ export class TaskHandler {
   }
 
   async getTasks(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -426,7 +427,7 @@ export class TaskHandler {
   }
 
   async deleteTask(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -447,7 +448,7 @@ export class TaskHandler {
   }
 
   async getTaskDetail(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -482,7 +483,7 @@ export class TaskHandler {
   }
 
   async postTasks(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const payload: IPostTask = req.body;
 
     try {

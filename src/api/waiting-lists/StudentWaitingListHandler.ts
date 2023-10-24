@@ -7,6 +7,7 @@ import {
   createResponse,
   throwResultError,
   throwValidationError,
+  getTokenPayload,
 } from "../../utils";
 import { StudentWaitingListService } from "../../services/StudentWaitingListService";
 import { StudentWaitingListAcceptanceStatusPayloadSchema } from "../../validator/waiting-lists/StudentWaitingListSchema";
@@ -25,7 +26,7 @@ export class StudentWaitingListHandler {
   async putAcceptanceStatus(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
     const payload: IPutStudentWaitingListAcceptanceStatus = req.body;
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
 
     try {
       const validationResult = this.validator.validate(

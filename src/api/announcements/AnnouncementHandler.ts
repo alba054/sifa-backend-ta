@@ -8,6 +8,7 @@ import {
   constants,
   createResponse,
   ERRORCODE,
+  getTokenPayload,
   HISTORYTYPE,
   RESPONSE_MESSAGE,
   throwResultError,
@@ -44,7 +45,7 @@ export class AnnouncementHandler {
     res: Response,
     next: NextFunction
   ) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -72,7 +73,7 @@ export class AnnouncementHandler {
   }
 
   async getAnnouncements(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -118,7 +119,7 @@ export class AnnouncementHandler {
   }
 
   async deleteAnnouncement(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -142,7 +143,7 @@ export class AnnouncementHandler {
   }
 
   async getAnnouncementDetail(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -186,7 +187,7 @@ export class AnnouncementHandler {
   }
 
   async postAnnouncements(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const payload: IPostAnnouncement = req.body;
 
     try {

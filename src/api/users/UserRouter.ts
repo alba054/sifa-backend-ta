@@ -136,6 +136,14 @@ export class UserRouter {
         this.userHandler.getLecturerStudentsWaitingLists
       );
 
+    // * class lecturers viewing students
+    this.router
+      .route(this.path + "/classes/:id/students")
+      .get(
+        AuthorizationBearer.authorize([ROLE.LECTURER]),
+        this.userHandler.getLecturerStudentsClass
+      );
+
     // * user view schedule based on current request time
     this.router
       .route(this.path + "/schedules")

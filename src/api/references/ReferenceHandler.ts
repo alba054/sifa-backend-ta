@@ -5,6 +5,7 @@ import {
   constants,
   createResponse,
   ERRORCODE,
+  getTokenPayload,
   HISTORYTYPE,
   RESPONSE_MESSAGE,
   throwResultError,
@@ -40,7 +41,7 @@ export class ReferenceHandler {
   }
 
   async deleteReference(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -68,7 +69,7 @@ export class ReferenceHandler {
     res: Response,
     next: NextFunction
   ) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -96,7 +97,7 @@ export class ReferenceHandler {
   }
 
   async getReferenceDetail(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -133,7 +134,7 @@ export class ReferenceHandler {
   }
 
   async getReferences(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const { id } = req.params;
 
     try {
@@ -171,7 +172,7 @@ export class ReferenceHandler {
   }
 
   async postReference(req: Request, res: Response, next: NextFunction) {
-    const tokenPayload: ITokenPayload = res.locals.user;
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
     const payload: IPostReference = req.body;
 
     try {

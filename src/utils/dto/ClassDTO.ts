@@ -20,3 +20,12 @@ export interface IListClassScheduleDTO {
   endTime: number;
   day: DAY;
 }
+
+export interface IClassStudentsDTO {
+  classId: string;
+  className: string;
+  students: {
+    name: string;
+    studentId: string;
+  }[];
+}

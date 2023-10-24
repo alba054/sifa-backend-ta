@@ -4,6 +4,28 @@ import { IPostUserPayload, IPutUserProfile } from "../utils/interfaces/User";
 import bcryptjs from "bcryptjs";
 
 export class User {
+  async getUserByClassIncludeQuiz(classId: string, quizId: string) {
+    return db.user.findMany({
+      where: {
+        role: ROLE.STUDENT,
+        classes: {
+          some: {
+            id: classId,
+          },
+        },
+      },
+      include: {
+        Answer: {
+          where: {
+            problem: {
+              quizId,
+            },
+          },
+        },
+      },
+    });
+  }
+
   async getUserByClassIncludeTask(classId: string, taskId: string) {
     return db.user.findMany({
       where: {

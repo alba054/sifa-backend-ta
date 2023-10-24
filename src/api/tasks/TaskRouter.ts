@@ -74,6 +74,7 @@ export class TaskRouter {
 
     // * delete task submission
     // * edit task submission
+    // * get task submission
     this.router
       .route(this.path + "/submissions/:id")
       .delete(

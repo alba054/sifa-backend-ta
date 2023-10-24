@@ -3,6 +3,8 @@ import { BadRequestError } from "../exceptions/httpError/BadRequestError";
 import { NotFoundError } from "../exceptions/httpError/NotFoundError";
 import { InternalServerError } from "../exceptions/httpError/InternalServerError";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { Response } from "express";
+import { ITokenPayload } from "./interfaces/TokenPayload";
 
 dotenv.config();
 
@@ -70,6 +72,22 @@ export enum RESPONSE_MESSAGE {
   SUCCESS = "success",
   FAILED = "failed",
 }
+
+export enum QUIZ_TYPE {
+  MULTIPLE_CHOICE = "MULTIPLE_CHOICE",
+  PHOTO_ANSWER = "PHOTO_ANSWER",
+}
+
+export enum MULTIPLE_ANSWER_CHOICE {
+  A = "A",
+  B = "B",
+  C = "C",
+  D = "D",
+  E = "E",
+  UNSELECTED = "UNSELECTED",
+}
+
+export const MULTIPLE_ANSWER_CHOICES = ["A", "B", "C", "D", "E", "UNSELECTED"];
 
 export const constants = {
   ACCESS_TOKEN_EXP: 24 * 60 * 60 * 30, // *  1 month
@@ -177,4 +195,8 @@ export const catchPrismaError = (error: any) => {
 export const convertEpochToDate = (epochMiliSecond: number, offset: number) => {
   const convertedEpoch = epochMiliSecond + offset * 60 * 60 * 1000;
   return new Date(convertedEpoch);
+};
+
+export const getTokenPayload = (res: Response): ITokenPayload => {
+  return res.locals.user;
 };
