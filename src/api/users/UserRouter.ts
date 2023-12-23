@@ -20,6 +20,7 @@ export class UserRouter {
     // * credential
     // * update user profile
     // * post a new user
+    // * self delete
     this.router
       .route(this.path)
       .get(

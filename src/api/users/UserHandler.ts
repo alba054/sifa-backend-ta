@@ -74,6 +74,7 @@ export class UserHandler {
     this.getUserClasses = this.getUserClasses.bind(this);
     this.getTodayClassSchedules = this.getTodayClassSchedules.bind(this);
     this.getLecturerStudentsClass = this.getLecturerStudentsClass.bind(this);
+    this.updateUserById = this.updateUserById.bind(this);
   }
 
   async getLecturerStudentsClass(
@@ -240,28 +241,33 @@ export class UserHandler {
 
   async getUserById(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
-    const user = await this.userService.getUserById(id);
-
-    if (user && "error" in user) {
-      switch (user.error) {
-        case 400:
-          throw new BadRequestError(user.errorCode, user.message);
-        case 404:
-          throw new NotFoundError(user.errorCode, user.message);
-        default:
-          throw new InternalServerError(user.errorCode);
+    
+    try {
+      
+      const user = await this.userService.getUserById(id);
+      if (user && "error" in user) {
+        switch (user.error) {
+          case 400:
+            throw new BadRequestError(user.errorCode, user.message);
+          case 404:
+            throw new NotFoundError(user.errorCode, user.message);
+          default:
+            throw new InternalServerError(user.errorCode);
+        }
       }
+  
+      return res.status(200).json(
+        createResponse(RESPONSE_MESSAGE.SUCCESS, {
+          fullname: user.fullname,
+          role: user.role,
+          userId: user.id,
+          username: user.username,
+          email: user.email,
+        } as IUserProfileDTO)
+      );
+    } catch (error) {
+      return next(error);
     }
-
-    return res.status(200).json(
-      createResponse(RESPONSE_MESSAGE.SUCCESS, {
-        fullname: user.fullname,
-        role: user.role,
-        userId: user.id,
-        username: user.username,
-        email: user.email,
-      } as IUserProfileDTO)
-    );
   }
 
   async updateUserById(req: Request, res: Response, next: NextFunction) {

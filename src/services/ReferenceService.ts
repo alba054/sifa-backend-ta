@@ -175,6 +175,7 @@ export class ReferenceService {
             id: uuidv4(),
             description: payload.description,
             uri: referenceId,
+            classId: payload.classId,
           },
         }),
       ]);

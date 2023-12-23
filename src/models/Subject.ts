@@ -8,9 +8,13 @@ export class Subject {
       skip: (page - 1) * constants.PAGINATION_OFFSET,
       take: constants.PAGINATION_OFFSET,
       where: {
-        OR: [
-          { name: { contains: search === "" ? undefined : search } },
-          { code: { startsWith: search === "" ? undefined : search } },
+        AND: [
+          {
+            OR: [
+              { name: search === "" ? undefined : { contains: search } },
+              { code: search === "" ? undefined : { startsWith: search } },
+            ],
+          },
         ],
       },
     });

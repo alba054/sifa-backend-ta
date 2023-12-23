@@ -31,12 +31,22 @@ export class ClassRouter {
 
     // * edit class
     // * delete class
+    // * get class
     this.router
       .route(this.path + "/:id")
       .put(AuthorizationBearer.authorize([ROLE.ADMIN]), this.handler.putClass)
       .delete(
         AuthorizationBearer.authorize([ROLE.ADMIN]),
         this.handler.deleteClass
+      )
+      .get(AuthorizationBearer.authorize([ROLE.ADMIN]), this.handler.getClass);
+
+    // * get class activity history
+    this.router
+      .route(this.path + "/:id/histories")
+      .get(
+        AuthorizationBearer.authorize([ROLE.STUDENT, ROLE.LECTURER]),
+        this.handler.getClassHistories
       );
 
     // * assign lecturer to class

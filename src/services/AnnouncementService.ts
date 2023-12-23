@@ -175,6 +175,8 @@ export class AnnouncementService {
             id: uuidv4(),
             description: payload.description,
             uri: referenceId,
+            classId: payload.classId,
+            lecturerId: userId
           },
         }),
       ]);

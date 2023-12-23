@@ -108,8 +108,14 @@ export class UserService {
     const user = await this.userModel.getUserById(id);
 
     if (!user) {
-      return createErrorObject();
+      return createErrorObject(
+        404,
+        "user's not found",
+        ERRORCODE.USER_NOT_FOUND_ERROR
+      );
     }
+
+    return this.userModel.updateUserByUserId(id, payload);
   }
 
   async deleteUserById(id: string) {

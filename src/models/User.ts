@@ -1,9 +1,31 @@
 import db from "../database";
 import { DAY, ROLE, catchPrismaError, constants } from "../utils";
-import { IPostUserPayload, IPutUserProfile } from "../utils/interfaces/User";
+import {
+  IPostUserPayload,
+  IPutUserMasterData,
+  IPutUserProfile,
+} from "../utils/interfaces/User";
 import bcryptjs from "bcryptjs";
 
 export class User {
+  async updateUserByUserId(id: string, payload: IPutUserMasterData) {
+    try {
+      return await db.user.update({
+        where: {
+          id,
+        },
+        data: {
+          email: payload.email,
+          fullname: payload.fullname,
+          username: payload.username,
+          role: payload.role,
+        },
+      });
+    } catch (error) {
+      return catchPrismaError(error);
+    }
+  }
+
   async getUserByClassIncludeQuiz(classId: string, quizId: string) {
     return db.user.findMany({
       where: {

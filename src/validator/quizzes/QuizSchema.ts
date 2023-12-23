@@ -36,3 +36,7 @@ export const QuizProblemAnswerPayloadSchema = Joi.object({
     .items(...MULTIPLE_ANSWER_CHOICES)
     .optional(),
 });
+
+export const QuizAnswerFeedbackPayloadSchema = Joi.object({
+  feedback: Joi.string().required(),
+});

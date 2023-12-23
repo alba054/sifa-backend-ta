@@ -18,6 +18,10 @@ export interface IPutQuizMultipleChoiceProblemAnswer {
   readonly answers?: MULTIPLE_ANSWER_CHOICE[];
 }
 
+export interface IPutQuizStudentFeedback {
+  readonly feedback: string;
+}
+
 interface IPostQuizProblemBody {
   readonly description: string;
   readonly optionA?: string;

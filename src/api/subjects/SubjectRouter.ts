@@ -40,6 +40,10 @@ export class SubjectRouter {
       .delete(
         AuthorizationBearer.authorize([ROLE.ADMIN]),
         this.handler.deleteSubject
+      )
+      .get(
+        AuthorizationBearer.authorize([ROLE.ADMIN]),
+        this.handler.getSubject
       );
 
     return this.router;

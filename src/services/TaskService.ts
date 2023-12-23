@@ -456,6 +456,7 @@ export class TaskService {
             id: uuidv4(),
             description: payload.description,
             uri: referenceId,
+            classId: payload.classId
           },
         }),
       ]);

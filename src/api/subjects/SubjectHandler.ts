@@ -14,6 +14,9 @@ import {
   SubjectPayloadSchema,
 } from "../../validator/SubjectSchema";
 import { IListSubjectDTO } from "../../utils/dto/SubjectDTO";
+import { BadRequestError } from "../../exceptions/httpError/BadRequestError";
+import { NotFoundError } from "../../exceptions/httpError/NotFoundError";
+import { InternalServerError } from "../../exceptions/httpError/InternalServerError";
 
 export class SubjectHandler {
   private validator: Validator;
@@ -27,6 +30,35 @@ export class SubjectHandler {
     this.putSubject = this.putSubject.bind(this);
     this.getSubjects = this.getSubjects.bind(this);
     this.deleteSubject = this.deleteSubject.bind(this);
+    this.getSubject = this.getSubject.bind(this);
+  }
+
+  async getSubject(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    const subject = await this.subjectService.getSubjectById(id);
+
+    try {
+      if (subject && "error" in subject) {
+        switch (subject.error) {
+          case 400:
+            throw new BadRequestError(subject.errorCode, subject.message);
+          case 404:
+            throw new NotFoundError(subject.errorCode, subject.message);
+          default:
+            throw new InternalServerError(subject.errorCode);
+        }
+      }
+
+      return res.status(200).json(
+        createResponse(RESPONSE_MESSAGE.SUCCESS, {
+          name: subject.name,
+          code: subject.code,
+          id: subject.id,
+        } as IListSubjectDTO)
+      );
+    } catch (error) {
+      return next(error);
+    }
   }
 
   async getSubjects(req: Request, res: Response, next: NextFunction) {

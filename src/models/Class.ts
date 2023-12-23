@@ -80,18 +80,32 @@ export class Class {
       },
       include: {
         user: true,
+        Subject: true,
       },
     });
   }
 
-  async getAllClasses(page: number = 1, subjectId: string | undefined) {
+  async getAllClasses(
+    page: number = 1,
+    subjectId: string | undefined,
+    userId?: string | undefined
+  ) {
     return db.class.findMany({
       include: {
         Subject: true,
         user: true,
       },
       where: {
-        subjectId: subjectId === "" ? undefined : subjectId,
+        AND: [
+          { subjectId: subjectId === "" ? undefined : subjectId },
+          {
+            user: {
+              none: {
+                id: userId,
+              },
+            },
+          },
+        ],
       },
       skip: (page - 1) * constants.PAGINATION_OFFSET,
       take: constants.PAGINATION_OFFSET,

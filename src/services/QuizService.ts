@@ -6,18 +6,19 @@ import {
   ERRORCODE,
   HISTORYTYPE,
   MULTIPLE_ANSWER_CHOICE,
-  ROLE,
 } from "../utils";
 import {
   IPostQuiz,
   IPostQuizProblem,
   IPutQuizMultipleChoiceProblemAnswer,
+  IPutQuizStudentFeedback,
 } from "../utils/interfaces/Quiz";
 import { v4 as uuidv4 } from "uuid";
 import { Quiz } from "../models/Quiz";
 import { Problem } from "../models/Problem";
 import { Answer } from "../models/Answer";
 import { User } from "../models/User";
+import { Feedback } from "../models/Feedback";
 
 interface IPayloadMultipleAnswerPayload {
   problemId: string;
@@ -30,6 +31,7 @@ export class QuizService {
   private problemModel: Problem;
   private answerModel: Answer;
   private userModel: User;
+  private feedbackModel: Feedback;
 
   constructor() {
     this.classModel = new Class();
@@ -37,6 +39,39 @@ export class QuizService {
     this.problemModel = new Problem();
     this.answerModel = new Answer();
     this.userModel = new User();
+    this.feedbackModel = new Feedback();
+  }
+
+  async insertFeedbackToStudentQuiz(
+    lecturerId: string,
+    studentId: string,
+    quizId: string,
+    payload: IPutQuizStudentFeedback
+  ) {
+    const quiz = await this.quizModel.getQuizById(quizId);
+
+    if (!quiz) {
+      return createErrorObject(
+        404,
+        "quiz's not found",
+        ERRORCODE.COMMON_NOT_FOUND
+      );
+    }
+
+    if (!quiz.class?.user.find((u) => u.id === lecturerId)) {
+      return createErrorObject(
+        400,
+        "this class is not for you",
+        ERRORCODE.BAD_REQUEST_ERROR
+      );
+    }
+
+    return this.feedbackModel.insertFeedback(
+      uuidv4(),
+      studentId,
+      quizId,
+      payload
+    );
   }
 
   async getStudentsQuizAnswersByQuizId(userId: string, id: string) {
@@ -289,6 +324,7 @@ export class QuizService {
             id: uuidv4(),
             description: payload.description,
             uri: referenceId,
+            classId: payload.classId,
           },
         }),
       ]);

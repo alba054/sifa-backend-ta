@@ -40,6 +40,14 @@ export class QuizRouter {
         this.handler.getQuizStudentsWork
       );
 
+    // * give student quiz feedback
+    this.router
+      .route(this.path + "/:id/students/:userId")
+      .put(
+        AuthorizationBearer.authorize([ROLE.LECTURER]),
+        this.handler.putStudentQuizFeedback
+      );
+
     // * post problem of quiz
     // * get quiz problems
     this.router

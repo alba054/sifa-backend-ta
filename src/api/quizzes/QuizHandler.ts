@@ -3,6 +3,7 @@ import { BadRequestError } from "../../exceptions/httpError/BadRequestError";
 import { InternalServerError } from "../../exceptions/httpError/InternalServerError";
 import { NotFoundError } from "../../exceptions/httpError/NotFoundError";
 import { AttachmentService } from "../../services/AttachmentService";
+import { FeedbackService } from "../../services/FeedbackService";
 import { QuizService } from "../../services/QuizService";
 import {
   constants,
@@ -15,14 +16,20 @@ import {
   throwValidationError,
 } from "../../utils";
 import { IProblemDTO } from "../../utils/dto/ProblemDTO";
-import { IListQuizSubmissionDTO, IListQuizzesDTO, IQuizDetailDTO } from "../../utils/dto/QuizDTO";
+import {
+  IListQuizSubmissionDTO,
+  IListQuizzesDTO,
+  IQuizDetailDTO,
+} from "../../utils/dto/QuizDTO";
 import {
   IPostQuiz,
   IPostQuizProblem,
   IPutQuizMultipleChoiceProblemAnswer,
+  IPutQuizStudentFeedback,
 } from "../../utils/interfaces/Quiz";
 import { ITokenPayload } from "../../utils/interfaces/TokenPayload";
 import {
+  QuizAnswerFeedbackPayloadSchema,
   QuizPayloadSchema,
   QuizProblemAnswerPayloadSchema,
   QuizProblemPayloadSchema,
@@ -33,10 +40,12 @@ export class QuizHandler {
   private validator: Validator;
   private quizService: QuizService;
   private attachmentService: AttachmentService;
+  private feedbackService: FeedbackService;
 
   constructor() {
     this.quizService = new QuizService();
     this.attachmentService = new AttachmentService();
+    this.feedbackService = new FeedbackService();
     this.validator = new Validator();
 
     this.postQuiz = this.postQuiz.bind(this);
@@ -62,6 +71,46 @@ export class QuizHandler {
     this.getStudentQuizProblems = this.getStudentQuizProblems.bind(this);
     this.getStudentQuizAnswers = this.getStudentQuizAnswers.bind(this);
     this.getQuizStudentsWork = this.getQuizStudentsWork.bind(this);
+    this.putStudentQuizFeedback = this.putStudentQuizFeedback.bind(this);
+  }
+
+  async putStudentQuizFeedback(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const tokenPayload: ITokenPayload = getTokenPayload(res);
+    const { id, userId } = req.params;
+    const payload: IPutQuizStudentFeedback = req.body;
+
+    try {
+      const validationResult = this.validator.validate(
+        QuizAnswerFeedbackPayloadSchema,
+        payload
+      );
+
+      throwValidationError(validationResult);
+
+      const testError = await this.quizService.insertFeedbackToStudentQuiz(
+        tokenPayload.userId,
+        userId,
+        id,
+        payload
+      );
+
+      throwResultError(testError);
+
+      return res
+        .status(201)
+        .json(
+          createResponse(
+            RESPONSE_MESSAGE.SUCCESS,
+            "successfully add feedback to student quiz"
+          )
+        );
+    } catch (error) {
+      return next(error);
+    }
   }
 
   async getQuizStudentsWork(req: Request, res: Response, next: NextFunction) {
@@ -169,6 +218,12 @@ export class QuizHandler {
         id
       );
 
+      const feedbacks =
+        await this.feedbackService.getFeedbackByQuizIdAndStudentId(
+          id,
+          tokenPayload.userId
+        );
+
       if (answers && "error" in answers) {
         switch (answers.error) {
           case 400:
@@ -180,15 +235,26 @@ export class QuizHandler {
         }
       }
 
+      if (feedbacks && "error" in feedbacks) {
+        switch (feedbacks.error) {
+          case 400:
+            throw new BadRequestError(feedbacks.errorCode, feedbacks.message);
+          case 404:
+            throw new NotFoundError(feedbacks.errorCode, feedbacks.message);
+          default:
+            throw new InternalServerError(feedbacks.errorCode);
+        }
+      }
+
       // * handle student without answers to the related quiz
       if (!answers.length) {
         return next();
       }
 
       return res.status(200).json(
-        createResponse(
-          RESPONSE_MESSAGE.SUCCESS,
-          answers.map((p) => {
+        createResponse(RESPONSE_MESSAGE.SUCCESS, {
+          feedback: feedbacks?.description,
+          problems: answers.map((p) => {
             return {
               id: p.id,
               description: p.problem?.description,
@@ -199,8 +265,8 @@ export class QuizHandler {
               optionE: p.problem?.optionE,
               solution: p.choice ?? p.solution ?? null,
             } as IProblemDTO;
-          })
-        )
+          }),
+        })
       );
     } catch (error) {
       return next(error);
@@ -293,9 +359,8 @@ export class QuizHandler {
       }
 
       return res.status(200).json(
-        createResponse(
-          RESPONSE_MESSAGE.SUCCESS,
-          problems.map((p) => {
+        createResponse(RESPONSE_MESSAGE.SUCCESS, {
+          problems: problems.map((p) => {
             return {
               id: p.id,
               description: p.description,
@@ -306,8 +371,8 @@ export class QuizHandler {
               optionE: p.optionE,
               solution: null,
             } as IProblemDTO;
-          })
-        )
+          }),
+        })
       );
     } catch (error) {
       return next(error);

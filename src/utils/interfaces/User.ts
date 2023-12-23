@@ -1,3 +1,5 @@
+import { ROLE } from "..";
+
 export interface IPutUserProfile {
   readonly fullname?: string;
   readonly username?: string;
@@ -8,7 +10,7 @@ export interface IPutUserProfile {
 export interface IPostUserPayload {
   readonly fullname: string;
   readonly username: string;
-  readonly role: "LECTURER" | "STUDENT" | "ADMIN";
+  readonly role: ROLE;
   readonly password: string;
   readonly email?: string;
 }
@@ -16,7 +18,7 @@ export interface IPostUserPayload {
 export interface IPutUserMasterData {
   readonly fullname?: string;
   readonly username?: string;
-  readonly role?: "LECTURER" | "STUDENT" | "ADMIN";
+  readonly role?: ROLE;
   readonly password?: string;
   readonly email?: string;
 }

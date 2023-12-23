@@ -10,6 +10,20 @@ export class SubjectService {
     this.subjectModel = new Subject();
   }
 
+  async getSubjectById(id: string) {
+    const subject = await this.subjectModel.getSubjectById(id);
+
+    if (!subject) {
+      return createErrorObject(
+        404,
+        "subject's not found",
+        ERRORCODE.COMMON_NOT_FOUND
+      );
+    }
+
+    return subject;
+  }
+
   async getSubjects(page: number = 1, search: string | undefined) {
     return this.subjectModel.getAllSubjects(page, search);
   }
